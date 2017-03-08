@@ -146,6 +146,16 @@ class Centre{
 				</label>
 				<input type="text" name="proMan" class="form-control require" />
 			</div>
+			
+						<div class="form-group">
+				<label for="centre-code">
+					Programme Manager Email
+					<span class="required">
+						*
+					</span>
+				</label>
+				<input type="text" name="proManE" class="form-control require" />
+			</div>
 			<div class="ln_solid">
 			</div>
 			<div class="form-group">
@@ -300,6 +310,15 @@ class Centre{
 					</span>
 				</label>
 				<input type="text" name="proMan" class="form-control require" value="<?php _e($centre->programme_manag);?>" />
+			</div>
+			<div class="form-group">
+				<label for="centre-code">
+					Programme Manager Email
+					<span class="required">
+						*
+					</span>
+				</label>
+				<input type="text" name="proManE" class="form-control require" value = "<?php _e($centre->programme_manage_e);?>" />
 			</div>
 			<div class="ln_solid">
 			</div>
@@ -783,6 +802,7 @@ class Centre{
 				'support_Rad' => $suppRad,
 				'support_Rad_email'=> $suppRadE,
 				'programme_manag' => $proMan,
+				'programme_manage_e' => $proManE,
 
 			)
 		);
@@ -840,6 +860,7 @@ class Centre{
 				'support_Rad' => $suppRad,
 				'support_Rad_email'=> $suppRadE,
 				'programme_manag' => $proMan,
+				'programme_manage_e' => $proManE,
 			),
 			array(
 				'ID'=> $centre_id

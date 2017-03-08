@@ -980,31 +980,6 @@ class Equipment{
 			</div>
 
 			<div class="form-group">
-				<label for="centre">
-					Centre
-					<span class="required">
-						*
-					</span>
-				</label>
-				<select name="centre" class="form-control select_single require" tabindex="-1" data-placeholder="Choose centre">
-					<?php
-					$query = '';
-					if(!is_admin()):
-						$centres = maybe_unserialize($this->current__user->centre);
-						if(!empty($centres)){
-							$centres = implode(',',$centres);
-							$query = "WHERE `ID` IN (".$centres.")";
-						}
-					endif;
-					$query .= ($query != '') ? ' AND ' : ' WHERE ';
-					$query .= " `approved` = '1' ORDER BY `name` ASC";
-					$data = get_tabledata(TBL_CENTRES,false,array(),$query);
-					$option_data = get_option_data($data,array('ID','name'));
-					echo get_options_list($option_data);
-					?>
-				</select>
-			</div>
-			<div class="form-group">
 				<label for="supplier">
 					Suppliers
 					<span class="required">
@@ -1920,7 +1895,6 @@ class Equipment{
 				'ID' => $guid,
 				'code' => $code,
 				'name' => $name,
-				'centre' => $centre,
 				'supplier'=> $supplier,
 				'approved'=> 1,
 			)
@@ -1967,7 +1941,6 @@ class Equipment{
 		$result = $this->database->update(TBL_EQUIPMENT_TYPES,
 			array(
 				'name' => $name,
-				'centre' => $centre,
 				'supplier'=> $supplier,
 			),
 			array(
