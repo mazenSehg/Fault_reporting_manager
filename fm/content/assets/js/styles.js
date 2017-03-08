@@ -689,9 +689,9 @@ $(document).ready(function() {
 			type : 'POST',
 			data: {
 				action: 'fetch_equipment_data',
-				id: $('.fetch-centre-equipment-data').val(),
+				id: $('.select-equipment-type').val(),
 				decommed: value,
-				equipment_type: jQuery('.select-equipment-type').val()
+				centre: $('.fetch-centre-equipment-data').val(),
 			},
 			url  : ajax_url,
 			dataType: 'json',
@@ -718,7 +718,7 @@ $(document).ready(function() {
 				action: 'fetch_centre_equipment_data',
 				id: _this.val(),
 				decommed: value,
-				equipment_type: jQuery('.select-equipment-type').val()
+				equipment_type: $('.select-equipment-type').val()
 			},
 			url  : ajax_url,
 			dataType: 'json',
