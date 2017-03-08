@@ -631,12 +631,18 @@ $(document).ready(function() {
 	});
 	
 	$('.fetch-equipment-data').change(function(e){
-		var _this = $(this);	
+		var _this = $(this);
+		var value  = 0;
+		if($('.show-decommed').is(':checked')){
+			var value = 1;
+		}
 		$.ajax({ 
 			type : 'POST',
 			data: {
 				action: 'fetch_equipment_data',
-				id: _this.val(),			
+				id: _this.val(),
+				decommed: value,
+				centre: jQuery('.fetch-centre-equipment-data').val()	
 			},
 			url  : ajax_url,
 			dataType: 'json',
@@ -645,6 +651,7 @@ $(document).ready(function() {
 				$select_multiple.select2("destroy");
 				$select_single.select2("destroy");
 				$('.select-fault-type').html(res['fault_type_html']);
+				$('.select-equipment').html(res['equipment_html']);
 				$select_single.select2({ allowClear: true });
 				$select_multiple.select2({ allowClear: true });
 			}
@@ -683,7 +690,8 @@ $(document).ready(function() {
 			data: {
 				action: 'fetch_equipment_data',
 				id: $('.fetch-centre-equipment-data').val(),
-				decommed: value
+				decommed: value,
+				equipment_type: jQuery('.select-equipment-type').val()
 			},
 			url  : ajax_url,
 			dataType: 'json',
@@ -709,7 +717,8 @@ $(document).ready(function() {
 			data: {
 				action: 'fetch_centre_equipment_data',
 				id: _this.val(),
-				decommed: value
+				decommed: value,
+				equipment_type: jQuery('.select-equipment-type').val()
 			},
 			url  : ajax_url,
 			dataType: 'json',

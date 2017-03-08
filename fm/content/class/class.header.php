@@ -343,8 +343,18 @@ class Header
 											Add New User
 										</a>
 									</li>
+									<li class="hidden-xs hidden-lg">
+										<a href="<?php echo site_url();?>/edit-user/">
+										</a>
+									</li>
 									<?php endif;?>
-									
+									<?php
+									if( user_can('view_user') ): ?>
+									<li class="hidden-xs hidden-lg">
+										<a href="<?php echo site_url();?>/view-user/">
+										</a>
+									</li>
+									<?php endif;?>
 								</ul>
 							</li>
 							<?php endif; ?>
@@ -490,6 +500,11 @@ class Header
 													All Equipments
 												</a>
 											</li>
+											<li class="hidden-xs hidden-lg">
+												<a href="<?php echo site_url();?>/view-equipment/">
+													View Equipment
+												</a>
+											</li>
 											<?php endif;?>
 
 											<?php
@@ -497,6 +512,11 @@ class Header
 											<li>
 												<a href="<?php echo site_url();?>/add-new-equipment/">
 													Add New Equipment
+												</a>
+											</li>
+											<li class="hidden-xs hidden-lg">
+												<a href="<?php echo site_url();?>/edit-equipment/">
+													Edit Equipment
 												</a>
 											</li>
 
@@ -709,6 +729,10 @@ class Header
 													All Faults
 												</a>
 											</li>
+											<li class="hidden-xs hidden-lg">
+												<a href="<?php echo site_url();?>/view-fault/">
+												</a>
+											</li>
 											<?php endif;?>
 
 											<?php
@@ -716,6 +740,10 @@ class Header
 											<li>
 												<a href="<?php echo site_url();?>/add-new-fault/">
 													Add New Fault
+												</a>
+											</li>
+											<li class="hidden-xs hidden-lg">
+												<a href="<?php echo site_url();?>/edit-fault/">
 												</a>
 											</li>
 											<?php endif;?>
