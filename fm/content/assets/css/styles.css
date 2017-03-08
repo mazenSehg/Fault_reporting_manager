@@ -1,0 +1,302 @@
+@import url(fonts/stylesheet.css);
+body{
+	/*font-family: Century Gothic;*/
+	/*font-family: Cagliostro;*/
+	/*font-family: 'Quattrocento Sans', sans-serif;*/
+	font-family: 'Lato', sans-serif;
+	font-size:14px;
+}
+h1,h2,h3,h4,h5,h6{
+	font-family: Oswald;
+}
+.btn.font{
+	font-family: Oswald;
+}
+.green{
+	color:#26B99A;
+}
+.dark{
+	color:#4B5F71;
+}
+.side-menu li a{
+	font-family: Oswald;
+}
+.sidebar-footer a:hover{
+	color:#FFF;
+	cursor: pointer;
+}
+.datatable-buttons .avatar{
+	float:none;
+}
+.select2-container{
+	width:100% !important;
+}
+.select2-container--default .select2-results__option--highlighted[aria-selected]{
+	background-color: #26b99a;
+}
+form .alert{
+	display: none;
+}
+form span.required{
+	color:#26B99A;
+}
+.form-control{
+	box-shadow: none;
+}
+.form-control:focus{
+	border-color:#4B5F71;
+}
+.has-error .select2-selection{
+	border-color: #a94442;
+}
+.form-control[readonly]{
+	background: #fff;
+}
+.editor.btn-toolbar{
+	margin:0;
+	border:1px solid #ccc;
+	border-bottom: 0;
+}
+.btn{
+	margin-bottom: 5px !important;
+	text-transform: uppercase;
+	font-weight: 700;
+}
+.table .btn,
+.top_search .btn{
+	text-transform: none;
+	font-weight: 400;
+}
+.table tr td,
+.table tr th{
+	vertical-align: middle  !important;
+}
+.table tr td .form-group{
+	margin-bottom: 0;
+}
+.editor-wrapper{
+	box-shadown:none;
+	overflow: auto;
+	border:1px solid #ccc;
+	border-top:0;
+	padding:10px 15px;
+}
+.select2-container--default .select2-selection--single, .select2-container--default .select2-selection--multiple{
+	min-height:34px;
+}
+.select2-container--default .select2-selection--multiple .select2-selection__choice, .select2-container--default .select2-selection--multiple .select2-selection__clear{
+	padding:1px 5px;
+}
+.select2-container--default .select2-selection--single .select2-selection__arrow{
+	height:30px;
+}
+.select2-container--default .select2-selection--single .select2-selection__rendered{
+	line-height:23px;
+}
+.right_col{
+	min-height:650px;
+}
+.not-found-page{
+	padding:60px 0;
+}
+.not-found-page h1,
+.not-found-page h4{
+	text-transform: uppercase;
+}
+.daterangepicker select.monthselect,
+.daterangepicker select.yearselect{
+	color:#4B5F71;
+}
+.pagination.pagination-split>.active>a, .pagination.pagination-split>.active>a:focus, .pagination.pagination-split>.active>a:hover, .pagination.pagination-split>.active>span, .pagination.pagination-split>.active>span:focus, .pagination.pagination-split>.active>span:hover{
+	background-color:#26B99A;
+	border-color:#26B99A;
+	color:#fff;
+}
+ul.messages li{
+	padding:8px 10px;
+	margin-bottom: 10px;
+	list-style: none;
+}
+ul.messages li.unread{
+	background: #f5f5f5;
+}
+.label-success{
+	background-color:#26B99A;
+}
+.msg_list.dropdown-menu>li>a{
+	color:#5A738E;
+}
+ul.msg_list li .image img {
+	border-radius: 2px 2px 2px 2px;
+	-webkit-border-radius: 2px 2px 2px 2px;
+	float: left;
+	margin-right: 10px;
+	width: 11%;
+}
+.canvas-block{
+	position: absolute;
+	width: 100%;
+	height:100%;
+	border-bottom: 1px solid rgba(0,0,0,0.15);
+	background-color: #4B5F71;
+	background: url(../img/background-image.jpg) no-repeat;
+	background-size: cover;
+}
+.home-page.main .canvas-block{
+	/*background: transparent;*/
+	border: 0;
+}
+#myCanvas1{
+	position: absolute;
+}
+.home-page.main{
+	background: url(../img/background-image.jpg) no-repeat;
+	background-size: cover;
+}
+.home-page nav{
+	color:#fff;
+}
+.home-page .big-title{
+	font-size: 60px;
+}
+.home-page .big-box{
+	padding-top:60px;
+	overflow: hidden;
+}
+.home-page .main-box{
+	background: #fff;
+	display: block;
+	width: 100%;
+	float: left;
+}
+.home-page.main .main-box{
+	background:transparent;
+	color:#fff;
+}
+.home-page.main .login-form{
+	background: rgba(0,0,0,0.63);
+	padding:40px 20px;
+}
+.home-page.main .login-form .form-title{
+	padding-bottom: 15px;
+	border-bottom: 1px solid rgba(255,255,255,0.5);
+	text-transform: uppercase;
+}
+.home-page .main-box .features li{
+	border-right:1px solid #fff;
+}
+.home-page .main-box .features li:last-child{
+	border:0;
+}
+.home-page .main-box .features li>a{
+	color:#fff;
+	font-size: 16px;
+}
+.home-page .main-box .features li>a:hover,
+.home-page .main-box .features li>a:focus{
+	text-decoration: none;
+	outline: 0;
+}
+.home-page .home-footer{
+	padding:15px 0 10px 0;
+	background: rgba(0,0,0,0.3);
+	color:#fff;
+}
+.home-page .home-footer a{
+	color:#fff;
+}
+form.edit-exam-student-marks .table tbody>tr>td input{
+	min-width:70px;
+}
+form.edit-exam-student-marks .table tbody>tr>td:first-child input{
+	min-width:150px;
+}
+form.edit-exam-questions .table tbody>tr{
+	cursor: move;
+}
+form.edit-exam-questions .table-bordered>tbody>tr{
+	border:1px dashed #4B5F71 !important;
+}
+.profile-image-preview-box{
+	height:100px;
+	width:100px;
+}
+ul.bar_tabs > li a{
+	font-weight:700;
+}
+ul.bar_tabs > li.active a,
+ul.bar_tabs > li.active a:hover,
+ul.bar_tabs > li.active a:focus{
+	color:#26B99A;
+}
+ul.booking_clinics{
+	height: auto;
+	overflow-y: scroll;
+	max-height: 500px;
+}
+ul.booking_clinics li{
+	padding: 15px 10px;
+	border:1px solid #eee;
+}
+ul.booking_clinics::-webkit-scrollbar {
+	width: 4px;
+}
+ul.booking_clinics::-webkit-scrollbar-track {
+	background:transparent;
+}
+ul.booking_clinics::-webkit-scrollbar-thumb {
+	background: #26B99A;
+}
+ul.booking_clinics .booking-btn{
+	min-width: 135px;
+	text-align: center;
+}
+
+.fc-event-container .fc-event {
+	color:#FFF;
+	background: #26B99A;
+	border: 1px solid #169F85;
+	text-align: center;
+	font-family: Oswald;
+}
+@media only screen and (max-width:767px){
+	.home-page .main-box .right-box{
+		padding-top:0;
+		border:0;
+	}
+	.home-page .container {
+		width: auto;
+		padding-right: 15px;
+		padding-left: 15px;
+	}
+	.home-page.main .main-box{
+		margin-bottom:60px;
+	}
+	.home-page .home-footer .pull-left,
+	.home-page .home-footer .pull-right{
+		float: none !important;
+		text-align: center;
+	}
+}
+@media only screen and (min-width:768px){
+	.home-page .home-footer.fixed{
+		position: fixed;
+		bottom: 0;
+		width: 100%;
+	}
+}
+@media (min-width: 1200px){
+	.home-page .container {
+		width: 1170px;
+	}
+}
+@media (min-width: 992px) and (max-width: 1999px){
+	.home-page .container {
+		width: 970px;
+	}
+}
+@media (min-width: 768px) and (max-width: 991px) {
+	.home-page .container {
+		width: 750px;
+	}
+}
