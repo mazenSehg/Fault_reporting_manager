@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Mar 10, 2017 at 11:10 AM
+-- Generation Time: Mar 10, 2017 at 12:51 PM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -41,7 +41,9 @@ CREATE TABLE `tbl_access_log` (
 
 INSERT INTO `tbl_access_log` (`ID`, `user_id`, `ip_address`, `device`, `user_agent`, `date`) VALUES
 (29, 1, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/602.3.12 (KHTML, like Gecko) Version/10.0.2 Safari/602.3.12', '2017-03-08 16:06:54'),
-(30, 1, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/602.3.12 (KHTML, like Gecko) Version/10.0.2 Safari/602.3.12', '2017-03-08 17:29:43');
+(30, 1, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/602.3.12 (KHTML, like Gecko) Version/10.0.2 Safari/602.3.12', '2017-03-08 17:29:43'),
+(31, 10000793092, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/602.3.12 (KHTML, like Gecko) Version/10.0.2 Safari/602.3.12', '2017-03-10 10:12:49'),
+(32, 1, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/602.3.12 (KHTML, like Gecko) Version/10.0.2 Safari/602.3.12', '2017-03-10 10:14:39');
 
 -- --------------------------------------------------------
 
@@ -248,7 +250,7 @@ CREATE TABLE `tbl_equipment` (
 --
 
 INSERT INTO `tbl_equipment` (`ID`, `name`, `centre`, `equipment_code`, `equipment_type`, `manufacturer`, `model`, `supplier`, `service_agent`, `location_id`, `location`, `serial_number`, `year_manufacturered`, `year_installed`, `year_decommisoned`, `decommed`, `spare`, `comment`, `x_ray`, `approved`, `created_on`) VALUES
-(89173, '', 1426, 'WNM4P', 417, 1914, '10271', 0, NULL, 'Processor 2', 'Llandudno static', '5032', 2002, 2002, 2012, 1, 0, '', 0, 1, '2017-03-09 15:05:29'),
+(89173, '', 0, 'WNM4P', 417, 1914, '10271', 0, NULL, 'Processor 2', 'Llandudno static', '5032', 2002, 2002, 2012, 1, 0, '', 0, 1, '2017-03-09 15:05:29'),
 (89174, '', 1414, 'LCO2V', 425, 1760, '9676', 0, NULL, '', 'Mermaid Centre', 'M5974139', 1998, 1998, 2010, 1, 0, '', 0, 1, '2017-03-09 15:05:29'),
 (89175, '', 1382, 'SAB5V', 425, 1932, '10298', 0, NULL, '', 'Static', '69432', 0, 2003, 2014, 1, 0, '', 0, 1, '2017-03-09 15:05:29'),
 (89176, '', 1409, 'JSO1D', 434, 1928, '9741', 0, NULL, '', 'Mobile 1', 'K48873', 0, 0, 2013, 1, 0, '', 0, 1, '2017-03-09 15:05:29'),
@@ -1929,7 +1931,30 @@ INSERT INTO `tbl_notifications` (`ID`, `user_id`, `title`, `notification`, `read
 (324, 1, 'Account deleted', 'You have successfully deleted (Rtret Twerwe) account.', 0, 0, '2017-03-10 09:27:01'),
 (325, 1, 'New Admin Account Created', 'You have successfully created a new admin account (Celia Strudley).', 0, 0, '2017-03-10 09:28:47'),
 (326, 1, 'Admin Account Password Reset', 'You have successfully changed (Celia Strudley) account password.', 0, 0, '2017-03-10 10:09:03'),
-(327, 1, 'Admin Account Details updated', 'You have successfully updated (Celia Strudley) account details.', 0, 0, '2017-03-10 10:09:03');
+(327, 1, 'Admin Account Details updated', 'You have successfully updated (Celia Strudley) account details.', 0, 0, '2017-03-10 10:09:03'),
+(328, 1, 'Service agent details updated', 'You have successfully updated service agent (Carestream).', 0, 0, '2017-03-10 10:52:41'),
+(329, 1, 'Service agent details updated', 'You have successfully updated service agent (MIS).', 0, 0, '2017-03-10 10:55:58'),
+(330, 1, 'Service agent details updated', 'You have successfully updated service agent (GE).', 0, 0, '2017-03-10 10:57:57'),
+(331, 1, 'Service agent details updated', 'You have successfully updated service agent (Fuji).', 0, 0, '2017-03-10 10:59:19'),
+(332, 1, 'Service agent details updated', 'You have successfully updated service agent (Medical X-Rays).', 0, 0, '2017-03-10 11:00:52'),
+(333, 1, 'Service agent details updated', 'You have successfully updated service agent (Shimadzu).', 0, 0, '2017-03-10 11:01:19'),
+(334, 1, 'Service agent details updated', 'You have successfully updated service agent (Philips).', 0, 0, '2017-03-10 11:02:27'),
+(335, 1, 'Service agent details updated', 'You have successfully updated service agent (Agfa).', 0, 0, '2017-03-10 11:05:29'),
+(336, 1, 'Service agent details updated', 'You have successfully updated service agent (Andersons).', 0, 0, '2017-03-10 11:05:51'),
+(337, 1, 'Service agent details updated', 'You have successfully updated service agent (Wardray).', 0, 0, '2017-03-10 11:07:47'),
+(338, 1, 'Service agent details updated', 'You have successfully updated service agent (Siemens).', 0, 0, '2017-03-10 11:10:03'),
+(339, 1, 'Service agent details updated', 'You have successfully updated service agent (X-ograph).', 0, 0, '2017-03-10 11:10:39'),
+(340, 1, 'Service agent details updated', 'You have successfully updated service agent (Wolverson).', 0, 0, '2017-03-10 11:13:21'),
+(341, 1, 'Service agent details updated', 'You have successfully updated service agent (HSL).', 0, 0, '2017-03-10 11:16:59'),
+(342, 1, 'Service agent details updated', 'You have successfully updated service agent (Kodak).', 0, 0, '2017-03-10 11:18:27'),
+(343, 1, 'Service agent details updated', 'You have successfully updated service agent (Du Pont).', 0, 0, '2017-03-10 11:18:56'),
+(344, 1, 'Service agent details updated', 'You have successfully updated service agent (Lister Petter).', 0, 0, '2017-03-10 11:22:49'),
+(345, 1, 'Service agent details updated', 'You have successfully updated service agent (Wolverson).', 0, 0, '2017-03-10 11:32:11'),
+(346, 1, 'Service agent details updated', 'You have successfully updated service agent (HSL).', 0, 0, '2017-03-10 11:34:10'),
+(347, 1, 'Service agent details updated', 'You have successfully updated service agent (Impex Imaging).', 0, 0, '2017-03-10 11:35:42'),
+(348, 1, 'Service agent details updated', 'You have successfully updated service agent (Hologic).', 0, 0, '2017-03-10 11:36:50'),
+(349, 1, 'Service agent details updated', 'You have successfully updated service agent (MAS).', 0, 0, '2017-03-10 11:37:39'),
+(350, 1, 'Service agent details updated', 'You have successfully updated service agent (Otley Rhodes).', 0, 0, '2017-03-10 11:37:54');
 
 -- --------------------------------------------------------
 
@@ -2043,28 +2068,28 @@ CREATE TABLE `tbl_service_agent` (
 --
 
 INSERT INTO `tbl_service_agent` (`ID`, `name`, `equipment_type`, `approved`, `created_on`) VALUES
-(199, 'Carestream', NULL, 1, '2017-03-09 15:12:36'),
-(200, 'MIS', NULL, 1, '2017-03-09 15:12:36'),
-(201, 'GE', NULL, 1, '2017-03-09 15:12:36'),
-(202, 'Fuji', NULL, 1, '2017-03-09 15:12:36'),
-(203, 'Medical X-Rays', NULL, 1, '2017-03-09 15:12:36'),
-(204, 'Shimadzu', NULL, 1, '2017-03-09 15:12:36'),
-(205, 'Philips', NULL, 1, '2017-03-09 15:12:36'),
-(206, 'Agfa', NULL, 1, '2017-03-09 15:12:36'),
-(207, 'Andersons', NULL, 1, '2017-03-09 15:12:36'),
-(208, 'Wardray', NULL, 1, '2017-03-09 15:12:36'),
-(209, 'Siemens', NULL, 1, '2017-03-09 15:12:36'),
-(210, 'X-ograph', NULL, 1, '2017-03-09 15:12:36'),
-(211, 'Wolverson', NULL, 1, '2017-03-09 15:12:36'),
-(212, 'HSL', NULL, 1, '2017-03-09 15:12:36'),
-(213, 'Kodak', NULL, 1, '2017-03-09 15:12:36'),
-(214, 'Du Pont', NULL, 1, '2017-03-09 15:12:36'),
-(215, 'Lister Petter', NULL, 1, '2017-03-09 15:12:36'),
-(216, 'Tech Photo Sys', NULL, 1, '2017-03-09 15:12:36'),
-(217, 'Impex Imaging', NULL, 1, '2017-03-09 15:12:36'),
-(218, 'Hologic', NULL, 1, '2017-03-09 15:12:36'),
-(219, 'MAS', NULL, 1, '2017-03-09 15:12:36'),
-(220, 'Otley Rhodes', NULL, 1, '2017-03-09 15:12:36');
+(199, 'Carestream', 'a:9:{i:0;s:3:\"417\";i:1;s:3:\"419\";i:2;s:3:\"426\";i:3;s:3:\"428\";i:4;s:3:\"430\";i:5;s:3:\"432\";i:6;s:3:\"434\";i:7;s:3:\"439\";i:8;s:3:\"458\";}', 1, '2017-03-09 15:12:36'),
+(200, 'MIS', 'a:18:{i:0;s:3:\"415\";i:1;s:3:\"416\";i:2;s:3:\"417\";i:3;s:3:\"422\";i:4;s:3:\"424\";i:5;s:3:\"425\";i:6;s:3:\"426\";i:7;s:3:\"430\";i:8;s:3:\"431\";i:9;s:3:\"434\";i:10;s:3:\"438\";i:11;s:3:\"439\";i:12;s:3:\"440\";i:13;s:3:\"445\";i:14;s:3:\"448\";i:15;s:3:\"451\";i:16;s:3:\"457\";i:17;s:3:\"458\";}', 1, '2017-03-09 15:12:36'),
+(201, 'GE', 'a:8:{i:0;s:3:\"415\";i:1;s:3:\"419\";i:2;s:3:\"421\";i:3;s:3:\"425\";i:4;s:3:\"430\";i:5;s:3:\"431\";i:6;s:3:\"434\";i:7;s:3:\"451\";}', 1, '2017-03-09 15:12:36'),
+(202, 'Fuji', 'a:8:{i:0;s:3:\"417\";i:1;s:3:\"420\";i:2;s:3:\"430\";i:3;s:3:\"432\";i:4;s:3:\"434\";i:5;s:3:\"437\";i:6;s:3:\"439\";i:7;s:3:\"458\";}', 1, '2017-03-09 15:12:36'),
+(203, 'Medical X-Rays', 'a:7:{i:0;s:3:\"417\";i:1;s:3:\"422\";i:2;s:3:\"425\";i:3;s:3:\"430\";i:4;s:3:\"434\";i:5;s:3:\"457\";i:6;s:3:\"458\";}', 1, '2017-03-09 15:12:36'),
+(204, 'Shimadzu', 'a:2:{i:0;s:3:\"430\";i:1;s:3:\"439\";}', 1, '2017-03-09 15:12:36'),
+(205, 'Philips', 'a:8:{i:0;s:3:\"417\";i:1;s:3:\"422\";i:2;s:3:\"424\";i:3;s:3:\"425\";i:4;s:3:\"430\";i:5;s:3:\"434\";i:6;s:3:\"457\";i:7;s:3:\"458\";}', 1, '2017-03-09 15:12:36'),
+(206, 'Agfa', 'a:4:{i:0;s:3:\"416\";i:1;s:3:\"417\";i:2;s:3:\"419\";i:3;s:3:\"433\";}', 1, '2017-03-09 15:12:36'),
+(207, 'Andersons', 'a:2:{i:0;s:3:\"429\";i:1;s:3:\"457\";}', 1, '2017-03-09 15:12:36'),
+(208, 'Wardray', 'a:13:{i:0;s:3:\"416\";i:1;s:3:\"417\";i:2;s:3:\"419\";i:3;s:3:\"422\";i:4;s:3:\"425\";i:5;s:3:\"430\";i:6;s:3:\"433\";i:7;s:3:\"434\";i:8;s:3:\"437\";i:9;s:3:\"439\";i:10;s:3:\"455\";i:11;s:3:\"457\";i:12;s:3:\"458\";}', 1, '2017-03-09 15:12:36'),
+(209, 'Siemens', 'a:12:{i:0;s:3:\"416\";i:1;s:3:\"417\";i:2;s:3:\"419\";i:3;s:3:\"422\";i:4;s:3:\"425\";i:5;s:3:\"426\";i:6;s:3:\"430\";i:7;s:3:\"431\";i:8;s:3:\"433\";i:9;s:3:\"434\";i:10;s:3:\"439\";i:11;s:3:\"451\";}', 1, '2017-03-09 15:12:36'),
+(210, 'X-ograph', 'a:3:{i:0;s:3:\"425\";i:1;s:3:\"430\";i:2;s:3:\"439\";}', 1, '2017-03-09 15:12:36'),
+(211, 'Wolverson', 'a:3:{i:0;s:3:\"425\";i:1;s:3:\"430\";i:2;s:3:\"439\";}', 1, '2017-03-09 15:12:36'),
+(212, 'HSL', 'a:12:{i:0;s:3:\"415\";i:1;s:3:\"417\";i:2;s:3:\"419\";i:3;s:3:\"424\";i:4;s:3:\"430\";i:5;s:3:\"431\";i:6;s:3:\"434\";i:7;s:3:\"435\";i:8;s:3:\"437\";i:9;s:3:\"439\";i:10;s:3:\"451\";i:11;s:3:\"458\";}', 1, '2017-03-09 15:12:36'),
+(213, 'Kodak', 'a:13:{i:0;s:3:\"417\";i:1;s:3:\"419\";i:2;s:3:\"420\";i:3;s:3:\"425\";i:4;s:3:\"426\";i:5;s:3:\"430\";i:6;s:3:\"431\";i:7;s:3:\"432\";i:8;s:3:\"434\";i:9;s:3:\"439\";i:10;s:3:\"443\";i:11;s:3:\"454\";i:12;s:3:\"458\";}', 1, '2017-03-09 15:12:36'),
+(214, 'Du Pont', 'a:7:{i:0;s:3:\"417\";i:1;s:3:\"420\";i:2;s:3:\"432\";i:3;s:3:\"434\";i:4;s:3:\"439\";i:5;s:3:\"455\";i:6;s:3:\"458\";}', 1, '2017-03-09 15:12:36'),
+(215, 'Lister Petter', 'a:2:{i:0;s:3:\"429\";i:1;s:3:\"457\";}', 1, '2017-03-09 15:12:36'),
+(216, 'Tech Photo Sys', 'a:8:{i:0;s:3:\"415\";i:1;s:3:\"417\";i:2;s:3:\"430\";i:3;s:3:\"434\";i:4;s:3:\"439\";i:5;s:3:\"440\";i:6;s:3:\"452\";i:7;s:3:\"458\";}', 1, '2017-03-09 15:12:36'),
+(217, 'Impex Imaging', 'a:2:{i:0;s:3:\"425\";i:1;s:3:\"457\";}', 1, '2017-03-09 15:12:36'),
+(218, 'Hologic', 'a:4:{i:0;s:3:\"430\";i:1;s:3:\"431\";i:2;s:3:\"440\";i:3;s:3:\"451\";}', 1, '2017-03-09 15:12:36'),
+(219, 'MAS', 'a:4:{i:0;s:3:\"417\";i:1;s:3:\"425\";i:2;s:3:\"439\";i:3;s:3:\"458\";}', 1, '2017-03-09 15:12:36'),
+(220, 'Otley Rhodes', 'a:1:{i:0;s:3:\"430\";}', 1, '2017-03-09 15:12:36');
 
 -- --------------------------------------------------------
 
@@ -2245,7 +2270,7 @@ ALTER TABLE `tbl_users`
 -- AUTO_INCREMENT for table `tbl_access_log`
 --
 ALTER TABLE `tbl_access_log`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 --
 -- AUTO_INCREMENT for table `tbl_centres`
 --
@@ -2285,7 +2310,7 @@ ALTER TABLE `tbl_model`
 -- AUTO_INCREMENT for table `tbl_notifications`
 --
 ALTER TABLE `tbl_notifications`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=328;
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=351;
 --
 -- AUTO_INCREMENT for table `tbl_options`
 --
