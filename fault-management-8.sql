@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Mar 10, 2017 at 10:22 AM
+-- Generation Time: Mar 10, 2017 at 10:29 AM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -1925,7 +1925,9 @@ INSERT INTO `tbl_notifications` (`ID`, `user_id`, `title`, `notification`, `read
 (320, 1, 'Manufacturer details updated', 'You have successfully updated manufacturer (Carestream).', 0, 0, '2017-03-09 17:34:41'),
 (321, 1, 'Manufacturer details updated', 'You have successfully updated manufacturer (Carestream).', 0, 0, '2017-03-09 17:43:06'),
 (322, 1, 'Manufacturer details updated', 'You have successfully updated manufacturer (Carestream).', 0, 0, '2017-03-09 17:55:48'),
-(323, 1, 'Manufacturer details updated', 'You have successfully updated manufacturer (Carestream).', 0, 0, '2017-03-09 18:05:44');
+(323, 1, 'Manufacturer details updated', 'You have successfully updated manufacturer (Carestream).', 0, 0, '2017-03-09 18:05:44'),
+(324, 1, 'Account deleted', 'You have successfully deleted (Rtret Twerwe) account.', 0, 0, '2017-03-10 09:27:01'),
+(325, 1, 'New Admin Account Created', 'You have successfully created a new admin account (Celia Strudley).', 0, 0, '2017-03-10 09:28:47');
 
 -- --------------------------------------------------------
 
@@ -2093,11 +2095,11 @@ CREATE TABLE `tbl_usermeta` (
 --
 
 INSERT INTO `tbl_usermeta` (`ID`, `user_id`, `meta_key`, `meta_value`) VALUES
-(45, 10000364014, 'gender', 'Female'),
-(46, 10000364014, 'dob', '2017-03-07 12:00:00'),
-(47, 10000364014, 'user_phone', ''),
-(48, 10000364014, 'profile_img', '/content/assets/img/user.png'),
-(49, 10000364014, 'designation', '2');
+(53, 10000793092, 'profile_img', ''),
+(52, 10000793092, 'user_phone', ''),
+(51, 10000793092, 'dob', '2017-01-01 12:00:00'),
+(50, 10000793092, 'gender', 'Female'),
+(54, 10000793092, 'designation', '1');
 
 -- --------------------------------------------------------
 
@@ -2124,7 +2126,7 @@ CREATE TABLE `tbl_users` (
 
 INSERT INTO `tbl_users` (`ID`, `user_email`, `user_pass`, `first_name`, `last_name`, `user_role`, `user_status`, `centre`, `created_by`, `registered_at`) VALUES
 (1, 'admin@admin.com', '21232f297a57a5a743894a0e4a801fc3', 'Mazen', 'Sehgal', 'admin', 1, '', 0, '2016-06-14 08:35:48'),
-(10000364014, 'wer@fef.com', 'a4862b9520338da4e2fd578d1c85722d', 'rtret', 'twerwe', 'general_user', 1, 'a:4:{i:0;s:3:\"124\";i:1;s:2:\"53\";i:2;s:1:\"2\";i:3;s:1:\"4\";}', 1, '2017-03-09 15:47:23');
+(10000793092, 'celia.strudley@nhs.net', '49f32f8fa5562a3454f9b62a52472a8d', 'Celia', 'Strudley', 'centre_admin', 1, 'a:1:{i:0;s:2:\"55\";}', 1, '2017-03-10 09:28:47');
 
 --
 -- Indexes for dumped tables
@@ -2281,7 +2283,7 @@ ALTER TABLE `tbl_model`
 -- AUTO_INCREMENT for table `tbl_notifications`
 --
 ALTER TABLE `tbl_notifications`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=324;
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=326;
 --
 -- AUTO_INCREMENT for table `tbl_options`
 --
@@ -2311,7 +2313,7 @@ ALTER TABLE `tbl_supplier`
 -- AUTO_INCREMENT for table `tbl_usermeta`
 --
 ALTER TABLE `tbl_usermeta`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 --
 -- AUTO_INCREMENT for table `tbl_users`
 --
