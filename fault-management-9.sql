@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Mar 10, 2017 at 10:29 AM
+-- Generation Time: Mar 10, 2017 at 11:10 AM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -1927,7 +1927,9 @@ INSERT INTO `tbl_notifications` (`ID`, `user_id`, `title`, `notification`, `read
 (322, 1, 'Manufacturer details updated', 'You have successfully updated manufacturer (Carestream).', 0, 0, '2017-03-09 17:55:48'),
 (323, 1, 'Manufacturer details updated', 'You have successfully updated manufacturer (Carestream).', 0, 0, '2017-03-09 18:05:44'),
 (324, 1, 'Account deleted', 'You have successfully deleted (Rtret Twerwe) account.', 0, 0, '2017-03-10 09:27:01'),
-(325, 1, 'New Admin Account Created', 'You have successfully created a new admin account (Celia Strudley).', 0, 0, '2017-03-10 09:28:47');
+(325, 1, 'New Admin Account Created', 'You have successfully created a new admin account (Celia Strudley).', 0, 0, '2017-03-10 09:28:47'),
+(326, 1, 'Admin Account Password Reset', 'You have successfully changed (Celia Strudley) account password.', 0, 0, '2017-03-10 10:09:03'),
+(327, 1, 'Admin Account Details updated', 'You have successfully updated (Celia Strudley) account details.', 0, 0, '2017-03-10 10:09:03');
 
 -- --------------------------------------------------------
 
@@ -2095,7 +2097,7 @@ CREATE TABLE `tbl_usermeta` (
 --
 
 INSERT INTO `tbl_usermeta` (`ID`, `user_id`, `meta_key`, `meta_value`) VALUES
-(53, 10000793092, 'profile_img', ''),
+(53, 10000793092, 'profile_img', '/content/assets/img/user.png'),
 (52, 10000793092, 'user_phone', ''),
 (51, 10000793092, 'dob', '2017-01-01 12:00:00'),
 (50, 10000793092, 'gender', 'Female'),
@@ -2126,7 +2128,7 @@ CREATE TABLE `tbl_users` (
 
 INSERT INTO `tbl_users` (`ID`, `user_email`, `user_pass`, `first_name`, `last_name`, `user_role`, `user_status`, `centre`, `created_by`, `registered_at`) VALUES
 (1, 'admin@admin.com', '21232f297a57a5a743894a0e4a801fc3', 'Mazen', 'Sehgal', 'admin', 1, '', 0, '2016-06-14 08:35:48'),
-(10000793092, 'celia.strudley@nhs.net', '49f32f8fa5562a3454f9b62a52472a8d', 'Celia', 'Strudley', 'centre_admin', 1, 'a:1:{i:0;s:2:\"55\";}', 1, '2017-03-10 09:28:47');
+(10000793092, 'celia.strudley@nhs.net', '5f4dcc3b5aa765d61d8327deb882cf99', 'Celia', 'Strudley', 'centre_admin', 1, 'a:1:{i:0;s:2:\"55\";}', 1, '2017-03-10 09:28:47');
 
 --
 -- Indexes for dumped tables
@@ -2283,7 +2285,7 @@ ALTER TABLE `tbl_model`
 -- AUTO_INCREMENT for table `tbl_notifications`
 --
 ALTER TABLE `tbl_notifications`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=326;
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=328;
 --
 -- AUTO_INCREMENT for table `tbl_options`
 --
