@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Mar 10, 2017 at 05:14 PM
+-- Generation Time: Mar 10, 2017 at 06:51 PM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -2729,7 +2729,9 @@ INSERT INTO `tbl_notifications` (`ID`, `user_id`, `title`, `notification`, `read
 (359, 1, 'New supplier created ', 'You have successfully created a new supplier (TEST).', 0, 0, '2017-03-10 14:54:07'),
 (360, 1, 'Equipment Type updated', 'You have successfully updated equipment type (illuminator).', 0, 0, '2017-03-10 14:56:54'),
 (361, 1, 'Equipment Type updated', 'You have successfully updated equipment type (film printer).', 0, 0, '2017-03-10 15:00:14'),
-(362, 1, 'Equipment Type updated', 'You have successfully updated equipment type (film printer).', 0, 0, '2017-03-10 15:00:22');
+(362, 1, 'Equipment Type updated', 'You have successfully updated equipment type (film printer).', 0, 0, '2017-03-10 15:00:22'),
+(363, 1, 'New fault type created', 'You have successfully created a new fault type (dsfsdf).', 0, 0, '2017-03-10 16:19:26'),
+(364, 1, 'Fault Type deleted', 'You have successfully deleted (dsfsdf) fault_type.', 0, 0, '2017-03-10 16:21:16');
 
 -- --------------------------------------------------------
 
@@ -3090,7 +3092,7 @@ ALTER TABLE `tbl_model`
 -- AUTO_INCREMENT for table `tbl_notifications`
 --
 ALTER TABLE `tbl_notifications`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=363;
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=365;
 --
 -- AUTO_INCREMENT for table `tbl_options`
 --
