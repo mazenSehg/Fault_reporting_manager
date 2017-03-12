@@ -258,9 +258,7 @@ if( !class_exists('Fault') ):
 			<form class="edit-fault submit-form" method="post" autocomplete="off">
 				<div class="row">
 					<div class="col-xs-12">
-						<h3>
-							<?php _e('Centre with Fault');?>
-						</h3>
+						<h3><?php _e('Centre with Fault');?></h3>
 						<hr>
 					</div>
 					<div class="form-group col-sm-6 col-xs-12">
@@ -284,12 +282,7 @@ if( !class_exists('Fault') ):
 						</select>
 					</div>
 					<div class="form-group col-sm-6 col-xs-12">
-						<label for="name">
-							Name
-							<span class="required">
-								*
-							</span>
-						</label>
+						<label for="name">Name <span class="required">*</span></label>
 						<input type="text" name="name" class="form-control require" value="<?php _e($fault->name);?>" readonly="readonly" />
 					</div>
 				</div>
@@ -322,41 +315,28 @@ if( !class_exists('Fault') ):
 				</div>
 				<div class="row">
 					<div class="col-xs-12">
-						<h3>
-							<?php _e('Fault');?>
-						</h3>
+						<h3><?php _e('Fault');?></h3>
 						<hr>
 					</div>
 					<div class="form-group col-sm-6 col-xs-12">
-						<label for="fault-type">
-							Fault Type
-							<span class="required">
-								*
-							</span>
-						</label>
+						<label for="fault-type">Fault Type <span class="required">*</span></label>
 						<select name="fault_type" class="form-control select_single require select-fault-type" tabindex="-1" data-placeholder="Choose fault type">
 							<?php
-							$data = get_tabledata(TBL_FAULT_TYPES,false,array('equipment_type'=> $fault->equipment_type ,'approved' => '1') , 'ORDER BY `name` ASC');
+							$query= "where `equipment_type` LIKE '%".$fault->equipment_type."%' AND `approved` = '1' ORDER BY `name` ASC";
+							$data = get_tabledata(TBL_FAULT_TYPES, false, array() , $query);
 							$option_data = get_option_data($data,array('ID','name'));
 							echo get_options_list($option_data ,maybe_unserialize($fault->fault_type));
 							?>
 						</select>
 					</div>
 					<div class="form-group col-sm-6 col-xs-12">
-						<label for="date-of-fault">
-							Date of Fault
-						</label>
+						<label for="date-of-fault">Date of Fault</label>
 						<input type="text" name="date_of_fault" class="form-control input-datepicker" readonly="readonly" value="<?php echo ($fault->date_of_fault != '') ? date('M d, Y', strtotime($fault->date_of_fault)) : '';?>" />
 					</div>
 				</div>
 				<div class="row">
 					<div class="form-group col-sm-6 col-xs-12">
-						<label for="current-servicing-agency">
-							Current servicing agency
-							<span class="required">
-								*
-							</span>
-						</label>
+						<label for="current-servicing-agency">Current servicing agency <span class="required">*</span></label>
 						<select name="current_servicing_agency" class="form-control select_single require select-servicing-agency" tabindex="-1" data-placeholder="Choose servicing agency">
 							<?php
 							$equipment = get_tabledata(TBL_EQUIPMENTS, true, array('ID'=>$fault->equipment) );
@@ -367,23 +347,14 @@ if( !class_exists('Fault') ):
 						</select>
 					</div>
 					<div class="form-group col-sm-6 col-xs-12">
-						<label for="time-of-fault">
-							Servicing agency at time of fault
-							<span class="required">
-								*
-							</span>
-						</label>
+						<label for="time-of-fault">Servicing agency at time of fault <span class="required">*</span></label>
 						<input type="text" name="time_of_fault" class="form-control require" value="<?php _e($fault->time_of_fault);?>" />
 					</div>
 				</div>
 
-
-
 				<div class="row">
 					<div class="form-group col-sm-12 col-xs-12">
-						<label for="description-of-fault">
-							Description of Fault
-						</label>
+						<label for="description-of-fault">Description of Fault</label>
 						<textarea name="description_of_fault" class="form-control" rows="3">
 							<?php _e($fault->description_of_fault);?>
 						</textarea>
@@ -391,34 +362,24 @@ if( !class_exists('Fault') ):
 				</div>
 				<div class="row">
 					<div class="col-xs-12">
-						<h3>
-							<?php _e('Action');?>
-						</h3>
+						<h3><?php _e('Action');?></h3>
 						<hr>
 					</div>
 					<div class="form-group col-sm-6 col-xs-12">
-						<label for="">
-							Service Call No
-						</label>
+						<label for="">Service Call No</label>
 						<br/>
 						<input type="text" name="service_call_no" class="form-control require" value="<?php _e($fault->service_call_no);?>" />
 					</div>
 				</div>
 				<div class="row">
 					<div class="form-group col-sm-12 col-xs-12">
-						<label for="">
-							Please details action taken
-						</label>
-						<textarea name="action_taken" class="form-control" rows="3">
-							<?php _e($fault->action_taken);?>
-						</textarea>
+						<label for="">Please details action taken</label>
+						<textarea name="action_taken" class="form-control" rows="3"><?php _e($fault->action_taken);?></textarea>
 					</div>
 				</div>
 				<div class="row">
 					<div class="form-group col-sm-12 col-xs-12">
-						<label for="">
-							Fault corrected by user?
-						</label>
+						<label for="">Fault corrected by user?</label>
 						<br/>
 						<label>
 							<input type="radio" class="flat" name="fault_corrected_by_user" value="1" <?php checked($fault->fault_corrected_by_user,'1');?> /> Yes
@@ -431,9 +392,7 @@ if( !class_exists('Fault') ):
 						</label>
 					</div>
 					<div class="form-group col-sm-12 col-xs-12">
-						<label for="">
-							To fix at next service visit?
-						</label>
+						<label for="">To fix at next service visit?</label>
 						<br/>
 						<label>
 							<input type="radio" class="flat" name="to_fix_at_next_service_visit" value="1" <?php checked($fault->to_fix_at_next_service_visit,'1');?> /> Yes
@@ -446,9 +405,7 @@ if( !class_exists('Fault') ):
 						</label>
 					</div>
 					<div class="form-group col-sm-12 col-xs-12">
-						<label for="">
-							Engineer called out?
-						</label>
+						<label for="">Engineer called out?</label>
 						<br/>
 						<label>
 							<input type="radio" class="flat" name="engineer_called_out" value="1" <?php checked($fault->engineer_called_out,'1');?> /> Yes
@@ -478,15 +435,11 @@ if( !class_exists('Fault') ):
 				</div>
 				<div class="row">
 					<div class="col-xs-12">
-						<h3>
-							<?php _e('Fault Severity');?>
-						</h3>
+						<h3><?php _e('Fault Severity');?></h3>
 						<hr>
 					</div>
 					<div class="form-group col-sm-6 col-xs-12">
-						<label for="">
-							Equipment Status
-						</label>
+						<label for="">Equipment Status</label>
 						<br/>
 						<select name="equipment_status" class="form-control select_single require" tabindex="-1" data-placeholder="Choose equipment status">
 							<?php
@@ -498,50 +451,38 @@ if( !class_exists('Fault') ):
 				</div>
 				<div class="row">
 					<div class="form-group col-sm-6 col-xs-12">
-						<label for="">
-							Total equipment downtime (days)
-						</label>
+						<label for="">Total equipment downtime (days)</label>
 						<br/>
 						<input type="number" name="equipment_downtime" class="form-control require" min="0" value="<?php _e($fault->equipment_downtime);?>" />
 					</div>
 					<div class="form-group col-sm-6 col-xs-12">
-						<label for="">
-							Total screening downtime (days)
-						</label>
+						<label for="">Total screening downtime (days)</label>
 						<br/>
 						<input type="number" name="screening_downtime" class="form-control require" min="0" value="<?php _e($fault->screening_downtime);?>" />
 					</div>
 				</div>
 				<div class="row">
 					<div class="form-group col-sm-6 col-xs-12">
-						<label for="">
-							Number of repeat images
-						</label>
+						<label for="">Number of repeat images</label>
 						<br/>
 						<input type="number" name="repeat_images" class="form-control require" min="0" value="<?php _e($fault->repeat_images);?>" />
 					</div>
 					<div class="form-group col-sm-6 col-xs-12">
-						<label for="">
-							Number of cancelled women
-						</label>
+						<label for="">Number of cancelled women</label>
 						<br/>
 						<input type="number" name="cancelled_women" class="form-control require" min="0" value="<?php _e($fault->cancelled_women);?>" />
 					</div>
 				</div>
 				<div class="row">
 					<div class="form-group col-sm-6 col-xs-12">
-						<label for="">
-							Number of technical recalls
-						</label>
+						<label for="">Number of technical recalls</label>
 						<br/>
 						<input type="number" name="technical_recalls" class="form-control require" min="0" value="<?php _e($fault->technical_recalls);?>" />
 					</div>
 				</div>
 				<div class="row">
 					<div class="form-group col-sm-12 col-xs-12">
-						<label for="">
-							Are you satisfied with response of the servicing organisation?
-						</label>
+						<label for="">Are you satisfied with response of the servicing organisation?</label>
 						<br/>
 						<label>
 							<input type="radio" class="flat" name="satisfied_servicing_organisation" value="1" <?php checked($fault->satisfied_servicing_organisation,'1');?> /> Yes
@@ -560,9 +501,7 @@ if( !class_exists('Fault') ):
 						</label>
 					</div>
 					<div class="form-group col-sm-12 col-xs-12">
-						<label for="">
-							Are you satisfied with the performance of the service engineer?
-						</label>
+						<label for="">Are you satisfied with the performance of the service engineer?</label>
 						<br/>
 						<label>
 							<input type="radio" class="flat" name="satisfied_service_engineer" value="1" <?php checked($fault->satisfied_service_engineer,'1');?> /> Yes
@@ -581,9 +520,7 @@ if( !class_exists('Fault') ):
 						</label>
 					</div>
 					<div class="form-group col-sm-12 col-xs-12">
-						<label for="">
-							Are you generally satisfied withe the reliability/performance of the equipment?
-						</label>
+						<label for="">Are you generally satisfied withe the reliability/performance of the equipment?</label>
 						<br/>
 						<label>
 							<input type="radio" class="flat" name="satisfied_equipment" value="1" <?php checked($fault->satisfied_equipment,'1');?> /> Yes
@@ -604,15 +541,11 @@ if( !class_exists('Fault') ):
 				</div>
 				<div class="row">
 					<div class="col-xs-12">
-						<h3>
-							<?php _e('Approved');?>
-						</h3>
+						<h3><?php _e('Approved');?></h3>
 						<hr>
 					</div>
 					<div class="form-group col-sm-12 col-xs-12">
-						<label for="">
-							Approved?
-						</label>
+						<label for="">Approved?</label>
 						<br/>
 						<label>
 							<input type="radio" class="flat" name="approved" value="1" <?php checked($fault->approved,'1');?> /> Yes
@@ -630,9 +563,7 @@ if( !class_exists('Fault') ):
 				<div class="form-group">
 					<input type="hidden" name="action" value="update_fault" />
 					<input type="hidden" name="fault_id" value="<?php echo $fault->ID;?>" />
-					<button class="btn btn-success btn-md" type="submit">
-						Update Fault
-					</button>
+					<button class="btn btn-success btn-md" type="submit">Update Fault</button>
 				</div>
 			</form>
 			<?php endif; ?>
@@ -1030,12 +961,12 @@ if( !class_exists('Fault') ):
 			?>
 			<form class="add-fault_type submit-form" method="post" autocomplete="off">
 				<div class="form-group">
-					<label for="name">Name<span class="required">*</span></label>
+					<label for="name">Name <span class="required">*</span></label>
 					<input type="text" name="name" class="form-control require" />
 				</div>
 				<div class="form-group">
 					<label for="equipment-type">Equipment Type <span class="required">*</span></label>
-					<select name="equipment_type" class="form-control select_single require" tabindex="-1" data-placeholder="Choose equipment type">
+					<select name="equipment_type[]" class="form-control select_single require" tabindex="-1" data-placeholder="Choose equipment type" multiple="multiple">
 						<?php
 						$data = get_tabledata(TBL_EQUIPMENT_TYPES,false,array('approved'=> '1'), 'ORDER BY `name` ASC');
 						$option_data = get_option_data($data,array('ID','name'));
@@ -1077,7 +1008,7 @@ if( !class_exists('Fault') ):
 				</div>
 				<div class="form-group">
 					<label for="equipment-type">Equipment Type<span class="required">*</span></label>
-					<select name="equipment_type" class="form-control select_single require" tabindex="-1" data-placeholder="Choose equipment type">
+					<select name="equipment_type[]" class="form-control select_single require" tabindex="-1" data-placeholder="Choose equipment type" multiple="multiple">
 						<?php
 						$data = get_tabledata(TBL_EQUIPMENT_TYPES,false,array('approved'=> '1'), 'ORDER BY `name` ASC');
 						$option_data = get_option_data($data,array('ID','name'));
@@ -1116,8 +1047,8 @@ if( !class_exists('Fault') ):
 			<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap datatable-buttons" cellspacing="0" width="100%">
 				<thead>
 					<tr>
-						<th>Name</th>
-						<th>Equipment Type</th>
+						<th>Fault Type</th>
+						<th>Fault Type Description</th>
 						<th>Created On</th>
 						<?php if(is_admin()): ?>
 						<th>Approved</th>
@@ -1127,11 +1058,10 @@ if( !class_exists('Fault') ):
 				</thead>
 				<tbody>
 					<?php if($fault_types): foreach($fault_types as $fault_type):
-					$equipment_type = get_tabledata(TBL_EQUIPMENT_TYPES,true,array('ID'=> $fault_type->equipment_type));
 					?>
 					<tr>
 						<td><?php _e($fault_type->name);?></td>
-						<td><?php _e($equipment_type->name);?></td>
+                        <td><?php _e($fault_type->description);?></td>
 						<td><?php echo date('M d,Y',strtotime($fault_type->created_on));?></td>
 						<?php if(is_admin()): ?>
 						<td class="text-center">
@@ -1459,7 +1389,8 @@ if( !class_exists('Fault') ):
 				$return['equipment_html'] = get_options_list($option_data);
 
 				$data = '';
-				$data = get_tabledata(TBL_FAULT_TYPES, false, array('equipment_type'=> $id ,'approved' => '1') ,'ORDER BY `name` ASC');
+				$query= "where `equipment_type` LIKE '%".$id."%' AND `approved` = '1' ORDER BY `name` ASC";
+				$data = get_tabledata(TBL_FAULT_TYPES, false, array() , $query);
 				$option_data = get_option_data($data,array('ID','name'));
 				$return['fault_type_html'] = get_options_list($option_data);
 			endif;
@@ -1468,8 +1399,8 @@ if( !class_exists('Fault') ):
 
 		public function fetch__service__agent__data__process(){
 			extract($_POST);
-				$id = trim($id);
-				$return = array();
+			$id = trim($id);
+			$return = array();
 			if($id != ''):
 				$data = '';
 				$equipment = get_tabledata(TBL_EQUIPMENTS, true, array('ID'=> $id) );

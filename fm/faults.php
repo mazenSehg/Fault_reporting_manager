@@ -1,5 +1,6 @@
 <?php
 session_start();
+error_reporting(0);
 //Load all functions
 require_once('load.php');
 
