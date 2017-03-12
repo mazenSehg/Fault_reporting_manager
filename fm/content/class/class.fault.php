@@ -952,6 +952,117 @@ if( !class_exists('Fault') ):
 			$content = ob_get_clean();
 			return $content;
 		}
+        
+        
+        
+        
+        
+        
+        
+        
+        		public function all__faults__page__off(){
+			ob_start();
+			$query = '';
+			if(!is_admin()):
+				$centres = maybe_unserialize($this->current__user->centre);
+				if(!empty($centres)){
+					$centres = implode(',',$centres);
+					$query = "WHERE `centre` IN (".$centres.")";
+                    
+				}
+			endif;
+			$faults = get_tabledata(TBL_FAULTS,false,array('approved'=>0), $query);
+			if( !user_can('view_fault') ):
+				echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
+			elseif(!$faults):
+				echo page_not_found("Oops! There is no new faults record found",' ',false);
+			else:
+			?>
+			<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap datatable-buttons" cellspacing="0" width="100%">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Centre</th>
+						<th>Equipment Type</th>
+						<th>Equipment</th>
+						<th>Fault Type</th>
+						<th>Date of Fault</th>
+						<th>Created On</th>
+						<?php if(is_admin()): ?>
+						<th>Approved</th>
+						<?php endif; ?>
+						<th class="text-center">Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php if($faults): foreach($faults as $fault):
+						$centre = get_tabledata(TBL_CENTRES,true,array('ID'=> $fault->centre));
+						$equipment_type = get_tabledata(TBL_EQUIPMENT_TYPES,true,array('ID'=> $fault->equipment_type));
+						$equipment = get_tabledata(TBL_EQUIPMENTS,true,array('ID'=> $fault->equipment));
+						$fault_type = get_tabledata(TBL_FAULT_TYPES,true,array('ID'=> $fault->fault_type));
+					?>
+					<tr>
+						<td><?php _e($fault->name);?></td>
+						<td><?php _e($centre->name);?></td>
+						<td><?php _e($equipment_type->name);?></td>
+						<td><?php _e($equipment->name);?></td>
+						<td><?php _e($fault_type->name);?></td>
+						<td><?php echo date('M d,Y',strtotime($fault->date_of_fault));?></td>
+						<td><?php echo date('M d,Y',strtotime($fault->created_on));?></td>
+						<?php if(is_admin()): ?>
+						<td class="text-center">
+							<label><input type="checkbox" class="js-switch" <?php checked($fault->approved, 1);?> onClick="javascript:approve_switch(this);" data-id="<?php echo $fault->ID;?>" data-action="fault_approve_change"/></label>
+						</td>
+						<?php endif; ?>
+						<td class="text-center">
+							<?php if(is_admin()): ?>
+								<a href="<?php echo site_url();?>/view-fault/?id=<?php echo $fault->ID;?>" class="btn btn-dark btn-xs">
+									<i class="fa fa-edit"></i> View
+								</a>
+								<a href="<?php echo site_url();?>/edit-fault/?id=<?php echo $fault->ID;?>" class="btn btn-dark btn-xs">
+									<i class="fa fa-edit"></i> Edit
+								</a>
+								<a href="#" class="btn btn-danger btn-xs" onclick="javascript:delete_function(this);" data-id="<?php echo $fault->ID;?>" data-action="delete_fault"><i class="fa fa-trash"></i> Delete
+								</a>
+							<?php else: ?>
+								<?php 
+								$future = date('d-m-Y',strtotime(' + 2 day', strtotime($fault->created_on)));
+								$today = date('d-m-Y');
+								if($today == $future):
+									if( user_can('view_fault') ): ?>
+									<p>Overdue </p>
+									<a href="<?php echo site_url();?>/view-fault/?id=<?php echo $fault->ID;?>" class="btn btn-dark btn-xs"><i class="fa fa-edit"></i> View</a>
+									<?php endif; ?>
+								<?php else: ?>
+									<?php if($this->current__user__id == $fault->user_id):
+										if( user_can('edit_fault') ): ?>
+										<a href="<?php echo site_url();?>/edit-fault/?id=<?php echo $fault->ID;?>" class="btn btn-dark btn-xs">
+											<i class="fa fa-edit"></i> Edit
+										</a>
+										<?php endif; ?>
+										<?php if( user_can('delete_fault') ): ?>
+										<a href="#" class="btn btn-danger btn-xs" onclick="javascript:delete_function(this);" data-id="<?php echo $fault->ID;?>" data-action="delete_fault"><i class="fa fa-trash"></i> Delete</a>
+										<?php endif; ?>
+									<?php else: ?>
+										<?php if( user_can('view_fault') ): ?>
+										<a href="<?php echo site_url();?>/view-fault/?id=<?php echo $fault->ID;?>" class="btn btn-dark btn-xs">
+											<i class="fa fa-edit">
+											</i>View
+										</a>
+										<?php endif; ?>
+									<?php endif; ?>
+								<?php endif; ?>
+							<?php endif; ?>
+						</td>
+					</tr>
+					<?php endforeach; endif; ?>
+				</tbody>
+			</table>
+			<?php endif; ?>
+			<?php
+			$content = ob_get_clean();
+			return $content;
+		}
 
 		public function add__fault__type__page(){
 			ob_start();

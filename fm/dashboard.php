@@ -147,7 +147,7 @@ login_check();
 									<div class="x_content">
 										<div class="dashboard-widget-content">
 											<ul class="quick-list">
-												<li> <i class="fa fa-exclamation"></i> <a href="<?php echo site_url();?>/faults/">Number of Faults <strong>not</strong> approved</a>
+												<li> <i class="fa fa-exclamation"></i> <a href="<?php echo site_url();?>/faults2/">Number of Faults <strong>not</strong> approved</a>
 													<?php
 												$sql = "SELECT COUNT(*) as re FROM tbl_fault WHERE approved = 0";
 												$res = $db->get_results($sql);
@@ -161,7 +161,7 @@ login_check();
 												</li>
 											</ul>
 											<ul class="quick-list">
-												<li> <i class="fa fa-exclamation"></i> <a href="<?php echo site_url();?>/equipments/">Number of Equipments <strong>not</strong> approved</a>
+												<li> <i class="fa fa-exclamation"></i> <a href="<?php echo site_url();?>/equipments2/">Number of Equipments <strong>not</strong> approved</a>
 													<?php
 												$ap = 1;
 												$sql = "SELECT COUNT(*) as re2 FROM tbl_equipment WHERE approved = 0";

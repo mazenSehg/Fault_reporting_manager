@@ -140,6 +140,135 @@ class Equipment{
 		$content = ob_get_clean();
 		return $content;
 	}
+    
+    
+    
+    	public function all__equipments__page__off(){
+		ob_start();
+		$query = '';
+		if(!is_admin()):
+			$centres = maybe_unserialize($this->current__user->centre);
+			if(!empty($centres)){
+				$centres = implode(',',$centres);
+				$query = "WHERE `centre` IN (".$centres.")";
+			}
+		endif;
+		$equipments__list = get_tabledata(TBL_EQUIPMENTS,false,array('approved'=>0), $query);
+		if( !user_can( 'view_equipment') ):
+			echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
+		elseif(!$equipments__list):
+			echo page_not_found("Oops! There is no record found for Equipments",' ',false);
+		else:
+		?>
+		<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap datatable-buttons" cellspacing="0" width="100%">
+			<thead>
+				<tr>
+					<th>
+						Name
+					</th>
+					<th>
+						Centre
+					</th>
+					<th>
+						Equipment Code
+					</th>
+					<th>
+						Equipment Type
+					</th>
+					<th>
+						Model
+					</th>
+					<th>
+						Manufacturer
+					</th>
+					<th>
+						Service Agent
+					</th>
+					<th>
+						Created On
+					</th>
+					<?php if(is_admin()): ?>
+					<th>
+						Approved
+					</th>
+					<?php endif; ?>
+					<th class="text-center">
+						Actions
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php if($equipments__list): foreach($equipments__list as $equipment):
+					$centre = get_tabledata(TBL_CENTRES,true,array('ID'=>$equipment->centre));
+					$equipment_type = get_tabledata(TBL_EQUIPMENT_TYPES,true,array('ID'=>$equipment->equipment_type));
+					$manufacturer = get_tabledata(TBL_MANUFACTURERS,true,array('ID'=>$equipment->manufacturer));
+					$model = get_tabledata(TBL_MODELS,true,array('ID'=>$equipment->model));
+					$service_agent = get_tabledata(TBL_SERVICE_AGENTS,true,array('ID'=>$equipment->service_agent));
+				?>
+				<tr>
+					<td>
+						<?php _e($equipment->name);?>
+					</td>
+					<td>
+						<?php _e($centre->name);?>
+					</td>
+					<td>
+						<?php _e($equipment->equipment_code);?>
+					</td>
+					<td>
+						<?php _e($equipment_type->name);?>
+					</td>
+					<td>
+						<?php _e($model->name);?>
+					</td>
+					<td>
+						<?php _e($manufacturer->name);?>
+					</td>
+					<td>
+						<?php _e($service_agent->name);?>
+					</td>
+					<td>
+						<?php echo date('M d,Y',strtotime($equipment->created_on));?>
+					</td>
+					<?php if(is_admin()): ?>
+					<td class="text-center">
+						<label>
+							<input type="checkbox" class="js-switch" <?php checked($equipment->approved, 1);?> onClick="javascript:approve_switch(this);" data-id="<?php echo $equipment->ID;?>" data-action="equipment_approve_change"/>
+						</label>
+					</td>
+					<?php endif; ?>
+					<td class="text-center">
+						<?php if( user_can( 'view_equipment') ): ?>
+						<a href="<?php echo site_url();?>/view-equipment/?id=<?php echo $equipment->ID;?>" class="btn btn-dark btn-xs">
+							<i class="fa fa-eye">
+							</i>View
+						</a>
+						<?php endif; ?>
+						<?php if( user_can( 'edit_equipment') ): ?>
+						<a href="<?php echo site_url();?>/edit-equipment/?id=<?php echo $equipment->ID;?>" class="btn btn-dark btn-xs">
+							<i class="fa fa-edit">
+							</i>Edit
+						</a>
+						<?php endif; ?>
+						<?php if( user_can( 'delete_equipment') ): ?>
+						<a href="#" class="btn btn-danger btn-xs" onclick="javascript:delete_function(this);" data-id="<?php echo $equipment->ID;?>" data-action="delete_equipment">
+							<i class="fa fa-trash">
+							</i>Delete
+						</a>
+						<?php endif; ?>
+					</td>
+				</tr>
+				<?php
+				endforeach;
+				endif;
+				?>
+			</tbody>
+		</table>
+		<?php endif; ?>
+		<?php
+		$content = ob_get_clean();
+		return $content;
+	}
 
 	public function add__equipment__page(){
 		ob_start();
