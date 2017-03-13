@@ -864,7 +864,7 @@ if( !class_exists('Fault') ):
 			if( !user_can('view_fault') ):
 				echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
 			elseif(!$faults):
-				echo page_not_found("Oops! There is no new faults record found",' ',false);
+				echo page_not_found("There are no new faults record found",' ',false);
 			else:
 			?>
 			<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap datatable-buttons" cellspacing="0" width="100%">
@@ -975,7 +975,7 @@ if( !class_exists('Fault') ):
 			if( !user_can('view_fault') ):
 				echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
 			elseif(!$faults):
-				echo page_not_found("Oops! There is no new faults record found",' ',false);
+				echo page_not_found("There are no new faults record found",' ',false);
 			else:
 			?>
 			<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap datatable-buttons" cellspacing="0" width="100%">
@@ -1152,7 +1152,7 @@ if( !class_exists('Fault') ):
 			if( !user_can('view_fault_type') ):
 				echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
 			elseif(!$fault_types):
-				echo page_not_found("Oops! There is no new fault types record found",' ',false);
+				echo page_not_found("There are no new fault types record found",' ',false);
 			else:
 			?>
 			<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap datatable-buttons" cellspacing="0" width="100%">

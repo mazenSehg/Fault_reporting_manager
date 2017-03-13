@@ -343,7 +343,7 @@ class Centre{
 		if( !user_can('view_centre') ):
 			echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
 		elseif(!$centres):
-			echo page_not_found("Oops! There is no New centres record found",' ',false);
+			echo page_not_found("There are no New centres record found",' ',false);
 		else:
 		?>
 		<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap datatable-buttons" cellspacing="0" width="100%">
@@ -535,7 +535,7 @@ class Centre{
 		if( !user_can('view_region') ):
 		echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
 		elseif(!$regions):
-		echo page_not_found("Oops! There is no New regions record found",' ',false);
+		echo page_not_found("There are no New regions record found",' ',false);
 		else:
 		?>
 		<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap datatable-buttons" cellspacing="0" width="100%">
@@ -691,7 +691,7 @@ class Centre{
 		if( !user_can('view_region_body') ):
 		echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
 		elseif(!$region__body):
-		echo page_not_found("Oops! There is no New region_bodys record found",' ',false);
+		echo page_not_found("There are no New region_bodys record found",' ',false);
 		else:
 		?>
 		<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap datatable-buttons" cellspacing="0" width="100%">

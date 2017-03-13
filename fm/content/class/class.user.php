@@ -698,7 +698,7 @@ if( !class_exists('User') ):
 			if(!user_can('view_user')):
 			echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
 			elseif(!$users_list):
-			echo page_not_found("Oops! There is no New Users in website",' ',false);
+			echo page_not_found("There are no New Users in website",' ',false);
 			else:
 			?>
 			<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap datatable-buttons" cellspacing="0" width="100%">
