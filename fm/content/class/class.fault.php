@@ -860,7 +860,7 @@ if( !class_exists('Fault') ):
 					$query = "WHERE `centre` IN (".$centres.")";
 				}
 			endif;
-			$faults = get_tabledata(TBL_FAULTS,false,array(), $query);
+			$faults = get_tabledata(TBL_FAULTS,false,array(LIMIT (500)), $query);
 			if( !user_can('view_fault') ):
 				echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
 			elseif(!$faults):
