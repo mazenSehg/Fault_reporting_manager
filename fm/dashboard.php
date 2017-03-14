@@ -115,8 +115,10 @@ login_check();
 									<div class="x_content">
 										<div class="dashboard-widget-content">
 											<ul class="quick-list">
-												<li> <i class="fa fa-calendar-o"></i> <a href="<?php echo site_url();?>/general-setting/">Settings</a> </li>
 												<?php
+												if(is_admin()): 
+												<li> <i class="fa fa-calendar-o"></i> <a href="<?php echo site_url();?>/general-setting/">Settings</a> </li>
+												endif;
 												if(user_can('add_user')):
 												?>
 												<li> <i class="fa fa-users"></i> <a href="<?php echo site_url();?>/add-new-user/">Add  User</a> </li>
