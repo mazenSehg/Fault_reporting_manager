@@ -133,28 +133,28 @@ if( !class_exists('Fault') ):
 						<br/>
 						<label><input type="radio" class="flat" name="fault_corrected_by_user" value="1" /> Yes</label>
 						<label>&nbsp;</label>
-						<label><input type="radio" class="flat" name="fault_corrected_by_user" value="0" checked/> No</label>
+						<label><input type="radio" class="flat" name="fault_corrected_by_user" value="0"/> No</label>
 					</div>
 					<div class="form-group col-sm-12 col-xs-12">
 						<label for="">To fix at next service visit?</label>
 						<br/>
 						<label><input type="radio" class="flat" name="to_fix_at_next_service_visit" value="1" /> Yes</label>
 						<label>&nbsp;</label>
-						<label><input type="radio" class="flat" name="to_fix_at_next_service_visit" value="0" checked/> No</label>
+						<label><input type="radio" class="flat" name="to_fix_at_next_service_visit" value="0" /> No</label>
 					</div>
 					<div class="form-group col-sm-12 col-xs-12">
 						<label for="">Engineer called out?</label>
 						<br/>
 						<label><input type="radio" class="flat" name="engineer_called_out" value="1" /> Yes</label>
 						<label>&nbsp;</label>
-						<label><input type="radio" class="flat" name="engineer_called_out" value="0" checked/> No</label>
+						<label><input type="radio" class="flat" name="engineer_called_out" value="0" /> No</label>
 					</div>
 					<div class="form-group col-sm-12 col-xs-12">
 						<label for="">Has an adverse incident report been sent to MHRA pr appropriate devolved adminstration?</label>
 						<br/>
 						<label><input type="radio" class="flat" name="adverse_incident_report" value="1" /> Yes</label>
 						<label>&nbsp;</label>
-						<label><input type="radio" class="flat" name="adverse_incident_report" value="0" checked/> No</label>
+						<label><input type="radio" class="flat" name="adverse_incident_report" value="0" /> No</label>
 					</div>
 				</div>
 				<div class="row">
@@ -212,7 +212,7 @@ if( !class_exists('Fault') ):
 						<label>&nbsp;</label>
 						<label><input type="radio" class="flat" name="satisfied_servicing_organisation" value="0" /> No</label>
 						<label>&nbsp;</label>
-						<label><input type="radio" class="flat" name="satisfied_servicing_organisation" value="2" checked/> N/A</label>
+						<label><input type="radio" class="flat" name="satisfied_servicing_organisation" value="2" /> N/A</label>
 					</div>
 					<div class="form-group col-sm-12 col-xs-12">
 						<label for="">Are you satisfied with the performance of the service engineer?</label>
@@ -221,7 +221,7 @@ if( !class_exists('Fault') ):
 						<label>&nbsp;</label>
 						<label><input type="radio" class="flat" name="satisfied_service_engineer" value="0" /> No</label>
 						<label>&nbsp;</label>
-						<label><input type="radio" class="flat" name="satisfied_service_engineer" value="2" checked/> N/A</label>
+						<label><input type="radio" class="flat" name="satisfied_service_engineer" value="2" /> N/A</label>
 					</div>
 					<div class="form-group col-sm-12 col-xs-12">
 						<label for="">Are you generally satisfied withe the reliability/performance of the equipment?</label>
@@ -230,7 +230,7 @@ if( !class_exists('Fault') ):
 						<label>&nbsp;</label>
 						<label><input type="radio" class="flat" name="satisfied_equipment" value="0" /> No</label>
 						<label>&nbsp;</label>
-						<label><input type="radio" class="flat" name="satisfied_equipment" value="2" checked/> N/A</label>
+						<label><input type="radio" class="flat" name="satisfied_equipment" value="2" /> N/A</label>
 					</div>
 				</div>
 				<div class="ln_solid"></div>
