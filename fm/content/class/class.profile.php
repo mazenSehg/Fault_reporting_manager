@@ -341,7 +341,7 @@ class Profile
 		</ul>
 		<?php endif;
 		else:
-		echo page_not_found("Oops! There is no New Notifications",'  ',false);
+		echo page_not_found("There are no New Notifications",'  ',false);
 		endif;
 		$content = ob_get_clean();
 		return $content;
