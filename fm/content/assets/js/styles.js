@@ -792,7 +792,7 @@ function filter_user_name(value){
 	return check;
 }
 
-function alert_notification(Title,Text, Type, Class = ''){
+function alert_notification(Title,Text, Type, Class){
 	$('.ui-pnotify-closer').trigger('click');
 	new PNotify({
 		title: Title,
