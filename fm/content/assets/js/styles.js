@@ -51,6 +51,7 @@ $(document).ready(function() {
 	var handleDataTableButtons = function() {
 		if ($(".datatable-buttons").length) {
 			$(".datatable-buttons").DataTable({
+				
 				aaSorting : [],
 				dom: "Bfrtip",
 				buttons: [
@@ -61,6 +62,7 @@ $(document).ready(function() {
 					{extend: "print",className: "btn-sm"},
 					],
 				responsive: true
+
 			});
 		}
 	};

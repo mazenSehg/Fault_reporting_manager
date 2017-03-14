@@ -115,20 +115,72 @@ login_check();
 									<div class="x_content">
 										<div class="dashboard-widget-content">
 											<ul class="quick-list">
+												<?php
+												if(is_admin()): 
+												?>
 												<li> <i class="fa fa-calendar-o"></i> <a href="<?php echo site_url();?>/general-setting/">Settings</a> </li>
+												<?php
+												endif;
+												if(user_can('add_user')):
+												?>
 												<li> <i class="fa fa-users"></i> <a href="<?php echo site_url();?>/add-new-user/">Add  User</a> </li>
+												<?php
+												endif;
+												if(user_can('add_centre')):
+												?>
 												<li> <i class="fa fa-bar-chart"></i> <a href="<?php echo site_url();?>/add-new-centre/">Add  Centre</a> </li>
+												<?php
+												endif;
+												if(user_can('add_region')):
+												?>
 												<li> <i class="fa fa-line-chart"></i> <a href="<?php echo site_url();?>/add-new-region/">Add  Region</a> </li>
+												<?php
+												endif;
+												if(user_can('add_equipment')):
+												?>
 												<li> <i class="fa fa-bar-chart"></i> <a href="<?php echo site_url();?>/add-new-equipment/">Add  Equipment</a> </li>
+												<?php
+												endif;
+												if(user_can('add_equipment_type')):
+												?>
 												<li> <i class="fa fa-line-chart"></i> <a href="<?php echo site_url();?>/add-new-equipment-type/">Add  Equipment Type</a> </li>
+												<?php
+												endif;
+												if(user_can('add_service_agent')):
+												?>
 												<li> <i class="fa fa-area-chart"></i> <a href="<?php echo site_url();?>/add-new-service-agent/">Add  Service Agent</a> </li>
+												<?php
+												endif;
+												?>
 											</ul>
 											<ul class="quick-list">
+											<?php
+											if(user_can('add_manufacturer')):
+											?>
 												<li> <i class="fa fa-calendar-o"></i> <a href="<?php echo site_url();?>/add-new-manufacturer/">Add  Manufacturer</a> </li>
+												<?php
+												endif;
+											if(user_can('add_model')):
+												?>
 												<li> <i class="fa fa-bars"></i> <a href="<?php echo site_url();?>/add-new-model/">Add  Model</a> </li>
+												<?php
+												endif;
+											if(user_can('add_supplier')):
+												?>
 												<li> <i class="fa fa-bar-chart"></i> <a href="<?php echo site_url();?>/add-new-supplier/">Add  Supplier</a> </li>
+												<?php
+												endif;
+											if(user_can('add_fault')):
+												?>
 												<li> <i class="fa fa-line-chart"></i> <a href="<?php echo site_url();?>/add-new-fault/">Add  Fault</a> </li>
+											<?php
+												endif;
+											if(user_can('add_fault_type')):
+											?>
 												<li> <i class="fa fa-bar-chart"></i> <a href="<?php echo site_url();?>/add-new-fault-type/">Add  Fault Type</a> </li>
+											<?php
+											endif;
+											?>
 												<li> <i class="fa fa-sign-out"></i> <a href="<?php echo site_url();?>/logout/" class="link-logout">Log Out</a> </li>
 											</ul>
 										</div>

@@ -13,7 +13,7 @@ class Equipment{
 		$this->current__user__id = get_current_user_id();
 		$this->current__user = get_userdata($this->current__user__id);
 	}
-
+	
 	public function all__equipments__page(){
 		ob_start();
 		$query = '';
@@ -28,10 +28,24 @@ class Equipment{
 		if( !user_can( 'view_equipment') ):
 			echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
 		elseif(!$equipments__list):
-			echo page_not_found("There are no record found for Equipments",' ',false);
+			echo page_not_found("Oops! There is no record found for Equipments",' ',false);
 		else:
 		?>
-		<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap datatable-buttons" cellspacing="0" width="100%">
+
+<script>
+$(document).ready(function() {
+    $('#sdfdsf').dataTable( {
+        "bProcessing": true,
+        "bServerSide": true,
+        "sAjaxSource": "scripts/server_processing.php",
+        "iDeferLoading": 57
+    } );
+} );
+</script>
+
+
+
+		<table name = "sdfdsf" id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap datatable-buttons" cellspacing="0" width="100%">
 			<thead>
 				<tr>
 					<th>
@@ -157,7 +171,7 @@ class Equipment{
 		if( !user_can( 'view_equipment') ):
 			echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
 		elseif(!$equipments__list):
-			echo page_not_found("There are no record found for Equipments",' ',false);
+			echo page_not_found("Oops! There is no record found for Equipments",' ',false);
 		else:
 		?>
 		<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap datatable-buttons" cellspacing="0" width="100%">
@@ -1017,7 +1031,7 @@ class Equipment{
 		if( !user_can( 'view_equipment_type') ):
 			echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
 		elseif(!$equipment__types__list):
-			echo page_not_found("There are no record found for Equipment Types",' ',false);
+			echo page_not_found("Oops! There is no record found for Equipment Types",' ',false);
 		else:
 		?>
 		<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap datatable-buttons" cellspacing="0" width="100%">
@@ -1223,7 +1237,7 @@ class Equipment{
 		if( !user_can( 'view_service_agent') ):
 		echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
 		elseif(!$service__agents__list):
-		echo page_not_found("There are no record found for Service Agents",' ',false);
+		echo page_not_found("Oops! There is no record found for Service Agents",' ',false);
 		else:
 		?>
 		<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap datatable-buttons" cellspacing="0" width="100%">
@@ -1395,7 +1409,7 @@ class Equipment{
 		if( !user_can( 'view_manufacturer') ):
 			echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
 		elseif(!$manufacturers__list):
-			echo page_not_found("There are no record found for Manufacturers",' ',false);
+			echo page_not_found("Oops! There is no record found for Manufacturers",' ',false);
 		else:
 		?>
 		<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap datatable-buttons" cellspacing="0" width="100%">
@@ -1566,7 +1580,7 @@ class Equipment{
 		if( !user_can( 'view_model') ):
 			echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
 		elseif(!$models__list):
-			echo page_not_found("There are no record found for models",' ',false);
+			echo page_not_found("Oops! There is no record found for models",' ',false);
 		else:
 		?>
 		<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap datatable-buttons" cellspacing="0" width="100%">
@@ -1738,7 +1752,7 @@ class Equipment{
 		if( !user_can( 'view_supplier') ):
 		echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
 		elseif(!$suppliers__list):
-		echo page_not_found("There are no record found for suppliers",' ',false);
+		echo page_not_found("Oops! There is no record found for suppliers",' ',false);
 		else:
 		?>
 		<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap datatable-buttons" cellspacing="0" width="100%">
