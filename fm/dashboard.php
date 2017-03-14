@@ -117,7 +117,9 @@ login_check();
 											<ul class="quick-list">
 												<?php
 												if(is_admin()): 
+												?>
 												<li> <i class="fa fa-calendar-o"></i> <a href="<?php echo site_url();?>/general-setting/">Settings</a> </li>
+												<?php
 												endif;
 												if(user_can('add_user')):
 												?>
