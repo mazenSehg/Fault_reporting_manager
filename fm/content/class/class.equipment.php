@@ -13,7 +13,7 @@ class Equipment{
 		$this->current__user__id = get_current_user_id();
 		$this->current__user = get_userdata($this->current__user__id);
 	}
-
+	
 	public function all__equipments__page(){
 		ob_start();
 		$query = '';
@@ -24,14 +24,28 @@ class Equipment{
 				$query = "WHERE `centre` IN (".$centres.")";
 			}
 		endif;
-		$equipments__list = get_tabledata(TBL_EQUIPMENTS,false,array(LIMIT (500)), $query);
+		$equipments__list = get_tabledata(TBL_EQUIPMENTS,false,array(), $query);
 		if( !user_can( 'view_equipment') ):
 			echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
 		elseif(!$equipments__list):
 			echo page_not_found("Oops! There is no record found for Equipments",' ',false);
 		else:
 		?>
-		<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap datatable-buttons" cellspacing="0" width="100%">
+
+<script>
+$(document).ready(function() {
+    $('#sdfdsf').dataTable( {
+        "bProcessing": true,
+        "bServerSide": true,
+        "sAjaxSource": "scripts/server_processing.php",
+        "iDeferLoading": 57
+    } );
+} );
+</script>
+
+
+
+		<table name = "sdfdsf" id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap datatable-buttons" cellspacing="0" width="100%">
 			<thead>
 				<tr>
 					<th>
