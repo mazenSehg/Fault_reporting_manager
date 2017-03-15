@@ -22,6 +22,10 @@ login_check();
 					<!-- page content -->
 					<div class="right_col" role="main">
 						<!-- top tiles -->
+						
+						<?php
+																		if(is_admin()): 
+						?>
 						<div class="row top_tiles">
 							<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
 								<div class="tile-stats">
@@ -65,6 +69,10 @@ login_check();
 								</div>
 							</div>
 						</div>
+						<?php
+						endif;
+						?>
+						
 						<!-- /top tiles -->
 						<div class="row">
 							<div class="col-md-4 col-sm-4 col-xs-12">
@@ -104,7 +112,7 @@ login_check();
 									</div>
 								</div>
 							</div>
-							<div class="col-md-8 col-sm-8 col-xs-12">
+							<div class="col-md-8 col-sm-7 col-xs-12">
 								<div class="x_panel tile fixed_height_320">
 									<div class="x_title">
 										<h2>Quick Links</h2>
@@ -188,7 +196,8 @@ login_check();
 									</div>
 								</div>
 							</div>
-							<div class="col-md-8 col-sm-8 col-xs-12">
+							
+							<div class="col-md-4 col-sm-2 col-xs-12">
 								<div class="x_panel tile fixed_height_320">
 									<div class="x_title">
 										<h2>Todo list</h2>

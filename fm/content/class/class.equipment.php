@@ -103,16 +103,6 @@ class Equipment{
 
 			<div class="row">
 				<div class="form-group col-sm-6 col-xs-12">
-					<label for="equipment-code">
-						Equipment Code
-						<span class="required">
-							*
-						</span>
-					</label>
-					<input type="text" name="equipment_code" class="form-control require"/>
-				</div>
-
-				<div class="form-group col-sm-6 col-xs-12">
 					<label for="equipment-type">
 						Equipment Type
 						<span class="required">
@@ -1652,7 +1642,8 @@ class Equipment{
 		);
 		if( user_can('add_equipment') ):
 			$guid = get_guid(TBL_EQUIPMENTS);
-			$equipment_code = sprintf( "%d%d%d", $centre, $guid,$equipment_type);
+		$byn = rand(0, 99);
+			$equipment_code = sprintf( "%d%d%d", $centre, $byn,$equipment_type);
 
 			$result = $this->database->insert(TBL_EQUIPMENTS,
 				array(
@@ -2654,8 +2645,8 @@ class Equipment{
 			array_push($row, __($equipment_type->name));
 			array_push($row, __($model->name));
 			array_push($row, __($manufacturer->name));
+			array_push($row, __($service_agent->name));
 
-			array_push($row, __('NOT DEFINED'));					
 				
 			
 

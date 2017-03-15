@@ -470,6 +470,7 @@ $(document).ready(function() {
 				}else if(res['status'] == 1 ){ // if success then go inside
 					if(res['reset_form'] == 1){
 						form.trigger('reset');
+						location.reload();
 					}
 					alert_notification(res['message_heading'],res['message'],'success');
 					window.scrollTo(0,0);
@@ -547,6 +548,7 @@ $(document).ready(function() {
 				}else if(res['status'] == 1 ){ // if success then go inside
 					if(res['reset_form'] == 1){
 						form.trigger('reset');
+						location.reload();
 					}
 					alert_notification(res['message_heading'],res['message'],'success');
 					window.scrollTo(0,0);
