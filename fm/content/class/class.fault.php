@@ -866,7 +866,6 @@ if( !class_exists('Fault') ):
 			<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap ajax-datatable-buttons" cellspacing="0" width="100%" data-table="fetch_all_faults">
 				<thead>
 					<tr>
-						<th>Name</th>
 						<th>Centre</th>
 						<th>Equipment Type</th>
 						<th>Equipment</th>
@@ -1075,9 +1074,11 @@ if( !class_exists('Fault') ):
 					$return['message'] = 'Fault has been created successfully.';
 					$return['reset_form'] = 1;
 				endif;
+
 			endif;
 
 			return json_encode($return);
+
 		}
 
 		public function update__fault__process(){
@@ -1444,7 +1445,7 @@ if( !class_exists('Fault') ):
 				$where = implode(" OR " , $where);
 				$query .= ($query != '') ? ' AND ' : ' WHERE ';
 				$query .= $where;
-				$data_list = get_tabledata(TBL_EQUIPMENTS,false ,array(), $query.$sql );
+				$data_list = get_tabledata(TBL_EQUIPMENTS,false ,array(), $query.$sql);
 				$recordsFiltered = count( $data_list );
 			}else{
 				$data_list = get_tabledata(TBL_FAULTS,false,array(),$query.$sql);
@@ -1453,12 +1454,9 @@ if( !class_exists('Fault') ):
 						
 			if($data_list): foreach($data_list as $fault):
 				$centre = get_tabledata(TBL_CENTRES,true,array('ID'=> $fault->centre));
-				
 				$equipment_type = get_tabledata(TBL_EQUIPMENT_TYPES,true,array('ID'=> $fault->equipment_type));
 				$equipment = get_tabledata(TBL_EQUIPMENTS,true,array('ID'=> $fault->equipment));
 				$fault_type = get_tabledata(TBL_FAULT_TYPES,true,array('ID'=> $fault->fault_type));
-				
-				
 				$row = array();
 				array_push($row, __($fault->name));
 				array_push($row, __($centre->name));
