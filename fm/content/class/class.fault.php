@@ -866,6 +866,7 @@ if( !class_exists('Fault') ):
 			<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap ajax-datatable-buttons" cellspacing="0" width="100%" data-table="fetch_all_faults">
 				<thead>
 					<tr>
+						<th>Name</th>
 						<th>Centre</th>
 						<th>Equipment Type</th>
 						<th>Equipment</th>
@@ -1417,10 +1418,16 @@ if( !class_exists('Fault') ):
 		}
 
 		public function fetch_all_faults_process(){
+			$orders_columns = array(
+				0 => 'name',
+				5 => 'date_of_fault',
+				6 => 'created_on',
+				7 => 'approved',
+			);
 			$recordsTotal = $recordsFiltered = 0;
 			$draw = $_POST["draw"];
 			$orderByColumnIndex = $_POST['order'][0]['column'];
-			$orderBy = 'name';
+			$orderBy = ( array_key_exists( $orderByColumnIndex , $orders_columns ) ) ? $orders_columns[$orderByColumnIndex] : 'name';
 			$orderType = $_POST['order'][0]['dir'];
 			$start = $_POST["start"];
 			$length = $_POST['length'];
@@ -1445,7 +1452,7 @@ if( !class_exists('Fault') ):
 				$where = implode(" OR " , $where);
 				$query .= ($query != '') ? ' AND ' : ' WHERE ';
 				$query .= $where;
-				$data_list = get_tabledata(TBL_EQUIPMENTS,false ,array(), $query.$sql);
+				$data_list = get_tabledata(TBL_EQUIPMENTS,false ,array(), $query.$sql );
 				$recordsFiltered = count( $data_list );
 			}else{
 				$data_list = get_tabledata(TBL_FAULTS,false,array(),$query.$sql);
@@ -1454,14 +1461,18 @@ if( !class_exists('Fault') ):
 						
 			if($data_list): foreach($data_list as $fault):
 				$centre = get_tabledata(TBL_CENTRES,true,array('ID'=> $fault->centre));
+				
 				$equipment_type = get_tabledata(TBL_EQUIPMENT_TYPES,true,array('ID'=> $fault->equipment_type));
-				$equipment = get_tabledata(TBL_EQUIPMENTS,true,array('ID'=> $fault->equipment));
-				$fault_type = get_tabledata(TBL_FAULT_TYPES,true,array('ID'=> $fault->fault_type));
+				
+			$equipment = get_tabledata(TBL_EQUIPMENTS,true,array('ID'=> $fault->equipment));
+			$fault_type = get_tabledata(TBL_FAULT_TYPES,true,array('ID'=> $fault->fault_type));
+				
 				$row = array();
 				array_push($row, __($fault->name));
 				array_push($row, __($centre->name));
 				array_push($row, __($equipment_type->name));
 				array_push($row, __($equipment->name));
+				
 				array_push($row, __($fault_type->name));
 				
 				array_push($row, date('M d,Y',strtotime($fault->date_of_fault)));
