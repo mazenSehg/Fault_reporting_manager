@@ -37,7 +37,8 @@ login_check();
 								<div class="tile-stats">
 									<div class="icon"> <i class="fa fa-exclamation-circle"> </i> </div>
 									<div class="count">
-										<?php echo TBL_FAULTS;//echo count( get_tabledata(TBL_FAULTS,false));?>
+										<?php 
+										echo count( get_tabledata(TBL_FAULTS,false));?>
 									</div>
 									<h3> Total Faults</h3>
 									<p> </p>

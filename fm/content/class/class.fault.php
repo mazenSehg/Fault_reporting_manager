@@ -122,42 +122,40 @@ if( !class_exists('Fault') ):
 						<textarea name="action_taken" class="form-control" rows="3"></textarea>
 					</div>
 				</div>
-				<div class="row">
-					<div class="form-group col-sm-12 col-xs-12">
+
+					<div class="form-group col-sm-3 col-xs-12">
 						<label for="">Fault corrected by user?</label>
 						<br/>
 						<label><input type="radio" class="flat" name="fault_corrected_by_user" value="1" /> Yes</label>
 						<label>&nbsp;</label>
 						<label><input type="radio" class="flat" name="fault_corrected_by_user" value="0" /> No</label>
 					</div>
-					<div class="form-group col-sm-12 col-xs-12">
+					<div class="form-group col-sm-3 col-xs-12">
 						<label for="">To fix at next service visit?</label>
 						<br/>
 						<label><input type="radio" class="flat" name="to_fix_at_next_service_visit" value="1" /> Yes</label>
 						<label>&nbsp;</label>
 						<label><input type="radio" class="flat" name="to_fix_at_next_service_visit" value="0" /> No</label>
 					</div>
-					<div class="form-group col-sm-12 col-xs-12">
+					<div class="form-group col-sm-3 col-xs-12">
 						<label for="">Engineer called out?</label>
 						<br/>
 						<label><input type="radio" class="flat" name="engineer_called_out" value="1" /> Yes</label>
 						<label>&nbsp;</label>
 						<label><input type="radio" class="flat" name="engineer_called_out" value="0" /> No</label>
 					</div>
-					<div class="form-group col-sm-12 col-xs-12">
+					<div class="form-group col-sm-3 col-xs-12">
 						<label for="">Has an adverse incident report been sent to MHRA pr appropriate devolved adminstration?</label>
 						<br/>
 						<label><input type="radio" class="flat" name="adverse_incident_report" value="1" /> Yes</label>
 						<label>&nbsp;</label>
 						<label><input type="radio" class="flat" name="adverse_incident_report" value="0" /> No</label>
 					</div>
-				</div>
-				<div class="row">
 					<div class="col-xs-12">
 						<h3><?php _e('Fault Severity');?></h3>
 						<hr>
 					</div>
-					<div class="form-group col-sm-6 col-xs-12">
+					<div class="form-group col-sm-2 col-xs-12">
 						<label for="">Equipment Status</label>
 						<br/>
 						<select name="equipment_status" class="form-control select_single require" tabindex="-1" data-placeholder="Choose equipment status">
@@ -166,41 +164,37 @@ if( !class_exists('Fault') ):
 							echo get_options_list($option_data);
 							?>
 						</select>
-					</div>
+
 				</div>
-				<div class="row">
-					<div class="form-group col-sm-6 col-xs-12">
+					<div class="form-group col-sm-2 col-xs-12">
 						<label for="">Total equipment downtime (days)</label>
 						<br/>
 						<input type="number" name="equipment_downtime" class="form-control require" min="0" />
 					</div>
-					<div class="form-group col-sm-6 col-xs-12">
+					<div class="form-group col-sm-2 col-xs-12">
 						<label for="">Total screening downtime (days)</label>
 						<br/>
 						<input type="number" name="screening_downtime" class="form-control require" min="0" />
 					</div>
-				</div>
-				<div class="row">
-					<div class="form-group col-sm-6 col-xs-12">
+					<div class="form-group col-sm-2 col-xs-12">
 						<label for="">Number of repeat images</label>
 						<br/>
 						<input type="number" name="repeat_images" class="form-control require" min="0" />
 					</div>
-					<div class="form-group col-sm-6 col-xs-12">
+					<div class="form-group col-sm-2 col-xs-12">
 						<label for="">Number of cancelled women</label>
 						<br/>
 						<input type="number" name="cancelled_women" class="form-control require" min="0" />
 					</div>
-				</div>
 				<div class="row">
-					<div class="form-group col-sm-6 col-xs-12">
+					<div class="form-group col-sm-2 col-xs-12">
 						<label for="">Number of technical recalls</label>
 						<br/>
 						<input type="number" name="technical_recalls" class="form-control require" min="0" />
 					</div>
 				</div>
 				<div class="row">
-					<div class="form-group col-sm-12 col-xs-12">
+<div class="form-group col-sm-4 col-xs-12">
 						<label for="">Are you satisfied with response of the servicing organisation?</label>
 						<br/>
 						<label><input type="radio" class="flat" name="satisfied_servicing_organisation" value="1" /> Yes</label>
@@ -209,7 +203,7 @@ if( !class_exists('Fault') ):
 						<label>&nbsp;</label>
 						<label><input type="radio" class="flat" name="satisfied_servicing_organisation" value="2" /> N/A</label>
 					</div>
-					<div class="form-group col-sm-12 col-xs-12">
+<div class="form-group col-sm-4 col-xs-12">
 						<label for="">Are you satisfied with the performance of the service engineer?</label>
 						<br/>
 						<label><input type="radio" class="flat" name="satisfied_service_engineer" value="1" /> Yes</label>
@@ -218,7 +212,7 @@ if( !class_exists('Fault') ):
 						<label>&nbsp;</label>
 						<label><input type="radio" class="flat" name="satisfied_service_engineer" value="2" /> N/A</label>
 					</div>
-					<div class="form-group col-sm-12 col-xs-12">
+<div class="form-group col-sm-4 col-xs-12">
 						<label for="">Are you generally satisfied withe the reliability/performance of the equipment?</label>
 						<br/>
 						<label><input type="radio" class="flat" name="satisfied_equipment" value="1" /> Yes</label>
@@ -231,7 +225,7 @@ if( !class_exists('Fault') ):
 				<div class="ln_solid"></div>
 				<div class="form-group">
 					<input type="hidden" name="action" value="add_new_fault" />
-					<button class="btn btn-success btn-md" type="submit">Create New Fault</button>
+					<button class="btn btn-success btn-md" type="submit">Submit fault</button>
 				</div>
 			</form>
 			<?php endif; ?>
