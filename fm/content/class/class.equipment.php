@@ -31,7 +31,7 @@ class Equipment{
 			echo page_not_found("Oops! There is no record found for Equipments",' ',false);
 		else:
 		?>
-		<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap ajax-datatable-buttons" cellspacing="0" width="100%" data-table="fetch_all_equipments">
+<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap ajax-datatable-buttons" cellspacing="0" width="100%" data-table="fetch_all_equipments" data-order-column="7">
 			<thead>
 				<tr>
 					<th>Name</th>
@@ -2558,147 +2558,147 @@ class Equipment{
 		return json_encode($return);
 	}
 
-	public function supplier__approve__change__process(){
-		extract($_POST);
-		$id = trim($id);
-		$return = array(
-			'status' => 0,
-			'message_heading'=> 'Failed !',
-			'message' => 'Could not update supplier details, Please try again ',
-			'reset_form' => 0
-		);
-		if(user_can('edit_supplier')):
-			$supplier = get_tabledata(TBL_SUPPLIERS, true, array('ID'=> $id) );
-			$args = array('ID'=> $id);
-			$result = $this->database->update(TBL_SUPPLIERS,array('approved'=> $status),$args);
+		public function supplier__approve__change__process(){
+			extract($_POST);
+			$id = trim($id);
+			$return = array(
+				'status' => 0,
+				'message_heading'=> 'Failed !',
+				'message' => 'Could not update supplier details, Please try again ',
+				'reset_form' => 0
+			);
+			if(user_can('edit_supplier')):
+				$supplier = get_tabledata(TBL_SUPPLIERS, true, array('ID'=> $id) );
+				$args = array('ID'=> $id);
+				$result = $this->database->update(TBL_SUPPLIERS,array('approved'=> $status),$args);
 
-			if($result):
-				if($status == 0){
-					$notification_args = array(
-						'title' => 'Supplier (' .$supplier->name.') is disabled now',
-						'notification'=> 'You have successfully disabled (' .$supplier->name.') supplier.',
-					);
-					$return['message'] = 'You have successfully disabled (' .$supplier->name.') supplier.';
-				}else{
-					$notification_args = array(
-						'title' => 'Supplier (' .$supplier->name.') is approved now',
-						'notification'=> 'You have successfully approved (' .$supplier->name.') supplier.',
-					);
-					$return['message'] = 'You have successfully approved (' .$supplier->name.') supplier.';
-				}
-				add_user_notification($notification_args);
-				$return['status'] = 1;
-				$return['message_heading'] = 'Success !';
+				if($result):
+					if($status == 0){
+						$notification_args = array(
+							'title' => 'Supplier (' .$supplier->name.') is disabled now',
+							'notification'=> 'You have successfully disabled (' .$supplier->name.') supplier.',
+						);
+						$return['message'] = 'You have successfully disabled (' .$supplier->name.') supplier.';
+					}else{
+						$notification_args = array(
+							'title' => 'Supplier (' .$supplier->name.') is approved now',
+							'notification'=> 'You have successfully approved (' .$supplier->name.') supplier.',
+						);
+						$return['message'] = 'You have successfully approved (' .$supplier->name.') supplier.';
+					}
+					add_user_notification($notification_args);
+					$return['status'] = 1;
+					$return['message_heading'] = 'Success !';
+				endif;
 			endif;
-		endif;
-		return json_encode($return);
-	}
-
-	public function fetch_all_equipments_process(){
-		$recordsTotal = $recordsFiltered = 0;
-		$draw = $_POST["draw"];
-		$orderByColumnIndex = $_POST['order'][0]['column'];
-		$orderBy = 'name';
-		$orderType = $_POST['order'][0]['dir'];
-		$start = $_POST["start"];
-		$length = $_POST['length'];
-		
-		$query = '';
-		if(!is_admin()):
-			$centres = maybe_unserialize($this->current__user->centre);
-			if(!empty($centres)){
-				$centres = implode(',',$centres);
-				$query = "WHERE `centre` IN (".$centres.")";
-			}
-		endif;
-		$recordsTotal = count(get_tabledata(TBL_EQUIPMENTS,false,array(), $query));
-		$sql = sprintf(" ORDER BY %s %s limit %d , %d ", $orderBy,$orderType ,$start , $length);
-		$data = array();
-		if(!empty($_POST['search']['value'])){
-			$columns = array('ID','name');
-			for($i = 0 ; $i < count($columns);$i++){
-				$column = $columns[$i];
-				$where[] = "$column LIKE '%".$_POST['search']['value']."%'";
-			}
-			$where = implode(" OR " , $where);
-			$query .= ($query != '') ? ' AND ' : ' WHERE ';
-			$query .= $where;
-			$data_list = get_tabledata(TBL_EQUIPMENTS,false ,array(), $query.$sql );
-			$recordsFiltered = count( $data_list );
-		}else{
-			$data_list = get_tabledata(TBL_EQUIPMENTS,false,array(),$query.$sql);
-			$recordsFiltered = $recordsTotal;
+			return json_encode($return);
 		}
-		
-		if($data_list): foreach($data_list as $equipment):
-			$centre = get_tabledata(TBL_CENTRES,true,array('ID'=>$equipment->centre));
+
+		public function fetch_all_equipments_process(){
+			$orders_columns = array(
+				0 => 'name',
+				7 => 'created_on',
+				8 => 'approved',
+			);
+			$recordsTotal = $recordsFiltered = 0;
+			$draw = $_POST["draw"];
+			$orderByColumnIndex = $_POST['order'][0]['column'];
+			$orderBy = ( array_key_exists( $orderByColumnIndex , $orders_columns ) ) ? $orders_columns[$orderByColumnIndex] : 'created_on';
+			$orderType = $_POST['order'][0]['dir'];
+			$start = $_POST["start"];
+			$length = $_POST['length'];
 			
+			$query = '';
+			if(!is_admin()):
+				$centres = maybe_unserialize($this->current__user->centre);
+				if(!empty($centres)){
+					$centres = implode(',',$centres);
+					$query = "WHERE `centre` IN (".$centres.")";
+				}
+			endif;
+			$recordsTotal = count(get_tabledata(TBL_EQUIPMENTS,false,array(), $query));
+			$sql = sprintf(" ORDER BY %s %s limit %d , %d ", $orderBy,$orderType ,$start , $length);
+			$data = array();
+			if(!empty($_POST['search']['value'])){
+				$columns = array('ID','name');
+				for($i = 0 ; $i < count($columns);$i++){
+					$column = $columns[$i];
+					$where[] = "$column LIKE '%".$_POST['search']['value']."%'";
+				}
+				$where = implode(" OR " , $where);
+				$query .= ($query != '') ? ' AND ' : ' WHERE ';
+				$query .= $where;
+				$data_list = get_tabledata(TBL_EQUIPMENTS,false ,array(), $query.$sql );
+				$recordsFiltered = count( $data_list );
+			}else{
+				$data_list = get_tabledata(TBL_EQUIPMENTS,false,array(),$query.$sql);
+				$recordsFiltered = $recordsTotal;
+			}
 			
-			$equipment_type = get_tabledata(TBL_EQUIPMENT_TYPES,true,array('ID'=>$equipment->equipment_type));
-			$manufacturer = get_tabledata(TBL_MANUFACTURERS,true,array('ID'=>$equipment->manufacturer));
-			$model = get_tabledata(TBL_MODELS,true,array('ID'=>$equipment->model));
-			$service_agent = get_tabledata(TBL_SERVICE_AGENTS,true,array('ID'=>$equipment->service_agent));
-			$row = array();
-			array_push($row, __($equipment->name));
-			array_push($row, __($centre->name));
-			array_push($row, __($equipment->equipment_code));
-			array_push($row, __($equipment_type->name));
-			array_push($row, __($model->name));
-			array_push($row, __($manufacturer->name));
-			array_push($row, __($service_agent->name));
+			if($data_list): foreach($data_list as $equipment):
+				$centre = get_tabledata(TBL_CENTRES,true,array('ID'=>$equipment->centre));
+				$equipment_type = get_tabledata(TBL_EQUIPMENT_TYPES,true,array('ID'=>$equipment->equipment_type));
+				$manufacturer = get_tabledata(TBL_MANUFACTURERS,true,array('ID'=>$equipment->manufacturer));
+				$model = get_tabledata(TBL_MODELS,true,array('ID'=>$equipment->model));
+				$service_agent = get_tabledata(TBL_SERVICE_AGENTS,true,array('ID'=>$equipment->service_agent));
+				$row = array();
+				array_push($row, __($equipment->name));
+				array_push($row, __($centre->name));
+				array_push($row, __($equipment->equipment_code));
+				array_push($row, __($equipment_type->name));
+				array_push($row, __($model->name));
+				array_push($row, __($manufacturer->name));
+				array_push($row, __($service_agent->name));
 
 				
-			
-
-			
-			array_push($row, date('M d,Y',strtotime($equipment->created_on)));
-			if(is_admin()):
+				array_push($row, date('M d,Y',strtotime($equipment->created_on)));
+				if(is_admin()):
+					ob_start();
+					?>
+					<div class="text-center">
+						<label>
+							<input type="checkbox" class="js-switch" <?php checked($equipment->approved, 1);?> onclick="approve_switch(this);" data-id="<?php echo $equipment->ID;?>" data-action="equipment_approve_change"/>
+						</label>
+					</div>
+					<?php 
+					$checkbox = ob_get_clean();
+					array_push($row, $checkbox);
+				endif;
 				ob_start();
 				?>
 				<div class="text-center">
-					<label>
-						<input type="checkbox" class="js-switch" <?php checked($equipment->approved, 1);?> onclick="approve_switch(this);" data-id="<?php echo $equipment->ID;?>" data-action="equipment_approve_change"/>
-					</label>
+					<?php if( user_can( 'view_equipment') ): ?>
+					<a href="<?php echo site_url();?>/view-equipment/?id=<?php echo $equipment->ID;?>" class="btn btn-dark btn-xs">
+						<i class="fa fa-eye"></i> View
+					</a>
+					<?php endif; ?>
+					<?php if( user_can( 'edit_equipment') ): ?>
+					<a href="<?php echo site_url();?>/edit-equipment/?id=<?php echo $equipment->ID;?>" class="btn btn-dark btn-xs">
+						<i class="fa fa-edit"></i> Edit
+					</a>
+					<?php endif; ?>
+					<?php if( user_can( 'delete_equipment') ): ?>
+					<a href="#" class="btn btn-danger btn-xs" onclick="delete_function(this);" data-id="<?php echo $equipment->ID;?>" data-action="delete_equipment">
+						<i class="fa fa-trash"></i> Delete
+					</a>
+					<?php endif; ?>
 				</div>
 				<?php 
-				$checkbox = ob_get_clean();
-				array_push($row, $checkbox);
+				$action = ob_get_clean();
+				array_push($row, $action);
+				$data[] = $row;
+				endforeach;
 			endif;
-			ob_start();
-			?>
-			<div class="text-center">
-				<?php if( user_can( 'view_equipment') ): ?>
-				<a href="<?php echo site_url();?>/view-equipment/?id=<?php echo $equipment->ID;?>" class="btn btn-dark btn-xs">
-					<i class="fa fa-eye"></i> View
-				</a>
-				<?php endif; ?>
-				<?php if( user_can( 'edit_equipment') ): ?>
-				<a href="<?php echo site_url();?>/edit-equipment/?id=<?php echo $equipment->ID;?>" class="btn btn-dark btn-xs">
-					<i class="fa fa-edit"></i> Edit
-				</a>
-				<?php endif; ?>
-				<?php if( user_can( 'delete_equipment') ): ?>
-				<a href="#" class="btn btn-danger btn-xs" onclick="delete_function(this);" data-id="<?php echo $equipment->ID;?>" data-action="delete_equipment">
-					<i class="fa fa-trash"></i> Delete
-				</a>
-				<?php endif; ?>
-			</div>
-			<?php 
-			$action = ob_get_clean();
-			array_push($row, $action);
-			$data[] = $row;
-			endforeach;
-		endif;
-		
-		/* Response to client before JSON encoding */
-		$response = array(
-			"draw" => intval($draw),
-			"recordsTotal" => $recordsTotal,
-			"recordsFiltered"=> $recordsFiltered,
-			"data" => $data,
-		);
-		return json_encode($response);
+			
+			/* Response to client before JSON encoding */
+			$response = array(
+				"draw" => intval($draw),
+				"recordsTotal" => $recordsTotal,
+				"recordsFiltered"=> $recordsFiltered,
+				"data" => $data,
+			);
+			return json_encode($response);
+		}
 	}
-}
 endif;
 ?>
