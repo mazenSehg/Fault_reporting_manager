@@ -136,9 +136,7 @@ if( !class_exists('User') ):
 							<a href="#tab_content1" role="tab" data-toggle="tab" aria-expanded="true">Recent Activity</a>
 						</li>
 						<li role="presentation" class="">
-							<a href="#tab_content2" role="tab" data-toggle="tab" aria-expanded="false">
-								Recent Access Log
-							</a>
+							<a href="#tab_content2" role="tab" data-toggle="tab" aria-expanded="false">Recent Access Log</a>
 						</li>
 					</ul>
 					<div id="myTabContent" class="tab-content">
@@ -159,9 +157,7 @@ if( !class_exists('User') ):
 									<div class="message_wrapper">
 										<h4 class="heading">
 											<?php echo $user__notifications->title;?>
-											<small>
-												<?php echo date('M d, Y h:i a',strtotime($user__notifications->date));?>
-											</small>
+											<small><?php echo date('M d, Y h:i a',strtotime($user__notifications->date));?></small>
 										</h4>
 										<blockquote class="message">
 											<?php _e(htmlspecialchars_decode($user__notifications->notification));?>
@@ -171,9 +167,7 @@ if( !class_exists('User') ):
 								</li>
 								<?php endforeach; else: ?>
 								<li>
-									<h5>
-										There is no recent activity details
-									</h5>
+									<h5>There is no recent activity details</h5>
 								</li>
 								<?php endif; ?>
 							</ul>
@@ -184,15 +178,9 @@ if( !class_exists('User') ):
 							<table id="datatable-buttons" class="table table-striped table-bordered" cellspacing="0" width="100%">
 								<thead>
 									<tr>
-										<th>
-											Last Login
-										</th>
-										<th>
-											Location
-										</th>
-										<th>
-											Device
-										</th>
+										<th>Last Login</th>
+										<th>Location</th>
+										<th>Device</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -473,57 +461,38 @@ if( !class_exists('User') ):
 			return $content;
 		}
 
-		public function edit__user__page()
-		{
+		public function edit__user__page(){
 			ob_start();
 			$user__id = $_GET['user_id'];
 			$user = get_userdata($user__id);
 			if(!user_can('edit_user')):
-			echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
+				echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
 			elseif(!$user):
-			echo page_not_found('Oops ! User Details Not Found.','Please go back and check again !');
+				echo page_not_found('Oops ! User Details Not Found.','Please go back and check again !');
 			else:
 			?>
 			<form class="edit-user user-form" method="post" autocomplete="off">
 				<div class="row">
 					<div class="form-group col-sm-6 col-xs-12">
-						<label for="first_name">
-							First Name
-							<span class="required">
-								*
-							</span>
-						</label>
+						<label for="first_name">First Name <span class="required">*</span></label>
 						<input type="text" name="first_name" class="form-control require" value="<?php _e($user->first_name);?>"/>
 					</div>
 					<div class="form-group col-sm-6 col-xs-12">
-						<label for="last_name">
-							Last Name
-							<span class="required">
-								*
-							</span>
-						</label>
+						<label for="last_name">Last Name <span class="required">*</span></label>
 						<input type="text" name="last_name" class="form-control require" value="<?php _e($user->last_name);?>"/>
 					</div>
 				</div>
 
 				<div class="row">
 					<div class="form-group col-sm-6 col-xs-12">
-						<label for="email">
-							Email
-							<span class="required">
-								*
-							</span>
-						</label>
+						<label for="email">Email <span class="required">*</span></label>
 						<input type="text" name="user_email" class="form-control require" value="<?php _e($user->user_email);?>" />
 					</div>
 					<div class="form-group col-sm-6 col-xs-12">
-						<label for="dob">
-							Date of birth
-						</label>
+						<label for="dob">Date of birth</label>
 						<?php
 						$dob = trim(get_user_meta($user->ID,'dob'));
-						if($dob != '')
-						{
+						if($dob != ''){
 							$dob = date('M d, Y', strtotime($dob));
 						}
 						?>
@@ -533,54 +502,29 @@ if( !class_exists('User') ):
 
 				<div class="row">
 					<div class="form-group col-sm-6 col-xs-12">
-						<label for="gender">
-							Gender
-							<span class="required">
-								*
-							</span>
+						<label for="gender">Gender <span class="required">*</span>
 						</label>
 						<select name="gender" class="form-control select_single require" tabindex="-1" data-placeholder="Choose a gender">
-							<option value="">
-							</option>
-							<option value="Male" <?php
-	 if(trim(get_user_meta($user->ID,'gender')) == 'Male')
-	{ echo 'selected'; } ?>>
-								Male
-							</option>
-							<option value="Female" <?php
-	 if(trim(get_user_meta($user->ID,'gender')) == 'Female')
-	{ echo 'selected'; } ?>>
-								Female
-							</option>
+							<option value=""></option>
+							<option value="Male" <?php  if(trim(get_user_meta($user->ID,'gender')) == 'Male') { echo 'selected'; } ?>>Male</option>
+							<option value="Female" <?php if(trim(get_user_meta($user->ID,'gender')) == 'Female') { echo 'selected'; } ?>>Female</option>
 						</select>
 					</div>
 					<div class="form-group col-sm-6 col-xs-12">
-						<label for="user_phone">
-							Phone
-						</label>
+						<label for="user_phone">Phone</label>
 						<input type="text" name="user_phone" class="form-control" value="<?php echo get_user_meta($user__id,'user_phone');?>"/>
 					</div>
 				</div>
 
 				<div class="row">
 					<div class="form-group col-sm-6 col-xs-12">
-						<label for="company">
-							Role
-							<span class="required">
-								*
-							</span>
-						</label>
+						<label for="company">Role <span class="required">*</span></label>
 						<select name="user_role" class="form-control select_single require" tabindex="-1" data-placeholder="Choose role">
 							<?php echo get_options_list(get_roles(),array($user->user_role)); ?>
 						</select>
 					</div>
 					<div class="form-group col-sm-6 col-xs-12">
-						<label for="hostipals">
-							Designation
-							<span class="required">
-								*
-							</span>
-						</label>
+						<label for="hostipals">Designation <span class="required">*</span></label>
 						<select name="designation" class="form-control select_single require" tabindex="-1" data-placeholder="Choose designation" >
 							<?php $option_data = get_designations(); echo get_options_list($option_data , array(trim ( get_user_meta($user->ID,'designation') ) ) ); ?>
 						</select>
@@ -589,22 +533,17 @@ if( !class_exists('User') ):
 
 				<div class="row">
 					<div class="form-group col-sm-12 col-xs-12">
-						<label for="centre">
-							Centre
-							<span class="required">
-								*
-							</span>
+						<label for="centre">Centre <span class="required">*</span></span>
 						</label>
 						<select name="centre[]" class="form-control select_single require" tabindex="-1" data-placeholder="Choose centre" multiple="multiple">
 							<?php
 							$query = '';
 							if(!is_admin()):
-							$centres = maybe_unserialize($this->current__user->centre);
-							if(!empty($centres))
-							{
-								$centres = implode(',',$centres);
-								$query = "WHERE `ID` IN (".$centres.")";
-							}
+								$centres = maybe_unserialize($this->current__user->centre);
+								if(!empty($centres)){
+									$centres = implode(',',$centres);
+									$query = "WHERE `ID` IN (".$centres.")";
+								}
 							endif;
 
 							$query .= ($query != '') ? ' AND ' : ' WHERE ';
@@ -619,14 +558,11 @@ if( !class_exists('User') ):
 
 				<div class="row">
 					<div class="col-xs-12 col-sm-6 form-goup">
-						<label>
-							Upload Profile Image
-						</label>
+						<label>Upload Profile Image</label>
 						<input type="text" name="profile_img" class="form-control" value="<?php echo get_user_profile_image($user->ID,false);?>" placeholder="Uploaded image url" readonly="readonly"/>
 						<br/>
 						<a href="#" class="btn btn-default btn-sm" data-toggle="modal" data-target="#upload-image-modal">
-							<i class="fa fa-camera">
-							</i>&nbsp;Upload Image
+							<i class="fa fa-camera"></i>&nbsp;Upload Image
 						</a>
 					</div>
 					<div class="col-xs-12 col-sm-6 form-group">
@@ -638,24 +574,16 @@ if( !class_exists('User') ):
 
 				<div class="row">
 					<div class="form-group col-sm-6 col-xs-12">
-						<label for="user_pass">
-							Reset Password
-						</label>
+						<label for="user_pass">Reset Password</label>
 						<input type="text" name="user_pass" value="" class="form-control"/>
-						<div>
-							&nbsp;
-						</div>
-						<button class="btn btn-default generate-password">
-							Generate Password
-						</button>
+						<div>&nbsp;</div>
+						<button class="btn btn-default generate-password">Generate Password</button>
 					</div>
 				</div>
 
 				<div class="row">
 					<div class="form-group col-sm-6 col-xs-12">
-						<label for="">
-							Disable Account
-						</label>
+						<label for="">Disable Account</label>
 						<br/>
 						<div class="radio-inline">
 							<label>
@@ -669,18 +597,13 @@ if( !class_exists('User') ):
 						</div>
 					</div>
 				</div>
-				<div class="ln_solid">
-				</div>
+				<div class="ln_solid"></div>
 
 				<div class="form-group">
-					<div>
-						&nbsp;
-					</div>
+					<div>&nbsp;</div>
 					<input type="hidden" name="action" value="edit_user"/>
 					<input type="hidden" name="user_id" value="<?php echo $user__id;?>"/>
-					<button class="btn btn-success btn-md" type="submit">
-						Update User
-					</button>
+					<button class="btn btn-success btn-md" type="submit">Update User</button>
 				</div>
 			</form>
 			<?php echo $this->upload__image__section();?>
@@ -690,39 +613,27 @@ if( !class_exists('User') ):
 			return $content;
 		}
 
-		public function all__users__page()
-		{
+		public function all__users__page(){
 			ob_start();
 			$args = (!is_admin()) ? array('created_by'=> $this->current__user__id) : array();
 			$users_list = get_tabledata(TBL_USERS,false,$args);
 			if(!user_can('view_user')):
-			echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
+				echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
 			elseif(!$users_list):
-			echo page_not_found("There are no New Users your centre",' ',false);
+				echo page_not_found("Oops! There is no New Users in website",' ',false);
 			else:
 			?>
 			<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap datatable-buttons" cellspacing="0" width="100%">
 				<thead>
 					<tr>
-						<th>
-						</th>
-						<th>
-							Name
-						</th>
-						<th>
-							Email
-						</th>
-						<th>
-							Registered On
-						</th>
+						<th></th>
+						<th>Name</th>
+						<th>Email</th>
+						<th>Registered On</th>
 						<?php if(is_admin()): ?>
-						<th class="text-center">
-							Status
-						</th>
+						<th class="text-center">Status</th>
 						<?php endif; ?>
-						<th class="text-center">
-							Actions
-						</th>
+						<th class="text-center">Actions</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -779,21 +690,15 @@ if( !class_exists('User') ):
 		}
 
 		//Process functions starts here
-		public function user__login__process()
-		{
+		public function user__login__process(){
 			global $device;
 			extract($_POST);
-			if(email_exists($user_name))
-			{
+			if(email_exists($user_name)){
 				$user = get_user_by('email',$user_name);
-				if(check_password($user_pass,$user->ID))
-				{
-					if(!is_user_active($user->ID))
-					{
+				if(check_password($user_pass,$user->ID)){
+					if(!is_user_active($user->ID)){
 						return 2;
-					}
-					else
-					{
+					}else{
 						set_current_user($user->ID);
 						$this->database->insert(TBL_ACCESS_LOG,
 							array(
@@ -805,20 +710,15 @@ if( !class_exists('User') ):
 						);
 						return 1;
 					}
-				}
-				else
-				{
+				}else{
 					return 0;
 				}
-			}
-			else
-			{
+			}else{
 				return 0;
 			}
 		}
 
-		public function add__user__process()
-		{
+		public function add__user__process(){
 			extract($_POST);
 			$return = array(
 				'status' => 0,
@@ -828,55 +728,54 @@ if( !class_exists('User') ):
 			);
 
 			if(user_can('add_user')):
-			if(email_exists($user_email)):
-			$return['status'] = 2;
-			$return['message_heading'] = 'Email Already Exist';
-			$return['message'] = 'Email address you entered is already exists, please try another email address.';
-			$return['fields'] = array('user_email');
+				if(email_exists($user_email)):
+				$return['status'] = 2;
+				$return['message_heading'] = 'Email Already Exist';
+				$return['message'] = 'Email address you entered is already exists, please try another email address.';
+				$return['fields'] = array('user_email');
 			else:
-			if(!isset($centre))
-			$centre = '';
+				if(!isset($centre))
+				$centre = '';
 
-			$user_pass = password_generator();
-			$guid = get_guid(TBL_USERS);
-			$result = $this->database->insert(TBL_USERS,
-				array(
-					'ID' => $guid,
-					'first_name' => $first_name,
-					'last_name' => $last_name,
-					'user_email' => $user_email,
-					'user_role' => $user_role,
-					'user_status'=> 1,
-					'user_pass' => set_password($user_pass),
-					'centre' => $centre,
-					'created_by' => $this->current__user__id,
-				)
-			);
-			if($result):
-			$user__id = $guid;
-			update_user_meta($user__id,'gender',$gender);
-			update_user_meta($user__id,'dob',date('Y-m-d h:i:s',strtotime($dob) ) );
-			update_user_meta($user__id,'user_phone',$user_phone);
-			update_user_meta($user__id,'profile_img',$profile_img);
-			update_user_meta($user__id,'designation',$designation);
-			$notification_args = array(
-				'title' => 'New Admin Account Created',
-				'notification'=> 'You have successfully created a new admin account ('.ucfirst($first_name).' '.ucfirst($last_name).').',
-			);
-			add_user_notification($notification_args);
-			$return['status'] = 1;
-			$return['message_heading'] = 'Success !';
-			$return['message'] = 'Account has been successfully created.';
-			$return['reset_form'] = 1;
-			endif;
-			endif;
+				$user_pass = password_generator();
+				$guid = get_guid(TBL_USERS);
+				$result = $this->database->insert(TBL_USERS,
+					array(
+						'ID' => $guid,
+						'first_name' => $first_name,
+						'last_name' => $last_name,
+						'user_email' => $user_email,
+						'user_role' => $user_role,
+						'user_status'=> 1,
+						'user_pass' => set_password($user_pass),
+						'centre' => $centre,
+						'created_by' => $this->current__user__id,
+					)
+				);
+				if($result):
+					$user__id = $guid;
+					update_user_meta($user__id,'gender',$gender);
+					update_user_meta($user__id,'dob',date('Y-m-d h:i:s',strtotime($dob) ) );
+					update_user_meta($user__id,'user_phone',$user_phone);
+					update_user_meta($user__id,'profile_img',$profile_img);
+					update_user_meta($user__id,'designation',$designation);
+					$notification_args = array(
+						'title' => 'New Admin Account Created',
+						'notification'=> 'You have successfully created a new admin account ('.ucfirst($first_name).' '.ucfirst($last_name).').',
+					);
+					add_user_notification($notification_args);
+					$return['status'] = 1;
+					$return['message_heading'] = 'Success !';
+					$return['message'] = 'Account has been successfully created.';
+					$return['reset_form'] = 1;
+					endif;
+				endif;
 			endif;
 
 			return json_encode($return);
 		}
 
-		public function update__user__process()
-		{
+		public function update__user__process(){
 			extract($_POST);
 
 			$return = array(
@@ -887,91 +786,84 @@ if( !class_exists('User') ):
 			);
 
 			if(user_can('edit_user')):
-			$user = get_userdata($user_id);
-			if( is_value_exists(TBL_USERS,array('user_email' => $user_email),$user_id) ):
-			$return['status'] = 2;
-			$return['message_heading'] = 'Email Already Exist';
-			$return['message'] = 'Email address you entered is already exists, please try another email address.';
-			$return['fields'] = array('user_email');
+				$user = get_userdata($user_id);
+				if( is_value_exists(TBL_USERS,array('user_email' => $user_email),$user_id) ):
+				$return['status'] = 2;
+				$return['message_heading'] = 'Email Already Exist';
+				$return['message'] = 'Email address you entered is already exists, please try another email address.';
+				$return['fields'] = array('user_email');
 			else:
-			$check = false;
-			if(!isset($centre))
-			$centre = '';
+				$check = false;
+				if(!isset($centre))
+					$centre = '';
 
-			$result = $this->database->update(TBL_USERS,
-				array(
-					'first_name' => $first_name,
-					'last_name' => $last_name,
-					'user_email' => $user_email,
-					'user_status'=> $user_status,
-					'user_role' => $user_role,
-					'centre' => $centre,
-				),
-				array('ID'=> $user_id)
-			);
-			$check = ($result) ? true : false;
-
-			$result1 = false;
-			if($user_pass != '')
-			{
-				$result1 = $this->database->update(TBL_USERS,array('user_pass'=> set_password($user_pass)),array('ID'=> $user_id));
-			}
-			$check = ($result1) ? true : $check;
-			if($result1)
-			{
-				//update_user_meta($user_id,'reset_password',1);
-				$notification_args = array(
-					'title' => 'Admin Account Password Reset',
-					'notification'=> 'You have successfully changed ('.ucfirst($first_name).' '.ucfirst($last_name).') account password.',
+				$result = $this->database->update(TBL_USERS,
+					array(
+						'first_name' => $first_name,
+						'last_name' => $last_name,
+						'user_email' => $user_email,
+						'user_status'=> $user_status,
+						'user_role' => $user_role,
+						'centre' => $centre,
+					),
+					array('ID'=> $user_id)
 				);
-				add_user_notification($notification_args);
-			}
+				$check = ($result) ? true : false;
 
-			if($check):
-			update_user_meta($user_id,'gender',$gender);
-			update_user_meta($user_id,'dob',date('Y-m-d h:i:s',strtotime($dob) ) );
-			update_user_meta($user_id,'user_phone',$user_phone);
-			update_user_meta($user_id,'profile_img',$profile_img);
-			update_user_meta($user_id,'designation',$designation);
-			$notification_args = array(
-				'title' => 'Admin Account Details updated',
-				'notification'=> 'You have successfully updated ('.ucfirst($first_name).' '.ucfirst($last_name).') account details.',
-			);
-			add_user_notification($notification_args);
-			$return['status'] = 1;
-			$return['message_heading'] = 'Success !';
-			$return['message'] = 'Account has been successfully updated.';
-			endif;
-			endif;
+				$result1 = false;
+				if($user_pass != ''){
+					$result1 = $this->database->update(TBL_USERS,array('user_pass'=> set_password($user_pass)),array('ID'=> $user_id));
+				}
+				$check = ($result1) ? true : $check;
+				if($result1){
+					//update_user_meta($user_id,'reset_password',1);
+					$notification_args = array(
+						'title' => 'Admin Account Password Reset',
+						'notification'=> 'You have successfully changed ('.ucfirst($first_name).' '.ucfirst($last_name).') account password.',
+					);
+					add_user_notification($notification_args);
+				}
+
+				if($check):
+					update_user_meta($user_id,'gender',$gender);
+					update_user_meta($user_id,'dob',date('Y-m-d h:i:s',strtotime($dob) ) );
+					update_user_meta($user_id,'user_phone',$user_phone);
+					update_user_meta($user_id,'profile_img',$profile_img);
+					update_user_meta($user_id,'designation',$designation);
+					$notification_args = array(
+						'title' => 'Admin Account Details updated',
+						'notification'=> 'You have successfully updated ('.ucfirst($first_name).' '.ucfirst($last_name).') account details.',
+					);
+					add_user_notification($notification_args);
+					$return['status'] = 1;
+					$return['message_heading'] = 'Success !';
+					$return['message'] = 'Account has been successfully updated.';
+					endif;
+				endif;
 			endif;
 
 			return json_encode($return);
 		}
 
-		public function upload__image__process()
-		{
+		public function upload__image__process(){
 			$upload_str = '/uploads/profile_images/'.date('Y').'/'.date('m').'/';
 			$upload_img = ABSPATH . CONTENT . $upload_str;
 			$upload_url = '/content/'.$upload_str;
 			if(!file_exists($upload_img))
 			mkdir($upload_img, 0755, true);
-			if(isset($_FILES["photo"]) && $_FILES["photo"]["size"] > 0)
-			{
+			if(isset($_FILES["photo"]) && $_FILES["photo"]["size"] > 0){
 				$sourcePath = $_FILES["photo"]["tmp_name"];
 				$file = pathinfo($_FILES['photo']['name']);
 				$fileType = $file["extension"];
 				$full_img = 'profile-img-'.time().'.'.$fileType;
 				createThumb($sourcePath, $upload_img.$full_img,$fileType,300,300,300);
 				return $upload_url.$full_img;
-			}
-			else
-			{
+			}else{
 				return 0;
 			}
 		}
 
-		public function account__status__change__process()
-		{
+		public function account__status__change__process(){
 			extract($_POST);
 			$id = trim($id);
 			$return = array(
@@ -981,56 +873,53 @@ if( !class_exists('User') ):
 				'reset_form' => 0
 			);
 			if(is_admin() && $this->current__user__id != $id):
-			$user = get_userdata($id);
-			$args = array('ID'=> $id);
-			$result = $this->database->update(TBL_USERS,array('user_status'=> $status),$args);
+				$user = get_userdata($id);
+				$args = array('ID'=> $id);
+				$result = $this->database->update(TBL_USERS,array('user_status'=> $status),$args);
 
-			if($result):
-			if($status == 0)
-			{
-				$notification_args = array(
-					'title' => ucfirst($user->user_role).' Account Disabled',
-					'notification'=> 'You have successfully disbled ('.ucfirst($user->first_name).' '.ucfirst($user->last_name).') account.',
-				);
-				$return['message'] = 'You have successfully disbled ('.ucfirst($user->first_name).' '.ucfirst($user->last_name).') account.';
-			}
-			else
-			{
-				$notification_args = array(
-					'title' => ucfirst($user->user_role).' Account Enabled',
-					'notification'=> 'You have successfully enabled ('.ucfirst($user->first_name).' '.ucfirst($user->last_name).') account.',
-				);
-				$return['message'] = 'You have successfully enabled ('.ucfirst($user->first_name).' '.ucfirst($user->last_name).') account.';
-			}
-			add_user_notification($notification_args);
-			$return['status'] = 1;
-			$return['message_heading'] = 'Success !';
-			endif;
+				if($result):
+					if($status == 0){
+						$notification_args = array(
+							'title' => ucfirst($user->user_role).' Account Disabled',
+							'notification'=> 'You have successfully disbled ('.ucfirst($user->first_name).' '.ucfirst($user->last_name).') account.',
+						);
+						$return['message'] = 'You have successfully disbled ('.ucfirst($user->first_name).' '.ucfirst($user->last_name).') account.';
+					}
+					else{
+						$notification_args = array(
+							'title' => ucfirst($user->user_role).' Account Enabled',
+							'notification'=> 'You have successfully enabled ('.ucfirst($user->first_name).' '.ucfirst($user->last_name).') account.',
+						);
+						$return['message'] = 'You have successfully enabled ('.ucfirst($user->first_name).' '.ucfirst($user->last_name).') account.';
+					}
+					add_user_notification($notification_args);
+					$return['status'] = 1;
+					$return['message_heading'] = 'Success !';
+				endif;
 			endif;
 			return json_encode($return);
 		}
 
-		public function delete__user__process()
-		{
+		public function delete__user__process(){
 			extract($_POST);
 			$id = trim($id);
 			if(is_admin() && $this->current__user__id != $id):
-			$user = get_userdata($id);
-			$args = array('ID'=> $id);
-			$result = $this->database->delete(TBL_USERS,$args);
-			if($result):
-			$this->database->delete(TBL_USERMETA,array('user_id'=> $id));
-			$notification_args = array(
-				'title' => 'Account deleted',
-				'notification'=> 'You have successfully deleted ('.ucfirst($user->first_name).' '.ucfirst($user->last_name).') account.',
-			);
-			add_user_notification($notification_args);
-			return 1;
+				$user = get_userdata($id);
+				$args = array('ID'=> $id);
+				$result = $this->database->delete(TBL_USERS,$args);
+				if($result):
+					$this->database->delete(TBL_USERMETA,array('user_id'=> $id));
+					$notification_args = array(
+						'title' => 'Account deleted',
+						'notification'=> 'You have successfully deleted ('.ucfirst($user->first_name).' '.ucfirst($user->last_name).') account.',
+					);
+					add_user_notification($notification_args);
+					return 1;
+				else:
+					return 0;
+				endif;
 			else:
-			return 0;
-			endif;
-			else:
-			return 0;
+				return 0;
 			endif;
 		}
 	}
