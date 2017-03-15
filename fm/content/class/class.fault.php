@@ -1458,6 +1458,7 @@ if( !class_exists('Fault') ):
 				$equipment = get_tabledata(TBL_EQUIPMENTS,true,array('ID'=> $fault->equipment));
 				$fault_type = get_tabledata(TBL_FAULT_TYPES,true,array('ID'=> $fault->fault_type));
 				$row = array();
+				array_push($row, __($fault->name));
 				array_push($row, __($centre->name));
 				array_push($row, __($equipment_type->name));
 				array_push($row, __($equipment->name));
