@@ -3,19 +3,16 @@
 if(!defined('ABSPATH')) exit;
 
 if( !class_exists('Header') ):
-class Header
-{
+class Header{
 	private $database;
 	private $profile;
-	function __construct()
-	{
+	function __construct(){
 		global $db,$Profile;
 		$this->database = $db;
 		$this->profile = $Profile;
 	}
 
-	public function head()
-	{
+	public function head(){
 		ob_start();
 		?>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -64,6 +61,7 @@ class Header
 		<script>
 			var site_url = '<?php echo site_url();?>';
 			var ajax_url = '<?php echo PROCESS_URL;?>';
+			var table_ajax_url = '<?php echo TABLE_PROCESS_URL;?>';
 		</script>
 		<?php echo $this->scripts(); ?>
 		<?php
@@ -71,150 +69,95 @@ class Header
 		return $content;
 	}
 
-	public function scripts()
-	{
+	public function scripts(){
 		ob_start();
 		?>
 		<!-- jQuery -->
-		<script src="<?php echo JS_URL;?>jquery.min.js">
-		</script>
+		<script src="<?php echo JS_URL;?>jquery.min.js"></script>
 		<!-- jQuery -->
-		<script src="<?php echo JS_URL;?>jquery-ui.js">
-		</script>
+		<script src="<?php echo JS_URL;?>jquery-ui.js"></script>
 		<!-- canvas dot -->
-		<script src="<?php echo JS_URL;?>canvasdots.js">
-		</script>
+		<script src="<?php echo JS_URL;?>canvasdots.js"></script>
 		<!-- Bootstrap -->
-		<script src="<?php echo JS_URL;?>bootstrap.min.js">
-		</script>
+		<script src="<?php echo JS_URL;?>bootstrap.min.js"></script>
 		<!-- FastClick -->
-		<script src="<?php echo JS_URL;?>fastclick.js">
-		</script>
+		<script src="<?php echo JS_URL;?>fastclick.js"></script>
 		<!-- NProgress -->
-		<script src="<?php echo JS_URL;?>nprogress.js">
-		</script>
+		<script src="<?php echo JS_URL;?>nprogress.js"></script>
 		<!-- morris.js -->
-		<script src="<?php echo JS_URL;?>raphael.min.js">
-		</script>
-		<script src="<?php echo JS_URL;?>morris.min.js">
-		</script>
+		<script src="<?php echo JS_URL;?>raphael.min.js"></script>
+		<script src="<?php echo JS_URL;?>morris.min.js"></script>
 		<!-- Chart.js -->
-		<script src="<?php echo JS_URL;?>Chart.min.js">
-		</script>
+		<script src="<?php echo JS_URL;?>Chart.min.js"></script>
 		<!-- gauge.js -->
-		<script src="<?php echo JS_URL;?>gauge.min.js">
-		</script>
+		<script src="<?php echo JS_URL;?>gauge.min.js"></script>
 		<!-- bootstrap-progressbar -->
-		<script src="<?php echo JS_URL;?>bootstrap-progressbar.min.js">
-		</script>
+		<script src="<?php echo JS_URL;?>bootstrap-progressbar.min.js"></script>
 		<!-- iCheck -->
-		<script src="<?php echo JS_URL;?>icheck.min.js">
-		</script>
+		<script src="<?php echo JS_URL;?>icheck.min.js"></script>
 		<!-- Skycons -->
-		<script src="<?php echo JS_URL;?>skycons.js">
-		</script>
+		<script src="<?php echo JS_URL;?>skycons.js"></script>
 		<!-- Flot -->
-		<script src="<?php echo JS_URL;?>jquery.flot.js">
-		</script>
-		<script src="<?php echo JS_URL;?>jquery.flot.pie.js">
-		</script>
-		<script src="<?php echo JS_URL;?>jquery.flot.time.js">
-		</script>
-		<script src="<?php echo JS_URL;?>jquery.flot.stack.js">
-		</script>
-		<script src="<?php echo JS_URL;?>jquery.flot.resize.js">
-		</script>
+		<script src="<?php echo JS_URL;?>jquery.flot.js"></script>
+		<script src="<?php echo JS_URL;?>jquery.flot.pie.js"></script>
+		<script src="<?php echo JS_URL;?>jquery.flot.time.js"></script>
+		<script src="<?php echo JS_URL;?>jquery.flot.stack.js"></script>
+		<script src="<?php echo JS_URL;?>jquery.flot.resize.js"></script>
 		<!-- Flot plugins -->
-		<script src="<?php echo JS_URL;?>jquery.flot.orderBars.js">
-		</script>
-		<script src="<?php echo JS_URL;?>date.js">
-		</script>
-		<script src="<?php echo JS_URL;?>jquery.flot.spline.js">
-		</script>
-		<script src="<?php echo JS_URL;?>curvedLines.js">
-		</script>
+		<script src="<?php echo JS_URL;?>jquery.flot.orderBars.js"></script>
+		<script src="<?php echo JS_URL;?>date.js"></script>
+		<script src="<?php echo JS_URL;?>jquery.flot.spline.js"></script>
+		<script src="<?php echo JS_URL;?>curvedLines.js"></script>
 		<!-- jVectorMap -->
-		<script src="<?php echo JS_URL;?>jquery-jvectormap-2.0.3.min.js">
-		</script>
+		<script src="<?php echo JS_URL;?>jquery-jvectormap-2.0.3.min.js"></script>
 		<!-- bootstrap-daterangepicker -->
-		<script src="<?php echo JS_URL;?>moment.min.js">
-		</script>
-		<script src="<?php echo JS_URL;?>fullcalendar.min.js">
-		</script>
-		<script src="<?php echo JS_URL;?>daterangepicker.js">
-		</script>
+		<script src="<?php echo JS_URL;?>moment.min.js"></script>
+		<script src="<?php echo JS_URL;?>fullcalendar.min.js"></script>
+		<script src="<?php echo JS_URL;?>daterangepicker.js"></script>
 		<!-- datatables -->
-		<script src="<?php echo JS_URL;?>jquery.dataTables.min.js">
-		</script>
-		<script src="<?php echo JS_URL;?>dataTables.bootstrap.min.js">
-		</script>
-		<script src="<?php echo JS_URL;?>dataTables.buttons.min.js">
-		</script>
-		<script src="<?php echo JS_URL;?>buttons.bootstrap.min.js">
-		</script>
-		<script src="<?php echo JS_URL;?>buttons.flash.min.js">
-		</script>
-		<script src="<?php echo JS_URL;?>buttons.html5.min.js">
-		</script>
-		<script src="<?php echo JS_URL;?>buttons.print.min.js">
-		</script>
-		<script src="<?php echo JS_URL;?>dataTables.fixedHeader.min.js">
-		</script>
-		<script src="<?php echo JS_URL;?>dataTables.keyTable.min.js">
-		</script>
-		<script src="<?php echo JS_URL;?>dataTables.responsive.min.js">
-		</script>
-		<script src="<?php echo JS_URL;?>responsive.bootstrap.js">
-		</script>
-		<script src="<?php echo JS_URL;?>datatables.scroller.min.js">
-		</script>
-		<script src="<?php echo JS_URL;?>jszip.min.js">
-		</script>
-		<script src="<?php echo JS_URL;?>pdfmake.min.js">
-		</script>
-		<script src="<?php echo JS_URL;?>vfs_fonts.js">
-		</script>
-		<script src="<?php echo JS_URL;?>bootstrap-wysiwyg.min.js">
-		</script>
-		<script src="<?php echo JS_URL;?>jquery.hotkeys.js">
-		</script>
-		<script src="<?php echo JS_URL;?>prettify.js">
-		</script>
+		<script src="<?php echo JS_URL;?>jquery.dataTables.min.js"></script>
+		<script src="<?php echo JS_URL;?>dataTables.bootstrap.min.js"></script>
+		<script src="<?php echo JS_URL;?>dataTables.buttons.min.js"></script>
+		<script src="<?php echo JS_URL;?>buttons.bootstrap.min.js"></script>
+		<script src="<?php echo JS_URL;?>buttons.flash.min.js"></script>
+		<script src="<?php echo JS_URL;?>buttons.html5.min.js"></script>
+		<script src="<?php echo JS_URL;?>buttons.print.min.js"></script>
+		<script src="<?php echo JS_URL;?>dataTables.fixedHeader.min.js"></script>
+		<script src="<?php echo JS_URL;?>dataTables.keyTable.min.js"></script>
+		<script src="<?php echo JS_URL;?>dataTables.responsive.min.js"></script>
+		<script src="<?php echo JS_URL;?>responsive.bootstrap.js"></script>
+		<script src="<?php echo JS_URL;?>datatables.scroller.min.js"></script>
+		<script src="<?php echo JS_URL;?>jszip.min.js"></script>
+		<script src="<?php echo JS_URL;?>pdfmake.min.js"></script>
+		<script src="<?php echo JS_URL;?>vfs_fonts.js"></script>
+		<script src="<?php echo JS_URL;?>bootstrap-wysiwyg.min.js"></script>
+		<script src="<?php echo JS_URL;?>jquery.hotkeys.js"></script>
+		<script src="<?php echo JS_URL;?>prettify.js"></script>
 		<!-- jQuery Tags Input -->
-		<script src="<?php echo JS_URL;?>jquery.tagsinput.js">
-		</script>
+		<script src="<?php echo JS_URL;?>jquery.tagsinput.js"></script>
 		<!-- Switchery -->
-		<script src="<?php echo JS_URL;?>switchery.min.js">
-		</script>
+		<script src="<?php echo JS_URL;?>switchery.min.js"></script>
 		<!-- Select2 -->
-		<script src="<?php echo JS_URL;?>select2.full.min.js">
-		</script>
+		<script src="<?php echo JS_URL;?>select2.full.min.js"></script>
 		<!-- Parsley -->
-		<script src="<?php echo JS_URL;?>parsley.min.js">
-		</script>
+		<script src="<?php echo JS_URL;?>parsley.min.js"></script>
 		<!-- Autosize -->
-		<script src="<?php echo JS_URL;?>autosize.min.js">
-		</script>
+		<script src="<?php echo JS_URL;?>autosize.min.js"></script>
 		<!-- jQuery autocomplete -->
-		<script src="<?php echo JS_URL;?>jquery.autocomplete.min.js">
-		</script>
+		<script src="<?php echo JS_URL;?>jquery.autocomplete.min.js"></script>
 		<!-- starrr -->
-		<script src="<?php echo JS_URL;?>starrr.js">
-		</script>
+		<script src="<?php echo JS_URL;?>starrr.js"></script>
 		<!-- p notify -->
 		<script src="<?php echo JS_URL;?>pnotify.js">
 		</script>
-		<script src="<?php echo JS_URL;?>pnotify.buttons.js">
-		</script>
-		<script src="<?php echo JS_URL;?>pnotify.nonblock.js">
-		</script>
+		<script src="<?php echo JS_URL;?>pnotify.buttons.js"></script>
+		<script src="<?php echo JS_URL;?>pnotify.nonblock.js"></script>
 		<?php
 		$content = ob_get_clean();
 		return $content;
 	}
 
-	public function header()
-	{
+	public function header(){
 		ob_start();
 		echo $this->sidebar();
 		echo $this->top_bar();
@@ -222,8 +165,7 @@ class Header
 		return $content;
 	}
 
-	public function sidebar()
-	{
+	public function sidebar(){
 		ob_start();
 		?>
 		<!--Sidebar start-->
@@ -231,16 +173,12 @@ class Header
 			<div class="left_col scroll-view">
 				<div class="navbar nav_title" style="border: 0;">
 					<a href="<?php echo site_url().'/dashboard/';?>" class="site_title">
-						<i class="fa fa-ravelry">
-						</i>
-						<span>
-							<?php echo get_site_name();?>
-						</span>
+						<i class="fa fa-ravelry"></i>
+						<span><?php echo get_site_name();?></span>
 					</a>
 				</div>
 
-				<div class="clearfix">
-				</div>
+				<div class="clearfix"></div>
 
 				<!-- menu profile quick info -->
 				<div class="profile">
@@ -248,18 +186,13 @@ class Header
 						<img src="<?php echo get_current_user_profile_image();?>" alt="..." class="img-circle profile_img">
 					</div>
 					<div class="profile_info">
-						<span>
-							Welcome,
-						</span>
-						<h2>
-							<?php echo get_current_user_name();?>
-						</h2>
+						<span>Welcome,</span>
+						<h2><?php echo get_current_user_name();?></h2>
 					</div>
 				</div>
 				<!-- /menu profile quick info -->
 
-				<div class="clearfix">
-				</div>
+				<div class="clearfix"></div>
 				<!-- sidebar menu -->
 				<div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
 					<div class="menu_section">
@@ -267,10 +200,7 @@ class Header
 						<ul class="nav side-menu">
 							<li>
 								<a>
-									<i class="fa fa-home">
-									</i>Home
-									<span class="fa fa-chevron-down">
-									</span>
+									<i class="fa fa-home"></i>Home <span class="fa fa-chevron-down"></span>
 								</a>
 								<ul class="nav child_menu">
 									<li>
@@ -318,8 +248,7 @@ class Header
 								</ul>
 							</li>
 
-							<?php
-							if( user_can('view_user') || user_can('edit_user') || user_can('add_user')): ?>
+							<?php if( user_can('view_user') || user_can('edit_user') || user_can('add_user')): ?>
 							<li>
 								<a>
 									<i class="fa fa-user">
@@ -328,29 +257,26 @@ class Header
 									</span>
 								</a>
 								<ul class="nav child_menu">
-									<?php
-									if( user_can('view_user') ): ?>
+									<?php if( user_can('view_user') ): ?>
 									<li>
 										<a href="<?php echo site_url().'/users/';?>">
 											All Users
 										</a>
 									</li>
 									<?php endif;?>
-									<?php
-									if( user_can('edit_user') || user_can('add_user')): ?>
+									<?php if( user_can('edit_user') || user_can('add_user')): ?>
 									<li>
 										<a href="<?php echo site_url();?>/add-new-user/">
 											Add New User
 										</a>
 									</li>
-									<li class="hidden-xs hidden-lg">
+									<li class="hidden">
 										<a href="<?php echo site_url();?>/edit-user/">
 										</a>
 									</li>
 									<?php endif;?>
-									<?php
-									if( user_can('view_user') ): ?>
-									<li class="hidden-xs hidden-lg">
+									<?php if( user_can('view_user') ): ?>
+									<li class="hidden">
 										<a href="<?php echo site_url();?>/view-user/">
 										</a>
 									</li>
@@ -359,8 +285,7 @@ class Header
 							</li>
 							<?php endif; ?>
 
-							<?php
-							if( user_can('view_centre') || user_can('edit_centre') || user_can('add_centre') || user_can('view_region') || user_can('edit_region') || user_can('add_region') || user_can('view_region_body') || user_can('edit_region_body') || user_can('add_region_body')): ?>
+							<?php if( user_can('view_centre') || user_can('edit_centre') || user_can('add_centre') || user_can('view_region') || user_can('edit_region') || user_can('add_region') || user_can('view_region_body') || user_can('edit_region_body') || user_can('add_region_body')): ?>
 							<li>
 								<a>
 									<i class="fa fa-cubes">
@@ -369,8 +294,7 @@ class Header
 									</span>
 								</a>
 								<ul class="nav child_menu">
-									<?php
-									if( user_can('view_centre') || user_can('edit_centre') || user_can('add_centre')): ?>
+									<?php if( user_can('view_centre') || user_can('edit_centre') || user_can('add_centre')): ?>
 									<li>
 										<a>
 											Centres
@@ -378,8 +302,7 @@ class Header
 											</span>
 										</a>
 										<ul class="nav child_menu">
-											<?php
-											if( user_can('view_centre') ): ?>
+											<?php if( user_can('view_centre') ): ?>
 											<li>
 												<a href="<?php echo site_url();?>/centres/">
 													All Centres
@@ -387,14 +310,13 @@ class Header
 											</li>
 											<?php endif;?>
 
-											<?php
-											if( user_can('edit_centre') || user_can('add_centre')): ?>
+											<?php if( user_can('edit_centre') || user_can('add_centre')): ?>
 											<li>
 												<a href="<?php echo site_url();?>/add-new-centre/">
 													Add New Centre
 												</a>
 											</li>
-											<li class="hidden-xs hidden-lg">
+											<li class="hidden">
 												<a href="<?php echo site_url();?>/edit-centre/">
 												</a>
 											</li>
@@ -403,8 +325,7 @@ class Header
 									</li>
 									<?php endif;?>
 
-									<?php
-									if( user_can('view_region') || user_can('edit_region') || user_can('add_region')): ?>
+									<?php if( user_can('view_region') || user_can('edit_region') || user_can('add_region')): ?>
 									<li>
 										<a>
 											Regions
@@ -412,8 +333,7 @@ class Header
 											</span>
 										</a>
 										<ul class="nav child_menu">
-											<?php
-											if( user_can('view_region') ): ?>
+											<?php if( user_can('view_region') ): ?>
 											<li>
 												<a href="<?php echo site_url();?>/regions/">
 													All Regions
@@ -421,14 +341,13 @@ class Header
 											</li>
 											<?php endif;?>
 
-											<?php
-											if( user_can('edit_region') || user_can('add_region')): ?>
+											<?php if( user_can('edit_region') || user_can('add_region')): ?>
 											<li>
 												<a href="<?php echo site_url();?>/add-new-region/">
 													Add New Region
 												</a>
 											</li>
-											<li class="hidden-xs hidden-lg">
+											<li class="hidden">
 												<a href="<?php echo site_url();?>/edit-region/">
 												</a>
 											</li>
@@ -437,8 +356,7 @@ class Header
 									</li>
 									<?php endif;?>
 
-									<?php
-									if( user_can('view_region_body') || user_can('edit_region_body') || user_can('add_region_body')): ?>
+									<?php if( user_can('view_region_body') || user_can('edit_region_body') || user_can('add_region_body')): ?>
 									<li>
 										<a>
 											Region Body
@@ -446,8 +364,7 @@ class Header
 											</span>
 										</a>
 										<ul class="nav child_menu">
-											<?php
-											if( user_can('view_region_body') ): ?>
+											<?php if( user_can('view_region_body') ): ?>
 											<li>
 												<a href="<?php echo site_url();?>/region-body/">
 													All Region Body
@@ -455,14 +372,13 @@ class Header
 											</li>
 											<?php endif;?>
 
-											<?php
-											if( user_can('edit_region_body') || user_can('add_region_body')): ?>
+											<?php if( user_can('edit_region_body') || user_can('add_region_body')): ?>
 											<li>
 												<a href="<?php echo site_url();?>/add-new-region-body/">
 													Add New Region Body
 												</a>
 											</li>
-											<li class="hidden-xs hidden-lg">
+											<li class="hidden">
 												<a href="<?php echo site_url();?>/edit-region-body/">
 												</a>
 											</li>
@@ -474,12 +390,11 @@ class Header
 							</li>
 							<?php endif;?>
 
-							<?php
-							if( user_can('view_equipment') || user_can('edit_equipment') || user_can('add_equipment') || user_can('view_equipment_type') || user_can('edit_equipment_type') || user_can('add_equipment_type') || user_can('view_service_agent') || user_can('edit_service_agent') || user_can('add_service_agent') || user_can('edit_manufacturer') || user_can('add_manufacturer') || user_can('view_manufacturer') || user_can('edit_model') || user_can('add_model') || user_can('view_model') || user_can('edit_supplier') || user_can('add_supplier') || user_can('view_supplier')): ?>
+							<?php if( user_can('view_equipment') || user_can('edit_equipment') || user_can('add_equipment') || user_can('view_equipment_type') || user_can('edit_equipment_type') || user_can('add_equipment_type') || user_can('view_service_agent') || user_can('edit_service_agent') || user_can('add_service_agent') || user_can('edit_manufacturer') || user_can('add_manufacturer') || user_can('view_manufacturer') || user_can('edit_model') || user_can('add_model') || user_can('view_model') || user_can('edit_supplier') || user_can('add_supplier') || user_can('view_supplier')): ?>
 							<li>
 								<a>
 									<i class="fa fa-certificate">
-									</i>Manage Equipments
+									</i>Manage Equipment
 									<span class="fa fa-chevron-down">
 									</span>
 								</a>
@@ -488,33 +403,31 @@ class Header
 									if( user_can('view_equipment') || user_can('edit_equipment') || user_can('add_equipment') ): ?>
 									<li>
 										<a>
-											Equipments
+											Equipment
 											<span class="fa fa-chevron-down">
 											</span>
 										</a>
 										<ul class="nav child_menu">
-											<?php
-											if( user_can('view_equipment') ): ?>
+											<?php if( user_can('view_equipment') ): ?>
 											<li>
 												<a href="<?php echo site_url();?>/equipments/">
-													All Equipments
+													All Equipment
 												</a>
 											</li>
-											<li class="hidden-xs hidden-lg">
+											<li class="hidden">
 												<a href="<?php echo site_url();?>/view-equipment/">
 													View Equipment
 												</a>
 											</li>
 											<?php endif;?>
 
-											<?php
-											if( user_can('edit_equipment') || user_can('add_equipment') ): ?>
+											<?php if( user_can('edit_equipment') || user_can('add_equipment') ): ?>
 											<li>
 												<a href="<?php echo site_url();?>/add-new-equipment/">
 													Add New Equipment
 												</a>
 											</li>
-											<li class="hidden-xs hidden-lg">
+											<li class="hidden">
 												<a href="<?php echo site_url();?>/edit-equipment/">
 													Edit Equipment
 												</a>
@@ -525,8 +438,7 @@ class Header
 									</li>
 									<?php endif;?>
 
-									<?php
-									if( user_can('view_equipment_type') || user_can('edit_equipment_type') || user_can('add_equipment_type') ): ?>
+									<?php if( user_can('view_equipment_type') || user_can('edit_equipment_type') || user_can('add_equipment_type') ): ?>
 									<li>
 										<a>
 											Equipment Types
@@ -534,8 +446,7 @@ class Header
 											</span>
 										</a>
 										<ul class="nav child_menu">
-											<?php
-											if( user_can('view_equipment_type') ): ?>
+											<?php if( user_can('view_equipment_type') ): ?>
 											<li>
 												<a href="<?php echo site_url();?>/equipment-types/">
 													All Equipment Types
@@ -543,14 +454,13 @@ class Header
 											</li>
 											<?php endif;?>
 
-											<?php
-											if( user_can('edit_equipment_type') || user_can('add_equipment_type') ): ?>
+											<?php if( user_can('edit_equipment_type') || user_can('add_equipment_type') ): ?>
 											<li>
 												<a href="<?php echo site_url();?>/add-new-equipment-type/">
 													Add New Equipment Type
 												</a>
 											</li>
-											<li class="hidden-xs hidden-lg">
+											<li class="hidden">
 												<a href="<?php echo site_url();?>/edit-equipment-type/">
 													Edit Equipment Type
 												</a>
@@ -560,8 +470,7 @@ class Header
 									</li>
 									<?php endif;?>
 
-									<?php
-									if( user_can('view_service_agent') || user_can('edit_service_agent') || user_can('add_service_agent') ): ?>
+									<?php if( user_can('view_service_agent') || user_can('edit_service_agent') || user_can('add_service_agent') ): ?>
 									<li>
 										<a>
 											Service Agents
@@ -569,8 +478,7 @@ class Header
 											</span>
 										</a>
 										<ul class="nav child_menu">
-											<?php
-											if( user_can('view_service_agent') ): ?>
+											<?php if( user_can('view_service_agent') ): ?>
 											<li>
 												<a href="<?php echo site_url();?>/service-agents/">
 													All Service Agents
@@ -578,14 +486,13 @@ class Header
 											</li>
 											<?php endif;?>
 
-											<?php
-											if( user_can('edit_service_agent') || user_can('add_service_agent') ): ?>
+											<?php if( user_can('edit_service_agent') || user_can('add_service_agent') ): ?>
 											<li>
 												<a href="<?php echo site_url();?>/add-new-service-agent/">
 													Add New Service Agent
 												</a>
 											</li>
-											<li class="hidden-xs hidden-lg">
+											<li class="hidden">
 												<a href="<?php echo site_url();?>/edit-service-agent/">
 													Edit Service Agent
 												</a>
@@ -595,8 +502,7 @@ class Header
 									</li>
 									<?php endif;?>
 
-									<?php
-									if( user_can('edit_manufacturer') || user_can('add_manufacturer') || user_can('view_manufacturer') ): ?>
+									<?php if( user_can('edit_manufacturer') || user_can('add_manufacturer') || user_can('view_manufacturer') ): ?>
 									<li>
 										<a>
 											Manufacturers
@@ -604,8 +510,7 @@ class Header
 											</span>
 										</a>
 										<ul class="nav child_menu">
-											<?php
-											if( user_can('view_manufacturer') ): ?>
+											<?php if( user_can('view_manufacturer') ): ?>
 											<li>
 												<a href="<?php echo site_url();?>/manufacturers/">
 													All Manufacturers
@@ -613,14 +518,13 @@ class Header
 											</li>
 											<?php endif;?>
 
-											<?php
-											if( user_can('edit_manufacturer') || user_can('add_manufacturer') ): ?>
+											<?php if( user_can('edit_manufacturer') || user_can('add_manufacturer') ): ?>
 											<li>
 												<a href="<?php echo site_url();?>/add-new-manufacturer/">
 													Add New Manufacturer
 												</a>
 											</li>
-											<li class="hidden-xs hidden-lg">
+											<li class="hidden">
 												<a href="<?php echo site_url();?>/edit-manufacturer/">
 													Edit Manufacturer
 												</a>
@@ -630,8 +534,7 @@ class Header
 									</li>
 									<?php endif;?>
 
-									<?php
-									if( user_can('edit_model') || user_can('add_model') || user_can('view_model') ): ?>
+									<?php if( user_can('edit_model') || user_can('add_model') || user_can('view_model') ): ?>
 									<li>
 										<a>
 											Models
@@ -639,8 +542,7 @@ class Header
 											</span>
 										</a>
 										<ul class="nav child_menu">
-											<?php
-											if( user_can('view_model') ): ?>
+											<?php if( user_can('view_model') ): ?>
 											<li>
 												<a href="<?php echo site_url();?>/models/">
 													All Models
@@ -648,14 +550,13 @@ class Header
 											</li>
 											<?php endif;?>
 
-											<?php
-											if( user_can('edit_model') || user_can('add_model') ): ?>
+											<?php if( user_can('edit_model') || user_can('add_model') ): ?>
 											<li>
 												<a href="<?php echo site_url();?>/add-new-model/">
 													Add New Model
 												</a>
 											</li>
-											<li class="hidden-xs hidden-lg">
+											<li class="hidden">
 												<a href="<?php echo site_url();?>/edit-model/">
 													Edit Model
 												</a>
@@ -665,8 +566,7 @@ class Header
 									</li>
 									<?php endif;?>
 
-									<?php
-									if( user_can('edit_supplier') || user_can('add_supplier') || user_can('view_supplier') ): ?>
+									<?php if( user_can('edit_supplier') || user_can('add_supplier') || user_can('view_supplier') ): ?>
 									<li>
 										<a>
 											Suppliers
@@ -674,8 +574,7 @@ class Header
 											</span>
 										</a>
 										<ul class="nav child_menu">
-											<?php
-											if( user_can('view_supplier') ): ?>
+											<?php if( user_can('view_supplier') ): ?>
 											<li>
 												<a href="<?php echo site_url();?>/suppliers/">
 													All Suppliers
@@ -683,14 +582,13 @@ class Header
 											</li>
 											<?php endif;?>
 
-											<?php
-											if( user_can('edit_supplier') || user_can('add_supplier') ): ?>
+											<?php if( user_can('edit_supplier') || user_can('add_supplier') ): ?>
 											<li>
 												<a href="<?php echo site_url();?>/add-new-supplier/">
 													Add New Supplier
 												</a>
 											</li>
-											<li class="hidden-xs hidden-lg">
+											<li class="hidden">
 												<a href="<?php echo site_url();?>/edit-supplier/">
 													Edit Supplier
 												</a>
@@ -703,8 +601,7 @@ class Header
 							</li>
 							<?php endif;?>
 
-							<?php
-							if( user_can('view_fault') || user_can('edit_fault') || user_can('add_fault') || user_can('view_fault_type') || user_can('edit_fault_type') || user_can('add_fault_type') ): ?>
+							<?php if( user_can('view_fault') || user_can('edit_fault') || user_can('add_fault') || user_can('view_fault_type') || user_can('edit_fault_type') || user_can('add_fault_type') ): ?>
 							<li>
 								<a>
 									<i class="fa fa-exclamation-circle">
@@ -713,8 +610,7 @@ class Header
 									</span>
 								</a>
 								<ul class="nav child_menu">
-									<?php
-									if( user_can('view_fault') || user_can('edit_fault') || user_can('add_fault')): ?>
+									<?php if( user_can('view_fault') || user_can('edit_fault') || user_can('add_fault')): ?>
 									<li>
 										<a>
 											Faults
@@ -722,27 +618,25 @@ class Header
 											</span>
 										</a>
 										<ul class="nav child_menu">
-											<?php
-											if( user_can('view_fault') ): ?>
+											<?php if( user_can('view_fault') ): ?>
 											<li>
 												<a href="<?php echo site_url();?>/faults/">
 													All Faults
 												</a>
 											</li>
-											<li class="hidden-xs hidden-lg">
+											<li class="hidden">
 												<a href="<?php echo site_url();?>/view-fault/">
 												</a>
 											</li>
 											<?php endif;?>
 
-											<?php
-											if( user_can('edit_fault') || user_can('add_fault')): ?>
+											<?php if( user_can('edit_fault') || user_can('add_fault')): ?>
 											<li>
 												<a href="<?php echo site_url();?>/add-new-fault/">
 													Add New Fault
 												</a>
 											</li>
-											<li class="hidden-xs hidden-lg">
+											<li class="hidden">
 												<a href="<?php echo site_url();?>/edit-fault/">
 												</a>
 											</li>
@@ -751,8 +645,7 @@ class Header
 									</li>
 									<?php endif;?>
 
-									<?php
-									if( user_can('view_fault_type') || user_can('edit_fault_type') || user_can('add_fault_type')): ?>
+									<?php if( user_can('view_fault_type') || user_can('edit_fault_type') || user_can('add_fault_type')): ?>
 									<li>
 										<a>
 											Fault Types
@@ -760,8 +653,7 @@ class Header
 											</span>
 										</a>
 										<ul class="nav child_menu">
-											<?php
-											if( user_can('view_fault_type') ): ?>
+											<?php if( user_can('view_fault_type') ): ?>
 											<li>
 												<a href="<?php echo site_url();?>/fault-types/">
 													All Fault Types
@@ -769,14 +661,13 @@ class Header
 											</li>
 											<?php endif;?>
 
-											<?php
-											if( user_can('edit_fault_type') || user_can('add_fault_type')): ?>
+											<?php if( user_can('edit_fault_type') || user_can('add_fault_type')): ?>
 											<li>
 												<a href="<?php echo site_url();?>/add-new-fault-type/">
 													Add New Fault Type
 												</a>
 											</li>
-											<li class="hidden-xs hidden-lg">
+											<li class="hidden">
 												<a href="<?php echo site_url();?>/edit-fault-type/">
 												</a>
 											</li>
@@ -788,8 +679,7 @@ class Header
 							</li>
 							<?php endif;?>
 
-							<?php
-							if(is_admin()): ?>
+							<?php if(is_admin()): ?>
 							<li>
 								<a>
 									<i class="fa fa-cog">
@@ -822,8 +712,7 @@ class Header
 		return $content;
 	}
 
-	public function top_bar()
-	{
+	public function top_bar(){
 		ob_start();
 		?>
 		<div class="top_nav">
@@ -878,8 +767,7 @@ class Header
 		return $content;
 	}
 
-	public function page__header($title,$status = true)
-	{
+	public function page__header($title,$status = true){
 		ob_start();
 		?>
 		<div class="page-title">
@@ -889,8 +777,7 @@ class Header
 				</h3>
 			</div>
 
-			<?php
-			if($status === true): ?>
+			<?php if($status === true): ?>
 			<div class="title_right">
 				<div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
 					<div class="input-group">
@@ -905,15 +792,13 @@ class Header
 			</div>
 			<?php endif; ?>
 		</div>
-		<div class="clearfix">
-		</div>
+		<div class="clearfix"></div>
 		<?php
 		$content = ob_get_clean();
 		return $content;
 	}
 
-	public function home__page__header()
-	{
+	public function home__page__header(){
 		ob_start();
 		?>
 		<nav>
@@ -934,7 +819,6 @@ class Header
 		$content = ob_get_clean();
 		return $content;
 	}
-
 }
 endif;
 ?>

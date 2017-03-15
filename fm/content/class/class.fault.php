@@ -23,14 +23,11 @@ if( !class_exists('Fault') ):
 			<form class="add-fault submit-form" method="post" autocomplete="off">
 				<div class="row">
 					<div class="col-xs-12">
-						<h3>
-							<?php _e('Centre with Fault');?>
-						</h3>
-						<hr>
+						<h3><?php _e('Centre with Fault');?></h3><hr>
 					</div>
 					<div class="form-group col-sm-6 col-xs-12">
 						<label for="centre">Centre <span class="required"> *</span></label>
-						<select name="centre" class="form-control select_single require fetch-centre-equipment-data" tabindex="-1" data-placeholder="Choose centre">
+						<select name="centre" class="form-control select_single fetch-centre-equipment-data" tabindex="-1" data-placeholder="Choose centre">
 							<?php
 							$query = '';
 							if(!is_admin()):
@@ -50,13 +47,13 @@ if( !class_exists('Fault') ):
 					</div>
 					<div class="form-group col-sm-6 col-xs-12">
 						<label for="name">Name <span class="required">*</span></label>
-						<input type="text" name="name" class="form-control require" value="<?php _e($this->current__user->first_name .' '.$this->current__user->last_name);?>" readonly="readonly" />
+						<input type="text" name="name" class="form-control " value="<?php _e($this->current__user->first_name .' '.$this->current__user->last_name);?>" readonly="readonly" />
 					</div>
 				</div>
 				<div class="row">
 					<div class="form-group col-sm-6 col-xs-12">
 						<label for="equipment-type">Equipment Type <span class="required"> *</span></label>
-						<select name="equipment_type" class="form-control select_single require fetch-equipment-data select-equipment-type" tabindex="-1" data-placeholder="Choose equipment type">
+						<select name="equipment_type" class="form-control select_single fetch-equipment-data select-equipment-type" tabindex="-1" data-placeholder="Choose equipment type">
 							<?php
 							$data = get_tabledata(TBL_EQUIPMENT_TYPES,false,array('approved'=> '1'), 'ORDER BY `name` ASC');
 							$option_data = get_option_data($data,array('ID','name'));
@@ -66,7 +63,7 @@ if( !class_exists('Fault') ):
 					</div>
 					<div class="form-group col-sm-6 col-xs-12">
 						<label for="equipment">Equipment <span class="required"> *</span></label>
-						<select name="equipment" class="form-control select_single require select-equipment fetch-service-agent-data" tabindex="-1" data-placeholder="Choose equipment">
+						<select name="equipment" class="form-control select_single select-equipment fetch-service-agent-data" tabindex="-1" data-placeholder="Choose equipment">
 							<option value="">Choose equipment</option>
 						</select>
 					</div>
@@ -82,7 +79,7 @@ if( !class_exists('Fault') ):
 					</div>
 					<div class="form-group col-sm-6 col-xs-12">
 						<label for="fault-type">Fault Type <span class="required"> *</span></label>
-						<select name="fault_type" class="form-control select_single require select-fault-type" tabindex="-1" data-placeholder="Choose fault type">
+						<select name="fault_type" class="form-control select_single select-fault-type" tabindex="-1" data-placeholder="Choose fault type">
 							<option value="">Choose fault type</option>
 						</select>
 					</div>
@@ -106,8 +103,7 @@ if( !class_exists('Fault') ):
 				<div class="row">
 					<div class="form-group col-sm-12 col-xs-12">
 						<label for="description-of-fault">Description of Fault</label>
-						<textarea name="description_of_fault" class="form-control" rows="3">
-						</textarea>
+						<textarea name="description_of_fault" class="form-control" rows="3"></textarea>
 					</div>
 				</div>
 				<div class="row">
@@ -123,8 +119,7 @@ if( !class_exists('Fault') ):
 				<div class="row">
 					<div class="form-group col-sm-12 col-xs-12">
 						<label for="">Please details action taken</label>
-						<textarea name="action_taken" class="form-control" rows="3">
-						</textarea>
+						<textarea name="action_taken" class="form-control" rows="3"></textarea>
 					</div>
 				</div>
 				<div class="row">
@@ -133,7 +128,7 @@ if( !class_exists('Fault') ):
 						<br/>
 						<label><input type="radio" class="flat" name="fault_corrected_by_user" value="1" /> Yes</label>
 						<label>&nbsp;</label>
-						<label><input type="radio" class="flat" name="fault_corrected_by_user" value="0"/> No</label>
+						<label><input type="radio" class="flat" name="fault_corrected_by_user" value="0" /> No</label>
 					</div>
 					<div class="form-group col-sm-12 col-xs-12">
 						<label for="">To fix at next service visit?</label>
@@ -864,10 +859,10 @@ if( !class_exists('Fault') ):
 			if( !user_can('view_fault') ):
 				echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
 			elseif(!$faults):
-				echo page_not_found("There are no new faults record found",' ',false);
+				echo page_not_found("Oops! There is no new faults record found",' ',false);
 			else:
 			?>
-			<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap datatable-buttons" cellspacing="0" width="100%">
+			<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap ajax-datatable-buttons" cellspacing="0" width="100%" data-table="fetch_all_faults">
 				<thead>
 					<tr>
 						<th>Name</th>
@@ -883,180 +878,6 @@ if( !class_exists('Fault') ):
 						<th class="text-center">Actions</th>
 					</tr>
 				</thead>
-				<tbody>
-					<?php if($faults): foreach($faults as $fault):
-						$centre = get_tabledata(TBL_CENTRES,true,array('ID'=> $fault->centre));
-						$equipment_type = get_tabledata(TBL_EQUIPMENT_TYPES,true,array('ID'=> $fault->equipment_type));
-						$equipment = get_tabledata(TBL_EQUIPMENTS,true,array('ID'=> $fault->equipment));
-						$fault_type = get_tabledata(TBL_FAULT_TYPES,true,array('ID'=> $fault->fault_type));
-					?>
-					<tr>
-						<td><?php _e($fault->name);?></td>
-						<td><?php _e($centre->name);?></td>
-						<td><?php _e($equipment_type->name);?></td>
-						<td><?php _e($equipment->name);?></td>
-						<td><?php _e($fault_type->name);?></td>
-						<td><?php echo date('M d,Y',strtotime($fault->date_of_fault));?></td>
-						<td><?php echo date('M d,Y',strtotime($fault->created_on));?></td>
-						<?php if(is_admin()): ?>
-						<td class="text-center">
-							<label><input type="checkbox" class="js-switch" <?php checked($fault->approved, 1);?> onClick="javascript:approve_switch(this);" data-id="<?php echo $fault->ID;?>" data-action="fault_approve_change"/></label>
-						</td>
-						<?php endif; ?>
-						<td class="text-center">
-							<?php if(is_admin()): ?>
-								<a href="<?php echo site_url();?>/view-fault/?id=<?php echo $fault->ID;?>" class="btn btn-dark btn-xs">
-									<i class="fa fa-edit"></i> View
-								</a>
-								<a href="<?php echo site_url();?>/edit-fault/?id=<?php echo $fault->ID;?>" class="btn btn-dark btn-xs">
-									<i class="fa fa-edit"></i> Edit
-								</a>
-								<a href="#" class="btn btn-danger btn-xs" onclick="javascript:delete_function(this);" data-id="<?php echo $fault->ID;?>" data-action="delete_fault"><i class="fa fa-trash"></i> Delete
-								</a>
-							<?php else: ?>
-								<?php 
-								$future = date('d-m-Y',strtotime(' + 2 day', strtotime($fault->created_on)));
-								$today = date('d-m-Y');
-								if($today == $future):
-									if( user_can('view_fault') ): ?>
-									<p>Overdue </p>
-									<a href="<?php echo site_url();?>/view-fault/?id=<?php echo $fault->ID;?>" class="btn btn-dark btn-xs"><i class="fa fa-edit"></i> View</a>
-									<?php endif; ?>
-								<?php else: ?>
-									<?php if($this->current__user__id == $fault->user_id):
-										if( user_can('edit_fault') ): ?>
-										<a href="<?php echo site_url();?>/edit-fault/?id=<?php echo $fault->ID;?>" class="btn btn-dark btn-xs">
-											<i class="fa fa-edit"></i> Edit
-										</a>
-										<?php endif; ?>
-										<?php if( user_can('delete_fault') ): ?>
-										<a href="#" class="btn btn-danger btn-xs" onclick="javascript:delete_function(this);" data-id="<?php echo $fault->ID;?>" data-action="delete_fault"><i class="fa fa-trash"></i> Delete</a>
-										<?php endif; ?>
-									<?php else: ?>
-										<?php if( user_can('view_fault') ): ?>
-										<a href="<?php echo site_url();?>/view-fault/?id=<?php echo $fault->ID;?>" class="btn btn-dark btn-xs">
-											<i class="fa fa-edit">
-											</i>View
-										</a>
-										<?php endif; ?>
-									<?php endif; ?>
-								<?php endif; ?>
-							<?php endif; ?>
-						</td>
-					</tr>
-					<?php endforeach; endif; ?>
-				</tbody>
-			</table>
-			<?php endif; ?>
-			<?php
-			$content = ob_get_clean();
-			return $content;
-		}
-        
-        
-        
-        
-        
-        
-        
-        
-        		public function all__faults__page__off(){
-			ob_start();
-			$query = '';
-			if(!is_admin()):
-				$centres = maybe_unserialize($this->current__user->centre);
-				if(!empty($centres)){
-					$centres = implode(',',$centres);
-					$query = "WHERE `centre` IN (".$centres.")";
-                    
-				}
-			endif;
-			$faults = get_tabledata(TBL_FAULTS,false,array('approved'=>0), $query);
-			if( !user_can('view_fault') ):
-				echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
-			elseif(!$faults):
-				echo page_not_found("There are no new faults record found",' ',false);
-			else:
-			?>
-			<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap datatable-buttons" cellspacing="0" width="100%">
-				<thead>
-					<tr>
-						<th>Name</th>
-						<th>Centre</th>
-						<th>Equipment Type</th>
-						<th>Equipment</th>
-						<th>Fault Type</th>
-						<th>Date of Fault</th>
-						<th>Created On</th>
-						<?php if(is_admin()): ?>
-						<th>Approved</th>
-						<?php endif; ?>
-						<th class="text-center">Actions</th>
-					</tr>
-				</thead>
-				<tbody>
-					<?php if($faults): foreach($faults as $fault):
-						$centre = get_tabledata(TBL_CENTRES,true,array('ID'=> $fault->centre));
-						$equipment_type = get_tabledata(TBL_EQUIPMENT_TYPES,true,array('ID'=> $fault->equipment_type));
-						$equipment = get_tabledata(TBL_EQUIPMENTS,true,array('ID'=> $fault->equipment));
-						$fault_type = get_tabledata(TBL_FAULT_TYPES,true,array('ID'=> $fault->fault_type));
-					?>
-					<tr>
-						<td><?php _e($fault->name);?></td>
-						<td><?php _e($centre->name);?></td>
-						<td><?php _e($equipment_type->name);?></td>
-						<td><?php _e($equipment->name);?></td>
-						<td><?php _e($fault_type->name);?></td>
-						<td><?php echo date('M d,Y',strtotime($fault->date_of_fault));?></td>
-						<td><?php echo date('M d,Y',strtotime($fault->created_on));?></td>
-						<?php if(is_admin()): ?>
-						<td class="text-center">
-							<label><input type="checkbox" class="js-switch" <?php checked($fault->approved, 1);?> onClick="javascript:approve_switch(this);" data-id="<?php echo $fault->ID;?>" data-action="fault_approve_change"/></label>
-						</td>
-						<?php endif; ?>
-						<td class="text-center">
-							<?php if(is_admin()): ?>
-								<a href="<?php echo site_url();?>/view-fault/?id=<?php echo $fault->ID;?>" class="btn btn-dark btn-xs">
-									<i class="fa fa-edit"></i> View
-								</a>
-								<a href="<?php echo site_url();?>/edit-fault/?id=<?php echo $fault->ID;?>" class="btn btn-dark btn-xs">
-									<i class="fa fa-edit"></i> Edit
-								</a>
-								<a href="#" class="btn btn-danger btn-xs" onclick="javascript:delete_function(this);" data-id="<?php echo $fault->ID;?>" data-action="delete_fault"><i class="fa fa-trash"></i> Delete
-								</a>
-							<?php else: ?>
-								<?php 
-								$future = date('d-m-Y',strtotime(' + 2 day', strtotime($fault->created_on)));
-								$today = date('d-m-Y');
-								if($today == $future):
-									if( user_can('view_fault') ): ?>
-									<p>Overdue </p>
-									<a href="<?php echo site_url();?>/view-fault/?id=<?php echo $fault->ID;?>" class="btn btn-dark btn-xs"><i class="fa fa-edit"></i> View</a>
-									<?php endif; ?>
-								<?php else: ?>
-									<?php if($this->current__user__id == $fault->user_id):
-										if( user_can('edit_fault') ): ?>
-										<a href="<?php echo site_url();?>/edit-fault/?id=<?php echo $fault->ID;?>" class="btn btn-dark btn-xs">
-											<i class="fa fa-edit"></i> Edit
-										</a>
-										<?php endif; ?>
-										<?php if( user_can('delete_fault') ): ?>
-										<a href="#" class="btn btn-danger btn-xs" onclick="javascript:delete_function(this);" data-id="<?php echo $fault->ID;?>" data-action="delete_fault"><i class="fa fa-trash"></i> Delete</a>
-										<?php endif; ?>
-									<?php else: ?>
-										<?php if( user_can('view_fault') ): ?>
-										<a href="<?php echo site_url();?>/view-fault/?id=<?php echo $fault->ID;?>" class="btn btn-dark btn-xs">
-											<i class="fa fa-edit">
-											</i>View
-										</a>
-										<?php endif; ?>
-									<?php endif; ?>
-								<?php endif; ?>
-							<?php endif; ?>
-						</td>
-					</tr>
-					<?php endforeach; endif; ?>
-				</tbody>
 			</table>
 			<?php endif; ?>
 			<?php
@@ -1152,14 +973,13 @@ if( !class_exists('Fault') ):
 			if( !user_can('view_fault_type') ):
 				echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
 			elseif(!$fault_types):
-				echo page_not_found("There are no new fault types record found",' ',false);
+				echo page_not_found("Oops! There is no new fault types record found",' ',false);
 			else:
 			?>
 			<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap datatable-buttons" cellspacing="0" width="100%">
 				<thead>
 					<tr>
-						<th>Fault Type</th>
-						<th>Fault Type Description</th>
+						<th>Name</th>
 						<th>Created On</th>
 						<?php if(is_admin()): ?>
 						<th>Approved</th>
@@ -1172,7 +992,6 @@ if( !class_exists('Fault') ):
 					?>
 					<tr>
 						<td><?php _e($fault_type->name);?></td>
-                        <td><?php _e($fault_type->description);?></td>
 						<td><?php echo date('M d,Y',strtotime($fault_type->created_on));?></td>
 						<?php if(is_admin()): ?>
 						<td class="text-center">
@@ -1593,6 +1412,132 @@ if( !class_exists('Fault') ):
 				endif;
 			endif;
 			return json_encode($return);
+		}
+
+		public function fetch_all_faults_process(){
+			$recordsTotal = $recordsFiltered = 0;
+			$draw = $_POST["draw"];
+			$orderByColumnIndex = $_POST['order'][0]['column'];
+			$orderBy = 'name';
+			$orderType = $_POST['order'][0]['dir'];
+			$start = $_POST["start"];
+			$length = $_POST['length'];
+			
+			$query = '';
+			if(!is_admin()):
+				$centres = maybe_unserialize($this->current__user->centre);
+				if(!empty($centres)){
+					$centres = implode(',',$centres);
+					$query = "WHERE `centre` IN (".$centres.")";
+				}
+			endif;
+			$recordsTotal = count(get_tabledata(TBL_FAULTS,false,array(), $query));
+			$sql = sprintf(" ORDER BY %s %s LIMIT %d , %d ", $orderBy,$orderType ,$start , $length);
+			$data = array();
+			if(!empty($_POST['search']['value'])){
+				$columns = array('ID','name');
+				for($i = 0 ; $i < count($columns);$i++){
+					$column = $columns[$i];
+					$where[] = "$column LIKE '%".$_POST['search']['value']."%'";
+				}
+				$where = implode(" OR " , $where);
+				$query .= ($query != '') ? ' AND ' : ' WHERE ';
+				$query .= $where;
+				$data_list = get_tabledata(TBL_EQUIPMENTS,false ,array(), $query.$sql );
+				$recordsFiltered = count( $data_list );
+			}else{
+				$data_list = get_tabledata(TBL_FAULTS,false,array(),$query.$sql);
+				$recordsFiltered = $recordsTotal;
+			}
+						
+			if($data_list): foreach($data_list as $fault):
+				$centre = get_tabledata(TBL_CENTRES,true,array('ID'=> $fault->centre));
+				
+				$equipment_type = get_tabledata(TBL_EQUIPMENT_TYPES,true,array('ID'=> $fault->equipment_type));
+				$equipment = get_tabledata(TBL_EQUIPMENTS,true,array('ID'=> $fault->equipment));
+				$fault_type = get_tabledata(TBL_FAULT_TYPES,true,array('ID'=> $fault->fault_type));
+				
+				
+				$row = array();
+				array_push($row, __($fault->name));
+				array_push($row, __('UNKNOWN CENTRE'));
+				array_push($row, __('UNKNOWN EQUIPMENT TYPE'));
+				//array_push($row, __($centre->name));
+				//array_push($row, __($equipment_type->name));
+				array_push($row, __($equipment->name));
+				array_push($row, __($fault_type->name));
+				
+				array_push($row, date('M d,Y',strtotime($fault->date_of_fault)));
+				array_push($row, date('M d,Y',strtotime($fault->created_on)));
+				if(is_admin()):
+					ob_start();
+					?>
+					<div class="text-center">
+						<label><input type="checkbox" class="js-switch" <?php checked($fault->approved, 1);?> onclick="approve_switch(this);" data-id="<?php echo $fault->ID;?>" data-action="fault_approve_change"/></label>
+					</div>
+					<?php 
+					$checkbox = ob_get_clean();
+					array_push($row, $checkbox);
+				endif;
+				ob_start();
+				?>
+				<div class="text-center">
+					<?php if(is_admin()): ?>
+						<a href="<?php echo site_url();?>/view-fault/?id=<?php echo $fault->ID;?>" class="btn btn-dark btn-xs">
+							<i class="fa fa-edit"></i> View
+						</a>
+						<a href="<?php echo site_url();?>/edit-fault/?id=<?php echo $fault->ID;?>" class="btn btn-dark btn-xs">
+							<i class="fa fa-edit"></i> Edit
+						</a>
+						<a href="#" class="btn btn-danger btn-xs" onclick="delete_function(this);" data-id="<?php echo $fault->ID;?>" data-action="delete_fault">
+							<i class="fa fa-trash"></i> Delete
+						</a>
+					<?php else:
+						$future = date('d-m-Y',strtotime(' + 2 day', strtotime($fault->created_on)));
+						$today = date('d-m-Y');
+						if($today == $future):
+							if( user_can('view_fault') ): ?>
+							<p>Overdue </p>
+							<a href="<?php echo site_url();?>/view-fault/?id=<?php echo $fault->ID;?>" class="btn btn-dark btn-xs">
+								<i class="fa fa-edit"></i> View
+							</a>
+							<?php endif; ?>
+						<?php else: ?>
+							<?php if($this->current__user__id == $fault->user_id):
+								if( user_can('edit_fault') ): ?>
+								<a href="<?php echo site_url();?>/edit-fault/?id=<?php echo $fault->ID;?>" class="btn btn-dark btn-xs">
+									<i class="fa fa-edit"></i> Edit
+								</a>
+								<?php endif; ?>
+								
+								<?php if( user_can('delete_fault') ): ?>
+								<a href="#" class="btn btn-danger btn-xs" onclick="javascript:delete_function(this);" data-id="<?php echo $fault->ID;?>" data-action="delete_fault"><i class="fa fa-trash"></i> Delete</a>
+								<?php endif; ?>
+							<?php else: ?>
+								<?php if( user_can('view_fault') ): ?>
+								<a href="<?php echo site_url();?>/view-fault/?id=<?php echo $fault->ID;?>" class="btn btn-dark btn-xs">
+									<i class="fa fa-edit"></i> View
+								</a>
+								<?php endif; ?>
+							<?php endif; ?>
+						<?php endif; ?>
+					<?php endif; ?>
+				</div>
+				<?php 
+				$action = ob_get_clean();
+				array_push($row, $action);
+				$data[] = $row;
+				endforeach;
+			endif;
+			
+			/* Response to client before JSON encoding */
+			$response = array(
+				"draw" => intval($draw),
+				"recordsTotal" => $recordsTotal,
+				"recordsFiltered"=> $recordsFiltered,
+				"data" => $data,
+			);
+			return json_encode($response);
 		}
 	}
 endif;

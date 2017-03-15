@@ -3,19 +3,16 @@
 if(!defined('ABSPATH')) exit;
 
 if( !class_exists('Footer') ):
-class Footer
-{
+class Footer{
 	private $database;
 	private $profile;
-	function __construct()
-	{
+	function __construct(){
 		global $db,$Profile;
 		$this->database = $db;
 		$this->profile = $Profile;
 	}
 
-	public function footer()
-	{
+	public function footer(){
 		ob_start();
 		?>
 		<footer>
@@ -35,8 +32,7 @@ class Footer
 	}
 
 
-	public function scripts()
-	{
+	public function scripts(){
 		ob_start();
 		?>
 		<!-- Custom Theme Scripts -->
@@ -49,8 +45,7 @@ class Footer
 		return $content;
 	}
 
-	public function home__page__footer($fixed = '')
-	{
+	public function home__page__footer($fixed = ''){
 		ob_start();
 		?>
 		<div class="home-footer <?php echo $fixed; ?>">

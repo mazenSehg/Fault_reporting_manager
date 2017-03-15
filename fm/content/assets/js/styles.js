@@ -51,7 +51,6 @@ $(document).ready(function() {
 	var handleDataTableButtons = function() {
 		if ($(".datatable-buttons").length) {
 			$(".datatable-buttons").DataTable({
-				
 				aaSorting : [],
 				dom: "Bfrtip",
 				buttons: [
@@ -60,9 +59,43 @@ $(document).ready(function() {
 					{extend: "excel",className: "btn-sm"},
 					{extend: "pdfHtml5",className: "btn-sm"},
 					{extend: "print",className: "btn-sm"},
-					],
-				responsive: true
-
+				],
+				responsive: true,
+			});
+		}
+	};
+	
+	var ajaxhandleDataTableButtons = function() {
+		if ($(".ajax-datatable-buttons").length) {
+			$(".ajax-datatable-buttons").DataTable({
+				dom: "Bfrtip",
+				buttons: [
+					{extend: "copy",className: "btn-sm"},
+					{extend: "csv",className: "btn-sm"},
+					{extend: "excel",className: "btn-sm"},
+					{extend: "pdfHtml5",className: "btn-sm"},
+					{extend: "print",className: "btn-sm"},
+				],
+				responsive: true,
+				processing: true,
+				serverSide: true,
+				ajax: {
+					url: table_ajax_url,
+					type: 'POST',
+					data: function ( d ) {
+						d.action = $(".ajax-datatable-buttons").data('table');
+					},
+					complete:function(r){
+						if ($(".js-switch")[0]) {
+							var elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
+							elems.forEach(function (html) {
+								var switchery = new Switchery(html, {
+									color: '#26B99A'
+								});
+							});
+						}
+					}
+				},
 			});
 		}
 	};
@@ -72,6 +105,7 @@ $(document).ready(function() {
 		return {
 			init: function() {
 				handleDataTableButtons();
+				ajaxhandleDataTableButtons();
 			}
 		};
 	}();
@@ -217,7 +251,6 @@ $(document).ready(function() {
 				console.log(res);
 				btn.attr('disabled',false);
 				btn.html(btn_text);
-				console.log(res);
 				if(res == 0 ){ // if failed then go inside 
 					user_pass.parents('.form-group').addClass('has-error');
 					form.find('div.alert-danger').html('<i class="fa fa-times-circle"></i>  &nbsp;<span>Invalid Username or Password</span>');
@@ -234,7 +267,6 @@ $(document).ready(function() {
 					setTimeout(function(){ window.location.reload(); }, 500);
 					return false;
 				}else{
-					
 					form.find('div.alert-danger').html('<i class="fa fa-times-circle"></i>  &nbsp;<span>Could not login, please try again</span>');
 					form.find('div.alert-danger').slideDown();
 					return false;
@@ -734,6 +766,7 @@ $(document).ready(function() {
 			}
 		});
 	});
+
 });
 
 function delete_function(btn){
@@ -823,7 +856,7 @@ function approve_switch(btn){
 			console.log(res);
 			if(res['status'] == 0 ){ // if failed then go inside
 				alert_notification(res['message_heading'],res['message'],'info');
-				setTimeout(function(){ window.location.reload();},1000);
+				//setTimeout(function(){ window.location.reload();},1000);
 			}else if(res['status'] == 1 ){ // if success then go inside
 				alert_notification(res['message_heading'],res['message'],'success');
 			}
@@ -831,4 +864,3 @@ function approve_switch(btn){
 		}
 	});
 }
-

@@ -8,6 +8,7 @@ define( 'CSS_URL' , site_url() . '/' . CONTENT .'/assets/css/' );
 define( 'JS_URL' , site_url() . '/' . CONTENT .'/assets/js/' );
 define( 'IMAGE_URL' , site_url() . '/' . CONTENT .'/assets/img/' );
 define( 'PROCESS_URL' , site_url() . '/' . INC .'/process.php' );
+define( 'TABLE_PROCESS_URL' , site_url() . '/' . INC .'/table-process.php' );
 
 
 define( 'BLOG_NAME' ,'Fault Management' );
