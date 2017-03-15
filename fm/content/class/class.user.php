@@ -46,7 +46,7 @@ if( !class_exists('User') ):
 								<button class="btn btn-block btn-success btn-sm" type="submit"><i class="fa fa-lock"></i> Login</button>
 							</div>
 							<div class="form-group">
-								<div class="alert alert-success">Welcome Back, Successfully loggedin.</div>
+								<div class="alert alert-success">Welcome Back, Successfully logged in.</div>
 								<div class="alert alert-danger"></div>
 							</div>
 							<div class="form-group">
@@ -59,8 +59,9 @@ if( !class_exists('User') ):
 						</form>
 					</div>
 					<div class="col-md-7 col-xs-12 text-center hidden-xs ">
-						<h1 class=" big-title">Do More with Online Management</h1>
+						<h1 class=" big-title">Welcome to the NCCPM online Fault Reporting System.</h1>
 						<div class="ln_solid"></div>
+						<p>Please login to access the equipment and fault management services.</p>
 					</div>
 					<div class="col-md-1"></div>
 				</div>

@@ -400,6 +400,8 @@ class Header{
 								</a>
 								<ul class="nav child_menu">
 									<?php
+		
+		if(is_admin()){
 									if( user_can('view_equipment') || user_can('edit_equipment') || user_can('add_equipment') ): ?>
 									<li>
 										<a>
@@ -437,6 +439,43 @@ class Header{
 										</ul>
 									</li>
 									<?php endif;?>
+									<?php } else{
+			
+												if( user_can('view_equipment') || user_can('edit_equipment') || user_can('add_equipment') ): ?>
+									<li>
+										
+											<?php if( user_can('view_equipment') ): ?>
+											<li>
+												<a href="<?php echo site_url();?>/equipments/">
+													All Equipment
+												</a>
+											</li>
+											<li class="hidden">
+												<a href="<?php echo site_url();?>/view-equipment/">
+													View Equipment
+												</a>
+											</li>
+											<?php endif;?>
+
+											<?php if( user_can('edit_equipment') || user_can('add_equipment') ): ?>
+											<li>
+												<a href="<?php echo site_url();?>/add-new-equipment/">
+													Add New Equipment
+												</a>
+											</li>
+											<li class="hidden">
+												<a href="<?php echo site_url();?>/edit-equipment/">
+													Edit Equipment
+												</a>
+											</li>
+
+											<?php endif;?>
+									</li>
+									<?php endif;
+		}?>
+								
+									
+									
 
 									<?php if( user_can('view_equipment_type') || user_can('edit_equipment_type') || user_can('add_equipment_type') ): ?>
 									<li>
@@ -601,6 +640,9 @@ class Header{
 							</li>
 							<?php endif;?>
 
+							
+							
+														<?php if(is_admin()){ ?>
 							<?php if( user_can('view_fault') || user_can('edit_fault') || user_can('add_fault') || user_can('view_fault_type') || user_can('edit_fault_type') || user_can('add_fault_type') ): ?>
 							<li>
 								<a>
@@ -676,8 +718,103 @@ class Header{
 									</li>
 									<?php endif;?>
 								</ul>
+								
+								
 							</li>
 							<?php endif;?>
+							<?php }else{?>
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							<?php if( user_can('view_fault') || user_can('edit_fault') || user_can('add_fault') || user_can('view_fault_type') || user_can('edit_fault_type') || user_can('add_fault_type') ): ?>
+							<li>
+								<a>
+									<i class="fa fa-exclamation-circle">
+									</i>Faults
+									<span class="fa fa-chevron-down">
+									</span>
+								</a>
+								<ul class="nav child_menu">
+									<?php if( user_can('view_fault') || user_can('edit_fault') || user_can('add_fault')): ?>
+									<li>
+											<?php if( user_can('view_fault') ): ?>
+											<li>
+												<a href="<?php echo site_url();?>/faults/">
+													All Faults
+												</a>
+											</li>
+											<li class="hidden">
+												<a href="<?php echo site_url();?>/view-fault/">
+												</a>
+											</li>
+											<?php endif;?>
+
+											<?php if( user_can('edit_fault') || user_can('add_fault')): ?>
+											<li>
+												<a href="<?php echo site_url();?>/add-new-fault/">
+													Add New Fault
+												</a>
+											</li>
+											<li class="hidden">
+												<a href="<?php echo site_url();?>/edit-fault/">
+												</a>
+											</li>
+											<?php endif;?>
+									</li>
+									<?php endif;?>
+
+									<?php if( user_can('view_fault_type') || user_can('edit_fault_type') || user_can('add_fault_type')): ?>
+									<li>
+										<a>
+											Fault Types
+											<span class="fa fa-chevron-down">
+											</span>
+										</a>
+										<ul class="nav child_menu">
+											<?php if( user_can('view_fault_type') ): ?>
+											<li>
+												<a href="<?php echo site_url();?>/fault-types/">
+													All Fault Types
+												</a>
+											</li>
+											<?php endif;?>
+
+											<?php if( user_can('edit_fault_type') || user_can('add_fault_type')): ?>
+											<li>
+												<a href="<?php echo site_url();?>/add-new-fault-type/">
+													Add New Fault Type
+												</a>
+											</li>
+											<li class="hidden">
+												<a href="<?php echo site_url();?>/edit-fault-type/">
+												</a>
+											</li>
+											<?php endif;?>
+										</ul>
+									</li>
+									<?php endif;?>
+								</ul>
+								
+								
+							</li>
+							<?php endif;?>
+							<?php }?>
+							
+							
 
 							<?php if(is_admin()): ?>
 							<li>
