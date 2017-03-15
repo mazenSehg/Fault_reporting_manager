@@ -91,7 +91,7 @@ if( !class_exists('Fault') ):
 				<div class="row">
 					<div class="form-group col-sm-6 col-xs-12">
 						<label for="current-servicing-agency">Current servicing agency <span class="required"> *</span></label>
-						<select name="current_servicing_agency" class="form-control select_single require select-servicing-agency" tabindex="-1" data-placeholder="Choose servicing agency">
+						<select name="current_servicing_agency" class="form-control" tabindex="-1" data-placeholder="Choose servicing agency">
 							<option value="">Choose servicing agency</option>
 						</select>
 					</div>
@@ -123,39 +123,42 @@ if( !class_exists('Fault') ):
 					</div>
 				</div>
 
-					<div class="form-group col-sm-3 col-xs-12">
+					<div class="form-group col-sm-4 col-xs-12">
 						<label for="">Fault corrected by user?</label>
 						<br/>
 						<label><input type="radio" class="flat" name="fault_corrected_by_user" value="1" /> Yes</label>
 						<label>&nbsp;</label>
 						<label><input type="radio" class="flat" name="fault_corrected_by_user" value="0" /> No</label>
 					</div>
-					<div class="form-group col-sm-3 col-xs-12">
+					<div class="form-group col-sm-4 col-xs-12">
 						<label for="">To fix at next service visit?</label>
 						<br/>
 						<label><input type="radio" class="flat" name="to_fix_at_next_service_visit" value="1" /> Yes</label>
 						<label>&nbsp;</label>
 						<label><input type="radio" class="flat" name="to_fix_at_next_service_visit" value="0" /> No</label>
 					</div>
-					<div class="form-group col-sm-3 col-xs-12">
+					<div class="form-group col-sm-4 col-xs-12">
 						<label for="">Engineer called out?</label>
 						<br/>
 						<label><input type="radio" class="flat" name="engineer_called_out" value="1" /> Yes</label>
 						<label>&nbsp;</label>
 						<label><input type="radio" class="flat" name="engineer_called_out" value="0" /> No</label>
 					</div>
-					<div class="form-group col-sm-3 col-xs-12">
-						<label for="">Has an adverse incident report been sent to MHRA pr appropriate devolved adminstration?</label>
+								<div class="row">
+					<div class="form-group col-sm-12 col-xs-12">
+						<label for="">Has an adverse incident report been sent to MHRA pr appropriate devolved administration?</label>
 						<br/>
 						<label><input type="radio" class="flat" name="adverse_incident_report" value="1" /> Yes</label>
 						<label>&nbsp;</label>
 						<label><input type="radio" class="flat" name="adverse_incident_report" value="0" /> No</label>
 					</div>
+					</div>
+				<div class="row">
 					<div class="col-xs-12">
 						<h3><?php _e('Fault Severity');?></h3>
 						<hr>
 					</div>
-					<div class="form-group col-sm-2 col-xs-12">
+					<div class="form-group col-sm-6 col-xs-12">
 						<label for="">Equipment Status</label>
 						<br/>
 						<select name="equipment_status" class="form-control select_single require" tabindex="-1" data-placeholder="Choose equipment status">
@@ -164,8 +167,9 @@ if( !class_exists('Fault') ):
 							echo get_options_list($option_data);
 							?>
 						</select>
-
+					</div>
 				</div>
+				<div class="row">
 					<div class="form-group col-sm-2 col-xs-12">
 						<label for="">Total equipment downtime (days)</label>
 						<br/>
@@ -186,7 +190,6 @@ if( !class_exists('Fault') ):
 						<br/>
 						<input type="number" name="cancelled_women" class="form-control require" min="0" />
 					</div>
-				<div class="row">
 					<div class="form-group col-sm-2 col-xs-12">
 						<label for="">Number of technical recalls</label>
 						<br/>
@@ -194,7 +197,7 @@ if( !class_exists('Fault') ):
 					</div>
 				</div>
 				<div class="row">
-<div class="form-group col-sm-4 col-xs-12">
+					<div class="form-group col-sm-4 col-xs-12">
 						<label for="">Are you satisfied with response of the servicing organisation?</label>
 						<br/>
 						<label><input type="radio" class="flat" name="satisfied_servicing_organisation" value="1" /> Yes</label>
@@ -203,7 +206,7 @@ if( !class_exists('Fault') ):
 						<label>&nbsp;</label>
 						<label><input type="radio" class="flat" name="satisfied_servicing_organisation" value="2" /> N/A</label>
 					</div>
-<div class="form-group col-sm-4 col-xs-12">
+					<div class="form-group col-sm-4 col-xs-12">
 						<label for="">Are you satisfied with the performance of the service engineer?</label>
 						<br/>
 						<label><input type="radio" class="flat" name="satisfied_service_engineer" value="1" /> Yes</label>
@@ -212,7 +215,7 @@ if( !class_exists('Fault') ):
 						<label>&nbsp;</label>
 						<label><input type="radio" class="flat" name="satisfied_service_engineer" value="2" /> N/A</label>
 					</div>
-<div class="form-group col-sm-4 col-xs-12">
+					<div class="form-group col-sm-4 col-xs-12">
 						<label for="">Are you generally satisfied withe the reliability/performance of the equipment?</label>
 						<br/>
 						<label><input type="radio" class="flat" name="satisfied_equipment" value="1" /> Yes</label>
