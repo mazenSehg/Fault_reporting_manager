@@ -863,7 +863,7 @@ if( !class_exists('Fault') ):
 				echo page_not_found("Oops! There is no new faults record found",' ',false);
 			else:
 			?>
-			<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap ajax-datatable-buttons" cellspacing="0" width="100%" data-table="fetch_all_faults">
+<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap ajax-datatable-buttons" cellspacing="0" width="100%" data-table="fetch_all_faults" data-order-column="6">
 				<thead>
 					<tr>
 						<th>Name</th>
@@ -1427,7 +1427,7 @@ if( !class_exists('Fault') ):
 			$recordsTotal = $recordsFiltered = 0;
 			$draw = $_POST["draw"];
 			$orderByColumnIndex = $_POST['order'][0]['column'];
-			$orderBy = ( array_key_exists( $orderByColumnIndex , $orders_columns ) ) ? $orders_columns[$orderByColumnIndex] : 'name';
+			$orderBy = ( array_key_exists( $orderByColumnIndex , $orders_columns ) ) ? $orders_columns[$orderByColumnIndex] : 'created_on';
 			$orderType = $_POST['order'][0]['dir'];
 			$start = $_POST["start"];
 			$length = $_POST['length'];

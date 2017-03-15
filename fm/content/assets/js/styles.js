@@ -51,7 +51,7 @@ $(document).ready(function() {
 	var handleDataTableButtons = function() {
 		if ($(".datatable-buttons").length) {
 			$(".datatable-buttons").DataTable({
-				aaSorting : [],
+				order: [[ 1, "desc" ]],
 				dom: "Bfrtip",
 				buttons: [
 					{extend: "copy",className: "btn-sm"},
@@ -68,6 +68,7 @@ $(document).ready(function() {
 	var ajaxhandleDataTableButtons = function() {
 		if ($(".ajax-datatable-buttons").length) {
 			$(".ajax-datatable-buttons").DataTable({
+				order: [[ $(".ajax-datatable-buttons").data('order-column'), "desc" ]],
 				dom: "Bfrtip",
 				buttons: [
 					{extend: "copy",className: "btn-sm"},
