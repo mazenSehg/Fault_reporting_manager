@@ -1,6 +1,7 @@
 <?php
 // if accessed directly than exit
 if(!defined('ABSPATH')) exit;
+error_reporting(0);
 
 if( !class_exists('Fault') ):
 	class Fault{
@@ -55,7 +56,7 @@ if( !class_exists('Fault') ):
 						<label for="equipment-type">Equipment Type <span class="required"> *</span></label>
 						<select name="equipment_type" class="form-control select_single fetch-equipment-data select-equipment-type" tabindex="-1" data-placeholder="Choose equipment type">
 							<?php
-							$data = get_tabledata(TBL_EQUIPMENT_TYPES,false,array('approved'=> '1'), 'ORDER BY `name` ASC');
+							$data = get_tabledata(TBL_EQUIPMENT_TYPES,false,array('approved'=> '1'), 'ORDER BY `name` DESC');
 							$option_data = get_option_data($data,array('ID','name'));
 							echo get_options_list($option_data);
 							?>
@@ -283,7 +284,7 @@ if( !class_exists('Fault') ):
 						<label for="equipment-type">Equipment Type <span class="required"> *</span></label>
 						<select name="equipment_type" class="form-control select_single require fetch-equipment-data select-equipment-type" tabindex="-1" data-placeholder="Choose equipment type">
 							<?php
-							$data = get_tabledata(TBL_EQUIPMENT_TYPES,false,array('approved'=> '1'), 'ORDER BY `name` ASC');
+							$data = get_tabledata(TBL_EQUIPMENT_TYPES,false,array('approved'=> '1'), 'ORDER BY `name` DESC');
 							$option_data = get_option_data($data,array('ID','name'));
 							echo get_options_list($option_data, maybe_unserialize($fault->equipment_type));
 							?>
@@ -660,7 +661,10 @@ if( !class_exists('Fault') ):
 							<?php _e('Current servicing agency');?>
 						</td>
 						<td>
-							<?php _e($service_agent->name);?>
+							<?php if(_e($service_agent->name)!=null){
+				_e($service_agent->name);
+			}else{echo "None selected.";
+			}?>
 						</td>
 					</tr>
 					<tr>
@@ -1457,10 +1461,8 @@ if( !class_exists('Fault') ):
 				
 				$row = array();
 				array_push($row, __($fault->name));
-				array_push($row, __('UNKNOWN CENTRE'));
-				array_push($row, __('UNKNOWN EQUIPMENT TYPE'));
-				//array_push($row, __($centre->name));
-				//array_push($row, __($equipment_type->name));
+				array_push($row, __($centre->name));
+				array_push($row, __($equipment_type->name));
 				array_push($row, __($equipment->name));
 				array_push($row, __($fault_type->name));
 				
