@@ -1476,7 +1476,7 @@ if( !class_exists('Fault') ):
 				array_push($row, __($fault_type->name));
 				
 				array_push($row, date('M d,Y',strtotime($fault->date_of_fault)));
-				array_push($row, date('M d,Y',strtotime($fault->created_on)));
+				array_push($row, date('d M,Y',strtotime($fault->created_on)));
 				if(is_admin()):
 					ob_start();
 					?>

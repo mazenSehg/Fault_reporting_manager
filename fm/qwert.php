@@ -28,7 +28,14 @@ login_check();
 										<div class="x_panel">
 											<div class="x_content">
 												<?php
-										/*
+												
+												
+										
+										
+									/**
+												CODE TO UPDATE NAMES, MODEL< SERVICE AGENT FOR FAULTS TABLE
+										
+										
 								$aql1 = "SELECT * FROM tbl_equipment";
 								$aq = $db->get_results($aql1);
 
@@ -46,7 +53,6 @@ login_check();
 
 									$bowe = $bob2->ID;
 
-								//								$sting = $bob->equipment_type . " | ". $bob1->name . " | ".$bob2->name . " | ". $bob->location_id . " | ". $bob->location;
 								$sting = $bob1->name;
 								if($bob2->name!= null){
 									$sting = $sting . " | ".$bob2->name;
@@ -93,16 +99,19 @@ login_check();
 
 								endforeach;
 
-								*/
+								
 
 
 
 
+**/
 
 
+/**
 
 
-
+								CODE TO UPDATE EQUIPMENT TYPE AND CENTRE IN FAULT
+								
 										$sql1 = "SELECT * FROM tbl_fault";
 										$sq = $db->get_results($sql1);
 										foreach($sq as $res):
@@ -129,7 +138,37 @@ login_check();
 										$sq5 = $db->query($sql4);
 
 										endforeach;
+										
+										
+										PLA4L
+										Fuji | Amulet | 8041107 | 2004 | RLI
+										
+										DCB9L
+										Kodak | Dryview 8300 | K311-7355 | 2001 | St Barts
+										
+										**/
+												
+												
+												
+
 										?>
+												
+												
+<?php
+				$sql = "SELECT COUNT(*) AS resc FROM tbl_equipment WHERE equipment_code IS NULL OR equipment_code=''";
+				$res = $db->get_results($sql);
+				
+				$valll;
+				foreach($res as $row):
+				$valll =  $row->resc;								
+				endforeach;
+						
+				if($valll>0){
+				echo $valll;	
+				}
+												?>
+												
+												
 											</div>
 										</div>
 									</div>

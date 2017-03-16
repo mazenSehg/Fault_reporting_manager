@@ -63,15 +63,6 @@ class Equipment{
 		?>
 		<form class="add-equipment submit-form" method="post" autocomplete="off">
 			<div class="row">
-				<div class="form-group col-sm-6 col-xs-12">
-					<label for="name">
-						Name
-						<span class="required">
-							*
-						</span>
-					</label>
-					<input type="text" name="name" class="form-control require"/>
-				</div>
 
 				<div class="form-group col-sm-6 col-xs-12">
 					<label for="centre">
@@ -99,9 +90,7 @@ class Equipment{
 						?>
 					</select>
 				</div>
-			</div>
-
-			<div class="row">
+				
 				<div class="form-group col-sm-6 col-xs-12">
 					<label for="equipment-type">
 						Equipment Type
@@ -118,6 +107,8 @@ class Equipment{
 					</select>
 				</div>
 			</div>
+
+			
 
 			<div class="row">
 				<div class="form-group col-sm-6 col-xs-12">
@@ -233,7 +224,7 @@ class Equipment{
 			</div>
 
 			<div class="row">
-				<div class="form-group col-sm-3 col-xs-6">
+				<div class="form-group col-sm-3 col-xs-6" required>
 					<label for="decommed">
 						Decommed
 					</label><br/>
@@ -247,7 +238,7 @@ class Equipment{
 						<input type="radio" class="flat" name="decommed" value="0"> No
 					</label>
 				</div>
-				<div class="form-group col-sm-3 col-xs-6">
+				<div class="form-group col-sm-3 col-xs-6" required>
 					<label for="spare">
 						Spare
 					</label><br/>
@@ -261,7 +252,7 @@ class Equipment{
 						<input type="radio" class="flat" name="spare" value="0"> No
 					</label>
 				</div>
-				<div class="form-group col-sm-3 col-xs-6">
+				<div class="form-group col-sm-3 col-xs-6" required>
 					<label for="x-ray">
 						X-ray Subtype Digital
 					</label><br/>
@@ -280,13 +271,13 @@ class Equipment{
 						Approved
 					</label><br/>
 					<label>
-						<input type="radio" class="flat" name="approved" value="1"> Yes
+						<input type="radio" class="flat" name="approved" value="1" required> Yes
 					</label>
 					<label>
 						&nbsp;
 					</label>
 					<label>
-						<input type="radio" class="flat" name="approved" value="0"> No
+						<input type="radio" class="flat" name="approved" value="0" required> No
 					</label>
 				</div>
 			</div>
@@ -319,16 +310,6 @@ class Equipment{
 		<form class="edit-equipment submit-form" method="post" autocomplete="off">
 			<div class="row">
 				<div class="form-group col-sm-6 col-xs-12">
-					<label for="name">
-						Name
-						<span class="required">
-							*
-						</span>
-					</label>
-					<input type="text" name="name" class="form-control require" value="<?php _e($equipment->name);?>"/>
-				</div>
-
-				<div class="form-group col-sm-6 col-xs-12">
 					<label for="centre">
 						Centre
 						<span class="required">
@@ -353,11 +334,8 @@ class Equipment{
 						echo get_options_list($option_data, maybe_unserialize($equipment->centre));
 						?>
 					</select>
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="form-group col-sm-6 col-xs-12">
+					</div>
+					<div class="form-group col-sm-6 col-xs-12">
 					<label for="equipment-type">
 						Equipment Type
 						<span class="required">
@@ -372,6 +350,11 @@ class Equipment{
 						?>
 					</select>
 				</div>
+				</div>
+			</div>
+
+			<div class="row">
+				
 			</div>
 
 			<div class="row">
@@ -1648,9 +1631,9 @@ class Equipment{
 			$result = $this->database->insert(TBL_EQUIPMENTS,
 				array(
 					'ID' => $guid,
-					'name' => $name,
+					'name' => 0,
 					'centre' => $centre,
-					'equipment_code' => $equipment_code,
+					'equipment_code' => NULL,
 					'equipment_type' => $equipment_type,
 					'manufacturer' => $manufacturer,
 					'model' => $model,
@@ -1684,6 +1667,9 @@ class Equipment{
 		endif;
 
 		return json_encode($return);
+		
+		
+		
 	}
 
 	public function update__equipment__process(){
@@ -1698,24 +1684,26 @@ class Equipment{
 		if( user_can('edit_equipment') ):
 		$result = $this->database->update(TBL_EQUIPMENTS,
 			array(
-				'name' => $name,
-				'centre' => $centre,
-				'equipment_type' => $equipment_type,
-				'manufacturer' => $manufacturer,
-				'model' => $model,
-				'supplier' => $supplier,
-				'service_agent' => $service_agent,
-				'location_id' => $location_id,
-				'location' => $location,
-				'serial_number' => $serial_number,
-				'year_manufacturered'=> $year_manufacturered,
-				'year_installed' => $year_installed,
-				'year_decommisoned' => $year_decommisoned,
-				'decommed' => $decommed,
-				'spare' => $spare,
-				'comment' => $comment,
-				'x_ray' => $x_ray,
-				'approved' => $approved
+					'name' => 0,
+					'centre' => $centre,
+					'equipment_type' => $equipment_type,
+					'manufacturer' => $manufacturer,
+					'model' => $model,
+					'supplier' => $supplier,
+					'service_agent' => $service_agent,
+					'location_id' => $location_id,
+					'location' => $location,
+					'serial_number' => $serial_number,
+					'year_manufacturered'=> $year_manufacturered,
+					'year_installed' => $year_installed,
+					'year_decommisoned' => $year_decommisoned,
+					'decommed' => $decommed,
+					'spare' => $spare,
+					'comment' => $comment,
+					'x_ray' => $x_ray,
+					'approved' => $approved
+			
+
 			),
 			array(
 				'ID'=> $equipment_id
