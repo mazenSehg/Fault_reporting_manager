@@ -426,7 +426,7 @@ if ( !function_exists('page_not_found') ) :
 endif;
 
 if ( !function_exists('send_email') ) :
-	function send_email($from,$name,$reply_email,$to,$subject,$body,$attachment_files = ''){	
+	function send_email($from,$name,$to,$subject,$body){	
 		require_once( ABSPATH . INC. '/phpmailer/PHPMailerAutoload.php');	
 		$mail = new PHPMailer();
 		if(SMTP_STATUS == '1'):
