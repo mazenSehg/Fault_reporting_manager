@@ -399,6 +399,7 @@ if( !class_exists('User') ):
 								$query = "WHERE `ID` IN (".$centres.")";
 							}
 							endif;
+			
 							$data = get_tabledata(TBL_CENTRES,false,array('approved'=> '1'),$query);
 							$option_data = get_option_data($data,array('ID','name'));
 							echo get_options_list($option_data);
@@ -621,7 +622,7 @@ if( !class_exists('User') ):
 			if(!user_can('view_user')):
 				echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
 			elseif(!$users_list):
-				echo page_not_found("Oops! There is no New Users in website",' ',false);
+				echo page_not_found("THERE ARE NO  New Users in website",' ',false);
 			else:
 			?>
 			<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap datatable-buttons" cellspacing="0" width="100%">

@@ -330,7 +330,7 @@ if( !class_exists('Fault') ):
 				<div class="row">
 					<div class="form-group col-sm-6 col-xs-12">
 						<label for="current-servicing-agency">Current servicing agency <span class="required">*</span></label>
-						<select name="current_servicing_agency" class="form-control select_single require select-servicing-agency" tabindex="-1" data-placeholder="Choose servicing agency">
+						<select name="current_servicing_agency" class="form-control" tabindex="-1" data-placeholder="Choose servicing agency">
 							<?php
 							$equipment = get_tabledata(TBL_EQUIPMENTS, true, array('ID'=>$fault->equipment) );
 							$data = get_tabledata(TBL_SERVICE_AGENTS, false, array('ID'=> $equipment->service_agent ));
@@ -860,7 +860,7 @@ if( !class_exists('Fault') ):
 			if( !user_can('view_fault') ):
 				echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
 			elseif(!$faults):
-				echo page_not_found("Oops! There is no new faults record found",' ',false);
+				echo page_not_found("THERE ARE NO  new faults record found",' ',false);
 			else:
 			?>
 <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap ajax-datatable-buttons" cellspacing="0" width="100%" data-table="fetch_all_faults" data-order-column="6">
@@ -974,7 +974,7 @@ if( !class_exists('Fault') ):
 			if( !user_can('view_fault_type') ):
 				echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
 			elseif(!$fault_types):
-				echo page_not_found("Oops! There is no new fault types record found",' ',false);
+				echo page_not_found("THERE ARE NO  new fault types record found",' ',false);
 			else:
 			?>
 			<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap datatable-buttons" cellspacing="0" width="100%">
@@ -1066,7 +1066,7 @@ if( !class_exists('Fault') ):
 				if($result):
 					$notification_args = array(
 						'title' => 'New fault created',
-						'notification'=> 'You have successfully created a new fault ('.$name.').',
+						'notification'=> 'You have successfully entered a new fault ('.$name.').',
 					);
 
 					add_user_notification($notification_args);
@@ -1194,7 +1194,7 @@ if( !class_exists('Fault') ):
 					if($result):
 						$notification_args = array(
 							'title' => 'New fault type created',
-							'notification'=> 'You have successfully created a new fault type ('.$name.').',
+							'notification'=> 'You have successfully entered a new fault type ('.$name.').',
 						);
 
 						add_user_notification($notification_args);
