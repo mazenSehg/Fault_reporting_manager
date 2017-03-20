@@ -197,7 +197,7 @@ login_check();
 								</div>
 							</div>
 							
-							<div class="col-md-4 col-sm-2 col-xs-12">
+							<div class="col-md-5 col-sm-2 col-xs-12">
 								<div class="x_panel tile fixed_height_320">
 									<div class="x_title">
 										<h2>Todo list</h2>

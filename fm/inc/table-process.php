@@ -10,8 +10,15 @@
 			case 'fetch_all_equipments':
 				echo $Equipment->fetch_all_equipments_process();
 				break;
+			case 'fetch_all_equipments2':
+				echo $Equipment->fetch_all_equipments_process2();
+				break;
 			case 'fetch_all_faults':
 				echo $Fault->fetch_all_faults_process();
+				break;
+
+			case 'fetch_all_faults2':
+				echo $Fault->fetch_all_faults_process2();
 				break;
 			default:
 				$response = array(

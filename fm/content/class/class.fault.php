@@ -886,6 +886,67 @@ if( !class_exists('Fault') ):
 			return $content;
 		}
 
+		
+		
+		
+		
+		
+		
+		
+				public function all__faults__page__off(){
+			ob_start();
+			$query = '';
+			if(!is_admin()):
+				$centres = maybe_unserialize($this->current__user->centre);
+				if(!empty($centres)){
+					$centres = implode(',',$centres);
+					$query = "WHERE `centre` IN (".$centres.")";
+				}
+			endif;
+			$faults = get_tabledata(TBL_FAULTS,false,array(), $query);
+			if( !user_can('view_fault') ):
+				echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
+			elseif(!$faults):
+				echo page_not_found("THERE ARE NO  new faults record found",' ',false);
+			else:
+			?>
+<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap ajax-datatable-buttons" cellspacing="0" width="100%" data-table="fetch_all_faults2" data-order-column="6">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Centre</th>
+						<th>Equipment Type</th>
+						<th>Equipment</th>
+						<th>Fault Type</th>
+						<th>Date of Fault</th>
+						<th>Created On</th>
+						<?php if(is_admin()): ?>
+						<th>Approved</th>
+						<?php endif; ?>
+						<th class="text-center">Actions</th>
+					</tr>
+				</thead>
+			</table>
+			<?php endif; ?>
+			<?php
+			$content = ob_get_clean();
+			return $content;
+		}
+		
+		
+		
+		
+		
+		
+
+		
+		
+		
+		
+		
+		
+		
+		
 		public function add__fault__type__page(){
 			ob_start();
 			if( !user_can( 'add_fault_type') ):
@@ -1548,6 +1609,145 @@ if( !class_exists('Fault') ):
 			);
 			return json_encode($response);
 		}
+		
+		
+		
+		
+		
+		
+			public function fetch_all_faults_process2(){
+			$orders_columns = array(
+				0 => 'name',
+				5 => 'date_of_fault',
+				6 => 'created_on',
+				7 => 'approved',
+			);
+			$recordsTotal = $recordsFiltered = 0;
+			$draw = $_POST["draw"];
+			$orderByColumnIndex = $_POST['order'][0]['column'];
+			$orderBy = ( array_key_exists( $orderByColumnIndex , $orders_columns ) ) ? $orders_columns[$orderByColumnIndex] : 'created_on';
+			$orderType = $_POST['order'][0]['dir'];
+			$start = $_POST["start"];
+			$length = $_POST['length'];
+			
+			$query = '';
+			if(!is_admin()):
+				$centres = maybe_unserialize($this->current__user->centre);
+				if(!empty($centres)){
+					$centres = implode(',',$centres);
+					$query = "WHERE `centre` IN (".$centres.")";
+				}
+			endif;
+			$recordsTotal = count(get_tabledata(TBL_FAULTS,false,array(), $query));
+			$sql = sprintf(" ORDER BY %s %s LIMIT %d , %d ", $orderBy,$orderType ,$start , $length);
+			$data = array();
+			if(!empty($_POST['search']['value'])){
+				$columns = array('ID','name');
+				for($i = 0 ; $i < count($columns);$i++){
+					$column = $columns[$i];
+					$where[] = "$column LIKE '%".$_POST['search']['value']."%'";
+				}
+				$where = implode(" OR " , $where);
+				$query .= ($query != '') ? ' AND ' : ' WHERE ';
+				$query .= $where;
+				$data_list = get_tabledata(TBL_EQUIPMENTS,false ,array('approved'=>'0'), $query.$sql );
+				$recordsFiltered = count( $data_list );
+			}else{
+				$data_list = get_tabledata(TBL_FAULTS,false,array('approved'=>'0'),$query.$sql);
+				$recordsFiltered = $recordsTotal;
+			}
+						
+			if($data_list): foreach($data_list as $fault):
+				$centre = get_tabledata(TBL_CENTRES,true,array('ID'=> $fault->centre));
+				
+				$equipment_type = get_tabledata(TBL_EQUIPMENT_TYPES,true,array('ID'=> $fault->equipment_type));
+				
+			$equipment = get_tabledata(TBL_EQUIPMENTS,true,array('ID'=> $fault->equipment));
+			$fault_type = get_tabledata(TBL_FAULT_TYPES,true,array('ID'=> $fault->fault_type));
+				
+				$row = array();
+				array_push($row, __($fault->name));
+				array_push($row, __($centre->name));
+				array_push($row, __($equipment_type->name));
+				array_push($row, __($equipment->name));
+				
+				array_push($row, __($fault_type->name));
+				
+				//array_push($row, date('M d,Y',strtotime($fault->date_of_fault)));
+				array_push($row, date('d M, Y',$fault->date_of_fault));
+				array_push($row, date('d M,Y',strtotime($fault->created_on)));
+				if(is_admin()):
+					ob_start();
+					?>
+					<div class="text-center">
+						<label><input type="checkbox" class="js-switch" <?php checked($fault->approved, 1);?> onclick="approve_switch(this);" data-id="<?php echo $fault->ID;?>" data-action="fault_approve_change"/></label>
+					</div>
+					<?php 
+					$checkbox = ob_get_clean();
+					array_push($row, $checkbox);
+				endif;
+				ob_start();
+				?>
+				<div class="text-center">
+					<?php if(is_admin()): ?>
+						<a href="<?php echo site_url();?>/view-fault/?id=<?php echo $fault->ID;?>" class="btn btn-dark btn-xs">
+							<i class="fa fa-edit"></i> View
+						</a>
+						<a href="<?php echo site_url();?>/edit-fault/?id=<?php echo $fault->ID;?>" class="btn btn-dark btn-xs">
+							<i class="fa fa-edit"></i> Edit
+						</a>
+						<a href="#" class="btn btn-danger btn-xs" onclick="delete_function(this);" data-id="<?php echo $fault->ID;?>" data-action="delete_fault">
+							<i class="fa fa-trash"></i> Delete
+						</a>
+					<?php else:
+						$future = date('d-m-Y',strtotime(' + 2 day', strtotime($fault->created_on)));
+						$today = date('d-m-Y');
+						if($today == $future):
+							if( user_can('view_fault') ): ?>
+							<p>Overdue </p>
+							<a href="<?php echo site_url();?>/view-fault/?id=<?php echo $fault->ID;?>" class="btn btn-dark btn-xs">
+								<i class="fa fa-edit"></i> View
+							</a>
+							<?php endif; ?>
+						<?php else: ?>
+							<?php if($this->current__user__id == $fault->user_id):
+								if( user_can('edit_fault') ): ?>
+								<a href="<?php echo site_url();?>/edit-fault/?id=<?php echo $fault->ID;?>" class="btn btn-dark btn-xs">
+									<i class="fa fa-edit"></i> Edit
+								</a>
+								<?php endif; ?>
+								
+								<?php if( user_can('delete_fault') ): ?>
+								<a href="#" class="btn btn-danger btn-xs" onclick="javascript:delete_function(this);" data-id="<?php echo $fault->ID;?>" data-action="delete_fault"><i class="fa fa-trash"></i> Delete</a>
+								<?php endif; ?>
+							<?php else: ?>
+								<?php if( user_can('view_fault') ): ?>
+								<a href="<?php echo site_url();?>/view-fault/?id=<?php echo $fault->ID;?>" class="btn btn-dark btn-xs">
+									<i class="fa fa-edit"></i> View
+								</a>
+								<?php endif; ?>
+							<?php endif; ?>
+						<?php endif; ?>
+					<?php endif; ?>
+				</div>
+				<?php 
+				$action = ob_get_clean();
+				array_push($row, $action);
+				$data[] = $row;
+				endforeach;
+			endif;
+			
+			/* Response to client before JSON encoding */
+			$response = array(
+				"draw" => intval($draw),
+				"recordsTotal" => $recordsTotal,
+				"recordsFiltered"=> $recordsFiltered,
+				"data" => $data,
+			);
+			return json_encode($response);
+		}
+		
+		
 	}
 endif;
 ?>
