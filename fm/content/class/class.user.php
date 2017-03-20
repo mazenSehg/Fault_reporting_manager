@@ -358,7 +358,7 @@ if( !class_exists('User') ):
 				<div class="row">
 					<div class="form-group col-sm-6 col-xs-12">
 						<label for="company">
-							Role
+							User Type
 							<span class="required">
 								*
 							</span>
@@ -519,7 +519,7 @@ if( !class_exists('User') ):
 
 				<div class="row">
 					<div class="form-group col-sm-6 col-xs-12">
-						<label for="company">Role <span class="required">*</span></label>
+						<label for="company">User Type <span class="required">*</span></label>
 						<select name="user_role" class="form-control select_single require" tabindex="-1" data-placeholder="Choose role">
 							<?php echo get_options_list(get_roles(),array($user->user_role)); ?>
 						</select>
@@ -740,6 +740,7 @@ if( !class_exists('User') ):
 
 				$user_pass = password_generator();
 				$guid = get_guid(TBL_USERS);
+			$pword = set_password($user_pass);
 				$result = $this->database->insert(TBL_USERS,
 					array(
 						'ID' => $guid,
@@ -748,11 +749,19 @@ if( !class_exists('User') ):
 						'user_email' => $user_email,
 						'user_role' => $user_role,
 						'user_status'=> 1,
-						'user_pass' => set_password($user_pass),
+						'user_pass' => $pword,
 						'centre' => $centre,
 						'created_by' => $this->current__user__id,
 					)
 				);
+			
+			//MAILER 
+			$full = $first_name . " " . $last_name;
+			$subject = "NCCPM Fault Management System - Login Details";
+			$body = "Welcome, your login email address is: ". $user_email . " and your password is: " . $user_pass . ". The password can be changed once logged in.";
+			 $admn = "admin@admin.com";
+				
+			
 				if($result):
 					$user__id = $guid;
 					update_user_meta($user__id,'gender',$gender);
@@ -764,6 +773,8 @@ if( !class_exists('User') ):
 						'title' => 'New Admin Account Created',
 						'notification'=> 'You have successfully created a new admin account ('.ucfirst($first_name).' '.ucfirst($last_name).').',
 					);
+			send_email($admn,$full,$user_email, $subject, $body);
+			
 					add_user_notification($notification_args);
 					$return['status'] = 1;
 					$return['message_heading'] = 'Success !';
