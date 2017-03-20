@@ -26,6 +26,22 @@ if ( !function_exists('get_equipment_status') ) :
 	}
 endif;
 
+
+
+if ( !function_exists('get_approv') ) :
+	function get_approv($key = ''){
+		$data = array(
+			'0' => 'Not approved',
+			'1' => 'Approved',
+			'3' => 'Both',
+		);
+		
+		return ($key == '') ? $data : $data[$key];
+	}
+endif;
+
+
+
 if( !function_exists('get_designations')):
 	function get_designations(){
 		$data = array('Assistant Practitioner','QA Radiographer','Radiographer','Superintendent Radiographer');
