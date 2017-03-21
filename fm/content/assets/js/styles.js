@@ -87,8 +87,8 @@ $(document).ready(function() {
 						d.action = $(".ajax-datatable-buttons").data('table');
 					},
 					complete:function(r){
-						if ($(".js-switch")[0]) {
-							var elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
+						if ($("table .js-switch")[0]) {
+							var elems = Array.prototype.slice.call(document.querySelectorAll('table .js-switch'));
 							elems.forEach(function (html) {
 								var switchery = new Switchery(html, {
 									color: '#26B99A'
@@ -553,6 +553,9 @@ $(document).ready(function() {
 					}
 					alert_notification(res['message_heading'],res['message'],'success');
 					window.scrollTo(0,0);
+					if(res['reload'] == 1){
+						window.location.reload();
+					}
 				}
 				return false;
 			}
@@ -770,6 +773,15 @@ $(document).ready(function() {
 		});
 	});
 
+	$('.doh-action').on('click',function(e){
+		var _this = $(this);
+		if( _this.is(':checked')){
+			$('.doh-action-group').slideDown();
+		}else{
+			$('.doh-action-group').slideUp();
+		}
+	});
+    
 });
 
 function delete_function(btn){
@@ -840,11 +852,43 @@ function alert_notification(Title,Text, Type, Class = ''){
 }
 
 function approve_switch(btn){
+	var e = window.event;
+	
 	var status = 0;
 	var id = $(btn).data('id');
 	var action = $(btn).data('action');
+	
 	if($(btn).is(':checked')){
 		var status = 1;
+	}
+	if( action.trim() == 'fault_approve_change' && status == 1 ){
+		e.preventDefault();
+		var form = $('.fault-modal-form');
+		form.find('input[name="id"]').val(id);
+		form.find('input[name="status"]').val(status);
+		$.ajax({ 
+			type: 'POST',
+			data: {
+				'action' : 'fetch_fault_data_for_modal',
+				'id' : id,
+			},
+			url: ajax_url,
+			dataType: 'json',
+			success: function(res){
+				console.log(res);
+				if(res['doh'] != ''){
+					if(res['doh'].trim() == '1' && !form.find('.doh-action').is(':checked')){
+						form.find('.doh-action').trigger('click');
+					}
+					form.find('input[name="supplier_enquiry"]').val(res['supplier_enquiry'].trim());
+					form.find('input[name="supplier_action"]').val(res['supplier_action'].trim());
+					form.find('textarea[name="supplier_comments"]').val(res['supplier_comments'].trim());
+					$('.launch-fault-modal').trigger('click');
+					return false;
+				}
+			}
+		});
+		return false;
 	}
 	$.ajax({ 
 		type: 'POST',

@@ -226,6 +226,30 @@ if( !class_exists('Fault') ):
 						<label><input type="radio" class="flat" name="satisfied_equipment" value="2" /> N/A</label>
 					</div>
 				</div>
+                
+                
+                <div class="row">
+					<div class="form-group col-xs-12">
+						<label for="decommed"><?php _e('DoH Action');?></label>
+						<br/>
+						<label><input type="checkbox" name="doh" class="js-switch doh-action" /></label>
+					</div>
+				</div>
+				<div class="row doh-action-group">
+					<div class="form-group col-sm-6 col-xs-12">
+						<label for="supplier_enquiry"><?php _e('Enquiry to Supplier');?></label>
+						<input type="text" name="supplier_enquiry" class="form-control" />
+					</div>
+					<div class="form-group col-sm-6 col-xs-12">
+						<label for="supplier_action"><?php _e('Supplier Action');?></label>
+						<input type="text" name="supplier_action" class="form-control" class="form-control" />
+					</div>
+					<div class="form-group col-sm-12 col-xs-12">
+						<label for="supplier_comments"><?php _e('Supplier Comments');?></label>
+						<textarea name="supplier_comments" class="form-control" rows="3"></textarea>
+					</div>
+				</div>
+                
 				<div class="ln_solid"></div>
 				<div class="form-group">
 					<input type="hidden" name="action" value="add_new_fault" />
@@ -551,7 +575,29 @@ if( !class_exists('Fault') ):
 						</label>
 					</div>
 				</div>
-				<div class="ln_solid">
+                
+<div class="row">
+					<div class="form-group col-xs-12">
+						<label for="decommed"><?php _e('DoH Action');?></label>
+						<br/>
+						<label><input type="checkbox" name="doh" class="js-switch doh-action" <?php checked($fault->doh,1);?> /></label>
+					</div>
+				</div>
+				<div class="row doh-action-group <?php checked($fault->doh,1);?>">
+					<div class="form-group col-sm-6 col-xs-12">
+						<label for="supplier_enquiry"><?php _e('Enquiry to Supplier');?></label>
+						<input type="text" name="supplier_enquiry" class="form-control" value="<?php echo $fault->supplier_enquiry;?>" />
+					</div>
+					<div class="form-group col-sm-6 col-xs-12">
+						<label for="supplier_action"><?php _e('Supplier Action');?></label>
+						<input type="text" name="supplier_action" class="form-control" class="form-control" value="<?php echo $fault->supplier_action;?>" />
+					</div>
+					<div class="form-group col-sm-12 col-xs-12">
+						<label for="supplier_comments"><?php _e('Supplier Comments');?></label>
+						<textarea name="supplier_comments" class="form-control" rows="3" ><?php echo $fault->supplier_comments;?></textarea>
+					</div>
+				</div>
+				<div class="ln_solid"></div>
 				</div>
 				<div class="form-group">
 					<input type="hidden" name="action" value="update_fault" />
@@ -569,13 +615,12 @@ if( !class_exists('Fault') ):
 			ob_start();
 			$fault__id = $_GET['id'];
 			$query = '';
-			if(!is_admin()):
-			$centres = maybe_unserialize($this->current__user->centre);
-			if(!empty($centres))
-			{
-				$centres = implode(',',$centres);
-				$query = "WHERE `centre` IN (".$centres.")";
-			}
+		if(!is_admin()):
+				$centres = maybe_unserialize($this->current__user->centre);
+				if(!empty($centres)){
+					$centres = implode(',',$centres);
+					$query = "WHERE `centre` IN (".$centres.")";
+				}
 			endif;
 			$query .= ($query != '') ? ' AND ' : ' WHERE ';
 			$query .= " `ID` = ".$fault__id." ";
@@ -880,6 +925,51 @@ if( !class_exists('Fault') ):
 					</tr>
 				</thead>
 			</table>
+
+	<div class="fault-modal">
+				<button type="button" class="btn btn-info btn-lg hidden launch-fault-modal" data-toggle="modal" data-target="#fault-modal">Open Modal</button>
+				<div id="fault-modal" class="modal fade" role="dialog">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+							</div>
+							<form class="fault-modal-form submit-form" method="post" autocomplete="off">
+								<div class="modal-body">
+									<div class="form-group">
+										<label for="decommed"><?php _e('DoH Action');?></label>
+										<br/>
+										<label><input type="checkbox" name="doh" class="js-switch doh-action" /></label>
+									</div>
+									<div class="doh-action-group">
+										<div class="form-group">
+											<label for="supplier_enquiry"><?php _e('Enquiry to Supplier');?></label>
+											<input type="text" name="supplier_enquiry" class="form-control" />
+										</div>
+										<div class="form-group">
+											<label for="supplier_action"><?php _e('Supplier Action');?></label>
+											<input type="text" name="supplier_action" class="form-control" class="form-control" />
+										</div>
+										<div class="form-group">
+											<label for="supplier_comments"><?php _e('Supplier Comments');?></label>
+											<textarea name="supplier_comments" class="form-control" rows="3"></textarea>
+										</div>
+									</div>
+								</div>
+								<div class="modal-footer">
+									<input type="hidden" name="action" value="fault_approve_change_via_modal"/>
+									<input type="hidden" name="id" value=""/>
+									<input type="hidden" name="status" value=""/>
+									<button type="submit" class="btn btn-success"><?php _e('Submit');?></button>
+									<button type="button" class="btn btn-default" data-dismiss="modal"><?php _e('Close');?></button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
 			<?php endif; ?>
 			<?php
 			$content = ob_get_clean();
@@ -1130,8 +1220,8 @@ if( !class_exists('Fault') ):
 			);
 			if( user_can('add_fault') ):
 				$guid = get_guid(TBL_FAULTS);
-				$result = $this->database->insert(TBL_FAULTS,
-					array(
+				$doh = ( isset($doh) ) ? 1 : 0;
+				$insert_args = array(
 						'ID' => $guid,
 						'centre' => $centre,
 						'name' => $name,
@@ -1159,9 +1249,19 @@ if( !class_exists('Fault') ):
 						'satisfied_servicing_organisation'=> $satisfied_servicing_organisation,
 						'satisfied_service_engineer' => $satisfied_service_engineer,
 						'satisfied_equipment' => $satisfied_equipment,
-						'approved' => 0
-					)
+						'approved' => 0,
+					'doh' => $doh ,
 				);
+            
+            		
+				if( $doh == 1){
+					$insert_args['supplier_enquiry'] = $supplier_enquiry;
+					$insert_args['supplier_action'] = $supplier_action;
+					$insert_args['supplier_comments'] = $supplier_comments;
+				}
+				
+				$result = $this->database->insert(TBL_FAULTS,$insert_args);
+				
 				if($result):
 					$notification_args = array(
 						'title' => 'New fault created',
@@ -1189,9 +1289,10 @@ if( !class_exists('Fault') ):
 				'message' => 'Could not update fault, Please try again.',
 				'reset_form' => 0
 			);
+
 			if( user_can('edit_fault') ):
-				$result = $this->database->update(TBL_FAULTS,
-					array(
+				$doh = ( isset($doh) ) ? 1 : 0;
+				$update_args = array(
 						'centre' => $centre,
 						'name' => $name,
 						'equipment_type' => $equipment_type,
@@ -1218,11 +1319,18 @@ if( !class_exists('Fault') ):
 						'satisfied_service_engineer' => $satisfied_service_engineer,
 						'satisfied_equipment' => $satisfied_equipment,
 						'approved' => $approved
-					),
-					array(
-						'ID'=> $fault_id
-					)
 				);
+	if( $doh == 1){
+					$update_args['supplier_enquiry'] = $supplier_enquiry;
+					$update_args['supplier_action'] = $supplier_action;
+					$update_args['supplier_comments'] = $supplier_comments;
+				}else{
+					$update_args['supplier_enquiry'] = '';
+					$update_args['supplier_action'] = '';
+					$update_args['supplier_comments'] = '';
+				}
+				
+				$result = $this->database->update(TBL_FAULTS,$update_args, array( 'ID'=> $fault_id ) );
 
 				if($result):
 					$notification_args = array(
@@ -1650,7 +1758,71 @@ if( !class_exists('Fault') ):
 		
 		
 		
-		
+			public function fault__approve__change__via__modal__process(){
+			extract($_POST);
+			$id = trim($id);
+			$return = array(
+				'status' => 0,
+				'message_heading'=> 'Failed !',
+				'message' => 'Could not update fault details, Please try again ',
+				'reset_form' => 0
+			);
+			
+			if(user_can('edit_fault')):
+				$fault = get_tabledata(TBL_FAULTS, true, array('ID'=> $id) );
+				$doh = ( isset($doh) ) ? 1 : 0;
+				$args = array('ID'=> $id);
+				$update_args = array( 'approved'=> $status, 'doh' => $doh );
+				if( $doh == 1){
+					$update_args['supplier_enquiry'] = $supplier_enquiry;
+					$update_args['supplier_action'] = $supplier_action;
+					$update_args['supplier_comments'] = $supplier_comments;
+				}
+				$result = $this->database->update(TBL_FAULTS,$update_args,$args);
+
+				if($result):
+					if($status == 0){
+						$notification_args = array(
+							'title' => 'Fault (' .$fault->ID.') is disabled now',
+							'notification'=> 'You have successfully disabled (' .$fault->ID.') fault.',
+						);
+						$return['message'] = 'You have successfully disabled (' .$fault->ID.') fault.';
+					}else{
+						$notification_args = array(
+							'title' => 'Fault (' .$fault->ID.') is approved now',
+							'notification'=> 'You have successfully approved (' .$fault->ID.') fault.',
+						);
+						$return['message'] = 'You have successfully approved (' .$fault->ID.') fault.';
+					}
+					add_user_notification($notification_args);
+					$return['status'] = 1;
+					$return['reload'] = 1;
+					$return['message_heading'] = 'Success !';
+				endif;
+			endif;
+			return json_encode($return);
+		}
+
+		public function fault__data__for__modal__process(){
+			extract($_POST);
+			$id = trim($id);
+			$return = array();
+			$return['doh'] = '';
+			$return['supplier_enquiry'] = '';
+			$return['supplier_action'] = '';
+			$return['supplier_comments'] = '';
+			if($id != ''):
+				$data = '';
+				$fault = get_tabledata(TBL_FAULTS, true, array('ID'=> $id) );
+				if($fault){
+					$return['doh'] = $fault->doh;
+					$return['supplier_enquiry'] = $fault->supplier_enquiry;
+					$return['supplier_action'] = $fault->supplier_action;
+					$return['supplier_comments'] = $fault->supplier_comments;
+				}		
+			endif;
+			return json_encode($return);
+		}
 		
 		
 			public function fetch_all_faults_process2(){
