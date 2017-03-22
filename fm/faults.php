@@ -37,7 +37,39 @@ login_check();
 							</div>
 							<div class="x_content">
 									
+								<?php
+								$kkkkk = 0;
+								$answ = "SELECT * FROM tbl_fault WHERE manufacture = $kkkkk";
+								$rr = $db->get_results($answ);
+								foreach($rr as $cat):
 								
+
+										$sql = "SELECT * FROM tbl_fault WHERE ID = $cat->ID";
+												$re = $db->get_results($sql);
+												foreach($re as $res):
+												
+												echo $res->equipment;
+												echo "<br>";
+												$sql1 = "SELECT * FROM tbl_equipment WHERE ID = $res->equipment";
+												$re1 = $db->get_results($sql1);
+
+												$rrr;
+												foreach($re1 as $res1):
+												
+												$rrr = $res1->manufacturer;
+												echo $rrr;
+												echo "<br>";
+												endforeach;
+												
+												$sql2 = "UPDATE tbl_fault SET manufacture = $rrr";
+												$re1 = $db->query($sql2);
+												endforeach;
+												
+								endforeach;
+												
+								
+								
+								?>
 								<form method="POST">
 											<div class="row">
 													<div class="form-group col-sm-2 col-xs-12">
@@ -118,20 +150,7 @@ login_check();
 
 												
 												
-												
-				<div class="form-group col-sm-3 col-xs-20">
-					<label for="model">
-						Model
-						<span class="required">
-							*
-						</span>
-					</label>
-					<select name="model" class="form-control select_model select_single" tabindex="-1" data-placeholder="Choose model">
-						<option value="">
-							Choose model
-						</option>
-					</select>
-				</div>
+
 												<div class="form-group col-sm-4 col-xs-20">
 												<input type="submit" name="SubmitButton" value="Search"/>
 												</div>
@@ -159,7 +178,6 @@ $model = $_POST['model'];
 									$_SESSION['centre'] = $centre;
 									$_SESSION['equip_type'] = $equip_type;
 									$_SESSION['manuf'] = $manuf;
-									$_SESSION['model'] = $model;
 									
 									
 									
@@ -172,8 +190,6 @@ $model = $_POST['model'];
 									echo $equip_type;
 									echo "<br>";
 									echo $manuf;
-									echo "<br>";
-									echo $model;
 									echo "<br>";
 									echo $Fault->all__faults__page3(); 
 									

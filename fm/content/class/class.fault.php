@@ -2056,7 +2056,6 @@ class Fault{
 									$centre = $_SESSION['centre'];
 									$equip_type = $_SESSION['equip_type'];
 									$manuf = $_SESSION['manuf'];
-									$model = $_SESSION['model'];
 						
 						
 			$recordsTotal = $recordsFiltered = 0;
@@ -2075,14 +2074,16 @@ class Fault{
 					$query = "WHERE `centre` IN (".$centres.")";
 				}
 			endif;
-						if($status!=null and $centre!=null and $equip_type!=null){
-			$recordsTotal = count(get_tabledata(TBL_FAULTS,false,array('approved'=>$status, 'centre'=>$centre, 'equipment_type'=>$equip_type), $query));
+						if($status!=null and $centre!=null and $equip_type!=null and $manuf!=null){
+			$recordsTotal = count(get_tabledata(TBL_FAULTS,false,array('approved'=>$status, 'centre'=>$centre, 'equipment_type'=>$equip_type, 'manufacture'=>$manuf), $query));
 						}else if($status!=null){
 			$recordsTotal = count(get_tabledata(TBL_FAULTS,false,array('approved'=>$status), $query));	
 						}else if($centre!=null){
 			$recordsTotal = count(get_tabledata(TBL_FAULTS,false,array('centre'=>$centre), $query));
 						}else if($equip_type!=null){
 			$recordsTotal = count(get_tabledata(TBL_FAULTS,false,array('equipment_type'=>$equip_type), $query));							
+						}else if($equip_type!=null){
+			$recordsTotal = count(get_tabledata(TBL_FAULTS,false,array('manufacture'=>$manuf), $query));							
 						}
 		
 			$sql = sprintf(" ORDER BY %s %s LIMIT %d , %d ", $orderBy,$orderType ,$start , $length);
@@ -2096,11 +2097,11 @@ class Fault{
 				$where = implode(" OR " , $where);
 				$query .= ($query != '') ? ' AND ' : ' WHERE ';
 				$query .= $where;
-				$data_list = get_tabledata(TBL_EQUIPMENTS,false ,array('approved'=>$status, ' manufacturer' =>$manuf, 'model'=>$model), $query.$sql );
+				$data_list = get_tabledata(TBL_EQUIPMENTS,false ,array('approved'=>$status, ' manufacturer' =>$manuf), $query.$sql );
 				$recordsFiltered = count( $data_list );
 			}else{
-				if($status!=null and $centre!=null and $equip_type!=null){
-				$data_list = get_tabledata(TBL_FAULTS,false,array('approved'=>$status, 'centre'=>$centre, 'equipment_type'=>$equip_type),$query.$sql);
+				if($status!=null and $centre!=null and $equip_type!=null and $manuf!=null){
+				$data_list = get_tabledata(TBL_FAULTS,false,array('approved'=>$status, 'centre'=>$centre, 'equipment_type'=>$equip_type, 'manufacture'=>$manuf),$query.$sql);
 				$recordsFiltered = $recordsTotal;
 				}else if($status!=null){
 				$data_list = get_tabledata(TBL_FAULTS,false,array('approved'=>$status),$query.$sql);
@@ -2110,6 +2111,9 @@ class Fault{
 				$recordsFiltered = $recordsTotal;	
 				}else if($equip_type!=null){
 				$data_list = get_tabledata(TBL_FAULTS,false,array('equipment_type'=>$equip_type),$query.$sql);
+				$recordsFiltered = $recordsTotal;
+				}else if($manuf!=null){
+				$data_list = get_tabledata(TBL_FAULTS,false,array('manufacture'=>$manuf),$query.$sql);
 				$recordsFiltered = $recordsTotal;
 				}
 			}
