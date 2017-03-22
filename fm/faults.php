@@ -95,21 +95,30 @@ login_check();
 						?>
 					</select>
 				</div>
-				<div class="form-group col-sm-3 col-xs-20">
-					<label for="manufacturer">
-						Manufacturer
-						<span class="required">
-							*
-						</span>
-					</label>
-					
-					<select name="manufacturer" class="form-control select_manufacturer select_single fetch-manufacturer-data require" tabindex="-1" data-placeholder="Choose manufacturer">
-						<option value="">
-							Choose manufacturer
-						</option>
-					</select>
-					
-				</div>
+				
+
+												
+												<div class="form-group col-sm-3 col-xs-20">
+				<label for="manufacturer">
+					Manufacturer
+					<span class="required">
+						*
+					</span>
+				</label>
+				<select name="manufacturer" class="form-control select_single require" tabindex="-1" data-placeholder="Choose manufacturer">
+					<?php
+					$data = get_tabledata(TBL_MANUFACTURERS,false,array('approved'=> '1'));
+					$option_data = get_option_data($data,array('ID','name'));
+					echo get_options_list($option_data);
+					?>
+				</select>
+			</div>
+												
+												
+
+												
+												
+												
 				<div class="form-group col-sm-3 col-xs-20">
 					<label for="model">
 						Model
@@ -141,6 +150,8 @@ $equip_type = $_POST['equipment_type'];
 $manuf = $_POST['manufacturer'];
 $model = $_POST['model'];
 									
+								
+										
 									
 									
 									session_start();
