@@ -1017,6 +1017,49 @@ if( !class_exists('Fault') ):
 					</tr>
 				</thead>
 			</table>
+ <div class="fault-modal">
+				<button type="button" class="btn btn-info btn-lg hidden launch-fault-modal" data-toggle="modal" data-target="#fault-modal">Open Modal</button>
+				<div id="fault-modal" class="modal fade" role="dialog">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+							</div>
+							<form class="fault-modal-form submit-form" method="post" autocomplete="off">
+								<div class="modal-body">
+									<div class="form-group">
+										<label for="decommed"><?php _e('DoH Action');?></label>
+										<br/>
+										<label><input type="checkbox" name="doh" class="js-switch doh-action" /></label>
+									</div>
+									<div class="doh-action-group">
+										<div class="form-group">
+											<label for="supplier_enquiry"><?php _e('Enquiry to Supplier');?></label>
+											<input type="text" name="supplier_enquiry" class="form-control" />
+										</div>
+										<div class="form-group">
+											<label for="supplier_action"><?php _e('Supplier Action');?></label>
+											<input type="text" name="supplier_action" class="form-control" class="form-control" />
+										</div>
+										<div class="form-group">
+											<label for="supplier_comments"><?php _e('Supplier Comments');?></label>
+											<textarea name="supplier_comments" class="form-control" rows="3"></textarea>
+										</div>
+									</div>
+								</div>
+								<div class="modal-footer">
+									<input type="hidden" name="action" value="fault_approve_change_via_modal"/>
+									<input type="hidden" name="id" value=""/>
+									<input type="hidden" name="status" value=""/>
+									<button type="submit" class="btn btn-success"><?php _e('Submit');?></button>
+									<button type="button" class="btn btn-default" data-dismiss="modal"><?php _e('Close');?></button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+
 			<?php endif; ?>
 			<?php
 			$content = ob_get_clean();
@@ -1061,6 +1104,48 @@ if( !class_exists('Fault') ):
 					</tr>
 				</thead>
 			</table>
+<div class="fault-modal">
+				<button type="button" class="btn btn-info btn-lg hidden launch-fault-modal" data-toggle="modal" data-target="#fault-modal">Open Modal</button>
+				<div id="fault-modal" class="modal fade" role="dialog">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+							</div>
+							<form class="fault-modal-form submit-form" method="post" autocomplete="off">
+								<div class="modal-body">
+									<div class="form-group">
+										<label for="decommed"><?php _e('DoH Action');?></label>
+										<br/>
+										<label><input type="checkbox" name="doh" class="js-switch doh-action" /></label>
+									</div>
+									<div class="doh-action-group">
+										<div class="form-group">
+											<label for="supplier_enquiry"><?php _e('Enquiry to Supplier');?></label>
+											<input type="text" name="supplier_enquiry" class="form-control" />
+										</div>
+										<div class="form-group">
+											<label for="supplier_action"><?php _e('Supplier Action');?></label>
+											<input type="text" name="supplier_action" class="form-control" class="form-control" />
+										</div>
+										<div class="form-group">
+											<label for="supplier_comments"><?php _e('Supplier Comments');?></label>
+											<textarea name="supplier_comments" class="form-control" rows="3"></textarea>
+										</div>
+									</div>
+								</div>
+								<div class="modal-footer">
+									<input type="hidden" name="action" value="fault_approve_change_via_modal"/>
+									<input type="hidden" name="id" value=""/>
+									<input type="hidden" name="status" value=""/>
+									<button type="submit" class="btn btn-success"><?php _e('Submit');?></button>
+									<button type="button" class="btn btn-default" data-dismiss="modal"><?php _e('Close');?></button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
 			<?php endif; ?>
 			<?php
 			$content = ob_get_clean();
@@ -1973,17 +2058,6 @@ if( !class_exists('Fault') ):
 									$manuf = $_SESSION['manuf'];
 									$model = $_SESSION['model'];
 						
-	
-						
-						if($centre!=null){
-						   $sq = "SELECT * FROM tbl_centres WHERE ID = $centre";
-							$res = $db->get_results($sq);
-							$centr;
-							foreach($res as $i):
-							$centr = $i->name;
-							endforeach;
-							echo $centr;
-						}
 						
 			$recordsTotal = $recordsFiltered = 0;
 			$draw = $_POST["draw"];
@@ -2001,7 +2075,7 @@ if( !class_exists('Fault') ):
 					$query = "WHERE `centre` IN (".$centres.")";
 				}
 			endif;
-			$recordsTotal = count(get_tabledata(TBL_FAULTS,false,array(), $query));
+			$recordsTotal = count(get_tabledata(TBL_FAULTS,false,array('approved'=>$status, 'centre'=>$centre, 'equipment_type'=>$equip_type), $query));
 			$sql = sprintf(" ORDER BY %s %s LIMIT %d , %d ", $orderBy,$orderType ,$start , $length);
 			$data = array();
 			if(!empty($_POST['search']['value'])){
@@ -2013,10 +2087,10 @@ if( !class_exists('Fault') ):
 				$where = implode(" OR " , $where);
 				$query .= ($query != '') ? ' AND ' : ' WHERE ';
 				$query .= $where;
-				$data_list = get_tabledata(TBL_EQUIPMENTS,false ,array('approved'=>$status), $query.$sql );
+				$data_list = get_tabledata(TBL_EQUIPMENTS,false ,array('approved'=>$status, ' manufacturer' =>$manuf, 'model'=>$model), $query.$sql );
 				$recordsFiltered = count( $data_list );
 			}else{
-				$data_list = get_tabledata(TBL_FAULTS,false,array('approved'=>$status),$query.$sql);
+				$data_list = get_tabledata(TBL_FAULTS,false,array('approved'=>$status, 'centre'=>$centre, 'equipment_type'=>$equip_type),$query.$sql);
 				$recordsFiltered = $recordsTotal;
 			}
 						
