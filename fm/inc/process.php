@@ -58,7 +58,17 @@
 			case 'user_account_status_change':
 				echo $User->account__status__change__process();
 				break;
-			
+
+
+            case 'fault_approve_change_via_modal':
+				echo $Fault->fault__approve__change__via__modal__process();
+				break;
+
+			case 'fetch_fault_data_for_modal':
+				echo $Fault->fault__data__for__modal__process();
+				break;	
+
+
 			case 'delete_user':
 				echo $User->delete__user__process();
 				break;

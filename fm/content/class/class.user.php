@@ -381,32 +381,31 @@ if( !class_exists('User') ):
 				</div>
 
 				<div class="row">
-					<div class="form-group col-sm-12 col-xs-12">
-						<label for="centre">
-							Centre
-							<span class="required">
-								*
-							</span>
-						</label>
-						<select name="centre[]" class="form-control select_single require" tabindex="-1" data-placeholder="Choose centre" multiple="multiple">
+					<div class="form-group col-sm-6 col-xs-12">
+						<label for="centre">Centre <span class="required"> *</span></label>
+						<select name="centre" class="form-control select_single fetch-centre-equipment-data" tabindex="-1" data-placeholder="Choose centre">
 							<?php
 							$query = '';
 							if(!is_admin()):
-							$centres = maybe_unserialize($this->current__user->centre);
-							if(!empty($centres))
-							{
-								$centres = implode(',',$centres);
-								$query = "WHERE `ID` IN (".$centres.")";
-							}
+								$centres = maybe_unserialize($this->current__user->centre);
+								if(!empty($centres)){
+									$centres = implode(',',$centres);
+									$query = "WHERE `ID` IN (".$centres.")";
+								}
 							endif;
-			
-							$data = get_tabledata(TBL_CENTRES,false,array('approved'=> '1'),$query);
+							$query .= ($query != '') ? ' AND ' : ' WHERE ';
+							$query .= " `approved` = '1' ORDER BY `name` ASC";
+							$data = get_tabledata(TBL_CENTRES,false,array(),$query);
 							$option_data = get_option_data($data,array('ID','name'));
 							echo get_options_list($option_data);
 							?>
 						</select>
 					</div>
 				</div>
+				
+				<?php
+			
+			?>
 
 				<div class="row">
 					<div class="col-xs-12 col-sm-6 form-goup">
@@ -614,9 +613,13 @@ if( !class_exists('User') ):
 			$content = ob_get_clean();
 			return $content;
 		}
+		
+		
 
 		public function all__users__page(){
 			ob_start();
+			
+			$centres = maybe_unserialize($this->current__user->centre);
 			$args = (!is_admin()) ? array('created_by'=> $this->current__user__id) : array();
 			$users_list = get_tabledata(TBL_USERS,false,$args);
 			if(!user_can('view_user')):

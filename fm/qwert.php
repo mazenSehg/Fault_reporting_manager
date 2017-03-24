@@ -155,6 +155,7 @@ login_check();
 												
 												
 <?php
+												/**
 				$sql = "SELECT COUNT(*) AS resc FROM tbl_equipment WHERE equipment_code IS NULL OR equipment_code=''";
 				$res = $db->get_results($sql);
 				
@@ -166,6 +167,15 @@ login_check();
 				if($valll>0){
 				echo $valll;	
 				}
+				
+				**/
+				
+												
+												
+
+												
+												
+												
 												?>
 												
 												
