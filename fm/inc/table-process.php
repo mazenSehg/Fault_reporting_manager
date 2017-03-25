@@ -22,11 +22,6 @@
 				break;
 			default:
 
-case 'fetch_all_faults3':
-				echo $Fault->fetch_all_faults_process3();
-				break;
-			default:
-
 				$response = array(
 					"draw" => 0,
 					"recordsTotal" => 0,

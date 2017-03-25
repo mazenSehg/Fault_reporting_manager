@@ -31,6 +31,58 @@ class Equipment{
 			echo page_not_found("THERE ARE NO  record found for Equipments",' ',false);
 		else:
 		?>
+<div class="row custom-filters">
+				<div class="form-group col-sm-3 col-xs-12">
+					<label for="centre">Centre</label>
+					<select name="centre" class="form-control select_single" tabindex="-1" data-placeholder="Choose centre">
+						<?php
+						$query = '';
+						if(!is_admin()):
+							$centres = maybe_unserialize($this->current__user->centre);
+							if(!empty($centres)){
+							$centres = implode(',',$centres);
+								$query = "WHERE `ID` IN (".$centres.")";
+							}
+						endif;
+						$query .= ($query != '') ? ' AND ' : ' WHERE ';
+						$query .= " `approved` = '1' ORDER BY `name` ASC";
+						$data = get_tabledata(TBL_CENTRES,false,array(),$query);
+						$option_data = get_option_data($data,array('ID','name'));
+						echo get_options_list($option_data);
+						?>
+					</select>
+				</div>
+				<div class="form-group col-sm-3 col-xs-12">
+					<label for="equipment-type">Equipment Type</label>
+					<select name="equipment_type" class="form-control select_single" tabindex="-1" data-placeholder="Choose equipment type">
+						<?php
+						$data = get_tabledata(TBL_EQUIPMENT_TYPES,false,array('approved'=> '1'), 'ORDER BY `name` ASC');
+						$option_data = get_option_data($data,array('ID','name'));
+						echo get_options_list($option_data);
+						?>
+					</select>
+				</div>
+				<div class="form-group col-sm-3 col-xs-12">
+					<label for="manufacturer">Manufacturer</label>
+					<select name="manufacturer" class="form-control select_single" tabindex="-1" data-placeholder="Choose manufacturer">
+						<?php
+						$data = get_tabledata(TBL_MANUFACTURERS,false,array('approved'=> '1'), 'ORDER BY `name` ASC');
+						$option_data = get_option_data($data,array('ID','name'));
+						echo get_options_list($option_data);
+						?>
+					</select>
+				</div>
+				<div class="form-group col-sm-3 col-xs-12">
+					<label for="model">Model</label>
+					<select name="model" class="form-control select_single" tabindex="-1" data-placeholder="Choose model">
+						<?php
+						$data = get_tabledata(TBL_MODELS,false,array('approved'=> '1'), 'ORDER BY `name` ASC');
+						$option_data = get_option_data($data,array('ID','name'));
+						echo get_options_list($option_data);
+						?>
+					</select>
+				</div>
+			</div>
 <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap ajax-datatable-buttons" cellspacing="0" width="100%" data-table="fetch_all_equipments" data-order-column="7">
 			<thead>
 				<tr>
@@ -2609,7 +2661,7 @@ class Equipment{
 					$query = "WHERE `centre` IN (".$centres.")";
 				}
 			endif;
-			$recordsTotal = count(get_tabledata(TBL_EQUIPMENTS,false,array(), $query));
+			
 			$sql = sprintf(" ORDER BY %s %s limit %d , %d ", $orderBy,$orderType ,$start , $length);
 			$data = array();
 			if(!empty($_POST['search']['value'])){
@@ -2620,13 +2672,32 @@ class Equipment{
 				}
 				$where = implode(" OR " , $where);
 				$query .= ($query != '') ? ' AND ' : ' WHERE ';
-				$query .= $where;
-				$data_list = get_tabledata(TBL_EQUIPMENTS,false ,array(), $query.$sql );
-				$recordsFiltered = count( $data_list );
-			}else{
-				$data_list = get_tabledata(TBL_EQUIPMENTS,false,array(),$query.$sql);
-				$recordsFiltered = $recordsTotal;
+				$query .= $where;	
 			}
+			
+			if(!empty($_POST['centre']) && $_POST['centre'] != 'undefined'){
+				$query .= ($query != '') ? ' AND ' : ' WHERE ';
+				$query .= " `centre` = '".$_POST['centre']."' ";
+			}
+			
+			if(!empty($_POST['equipment_type']) && $_POST['equipment_type'] != 'undefined'){
+				$query .= ($query != '') ? ' AND ' : ' WHERE ';
+				$query .= " `equipment_type` = '".$_POST['equipment_type']."' ";
+			}
+			
+			if(!empty($_POST['manufacturer']) && $_POST['manufacturer'] != 'undefined'){
+				$query .= ($query != '') ? ' AND ' : ' WHERE ';
+				$query .= " `manufacturer` = '".$_POST['manufacturer']."' ";
+			}
+			
+			if(!empty($_POST['model']) && $_POST['model'] != 'undefined'){
+				$query .= ($query != '') ? ' AND ' : ' WHERE ';
+				$query .= " `model` = '".$_POST['model']."' ";
+			}
+			
+			$recordsTotal = count(get_tabledata(TBL_EQUIPMENTS,false,array(), $query));
+			$data_list = get_tabledata(TBL_EQUIPMENTS,false ,array(), $query.$sql );
+			$recordsFiltered = count( $data_list );
 			
 			if($data_list): foreach($data_list as $equipment):
 				$centre = get_tabledata(TBL_CENTRES,true,array('ID'=>$equipment->centre));
@@ -2692,7 +2763,7 @@ class Equipment{
 			);
 			return json_encode($response);
 		}
-	
+
 	
 	
 	
