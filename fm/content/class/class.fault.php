@@ -963,7 +963,7 @@ public function all__faults__page(){
 			<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap ajax-datatable-buttons" cellspacing="0" width="100%" data-table="fetch_all_faults" data-order-column="6">
 				<thead>
 					<tr>
-						<th>Name</th>
+						<th>Submitted By</th>
 						<th>Centre</th>
 						<th>Equipment Type</th>
 						<th>Equipment</th>
@@ -1052,7 +1052,7 @@ public function all__faults__page(){
 <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap ajax-datatable-buttons" cellspacing="0" width="100%" data-table="fetch_all_faults2" data-order-column="6">
 				<thead>
 					<tr>
-						<th>Name</th>
+						<th>Submitted By</th>
 						<th>Centre</th>
 						<th>Equipment Type</th>
 						<th>Equipment</th>
@@ -1765,8 +1765,8 @@ public function all__faults__page(){
 			
 			$recordsTotal = count(get_tabledata(TBL_FAULTS,false,array(), $query));
 			$data_list = get_tabledata(TBL_FAULTS,false,array(),$query.$sql);
-			$recordsFiltered = count( $data_list );
-					
+			//$recordsFiltered = count( $data_list );
+				$recordsFiltered = $recordsTotal;	
 			if($data_list): foreach($data_list as $fault):
 				
                 $centre = get_tabledata(TBL_CENTRES,true,array('ID'=> $fault->centre));
@@ -1892,7 +1892,8 @@ public function all__faults__page(){
 				$query .= ($query != '') ? ' AND ' : ' WHERE ';
 				$query .= $where;
 				$data_list = get_tabledata(TBL_EQUIPMENTS,false ,array('approved'=>'0'), $query.$sql );
-				$recordsFiltered = count( $data_list );
+				//$recordsFiltered = count( $data_list );
+				$recordsFiltered = $recordsTotal;	
 			}else{
 				$data_list = get_tabledata(TBL_FAULTS,false,array('approved'=>'0'),$query.$sql);
 				$recordsFiltered = $recordsTotal;

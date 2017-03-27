@@ -2697,8 +2697,8 @@ class Equipment{
 			
 			$recordsTotal = count(get_tabledata(TBL_EQUIPMENTS,false,array(), $query));
 			$data_list = get_tabledata(TBL_EQUIPMENTS,false ,array(), $query.$sql );
-			$recordsFiltered = count( $data_list );
-			
+			//$recordsFiltered = count( $data_list );
+			$recordsFiltered = $recordsTotal;	
 			if($data_list): foreach($data_list as $equipment):
 				$centre = get_tabledata(TBL_CENTRES,true,array('ID'=>$equipment->centre));
 				$equipment_type = get_tabledata(TBL_EQUIPMENT_TYPES,true,array('ID'=>$equipment->equipment_type));
@@ -2803,7 +2803,8 @@ class Equipment{
 				$query .= ($query != '') ? ' AND ' : ' WHERE ';
 				$query .= $where;
 				$data_list = get_tabledata(TBL_EQUIPMENTS,false ,array('approved'=>'0'), $query.$sql );
-				$recordsFiltered = count( $data_list );
+				//$recordsFiltered = count( $data_list );
+				$recordsFiltered = $recordsTotal;	
 			}else{
 				$data_list = get_tabledata(TBL_EQUIPMENTS,false,array('approved'=>'0'),$query.$sql);
 				$recordsFiltered = $recordsTotal;
