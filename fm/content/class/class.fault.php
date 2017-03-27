@@ -1708,6 +1708,10 @@ public function all__faults__page(){
         public function fetch_all_faults_process(){
 			$orders_columns = array(
 				0 => 'name',
+				1 => 'centre_name',
+				2 => 'e_type_name',
+				3 => 'equipment_name',
+				4 => 'f_type_name',
 				5 => 'date_of_fault',
 				6 => 'created_on',
 				7 => 'approved',
@@ -1779,12 +1783,14 @@ public function all__faults__page(){
 				$row = array();
 				array_push($row, __($fault->name));
 				array_push($row, __($centre->name));
-            
 				array_push($row, __($equipment_type->name));
 				array_push($row, __($equipment->name));
+				
 				array_push($row, __($fault_type->name));
-				array_push($row, date('M d,Y',strtotime($fault->date_of_fault)));
-				array_push($row, date('M d,Y',strtotime($fault->created_on)));
+				
+				//array_push($row, date('M d,Y',strtotime($fault->date_of_fault)));
+				array_push($row, date('d M, Y',$fault->date_of_fault));
+				array_push($row, date('d M,Y',strtotime($fault->created_on)));
 				if(is_admin()):
 					ob_start();
 					?>
@@ -1859,6 +1865,10 @@ public function all__faults__page(){
 			public function fetch_all_faults_process2(){
 			$orders_columns = array(
 				0 => 'name',
+				1 => 'centre_name',
+				2 => 'e_type_name',
+				3 => 'equipment_name',
+				4 => 'f_type_name',
 				5 => 'date_of_fault',
 				6 => 'created_on',
 				7 => 'approved',

@@ -25,7 +25,7 @@ login_check();
 			
 			<?php
 			
-		/**	
+			
 			
 							$sq = "SELECT COUNT(*) AS resc FROM tbl_fault WHERE equipment_name IS NULL OR equipment_name='0' OR e_type_name IS NULL OR e_type_name='0' ";
 				$req = $db->get_results($sq);
@@ -84,7 +84,7 @@ login_check();
 			
 			
 			
-			**/
+			
 			
 			?>
 			
