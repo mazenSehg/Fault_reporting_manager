@@ -32,7 +32,7 @@ class Equipment{
 		else:
 		?>
 <div class="row custom-filters">
-				<div class="form-group col-sm-3 col-xs-12">
+				<div class="form-group col-sm-2 col-xs-12">
 					<label for="centre">Centre</label>
 					<select name="centre" class="form-control select_single" tabindex="-1" data-placeholder="Choose centre">
 						<?php
@@ -52,7 +52,7 @@ class Equipment{
 						?>
 					</select>
 				</div>
-				<div class="form-group col-sm-3 col-xs-12">
+				<div class="form-group col-sm-2 col-xs-12">
 					<label for="equipment-type">Equipment Type</label>
 					<select name="equipment_type" class="form-control select_single" tabindex="-1" data-placeholder="Choose equipment type">
 						<?php
@@ -62,7 +62,7 @@ class Equipment{
 						?>
 					</select>
 				</div>
-				<div class="form-group col-sm-3 col-xs-12">
+				<div class="form-group col-sm-2 col-xs-12">
 					<label for="manufacturer">Manufacturer</label>
 					<select name="manufacturer" class="form-control select_single" tabindex="-1" data-placeholder="Choose manufacturer">
 						<?php
@@ -72,12 +72,21 @@ class Equipment{
 						?>
 					</select>
 				</div>
-				<div class="form-group col-sm-3 col-xs-12">
+				<div class="form-group col-sm-2 col-xs-12">
 					<label for="model">Model</label>
 					<select name="model" class="form-control select_single" tabindex="-1" data-placeholder="Choose model">
 						<?php
 						$data = get_tabledata(TBL_MODELS,false,array('approved'=> '1'), 'ORDER BY `name` ASC');
 						$option_data = get_option_data($data,array('ID','name'));
+						echo get_options_list($option_data);
+						?>
+					</select>
+				</div>
+				<div class="form-group col-sm-2 col-xs-12">
+					<label for="approved">Status</label>
+					<select name="approved" class="form-control select_single" tabindex="-1" data-placeholder="Choose status">
+						<?php
+						$option_data = array( '1' => 'Approved' , '0' => 'Unapproved');
 						echo get_options_list($option_data);
 						?>
 					</select>
@@ -2675,24 +2684,29 @@ class Equipment{
 				$query .= $where;	
 			}
 			
-			if(!empty($_POST['centre']) && $_POST['centre'] != 'undefined'){
+			if(isset($_POST['centre']) && $_POST['centre'] != '' && $_POST['centre'] != 'undefined'){
 				$query .= ($query != '') ? ' AND ' : ' WHERE ';
 				$query .= " `centre` = '".$_POST['centre']."' ";
 			}
 			
-			if(!empty($_POST['equipment_type']) && $_POST['equipment_type'] != 'undefined'){
+			if(isset($_POST['model']) && $_POST['model'] != '' && $_POST['model'] != 'undefined'){
 				$query .= ($query != '') ? ' AND ' : ' WHERE ';
-				$query .= " `equipment_type` = '".$_POST['equipment_type']."' ";
+				$query .= " `model` = '".$_POST['model']."' ";
 			}
 			
-			if(!empty($_POST['manufacturer']) && $_POST['manufacturer'] != 'undefined'){
+			if(isset($_POST['manufacturer']) && $_POST['manufacturer'] != '' && $_POST['manufacturer'] != 'undefined'){
 				$query .= ($query != '') ? ' AND ' : ' WHERE ';
 				$query .= " `manufacturer` = '".$_POST['manufacturer']."' ";
 			}
 			
-			if(!empty($_POST['model']) && $_POST['model'] != 'undefined'){
+			if(isset($_POST['fault_type']) && $_POST['fault_type'] != '' && $_POST['fault_type'] != 'undefined'){
 				$query .= ($query != '') ? ' AND ' : ' WHERE ';
-				$query .= " `model` = '".$_POST['model']."' ";
+				$query .= " `fault_type` = '".$_POST['fault_type']."' ";
+			}
+			
+			if(isset($_POST['approved']) && $_POST['approved'] != '' &&  $_POST['approved'] != 'undefined'){
+				$query .= ($query != '') ? ' AND ' : ' WHERE ';
+				$query .= " `approved` = '".$_POST['approved']."' ";
 			}
 			
 			$recordsTotal = count(get_tabledata(TBL_EQUIPMENTS,false,array(), $query));
@@ -2705,6 +2719,7 @@ class Equipment{
 				$manufacturer = get_tabledata(TBL_MANUFACTURERS,true,array('ID'=>$equipment->manufacturer));
 				$model = get_tabledata(TBL_MODELS,true,array('ID'=>$equipment->model));
 				$service_agent = get_tabledata(TBL_SERVICE_AGENTS,true,array('ID'=>$equipment->service_agent));
+			
 				$row = array();
 				array_push($row, __($equipment->name));
 				array_push($row, __($centre->name));
@@ -2712,7 +2727,8 @@ class Equipment{
 				array_push($row, __($equipment_type->name));
 				array_push($row, __($model->name));
 				array_push($row, __($manufacturer->name));
-				array_push($row, __($service_agent->name));
+				array_push($row, __($manufacturer->name));
+				//array_push($row, __($service_agent->name));
 
 				
 				array_push($row, date('M d,Y',strtotime($equipment->created_on)));

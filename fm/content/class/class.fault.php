@@ -909,8 +909,8 @@ public function all__faults__page(){
 				echo page_not_found("Oops! There is no new faults record found",' ',false);
 			else:
 			?>
-			<div class="row custom-filters">
-				<div class="form-group col-sm-3 col-xs-12">
+		<div class="row custom-filters">
+				<div class="form-group col-sm-2 col-xs-12">
 					<label for="centre">Centre</label>
 					<select name="centre" class="form-control select_single" tabindex="-1" data-placeholder="Choose centre">
 						<?php
@@ -930,7 +930,7 @@ public function all__faults__page(){
 						?>
 					</select>
 				</div>
-				<div class="form-group col-sm-3 col-xs-12">
+				<div class="form-group col-sm-2 col-xs-12">
 					<label for="equipment-type">Equipment Type</label>
 					<select name="equipment_type" class="form-control select_single" tabindex="-1" data-placeholder="Choose equipment type">
 						<?php
@@ -940,7 +940,7 @@ public function all__faults__page(){
 						?>
 					</select>
 				</div>
-				<div class="form-group col-sm-3 col-xs-12">
+				<div class="form-group col-sm-2 col-xs-12">
 					<label for="equipment">Equipment</label>
 					<select name="equipment" class="form-control select_single" tabindex="-1" data-placeholder="Choose equipment">
 						<?php
@@ -950,7 +950,7 @@ public function all__faults__page(){
 						?>
 					</select>
 				</div>
-				<div class="form-group col-sm-3 col-xs-12">
+				<div class="form-group col-sm-2 col-xs-12">
 					<label for="fault-type">Fault Type</label>
 					<select name="fault_type" class="form-control select_single" tabindex="-1" data-placeholder="Choose fault type">
 						<?php
@@ -960,10 +960,22 @@ public function all__faults__page(){
 						?>
 					</select>
 				</div>
+				<div class="form-group col-sm-2 col-xs-12">
+					<label for="approved">Status</label>
+					<select name="approved" class="form-control select_single" tabindex="-1" data-placeholder="Choose status">
+						<?php
+						$option_data = array( '1' => 'Approved' , '0' => 'Unapproved');
+						echo get_options_list($option_data);
+						?>
+					</select>
+				</div>
 			</div>
 			<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap ajax-datatable-buttons" cellspacing="0" width="100%" data-table="fetch_all_faults" data-order-column="6">
 				<thead>
 					<tr>
+						<?php if(is_admin()): ?>
+						<th>Approved</th>
+						<?php endif; ?>
 						<th>Submitted By</th>
 						<th>Centre</th>
 						<th>Equipment Type</th>
@@ -971,9 +983,7 @@ public function all__faults__page(){
 						<th>Fault Type</th>
 						<th>Date of Fault</th>
 						<th>Created On</th>
-						<?php if(is_admin()): ?>
-						<th>Approved</th>
-						<?php endif; ?>
+						
 						<th class="text-center">Actions</th>
 					</tr>
 				</thead>
@@ -1053,6 +1063,9 @@ public function all__faults__page(){
 <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap ajax-datatable-buttons" cellspacing="0" width="100%" data-table="fetch_all_faults2" data-order-column="6">
 				<thead>
 					<tr>
+						<?php if(is_admin()): ?>
+						<th>Approved</th>
+						<?php endif; ?>
 						<th>Submitted By</th>
 						<th>Centre</th>
 						<th>Equipment Type</th>
@@ -1060,9 +1073,6 @@ public function all__faults__page(){
 						<th>Fault Type</th>
 						<th>Date of Fault</th>
 						<th>Created On</th>
-						<?php if(is_admin()): ?>
-						<th>Approved</th>
-						<?php endif; ?>
 						<th class="text-center">Actions</th>
 					</tr>
 				</thead>
@@ -1748,24 +1758,29 @@ public function all__faults__page(){
 				$query .= $where;
 			}
 			
-			if(!empty($_POST['centre']) && $_POST['centre'] != 'undefined'){
+			if(isset($_POST['centre']) && $_POST['centre'] != '' && $_POST['centre'] != 'undefined'){
 				$query .= ($query != '') ? ' AND ' : ' WHERE ';
 				$query .= " `centre` = '".$_POST['centre']."' ";
 			}
 			
-			if(!empty($_POST['equipment']) && $_POST['equipment'] != 'undefined'){
+			if(isset($_POST['equipment']) && $_POST['equipment'] != '' &&  $_POST['equipment'] != 'undefined'){
 				$query .= ($query != '') ? ' AND ' : ' WHERE ';
 				$query .= " `equipment` = '".$_POST['equipment']."' ";
 			}
 			
-			if(!empty($_POST['equipment_type']) && $_POST['equipment_type'] != 'undefined'){
+			if(isset($_POST['equipment_type']) && $_POST['equipment_type'] != '' && $_POST['equipment_type'] != 'undefined'){
 				$query .= ($query != '') ? ' AND ' : ' WHERE ';
 				$query .= " `equipment_type` = '".$_POST['equipment_type']."' ";
 			}
 			
-			if(!empty($_POST['fault_type']) && $_POST['fault_type'] != 'undefined'){
+			if(isset($_POST['fault_type']) && $_POST['fault_type'] != '' && $_POST['fault_type'] != 'undefined'){
 				$query .= ($query != '') ? ' AND ' : ' WHERE ';
 				$query .= " `fault_type` = '".$_POST['fault_type']."' ";
+			}
+			
+			if(isset($_POST['approved']) && $_POST['approved'] != '' &&  $_POST['approved'] != 'undefined'){
+				$query .= ($query != '') ? ' AND ' : ' WHERE ';
+				$query .= " `approved` = '".$_POST['approved']."' ";
 			}
 			
 			$recordsTotal = count(get_tabledata(TBL_FAULTS,false,array(), $query, 'ID'));
@@ -1783,16 +1798,7 @@ public function all__faults__page(){
                 
 				
 				$row = array();
-				array_push($row, __($fault->name));
-				array_push($row, __($fault->centre_name));
-				array_push($row, __($fault->e_type_name));
-				array_push($row, __($fault->equipment_name));
-				array_push($row, __($fault->f_type_name));
-				
-				array_push($row, date('M d,Y',strtotime($fault->date_of_fault)));
-				//array_push($row, date('d M, Y',$fault->date_of_fault));
-				array_push($row, date('d M,Y',strtotime($fault->created_on)));
-				if(is_admin()):
+			if(is_admin()):
 					ob_start();
 					?>
 					<div class="text-center">
@@ -1802,6 +1808,16 @@ public function all__faults__page(){
 					$checkbox = ob_get_clean();
 					array_push($row, $checkbox);
 				endif;
+				array_push($row, __($fault->name));
+				array_push($row, __($fault->centre_name));
+				array_push($row, __($fault->e_type_name));
+				array_push($row, __($fault->equipment_name));
+				array_push($row, __($fault->f_type_name));
+				
+				array_push($row, date('M d,Y',strtotime($fault->date_of_fault)));
+				//array_push($row, date('d M, Y',$fault->date_of_fault));
+				array_push($row, date('d M,Y',strtotime($fault->created_on)));
+				
 				ob_start();
 				?>
 				<div class="text-center">
