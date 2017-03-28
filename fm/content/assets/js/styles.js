@@ -91,6 +91,7 @@ $(document).ready(function() {
 						d.fault_type = $('.custom-filters select[name="fault_type"]').val();
 						d.manufacturer = $('.custom-filters select[name="manufacturer"]').val();
 						d.model = $('.custom-filters select[name="model"]').val();
+						d.status = $('.custom-filters select[name="status"]').val();
 					},
 					complete:function(r){
 						if ($("table .js-switch")[0]) {

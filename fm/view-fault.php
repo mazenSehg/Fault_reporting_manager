@@ -1,5 +1,6 @@
 <?php
 session_start();
+error_reporting(0);
 //Load all functions
 require_once('load.php');
 
@@ -24,6 +25,16 @@ login_check();
 				<?php echo $Header->page__header('View Fault'); ?>
 				
 				<div class="row">
+					
+					<button onclick="goBack()">Previous page</button>
+
+<script>
+function goBack() {
+    window.history.go(-1);
+}
+</script>
+					
+					
 					<div class="col-md-12 col-sm-12 col-xs-12">
 						<div class="x_panel">
 							<div class="x_content">

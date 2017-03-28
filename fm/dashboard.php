@@ -197,7 +197,10 @@ login_check();
 									</div>
 								</div>
 							</div>
-							
+							<?php
+							if(is_admin()){
+								
+								?>
 							<div class="col-md-5 col-sm-2 col-xs-12">
 								<div class="x_panel tile fixed_height_320">
 									<div class="x_title">
@@ -242,6 +245,10 @@ login_check();
 									</div>
 								</div>
 							</div>
+							<?php
+							}
+							?>
+							
 						</div>
 					</div>
 					<!-- /page content -->
