@@ -1784,14 +1784,13 @@ public function all__faults__page(){
 				
 				$row = array();
 				array_push($row, __($fault->name));
-				array_push($row, __($centre->name));
-				array_push($row, __($equipment_type->name));
-				array_push($row, __($equipment->name));
+				array_push($row, __($fault->centre_name));
+				array_push($row, __($fault->e_type_name));
+				array_push($row, __($fault->equipment_name));
+				array_push($row, __($fault->f_type_name));
 				
-				array_push($row, __($fault_type->name));
-				
-				//array_push($row, date('M d,Y',strtotime($fault->date_of_fault)));
-				array_push($row, date('d M, Y',$fault->date_of_fault));
+				array_push($row, date('M d,Y',strtotime($fault->date_of_fault)));
+				//array_push($row, date('d M, Y',$fault->date_of_fault));
 				array_push($row, date('d M,Y',strtotime($fault->created_on)));
 				if(is_admin()):
 					ob_start();
@@ -1921,14 +1920,13 @@ public function all__faults__page(){
 				
 				$row = array();
 				array_push($row, __($fault->name));
-				array_push($row, __($centre->name));
-				array_push($row, __($equipment_type->name));
-				array_push($row, __($equipment->name));
+				array_push($row, __($fault->centre_name));
+				array_push($row, __($fault->e_type_name));
+				array_push($row, __($fault->equipment_name));
+				array_push($row, __($fault->f_type_name));
 				
-				array_push($row, __($fault_type->name));
-				
-				//array_push($row, date('M d,Y',strtotime($fault->date_of_fault)));
-				array_push($row, date('d M, Y',$fault->date_of_fault));
+				array_push($row, date('M d,Y',strtotime($fault->date_of_fault)));
+				//array_push($row, date('d M, Y',$fault->date_of_fault));
 				array_push($row, date('d M,Y',strtotime($fault->created_on)));
 				if(is_admin()):
 					ob_start();
