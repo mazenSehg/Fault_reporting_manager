@@ -869,7 +869,9 @@ function approve_switch(btn){
 		var status = 1;
 	}
 	if( action.trim() == 'fault_approve_change' && status == 1 ){
-		e.preventDefault();
+		if(e) {
+			e.preventDefault();
+		}
 		var form = $('.fault-modal-form');
 		form.find('input[name="id"]').val(id);
 		form.find('input[name="status"]').val(status);

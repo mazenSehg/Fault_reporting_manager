@@ -276,6 +276,7 @@ class db{
 			return null;
 		}
 
+
 		$new_array = array();
 		if ( $output == OBJECT ) {
 			// Return an integer-keyed array of row objects

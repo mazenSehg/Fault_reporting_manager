@@ -1,6 +1,7 @@
 <?php
 session_start();
 //Load all functions
+date_default_timezone_set('Europe/London');
 require_once('load.php');
 
 login_check();
@@ -42,7 +43,7 @@ login_check();
 									<div class="icon"> <i class="fa fa-exclamation-circle"> </i> </div>
 									<div class="count">
 										<?php 
-										echo count( get_tabledata(TBL_FAULTS,false));?>
+										echo count( get_tabledata(TBL_FAULTS,false, null, null, 'ID'));?>
 									</div>
 									<h3> Total Faults</h3>
 									<p> </p>

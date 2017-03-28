@@ -1,7 +1,8 @@
 <?php
 // if accessed directly than exit
 if(!defined('ABSPATH')) exit;
-error_reporting(0);
+date_default_timezone_set('Europe/London');
+//error_reporting(0);
 
 if( !class_exists('Fault') ):
 	class Fault{
@@ -901,7 +902,7 @@ public function all__faults__page(){
 					$query = "WHERE `centre` IN (".$centres.")";
 				}
 			endif;
-			$faults = get_tabledata(TBL_FAULTS,false,array(), $query);
+			$faults = get_tabledata(TBL_FAULTS,false,array(), $query, 'ID');
 			if( !user_can('view_fault') ):
 				echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
 			elseif(!$faults):
@@ -1767,10 +1768,11 @@ public function all__faults__page(){
 				$query .= " `fault_type` = '".$_POST['fault_type']."' ";
 			}
 			
-			$recordsTotal = count(get_tabledata(TBL_FAULTS,false,array(), $query));
+			$recordsTotal = count(get_tabledata(TBL_FAULTS,false,array(), $query, 'ID'));
 			$data_list = get_tabledata(TBL_FAULTS,false,array(),$query.$sql);
 			//$recordsFiltered = count( $data_list );
 				$recordsFiltered = $recordsTotal;	
+			error_log('INHERE');
 			if($data_list): foreach($data_list as $fault):
 				
                 $centre = get_tabledata(TBL_CENTRES,true,array('ID'=> $fault->centre));
