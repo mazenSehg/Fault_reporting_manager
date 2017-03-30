@@ -155,6 +155,7 @@ login_check();
 												
 												
 <?php
+												/**
 
 												$sql = "SELECT * FROM tbl_fault";
 												$re = $db->get_results($sql);
@@ -199,7 +200,16 @@ login_check();
 													
 													
 												}
+												**/
 												
+												
+												$sql = "SELECT * FROM tbl_faults";
+												$re = $db->get_results($sql);
+												foreach($re as $res){
+													
+													
+													
+												}
 												
 												?>
 												

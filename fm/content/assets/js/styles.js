@@ -92,6 +92,7 @@ $(document).ready(function() {
 						d.manufacturer = $('.custom-filters select[name="manufacturer"]').val();
 						d.model = $('.custom-filters select[name="model"]').val();
 						d.approved = $('.custom-filters select[name="approved"]').val();
+						d.date_of_fault = $('.custom-filters select[name="date_of_fault"]').val();
 						
 						console.log(d.status);
 					},
@@ -726,6 +727,29 @@ $(document).ready(function() {
 		});
 	});
 	
+	
+	
+		$('.fetch-service-agent-data2').change(function(e){
+		var _this = $(this);
+		$.ajax({ 
+			type : 'POST',
+			data: {
+				action: 'fetch_service_agent_data2',
+				id: _this.val(),
+			},
+			url  : ajax_url,
+			dataType: 'json',
+			success: function(res){
+				console.log(res);
+				$select_multiple.select2("destroy");
+				$select_single.select2("destroy");
+				$('.select-servicing-agency2').html(res['servicing_agency_html2']);
+				$select_single.select2({ allowClear: true });
+				$select_multiple.select2({ allowClear: true });
+			}
+		});
+	});
+	
 	$('.show-decommed').change(function(e){
 		var value  = 0;
 		var _this = $(this);
@@ -790,9 +814,35 @@ $(document).ready(function() {
 	});
 	
 	$('.custom-filters select').on('change',function(){
-		$('.ajax-datatable-buttons > thead > tr th:nth-child(1)').trigger('click');
+		var attr_name = $(this).attr('name');
+		if(attr_name == 'centre' || attr_name == 'equipment_type'){
+			$.ajax({ 
+				type : 'POST',
+				data: {
+					action: 'fetch_centre_equipment_data',
+					id: $('select[name="centre"]').val(),
+					decommed: 0,
+					equipment_type: $('select[name="equipment_type"]').val(),
+				},
+				url  : ajax_url,
+				dataType: 'json',
+				success: function(res){
+					console.log(res);
+					$select_multiple.select2("destroy");
+					$select_single.select2("destroy");
+					$('select[name="equipment"]').html(res['equipment_html']);
+					$select_single.select2({ allowClear: true });
+					$select_multiple.select2({ allowClear: true });
+					$('.ajax-datatable-buttons > thead > tr th:nth-child(1)').trigger('click');
+				}
+			});
+		}else{
+			$('.ajax-datatable-buttons > thead > tr th:nth-child(1)').trigger('click');
+		}
+		
 	});
 });
+
 
 function delete_function(btn){
 	var isDelete = confirm('Are you sure want to delete this record?');

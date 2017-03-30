@@ -152,7 +152,7 @@ login_check();
 								$sql46 = "UPDATE tbl_equipment SET model='$bowe' WHERE ID = '$IDD'";
 								$sq6 = $db->query($sql46);
 
-								$sql47 = "UPDATE tbl_equipment SET service_agent='$bowe' WHERE ID = '$IDD'";
+								$sql47 = "UPDATE tbl_equipment SET service_agent='$qwey->ID' WHERE ID = '$IDD'";
 								$sq7 = $db->query($sql47);
 
 

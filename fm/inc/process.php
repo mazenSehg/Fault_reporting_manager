@@ -232,6 +232,10 @@
 			case 'fetch_service_agent_data':
 				echo $Fault->fetch__service__agent__data__process();
 				break;	
+
+			case 'fetch_service_agent_data2':
+				echo $Fault->fetch__service__agent__data__process2();
+				break;	
 				
 			case 'fault_approve_change':
 				echo $Fault->fault__approve__change__process();

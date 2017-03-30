@@ -712,6 +712,33 @@ if( !function_exists('get_options_list')):
 				$return .= '<option value="'.$key.'" '.$selected.'>'.$val.'</option>';
 		endforeach;
 		
+		
+		
+		return $return;
+	}
+endif;
+
+
+if( !function_exists('get_options_list2')):
+	function get_options_list2($data, $value = array()){
+		$selected = '';
+		$return = '<option value=""></option>';
+		
+		if($data == null || $data == '' || !is_array($data) || empty($data))
+			return $data;
+		
+		if(!is_array($value)){
+			if($value == '' || $value == null){
+				$value = array();
+			}else{
+				$value = (array)$value;	
+			}
+		}
+		foreach($data as $key => $val):
+			$selected = (!empty($value) && in_array($key,$value) ) ? 'selected' : '';
+				$return .= '<option selected="'.$key.'" '.$selected.'>'.$val.'</option>';
+		endforeach;
+		
 		return $return;
 	}
 endif;

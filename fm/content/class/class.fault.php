@@ -65,12 +65,12 @@ if( !class_exists('Fault') ):
 					</div>
 					<div class="form-group col-sm-6 col-xs-12">
 						<label for="equipment">Equipment <span class="required"> *</span></label>
-						<select name="equipment" class="form-control select_single select-equipment fetch-service-agent-data" tabindex="-1" data-placeholder="Choose equipment">
+						<select name="equipment" class="form-control select_single select-equipment fetch-service-agent-data2" tabindex="-1" data-placeholder="Choose equipment">
 							<option value="">Choose equipment</option>
 						</select>
 					</div>
 					<div class="form-group col-sm-12 col-xs-12">
-						<label for="decommed">Show Decommed Equipment</label>
+						<label for="decommed">Show decommissioned Equipment</label>
 						<br/>
 						<label><input type="checkbox" class="js-switch show-decommed" /></label>
 					</div>
@@ -90,13 +90,24 @@ if( !class_exists('Fault') ):
 						<input type="text" name="date_of_fault" class="form-control input-datepicker" readonly="readonly" />
 					</div>
 				</div>
+				
 				<div class="row">
 					<div class="form-group col-sm-6 col-xs-12">
 						<label for="current-servicing-agency">Current servicing agency <span class="required"> *</span></label>
-						<select name="current_servicing_agency" class="form-control" tabindex="-1" data-placeholder="Choose servicing agency">
+						<select name="current_servicing_agency" class="form-control select_single require select-servicing-agency2"  tabindex="-1" data-placeholder="Choose servicing agency" disabled="true">
 							<option value="">Choose servicing agency</option>
 						</select>
 					</div>
+					
+					
+					
+					<div class="form-group col-sm-6 col-xs-12">
+						<label for="current-servicing-agency">Current servicing agency <span class="required"> *</span></label>
+					<input type="text" name="name"  class="form-control select_single require select-servicing-agency"  readonly="readonly" />
+						
+					</div>
+					
+
 					<div class="form-group col-sm-6 col-xs-12">
 						<label for="time-of-fault">Servicing agency at time of fault <span class="required"> *</span></label>
 						<input type="text" name="time_of_fault" class="form-control require" />
@@ -115,7 +126,7 @@ if( !class_exists('Fault') ):
 					<div class="form-group col-sm-6 col-xs-12">
 						<label for="">Service Call No</label>
 						<br/>
-						<input type="text" name="service_call_no" class="form-control require" />
+						<input type="text" name="service_call_no" class="form-control" />
 					</div>
 				</div>
 				<div class="row">
@@ -228,7 +239,10 @@ if( !class_exists('Fault') ):
 					</div>
 				</div>
                 
-                
+                <?php
+			if(is_admin()){
+				
+				?>
                 <div class="row">
 					<div class="form-group col-xs-12">
 						<label for="decommed"><?php _e('DoH Action');?></label>
@@ -250,6 +264,9 @@ if( !class_exists('Fault') ):
 						<textarea name="supplier_comments" class="form-control" rows="3"></textarea>
 					</div>
 				</div>
+				<?php
+			}
+				?>
                 
 				<div class="ln_solid"></div>
 				<div class="form-group">
@@ -317,7 +334,7 @@ if( !class_exists('Fault') ):
 					</div>
 					<div class="form-group col-sm-6 col-xs-12">
 						<label for="equipment">Equipment <span class="required"> *</span></label>
-						<select name="equipment" class="form-control select_single require select-equipment fetch-service-agent-data" tabindex="-1" data-placeholder="Choose equipment">
+						<select name="equipment" class="form-control select_single require select-equipment fetch-service-agent-data2" tabindex="-1" data-placeholder="Choose equipment">
 							<?php
 							$data = get_tabledata(TBL_EQUIPMENTS,false,array( 'equipment_type' => $fault->equipment_type, 'centre'=> $fault->centre ,'approved' => '1'), 'ORDER BY `name` ASC');
 							$option_data = get_option_data($data,array('ID','name'));
@@ -326,7 +343,7 @@ if( !class_exists('Fault') ):
 						</select>
 					</div>
 					<div class="form-group col-sm-12 col-xs-12">
-						<label for="decommed">Show Decommed Equipment</label>
+						<label for="decommed">Show decommissioned Equipment</label>
 						<br/>
 						<label><input type="checkbox" class="js-switch show-decommed" /></label>
 					</div>
@@ -373,9 +390,7 @@ if( !class_exists('Fault') ):
 				<div class="row">
 					<div class="form-group col-sm-12 col-xs-12">
 						<label for="description-of-fault">Description of Fault</label>
-						<textarea name="description_of_fault" class="form-control" rows="3">
-							<?php _e($fault->description_of_fault);?>
-						</textarea>
+						<textarea name="description_of_fault" class="form-control" rows="3"><?php _e($fault->description_of_fault);?></textarea>
 					</div>
 				</div>
 				<div class="row">
@@ -386,7 +401,7 @@ if( !class_exists('Fault') ):
 					<div class="form-group col-sm-6 col-xs-12">
 						<label for="">Service Call No</label>
 						<br/>
-						<input type="text" name="service_call_no" class="form-control require" value="<?php _e($fault->service_call_no);?>" />
+						<input type="text" name="service_call_no" class="form-control" value="<?php _e($fault->service_call_no);?>" />
 					</div>
 				</div>
 				<div class="row">
@@ -562,6 +577,12 @@ if( !class_exists('Fault') ):
 						<h3><?php _e('Approved');?></h3>
 						<hr>
 					</div>
+					
+					
+					<?php
+			
+			if(is_admin()){
+				?>
 					<div class="form-group col-sm-12 col-xs-12">
 						<label for="">Approved?</label>
 						<br/>
@@ -575,6 +596,9 @@ if( !class_exists('Fault') ):
 							<input type="radio" class="flat" name="approved" value="0" <?php checked($fault->approved,'0');?> /> No
 						</label>
 					</div>
+					<?php
+			}
+					?>
 				</div>
                 
 <div class="row">
@@ -965,6 +989,17 @@ public function all__faults__page(){
 					<select name="approved" class="form-control select_single" tabindex="-1" data-placeholder="Choose status">
 						<?php
 						$option_data = array( '1' => 'Approved' , '0' => 'Unapproved');
+						echo get_options_list($option_data);
+						?>
+					</select>
+				</div>
+			
+			<div class="form-group col-sm-2 col-xs-12">
+					<label for="date_of_fault">Date OF fault</label>
+					<select name="date_of_fault" class="form-control select_single" tabindex="-1" data-placeholder="Choose date of fault">
+						<?php
+						$data = get_tabledata(TBL_FAULTS,false,array('approved'=> '1'), '', 'DISTINCT `date_of_fault`');
+						$option_data = get_option_data($data,array('date_of_fault','date_of_fault'));
 						echo get_options_list($option_data);
 						?>
 					</select>
@@ -1570,6 +1605,22 @@ public function all__faults__page(){
 			endif;
 			return json_encode($return);
 		}
+		
+		
+		
+				public function fetch__service__agent__data__process2(){
+			extract($_POST);
+			$id = trim($id);
+			$return = array();
+			if($id != ''):
+				$data = '';
+				$equipment = get_tabledata(TBL_EQUIPMENTS, true, array('ID'=> $id) );
+				$data = get_tabledata(TBL_SERVICE_AGENTS, false, array('ID'=> $equipment->service_agent ));
+				$option_data = get_option_data($data,array('ID','name'));
+				$return['servicing_agency_html2'] = get_options_list2($option_data);
+			endif;
+			return json_encode($return);
+		}
 
 		public function fault__approve__change__process(){
 			extract($_POST);
@@ -1687,8 +1738,11 @@ public function all__faults__page(){
 					}
 					add_user_notification($notification_args);
 					$return['status'] = 1;
-					$return['reload'] = 1;
+					//$return['reload'] = 1;
+				//got to hide modal "modal-content"
+				
 					$return['message_heading'] = 'Success !';
+				
 				endif;
 			endif;
 			return json_encode($return);
@@ -1716,16 +1770,16 @@ public function all__faults__page(){
 		}
 		
         
-        public function fetch_all_faults_process(){
+  		public function fetch_all_faults_process(){
 			$orders_columns = array(
-				0 => 'name',
-				1 => 'centre_name',
-				2 => 'e_type_name',
-				3 => 'equipment_name',
-				4 => 'f_type_name',
-				5 => 'date_of_fault',
-				6 => 'created_on',
-				7 => 'approved',
+				1 => 'name',
+				2 => 'centre_name',
+				3 => 'e_type_name',
+				4 => 'equipment_name',
+				5 => 'f_type_name',
+				6 => 'date_of_fault',
+				7 => 'created_on',
+				0 => 'approved',
 			);
 			$recordsTotal = $recordsFiltered = 0;
 			$draw = $_POST["draw"];
@@ -1783,11 +1837,15 @@ public function all__faults__page(){
 				$query .= " `approved` = '".$_POST['approved']."' ";
 			}
 			
-			$recordsTotal = count(get_tabledata(TBL_FAULTS,false,array(), $query, 'ID'));
+			if(isset($_POST['date_of_fault']) && $_POST['date_of_fault'] != '' &&  $_POST['date_of_fault'] != 'undefined'){
+				$query .= ($query != '') ? ' AND ' : ' WHERE ';
+				$query .= " `date_of_fault` = '".$_POST['date_of_fault']."' ";
+			}
+			
+			$recordsTotal = count(get_tabledata(TBL_FAULTS,false,array(), $query));
 			$data_list = get_tabledata(TBL_FAULTS,false,array(),$query.$sql);
-			//$recordsFiltered = count( $data_list );
-				$recordsFiltered = $recordsTotal;	
-			error_log('INHERE');
+			$recordsFiltered = $recordsTotal;
+					
 			if($data_list): foreach($data_list as $fault):
 				
                 $centre = get_tabledata(TBL_CENTRES,true,array('ID'=> $fault->centre));
@@ -1874,21 +1932,22 @@ public function all__faults__page(){
 				'draw' => intval($draw),
 				'recordsTotal' => $recordsTotal,
 				'recordsFiltered'=> $recordsFiltered,
-				'data' => $data
+				'data' => $data,
 			);
 			return json_encode($response);
 		}
+			
 		
 			public function fetch_all_faults_process2(){
 			$orders_columns = array(
-				0 => 'name',
-				1 => 'centre_name',
-				2 => 'e_type_name',
-				3 => 'equipment_name',
-				4 => 'f_type_name',
-				5 => 'date_of_fault',
-				6 => 'created_on',
-				7 => 'approved',
+				1 => 'name',
+				2 => 'centre_name',
+				3 => 'e_type_name',
+				4 => 'equipment_name',
+				5 => 'f_type_name',
+				6 => 'date_of_fault',
+				7 => 'created_on',
+				0 => 'approved',
 			);
 			$recordsTotal = $recordsFiltered = 0;
 			$draw = $_POST["draw"];
