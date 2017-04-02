@@ -1842,7 +1842,7 @@ public function all__faults__page(){
 				$query .= " `date_of_fault` = '".$_POST['date_of_fault']."' ";
 			}
 			
-			$recordsTotal = count(get_tabledata(TBL_FAULTS,false,array(), $query));
+			$recordsTotal = count(get_tabledata(TBL_FAULTS,false,array(), $query, 'ID'));
 			$data_list = get_tabledata(TBL_FAULTS,false,array(),$query.$sql);
 			$recordsFiltered = $recordsTotal;
 					
