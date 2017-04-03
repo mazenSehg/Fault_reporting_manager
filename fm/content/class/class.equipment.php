@@ -515,7 +515,7 @@ class Equipment{
 							*
 						</span>
 					</label>
-					<select name="supplier" class="form-control select_supplier select_single require" tabindex="-1" data-placeholder="Choose supplier">
+					<select name="supplier" class="form-control select_supplier select_single" tabindex="-1" data-placeholder="Choose supplier">
 						<option value="">
 							Choose supplier
 						</option>
@@ -1703,7 +1703,7 @@ class Equipment{
 					'equipment_type' => $equipment_type,
 					'manufacturer' => $manufacturer,
 					'model' => $model,
-					'supplier' => $supplier,
+					'supplier' => NULL,
 					'service_agent' => $service_agent,
 					'location_id' => $location_id,
 					'location' => $location,
@@ -2709,10 +2709,12 @@ class Equipment{
 				$query .= " `approved` = '".$_POST['approved']."' ";
 			}
 			
-			$recordsTotal = count(get_tabledata(TBL_EQUIPMENTS,false,array(), $query));
+	$recordsTotal = get_tabledata(TBL_FAULTS,true,array(), $query, 'COUNT(ID) as count');
+			$recordsTotal = $recordsTotal->count;
 			$data_list = get_tabledata(TBL_EQUIPMENTS,false ,array(), $query.$sql );
-			//$recordsFiltered = count( $data_list );
-			$recordsFiltered = $recordsTotal;	
+			$recordsFiltered = $recordsTotal;
+			
+			
 			if($data_list): foreach($data_list as $equipment):
 				$centre = get_tabledata(TBL_CENTRES,true,array('ID'=>$equipment->centre));
 				$equipment_type = get_tabledata(TBL_EQUIPMENT_TYPES,true,array('ID'=>$equipment->equipment_type));

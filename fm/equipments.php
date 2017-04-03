@@ -75,21 +75,21 @@ login_check();
 				
 				
 				endforeach;
-				
-				
-				
-				?>
-																<?php
-				//PLA4L
-								$check2 = "SELECT COUNT(*) as answ FROM tbl_equipment WHERE LENGTH(name) < 2";
-				$chk = $db->get_results($check2);
-				
-				$chk;
-												foreach($chk as $res):
-												$chk = $res->answ;
-												echo "<br>";
-												endforeach;
-
+//				
+//				
+//				
+//				?>
+//																<?php
+//				//PLA4L
+//								$check2 = "SELECT COUNT(*) as answ FROM tbl_equipment WHERE LENGTH(name) < 2";
+//				$chk = $db->get_results($check2);
+//				
+//				$chk;
+//												foreach($chk as $res):
+//												$chk = $res->answ;
+//												echo "<br>";
+//												endforeach;
+//
 												
 				?>
 				

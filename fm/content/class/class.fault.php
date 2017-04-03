@@ -985,7 +985,7 @@ public function all__faults__page(){
 					</select>
 				</div>
 				<div class="form-group col-sm-2 col-xs-12">
-					<label for="approved">Status</label>
+					<label for="approved">Approval Status</label>
 					<select name="approved" class="form-control select_single" tabindex="-1" data-placeholder="Choose status">
 						<?php
 						$option_data = array( '1' => 'Approved' , '0' => 'Unapproved');
@@ -1842,7 +1842,8 @@ public function all__faults__page(){
 				$query .= " `date_of_fault` = '".$_POST['date_of_fault']."' ";
 			}
 			
-			$recordsTotal = count(get_tabledata(TBL_FAULTS,false,array(), $query, 'ID'));
+$recordsTotal = get_tabledata(TBL_FAULTS,true,array(), $query, 'COUNT(ID) as count');
+			$recordsTotal = $recordsTotal->count;
 			$data_list = get_tabledata(TBL_FAULTS,false,array(),$query.$sql);
 			$recordsFiltered = $recordsTotal;
 					
