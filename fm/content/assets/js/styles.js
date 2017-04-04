@@ -813,16 +813,17 @@ $(document).ready(function() {
 		}
 	});
 	
+
 	$('.custom-filters select').on('change',function(){
 		var attr_name = $(this).attr('name');
 		if(attr_name == 'centre' || attr_name == 'equipment_type'){
 			$.ajax({ 
 				type : 'POST',
 				data: {
-					action: 'fetch_centre_equipment_data',
-					id: $('select[name="centre"]').val(),
+					action: 'fetch_equipment_data',
+					id: $('select[name="equipment_type"]').val(),
 					decommed: 0,
-					equipment_type: $('select[name="equipment_type"]').val(),
+					equipment_type: $('select[name="centre"]').val(),
 				},
 				url  : ajax_url,
 				dataType: 'json',
@@ -831,6 +832,7 @@ $(document).ready(function() {
 					$select_multiple.select2("destroy");
 					$select_single.select2("destroy");
 					$('select[name="equipment"]').html(res['equipment_html']);
+					$('select[name="fault_type"]').html(res['fault_type_html']);
 					$select_single.select2({ allowClear: true });
 					$select_multiple.select2({ allowClear: true });
 					$('.ajax-datatable-buttons > thead > tr th:nth-child(1)').trigger('click');

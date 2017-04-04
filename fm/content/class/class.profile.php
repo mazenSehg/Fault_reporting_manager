@@ -3,15 +3,13 @@
 if(!defined('ABSPATH')) exit;
 
 if( !class_exists('Profile') ):
-class Profile
-{
+class Profile{
 	public $user__id;
 	private $user;
 	private $user__class;
 	private $database;
 
-	function __construct()
-	{
+	function __construct(){
 		global $db,$User;
 		$this->user__class = $User;
 		$this->user__id = get_current_user_id();
@@ -19,8 +17,7 @@ class Profile
 		$this->database = $db;
 	}
 
-	public function change__password__page()
-	{
+	public function change__password__page(){
 		ob_start();
 		?>
 		<form class="change-password" method="post" autocomplete="off">
@@ -240,8 +237,7 @@ class Profile
 		return $content;
 	}
 
-	public function notifications__page()
-	{
+	public function notifications__page(){
 		ob_start();
 		$notifications__args = array('user_id'=> $this->user__id ,'hide'   => 0);
 		$notifications__result1 = get_tabledata(TBL_NOTIFICATIONS,false,$notifications__args);
@@ -341,7 +337,7 @@ class Profile
 		</ul>
 		<?php endif;
 		else:
-		echo page_not_found("There are no New Notifications",'  ',false);
+		echo page_not_found("Oops! There is no New Notifications",'  ',false);
 		endif;
 		$content = ob_get_clean();
 		return $content;

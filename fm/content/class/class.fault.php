@@ -69,8 +69,10 @@ if( !class_exists('Fault') ):
 							<option value="">Choose equipment</option>
 						</select>
 					</div>
-					<div class="form-group col-sm-12 col-xs-12">
-						<label for="decommed">Show decommissioned Equipment</label>
+					<div class="form-group col-sm-6 col-xs-12">
+					</div>
+					<div class="form-group col-sm-6 col-xs-12">
+						<label for="decommed">Show decommissioned equipment</label>
 						<br/>
 						<label><input type="checkbox" class="js-switch show-decommed" /></label>
 					</div>
@@ -93,24 +95,20 @@ if( !class_exists('Fault') ):
 				
 				<div class="row">
 					<div class="form-group col-sm-6 col-xs-12">
-						<label for="current-servicing-agency">Current servicing agency <span class="required"> *</span></label>
-						<select name="current_servicing_agency" class="form-control select_single require select-servicing-agency2"  tabindex="-1" data-placeholder="Choose servicing agency" disabled="true">
+						<label for="current-servicing-agency">Current servicing agency </label>
+						<select name="current_servicing_agency" class="form-control select_single select-servicing-agency2"  tabindex="-1" data-placeholder="Choose servicing agency" disabled="true">
 							<option value="">Choose servicing agency</option>
 						</select>
 					</div>
 					
 					
-					
-					<div class="form-group col-sm-6 col-xs-12">
-						<label for="current-servicing-agency">Current servicing agency <span class="required"> *</span></label>
-					<input type="text" name="name"  class="form-control select_single require select-servicing-agency"  readonly="readonly" />
-						
-					</div>
+
+			
 					
 
 					<div class="form-group col-sm-6 col-xs-12">
 						<label for="time-of-fault">Servicing agency at time of fault <span class="required"> *</span></label>
-						<input type="text" name="time_of_fault" class="form-control require" />
+						<input type="text" name="time_of_fault" class="form-control" />
 					</div>
 				</div>
 				<div class="row">
@@ -157,6 +155,15 @@ if( !class_exists('Fault') ):
 						<label>&nbsp;</label>
 						<label><input type="radio" class="flat" name="engineer_called_out" value="0" /> No</label>
 					</div>
+				
+				
+				
+				
+				
+				
+				
+				
+				
 								<div class="row">
 					<div class="form-group col-sm-12 col-xs-12">
 						<label for="">Has an adverse incident report been sent to MHRA pr appropriate devolved administration?</label>
@@ -215,27 +222,27 @@ if( !class_exists('Fault') ):
 						<br/>
 						<label><input type="radio" class="flat" name="satisfied_servicing_organisation" value="1" /> Yes</label>
 						<label>&nbsp;</label>
-						<label><input type="radio" class="flat" name="satisfied_servicing_organisation" value="0" /> No</label>
+						<label><input type="radio" class="flat" name="satisfied_servicing_organisation" value="2" /> No</label>
 						<label>&nbsp;</label>
-						<label><input type="radio" class="flat" name="satisfied_servicing_organisation" value="2" /> N/A</label>
+						<label><input type="radio" class="flat" name="satisfied_servicing_organisation" value="0" /> N/A</label>
 					</div>
 					<div class="form-group col-sm-4 col-xs-12">
 						<label for="">Are you satisfied with the performance of the service engineer?</label>
 						<br/>
 						<label><input type="radio" class="flat" name="satisfied_service_engineer" value="1" /> Yes</label>
 						<label>&nbsp;</label>
-						<label><input type="radio" class="flat" name="satisfied_service_engineer" value="0" /> No</label>
+						<label><input type="radio" class="flat" name="satisfied_service_engineer" value="2" /> No</label>
 						<label>&nbsp;</label>
-						<label><input type="radio" class="flat" name="satisfied_service_engineer" value="2" /> N/A</label>
+						<label><input type="radio" class="flat" name="satisfied_service_engineer" value="0" /> N/A</label>
 					</div>
 					<div class="form-group col-sm-4 col-xs-12">
 						<label for="">Are you generally satisfied withe the reliability/performance of the equipment?</label>
 						<br/>
 						<label><input type="radio" class="flat" name="satisfied_equipment" value="1" /> Yes</label>
 						<label>&nbsp;</label>
-						<label><input type="radio" class="flat" name="satisfied_equipment" value="0" /> No</label>
+						<label><input type="radio" class="flat" name="satisfied_equipment" value="2" /> No</label>
 						<label>&nbsp;</label>
-						<label><input type="radio" class="flat" name="satisfied_equipment" value="2" /> N/A</label>
+						<label><input type="radio" class="flat" name="satisfied_equipment" value="0" /> N/A</label>
 					</div>
 				</div>
                 
@@ -371,7 +378,7 @@ if( !class_exists('Fault') ):
 				</div>
 				<div class="row">
 					<div class="form-group col-sm-6 col-xs-12">
-						<label for="current-servicing-agency">Current servicing agency <span class="required">*</span></label>
+						<label for="current-servicing-agency">Current servicing agency </label>
 						<select name="current_servicing_agency" class="form-control" tabindex="-1" data-placeholder="Choose servicing agency">
 							<?php
 							$equipment = get_tabledata(TBL_EQUIPMENTS, true, array('ID'=>$fault->equipment) );
@@ -383,7 +390,7 @@ if( !class_exists('Fault') ):
 					</div>
 					<div class="form-group col-sm-6 col-xs-12">
 						<label for="time-of-fault">Servicing agency at time of fault <span class="required">*</span></label>
-						<input type="text" name="time_of_fault" class="form-control require" value="<?php _e($fault->time_of_fault);?>" />
+						<input type="text" name="time_of_fault" class="form-control" value="<?php _e($fault->time_of_fault);?>" />
 					</div>
 				</div>
 
@@ -572,17 +579,19 @@ if( !class_exists('Fault') ):
 						</label>
 					</div>
 				</div>
+									<?php
+			
+			if(is_admin()){
+				?>
 				<div class="row">
+					
 					<div class="col-xs-12">
 						<h3><?php _e('Approved');?></h3>
 						<hr>
 					</div>
 					
 					
-					<?php
-			
-			if(is_admin()){
-				?>
+
 					<div class="form-group col-sm-12 col-xs-12">
 						<label for="">Approved?</label>
 						<br/>
@@ -596,9 +605,7 @@ if( !class_exists('Fault') ):
 							<input type="radio" class="flat" name="approved" value="0" <?php checked($fault->approved,'0');?> /> No
 						</label>
 					</div>
-					<?php
-			}
-					?>
+
 				</div>
                 
 <div class="row">
@@ -623,6 +630,9 @@ if( !class_exists('Fault') ):
 					</div>
 				</div>
 				<div class="ln_solid"></div>
+									<?php
+			}
+					?>
 				</div>
 				<div class="form-group">
 					<input type="hidden" name="action" value="update_fault" />
@@ -1940,7 +1950,8 @@ $recordsTotal = get_tabledata(TBL_FAULTS,true,array(), $query, 'COUNT(ID) as cou
 			
 		
 			public function fetch_all_faults_process2(){
-			$orders_columns = array(
+			 if(is_admin()){
+				 $orders_columns = array(
 				1 => 'name',
 				2 => 'centre_name',
 				3 => 'e_type_name',
@@ -1949,6 +1960,18 @@ $recordsTotal = get_tabledata(TBL_FAULTS,true,array(), $query, 'COUNT(ID) as cou
 				6 => 'date_of_fault',
 				7 => 'created_on',
 				0 => 'approved',
+			);
+						   }
+				
+				
+							$orders_columns = array(
+				0 => 'centre_name',
+				1 => 'e_type_name',
+				2 => 'equipment_name',
+				3 => 'f_type_name',
+				4 => 'date_of_fault',
+				5 => 'created_on',
+				6 => 'name',
 			);
 			$recordsTotal = $recordsFiltered = 0;
 			$draw = $_POST["draw"];

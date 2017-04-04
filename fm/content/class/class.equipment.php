@@ -83,7 +83,7 @@ class Equipment{
 					</select>
 				</div>
 				<div class="form-group col-sm-2 col-xs-12">
-					<label for="approved">Status</label>
+					<label for="approved">Approval Status</label>
 					<select name="approved" class="form-control select_single" tabindex="-1" data-placeholder="Choose status">
 						<?php
 						$option_data = array( '1' => 'Approved' , '0' => 'Unapproved');
