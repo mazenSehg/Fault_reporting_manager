@@ -104,7 +104,7 @@ select {
 					<div class="form-group col-sm-6 col-xs-12">
 						<label for="current-servicing-agency">Current servicing agency </label>
 						<select name="current_servicing_agency" class="form-control select-servicing-agency2"  tabindex="-1" data-placeholder="Choose servicing agency" disabled="true">
-							<option value="">Choose servicing agency</option>
+							<option value="">Current servicing agency</option>
 						</select>
 					</div>
 					
