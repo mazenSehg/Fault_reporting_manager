@@ -92,15 +92,24 @@ if( !class_exists('Fault') ):
 						<input type="text" name="date_of_fault" class="form-control input-datepicker" readonly="readonly" />
 					</div>
 				</div>
-				
+				<style>
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    text-indent: 1px;
+    text-overflow: '';
+}
+				</style>
 				<div class="row">
 					<div class="form-group col-sm-6 col-xs-12">
 						<label for="current-servicing-agency">Current servicing agency </label>
-						<select name="current_servicing_agency" class="form-control select_single select-servicing-agency2"  tabindex="-1" data-placeholder="Choose servicing agency" disabled="true">
+						<select name="current_servicing_agency" class="form-control select-servicing-agency2"  tabindex="-1" data-placeholder="Choose servicing agency" disabled="true">
 							<option value="">Choose servicing agency</option>
 						</select>
 					</div>
 					
+					
+		
 					
 
 			
