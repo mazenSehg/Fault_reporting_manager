@@ -103,7 +103,7 @@ select {
 				<div class="row">
 					<div class="form-group col-sm-6 col-xs-12">
 						<label for="current-servicing-agency">Current servicing agency </label>
-						<select name="current_servicing_agency" class="form-control select-servicing-agency2"  tabindex="-1" data-placeholder="Choose servicing agency" disabled="true">
+						<select name="current_servicing_agency" class="form-control select-servicing-agency2"  tabindex="-1" data-placeholder="Choose servicing agency" readonly="true">
 							<option value="">Current servicing agency</option>
 						</select>
 					</div>
@@ -143,34 +143,42 @@ select {
 					</div>
 				</div>
 
-					<div class="form-group col-sm-4 col-xs-12">
-						<label for="">Fault corrected by user?</label>
+<div class="form-group col-sm-4 col-xs-12">
+	<label for="">Fault corrected by user?</label>
 						<br/>
-						<label><input type="radio" class="flat" name="fault_corrected_by_user" value="1" /> Yes</label>
+						<label><input type="radio" class="flat custom_radiobox" name="fault_corrected_by_user" value="1" checked/> Yes</label>
 						<label>&nbsp;</label>
-						<label><input type="radio" class="flat" name="fault_corrected_by_user" value="0" /> No</label>
+						<label><input type="radio" class="flat custom_radiobox" name="fault_corrected_by_user" value="0"/> No</label>
+						<label>&nbsp;</label>
+						<label><input type="radio" class="flat custom_radiobox" name="fault_corrected_by_user" value="2" /> N/A</label>
 					</div>
-					<div class="form-group col-sm-4 col-xs-12">
+<div class="form-group col-sm-4 col-xs-12">
 						<label for="">To fix at next service visit?</label>
 						<br/>
-						<label><input type="radio" class="flat" name="to_fix_at_next_service_visit" value="1" /> Yes</label>
+						<label><input type="radio" class="flat custom_radiobox" name="to_fix_at_next_service_visit" value="1" /> Yes</label>
 						<label>&nbsp;</label>
-						<label><input type="radio" class="flat" name="to_fix_at_next_service_visit" value="0" /> No</label>
+						<label><input type="radio" class="flat custom_radiobox" name="to_fix_at_next_service_visit" value="0" /> No</label>
+						<label>&nbsp;</label>
+						<label><input type="radio" class="flat custom_radiobox" name="to_fix_at_next_service_visit" value="2" checked/> N/A</label>
 					</div>
-					<div class="form-group col-sm-4 col-xs-12">
+<div class="form-group col-sm-4 col-xs-12">
 						<label for="">Engineer called out?</label>
 						<br/>
-						<label><input type="radio" class="flat" name="engineer_called_out" value="1" /> Yes</label>
+						<label><input type="radio" class="flat custom_radiobox" name="engineer_called_out" value="1" /> Yes</label>
 						<label>&nbsp;</label>
-						<label><input type="radio" class="flat" name="engineer_called_out" value="0" /> No</label>
+						<label><input type="radio" class="flat custom_radiobox" name="engineer_called_out" value="0" /> No</label>
+						<label>&nbsp;</label>
+						<label><input type="radio" class="flat custom_radiobox" name="engineer_called_out" value="2" checked/> N/A</label>
 					</div>
+<style>				
+				div.nahid {    
+  display:none;
+}
+				</style>		
 				
-				
-				
-				
-				
-				
-				
+				<div align="right">
+				<small>To select another option, please select <b>'no' </b> <b>'N/A' </b> or first for the question you already responded to.</small>
+				</div>
 				
 				
 								<div class="row">
@@ -427,44 +435,32 @@ select {
 					</div>
 				</div>
 				<div class="row">
-					<div class="form-group col-sm-12 col-xs-12">
+<div class="form-group col-sm-4 col-xs-12">
 						<label for="">Fault corrected by user?</label>
-						<br/>
-						<label>
-							<input type="radio" class="flat" name="fault_corrected_by_user" value="1" <?php checked($fault->fault_corrected_by_user,'1');?> /> Yes
-						</label>
-						<label>
-							&nbsp;
-						</label>
-						<label>
-							<input type="radio" class="flat" name="fault_corrected_by_user" value="0" <?php checked($fault->fault_corrected_by_user,'0');?> /> No
-						</label>
+					<br/>
+						<label><input type="radio" class="flat custom_radiobox" name="fault_corrected_by_user" value="1" <?php checked($fault->fault_corrected_by_user,'1');?> /> Yes</label>
+						<label>&nbsp;</label>
+						<label><input type="radio" class="flat custom_radiobox" name="fault_corrected_by_user" value="0" <?php checked($fault->fault_corrected_by_user,'0');?> /> No</label>
+						<label>&nbsp;</label>
+						<label><input type="radio" class="flat custom_radiobox" name="fault_corrected_by_user" value="2" <?php checked($fault->fault_corrected_by_user,'2');?> /> N/A</label>
 					</div>
-					<div class="form-group col-sm-12 col-xs-12">
+<div class="form-group col-sm-4 col-xs-12">
 						<label for="">To fix at next service visit?</label>
 						<br/>
-						<label>
-							<input type="radio" class="flat" name="to_fix_at_next_service_visit" value="1" <?php checked($fault->to_fix_at_next_service_visit,'1');?> /> Yes
-						</label>
-						<label>
-							&nbsp;
-						</label>
-						<label>
-							<input type="radio" class="flat" name="to_fix_at_next_service_visit" value="0" <?php checked($fault->to_fix_at_next_service_visit,'0');?> /> No
-						</label>
+						<label><input type="radio" class="flat custom_radiobox" name="to_fix_at_next_service_visit" value="1" <?php checked($fault->to_fix_at_next_service_visit,'1');?> /> Yes</label>
+						<label>&nbsp;</label>
+						<label><input type="radio" class="flat custom_radiobox" name="to_fix_at_next_service_visit" value="0" <?php checked($fault->to_fix_at_next_service_visit,'0');?> /> No</label>
+						<label>&nbsp;</label>
+						<label><input type="radio" class="flat custom_radiobox" name="to_fix_at_next_service_visit" value="2" <?php checked($fault->to_fix_at_next_service_visit,'2');?> /> N/A</label>
 					</div>
-					<div class="form-group col-sm-12 col-xs-12">
+<div class="form-group col-sm-4 col-xs-12">
 						<label for="">Engineer called out?</label>
 						<br/>
-						<label>
-							<input type="radio" class="flat" name="engineer_called_out" value="1" <?php checked($fault->engineer_called_out,'1');?> /> Yes
-						</label>
-						<label>
-							&nbsp;
-						</label>
-						<label>
-							<input type="radio" class="flat" name="engineer_called_out" value="0" <?php checked($fault->engineer_called_out,'0');?> /> No
-						</label>
+						<label><input type="radio" class="flat custom_radiobox" name="engineer_called_out" value="1" <?php checked($fault->engineer_called_out,'1');?> /> Yes</label>
+						<label>&nbsp;</label>
+						<label><input type="radio" class="flat custom_radiobox" name="engineer_called_out" value="0" <?php checked($fault->engineer_called_out,'0');?> /> No</label>
+						<label>&nbsp;</label>
+						<label><input type="radio" class="flat custom_radiobox" name="engineer_called_out" value="2" <?php checked($fault->engineer_called_out,'2');?> /> N/A</label>
 					</div>
 					<div class="form-group col-sm-12 col-xs-12">
 						<label for="">
@@ -789,28 +785,43 @@ select {
 						</td>
 					</tr>
 					<tr>
-						<td>
-							<?php _e('Fault corrected by user?');?>
-						</td>
-						<td>
-							<?php echo ($fault->fault_corrected_by_user == 1) ? 'Yes' : 'No'; ?>
-						</td>
+						<td><?php _e('Fault corrected by user?');?></td>
+						<?php
+							$fault_corrected_by_user = $fault->fault_corrected_by_user;
+							$value = '';
+							switch($fault_corrected_by_user):
+								case '0' : $value = 'No'; break;
+								case '1' : $value = 'Yes'; break;
+								case '2' : $value = 'N/A'; break;
+							endswitch;
+						?>
+						<td><?php echo $value; ?></td>
 					</tr>
 					<tr>
-						<td>
-							<?php _e('To fix at next service visit?');?>
-						</td>
-						<td>
-							<?php echo ($fault->to_fix_at_next_service_visit == 1) ? 'Yes' : 'No'; ?>
-						</td>
+						<td><?php _e('To fix at next service visit?');?></td>
+						<?php
+							$to_fix_at_next_service_visit = $fault->to_fix_at_next_service_visit;
+							$value = '';
+							switch($to_fix_at_next_service_visit):
+								case '0' : $value = 'No'; break;
+								case '1' : $value = 'Yes'; break;
+								case '2' : $value = 'N/A'; break;
+							endswitch;
+						?>
+						<td><?php echo $value; ?></td>
 					</tr>
 					<tr>
-						<td>
-							<?php _e('Engineer called out?');?>
-						</td>
-						<td>
-							<?php echo ($fault->engineer_called_out == 1) ? 'Yes' : 'No'; ?>
-						</td>
+						<td><?php _e('Engineer called out?');?></td>
+						<?php
+							$engineer_called_out = $fault->engineer_called_out;
+							$value = '';
+							switch($engineer_called_out):
+								case '0' : $value = 'No'; break;
+								case '1' : $value = 'Yes'; break;
+								case '2' : $value = 'N/A'; break;
+							endswitch;
+						?>
+						<td><?php echo $value; ?></td>
 					</tr>
 					<tr>
 						<td>
@@ -1286,6 +1297,7 @@ public function all__faults__page(){
 		//Process functions starts here
 		public function add__fault__process(){
 			extract($_POST);
+			
 			$return = array(
 				'status' => 0,
 				'message_heading'=> 'Failed !',
@@ -1309,10 +1321,9 @@ public function all__faults__page(){
 						'description_of_fault' => $description_of_fault,
 						'service_call_no' => $service_call_no,
 						'action_taken' => $action_taken,
-						'fault_corrected_by_user' => $fault_corrected_by_user,
-						'to_fix_at_next_service_visit' => $to_fix_at_next_service_visit,
-						'to_fix_at_next_service_visit' => $to_fix_at_next_service_visit,
-						'engineer_called_out' => $engineer_called_out,
+						'fault_corrected_by_user' => (isset($fault_corrected_by_user)) ? $fault_corrected_by_user : 2,
+						'to_fix_at_next_service_visit' => (isset($to_fix_at_next_service_visit)) ? $to_fix_at_next_service_visit : 2,
+						'engineer_called_out' => (isset($engineer_called_out)) ? $engineer_called_out : 2,
 						'adverse_incident_report' => $adverse_incident_report,
 						'equipment_status' => $equipment_status,
 						'equipment_downtime' => $equipment_downtime,
@@ -1324,7 +1335,7 @@ public function all__faults__page(){
 						'satisfied_service_engineer' => $satisfied_service_engineer,
 						'satisfied_equipment' => $satisfied_equipment,
 						'approved' => 0,
-					'doh' => $doh ,
+						'doh' => $doh ,
 				);
             
             		
@@ -1378,10 +1389,9 @@ public function all__faults__page(){
 						'description_of_fault' => $description_of_fault,
 						'service_call_no' => $service_call_no,
 						'action_taken' => $action_taken,
-						'fault_corrected_by_user' => $fault_corrected_by_user,
-						'to_fix_at_next_service_visit' => $to_fix_at_next_service_visit,
-						'to_fix_at_next_service_visit' => $to_fix_at_next_service_visit,
-						'engineer_called_out' => $engineer_called_out,
+						'fault_corrected_by_user' => (isset($fault_corrected_by_user)) ? $fault_corrected_by_user : 2,
+						'to_fix_at_next_service_visit' => (isset($to_fix_at_next_service_visit)) ? $to_fix_at_next_service_visit : 2,
+						'engineer_called_out' => (isset($engineer_called_out)) ? $engineer_called_out : 2,
 						'adverse_incident_report' => $adverse_incident_report,
 						'equipment_status' => $equipment_status,
 						'equipment_downtime' => $equipment_downtime,
@@ -1624,6 +1634,8 @@ public function all__faults__page(){
 			endif;
 			return json_encode($return);
 		}
+		
+
 		
 		
 		

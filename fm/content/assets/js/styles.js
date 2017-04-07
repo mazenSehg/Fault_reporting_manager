@@ -65,11 +65,13 @@ $(document).ready(function() {
 		}
 	};
 	
-	var ajaxhandleDataTableButtons = function() {
+var ajaxhandleDataTableButtons = function() {
 		if ($(".ajax-datatable-buttons").length) {
 			$(".ajax-datatable-buttons").DataTable({
+				
 				order: [[ $(".ajax-datatable-buttons").data('order-column'), "desc" ]],
-				dom: "Bfrtip",
+				dom: "Bflrtip",
+				lengthMenu: [[10, 25, 50, 100,150,200,250,300,400,450,500], [10, 25, 50, 100,150,200,250,300,400,450,500]],
 				buttons: [
 					{extend: "copy",className: "btn-sm"},
 					{extend: "csv",className: "btn-sm"},
@@ -93,8 +95,6 @@ $(document).ready(function() {
 						d.model = $('.custom-filters select[name="model"]').val();
 						d.approved = $('.custom-filters select[name="approved"]').val();
 						d.date_of_fault = $('.custom-filters select[name="date_of_fault"]').val();
-						
-						console.log(d.status);
 					},
 					complete:function(r){
 						if ($("table .js-switch")[0]) {
@@ -110,6 +110,7 @@ $(document).ready(function() {
 			});
 		}
 	};
+
 
 	TableManageButtons = function() {
 		"use 	strict";
@@ -197,6 +198,45 @@ $(document).ready(function() {
 		showDropdowns: true,
 		calender_style: "picker_1"
 	});
+	
+	
+	var radiobox_names = ['fault_corrected_by_user' ,'to_fix_at_next_service_visit','engineer_called_out'];
+	var radiobox_check = false;
+	$.each( radiobox_names, function( key, value ) {
+		var _value = $('input[name="'+value+'"]:checked').val();
+		if(radiobox_check == false){
+			$.each( radiobox_names, function( key1, value1 ) {
+				if( value != value1){
+					if(_value == '1'){
+						$('input[name="'+value1+'"][value="2"]').iCheck('check');
+						$('input[name="'+value1+'"]').iCheck('disable');
+						radiobox_check = true;
+					}else{
+						$('input[name="'+value1+'"]').iCheck('enable');
+					}
+				}
+			});
+		}
+	});
+	
+	$('.custom_radiobox').on('ifClicked',function(){
+		var _this = $(this);
+		var value = _this.attr('name');
+		var radiobox_names = ['fault_corrected_by_user' ,'to_fix_at_next_service_visit','engineer_called_out'];
+		var _value = _this.val();
+		$.each( radiobox_names, function( key1, value1 ) {
+			if( value != value1){
+				if(_value == '1' ){
+					$('input[name="'+value1+'"][value="2"]').iCheck('check');
+					$('input[name="'+value1+'"]').iCheck('disable');
+				}else{
+					$('input[name="'+value1+'"]').iCheck('enable');
+				}
+			}
+		});
+	});
+
+	
 	
 	var url_filter = /^(http|https|ftp):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/i;
 	var email_filter = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
@@ -545,6 +585,7 @@ $(document).ready(function() {
 			url: ajax_url,
 			dataType: 'json',
 			success : function(res){
+				console.log(res);
 				btn.attr('disabled',false);
 				btn.html(btn_text);
 				if(res['status'] == 0 ){ // if failed then go inside
@@ -844,7 +885,6 @@ $(document).ready(function() {
 		
 	});
 });
-
 
 function delete_function(btn){
 	var isDelete = confirm('Are you sure want to delete this record?');
