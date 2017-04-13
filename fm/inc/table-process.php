@@ -17,6 +17,12 @@
 				echo $Fault->fetch_all_faults_process();
 				break;
 
+			case 'fetch_all_faults_export':
+				echo $Fault->fetch_all_e_faults_process();
+				break;
+
+
+
 			case 'fetch_all_faults2':
 				echo $Fault->fetch_all_faults_process2();
 				break;

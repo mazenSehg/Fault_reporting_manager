@@ -177,7 +177,7 @@ select {
 				</style>		
 				
 				<div align="right">
-				<small>To select another option, please select <b>'no' </b> <b>'N/A' </b> or first for the question you already responded to.</small>
+				<small>To select another option, please select <b>'no' </b> or <b>'N/A' </b> or first for the question you already responded to.</small>
 				</div>
 				
 				
@@ -947,6 +947,8 @@ select {
 		}
 
 public function all__faults__page(){
+	
+	
 			ob_start();
 			$query = '';
 			if(!is_admin()):
@@ -963,6 +965,9 @@ public function all__faults__page(){
 				echo page_not_found("Oops! There is no new faults record found",' ',false);
 			else:
 			?>
+
+
+
 		<div class="row custom-filters">
 				<div class="form-group col-sm-2 col-xs-12">
 					<label for="centre">Centre</label>
@@ -1025,7 +1030,7 @@ public function all__faults__page(){
 				</div>
 			
 			<div class="form-group col-sm-2 col-xs-12">
-					<label for="date_of_fault">Date OF fault</label>
+					<label for="date_of_fault">Date of fault</label>
 					<select name="date_of_fault" class="form-control select_single" tabindex="-1" data-placeholder="Choose date of fault">
 						<?php
 						$data = get_tabledata(TBL_FAULTS,false,array('approved'=> '1'), '', 'DISTINCT `date_of_fault`');
@@ -1035,7 +1040,119 @@ public function all__faults__page(){
 					</select>
 				</div>
 			</div>
-			<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap ajax-datatable-buttons" cellspacing="0" width="100%" data-table="fetch_all_faults" data-order-column="6">
+
+<script type="text/javascript">
+
+	function fnExcelReport()
+{
+    var tab_text="<table border='2px'><tr bgcolor='#87AFC6'>";
+    var textRange; var j=0;
+    tab = document.getElementById('datatable-buttons'); // id of table
+
+    for(j = 0 ; j < tab.rows.length ; j++) 
+    {     
+        tab_text=tab_text+tab.rows[j].innerHTML+"</tr>";
+        //tab_text=tab_text+"</tr>";
+    }
+
+    tab_text=tab_text+"</table>";
+    tab_text= tab_text.replace(/<A[^>]*>|<\/A>/g, "");
+    tab_text= tab_text.replace(/<img[^>]*>/gi,""); 
+    tab_text= tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); 
+
+    var ua = window.navigator.userAgent;
+    var msie = ua.indexOf("MSIE "); 
+
+    if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./))      // If Internet Explorer
+    {
+        txtArea1.document.open("txt/html","replace");
+        txtArea1.document.write(tab_text);
+        txtArea1.document.close();
+        txtArea1.focus(); 
+        sa=txtArea1.document.execCommand("SaveAs",true,"faults_export.xls");
+    }  
+    else                 //other browser not tested on IE 11
+        sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(tab_text));  
+
+    return (sa);
+
+}
+	
+	
+</script>
+
+<iframe id="txtArea1" style="display:none"></iframe>
+
+
+
+<?php
+	if(is_admin()){
+		?>
+<form action="<?php $PHP_SELF ;?>" method="POST">
+ <input type="submit" name="submit" value="Access database layout">
+</form>
+<?php
+	}
+	?>
+
+
+
+<?php
+ if (isset($_POST['submit'] ))
+        {
+	?>
+
+<button id="btnExport" onclick="fnExcelReport();"> EXPORTABLE PAGE</button>
+			<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap ajax-datatable-buttons" cellspacing="0" width="100%" data-table="fetch_all_faults_export" data-order-column="6">
+				<thead>
+					<tr>
+						<?php if(is_admin()): ?>
+						<th>Approved</th>
+						<?php endif; ?>
+						<th>Fault ID</th>
+						<th>Submitted by</th>
+						<th>Equipment<br>code</th>
+						<th>Serviced by</th>
+						<th>Fault<br>Type</th>
+						<th>Description<br>of fault</th>
+						
+						<th>Action<br>Taken</th>
+						<th>DoH</th>
+						<th>User corrected?</th>
+						<th>next service<br>station correction?</th>
+						<th>Engineer<br>called out?</th>
+						<th>Engineer<br>callout ref.</th>
+						<th>Equipment<br>status</th>
+						
+						
+						<th>Equipment<br>downtime</th>
+						<th>Screening<br>downtime</th>
+						<th>Repeat<br>films</th>
+						<th>Cancelled<br>patients</th>
+						<th>Recalled<br>patients</th>
+						<th>Agency<br>satisfaction</th>
+						<th>Engineer<br>satisfaction</th>
+						<th>Equipment<br>satisfaction</th>
+						<th>Enquiry to<br>supplier</th>
+						<th>Supplier<br>action</th>
+						<th>Supplier<br>comment</th>
+						<th>MDA<br>notified</th>
+						
+						
+						<th>Date of Fault</th>
+						<th>Created On</th>
+						
+						<th class="text-center">Actions</th>
+					</tr>
+				</thead>
+			</table>
+
+<?php
+		}else{
+			
+			?>
+			
+<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap ajax-datatable-buttons" cellspacing="0" width="100%" data-table="fetch_all_faults" data-order-column="6">
 				<thead>
 					<tr>
 						<?php if(is_admin()): ?>
@@ -1053,6 +1170,12 @@ public function all__faults__page(){
 					</tr>
 				</thead>
 			</table>
+
+
+
+<?php	
+		}
+	?>
 			<div class="fault-modal">
 				<button type="button" class="btn btn-info btn-lg hidden launch-fault-modal" data-toggle="modal" data-target="#fault-modal">Open Modal</button>
 				<div id="fault-modal" class="modal fade" role="dialog">
@@ -1080,6 +1203,7 @@ public function all__faults__page(){
 										<div class="form-group">
 											<label for="supplier_comments"><?php _e('Supplier Comments');?></label>
 											<textarea name="supplier_comments" class="form-control" rows="3"></textarea>
+										</div>
 										</div>
 									</div>
 								</div>
@@ -1296,6 +1420,63 @@ public function all__faults__page(){
 
 		//Process functions starts here
 		public function add__fault__process(){
+						
+			
+			//delete here
+							$sq = "SELECT COUNT(*) AS resc FROM tbl_fault WHERE equipment_name IS NULL OR equipment_name='0' OR e_type_name IS NULL OR e_type_name='0' ";
+				$req = $db->get_results($sq);
+				
+				$valll;
+				foreach($req as $row):
+				$valll =  $row->resc;								
+				endforeach;
+						
+				if($valll!=0){
+															$sql = "SELECT * FROM tbl_fault WHERE equipment_name IS NULL OR equipment_name='0' OR e_type_name IS NULL OR e_type_name='0'";
+												$re = $db->get_results($sql);
+												foreach($re as $res){
+													
+													$sql1 = "SELECT * FROM tbl_equipment WHERE ID = $res->equipment";
+													$re1 = $db->get_results($sql1);
+													$equip;
+													foreach($re1 as $res1){
+														$equip = $res1->name;
+														
+														$sql2 = "SELECT * FROM tbl_equipment_type WHERE ID = $res->equipment_type";
+														$re2 = $db->get_results($sql2);
+														$type;
+														foreach ($re2 as $res2){
+														$type = $res2->name;
+															
+															$sql3 = "SELECT * FROM tbl_centres WHERE ID = $res->centre";
+															$re3 = $db->get_results($sql3);
+															$centre;
+															foreach ($re3 as $res3){
+																$centre = $res3->name;
+															
+																$sql4 = "SELECT * FROM tbl_fault_type WHERE ID = $res->fault_type";
+																$re4 = $db->get_results($sql4);
+																$f_type;
+																foreach($re4 as $res4){
+																	$f_type = $res4->name;
+																	
+																}
+																
+															}
+															
+														}
+														
+													}
+													
+													$sql4 = "UPDATE tbl_fault SET equipment_name='$equip', e_type_name='$type', centre_name='$centre', f_type_name='$f_type' WHERE ID = '$res->ID'";
+										$sq5 = $db->query($sql4);
+													}
+													
+												}
+			
+			//to here
+			
+			
 			extract($_POST);
 			
 			$return = array(
@@ -1304,6 +1485,7 @@ public function all__faults__page(){
 				'message' => 'Could not create fault, Please try again.',
 				'reset_form' => 0
 			);
+			
 			if( user_can('add_fault') ):
 				$guid = get_guid(TBL_FAULTS);
 				$doh = ( isset($doh) ) ? 1 : 0;
@@ -1801,7 +1983,257 @@ public function all__faults__page(){
 		}
 		
         
-  		public function fetch_all_faults_process(){
+  		public function fetch_all_e_faults_process(){
+			
+			
+
+			
+			$orders_columns = array(
+				1 => 'name',
+				2 => 'centre_name',
+				3 => 'e_type_name',
+				4 => 'equipment_name',
+				5 => 'f_type_name',
+				6 => 'date_of_fault',
+				7 => 'created_on',
+				0 => 'approved',
+			);
+			$recordsTotal = $recordsFiltered = 0;
+			$draw = $_POST["draw"];
+			$orderByColumnIndex = $_POST['order'][0]['column'];
+			$orderBy = ( array_key_exists( $orderByColumnIndex , $orders_columns ) ) ? $orders_columns[$orderByColumnIndex] : 'created_on';
+			$orderType = $_POST['order'][0]['dir'];
+			$start = $_POST["start"];
+			$length = $_POST['length'];
+			
+			$query = '';
+			
+			if(!is_admin()):
+				$centres = maybe_unserialize($this->current__user->centre);
+				if(!empty($centres)){
+					$centres = implode(',',$centres);
+					$query = "WHERE `centre` IN (".$centres.")";
+				}
+			endif;
+			
+			$sql = sprintf(" ORDER BY %s %s LIMIT %d , %d ", $orderBy, $orderType ,$start , $length);
+			$data = array();
+			if(!empty($_POST['search']['value'])){
+				$columns = array('ID','name');
+				for($i = 0 ; $i < count($columns);$i++){
+					$column = $columns[$i];
+					$where[] = "$column LIKE '%".$_POST['search']['value']."%'";
+				}
+				$where = implode(" OR " , $where);
+				$query .= ($query != '') ? ' AND ' : ' WHERE ';
+				$query .= $where;
+			}
+			
+			if(isset($_POST['centre']) && $_POST['centre'] != '' && $_POST['centre'] != 'undefined'){
+				$query .= ($query != '') ? ' AND ' : ' WHERE ';
+				$query .= " `centre` = '".$_POST['centre']."' ";
+			}
+			
+			if(isset($_POST['equipment']) && $_POST['equipment'] != '' &&  $_POST['equipment'] != 'undefined'){
+				$query .= ($query != '') ? ' AND ' : ' WHERE ';
+				$query .= " `equipment` = '".$_POST['equipment']."' ";
+			}
+			
+			if(isset($_POST['equipment_type']) && $_POST['equipment_type'] != '' && $_POST['equipment_type'] != 'undefined'){
+				$query .= ($query != '') ? ' AND ' : ' WHERE ';
+				$query .= " `equipment_type` = '".$_POST['equipment_type']."' ";
+			}
+			
+			if(isset($_POST['fault_type']) && $_POST['fault_type'] != '' && $_POST['fault_type'] != 'undefined'){
+				$query .= ($query != '') ? ' AND ' : ' WHERE ';
+				$query .= " `fault_type` = '".$_POST['fault_type']."' ";
+			}
+			
+			if(isset($_POST['approved']) && $_POST['approved'] != '' &&  $_POST['approved'] != 'undefined'){
+				$query .= ($query != '') ? ' AND ' : ' WHERE ';
+				$query .= " `approved` = '".$_POST['approved']."' ";
+			}
+			
+			if(isset($_POST['date_of_fault']) && $_POST['date_of_fault'] != '' &&  $_POST['date_of_fault'] != 'undefined'){
+				$query .= ($query != '') ? ' AND ' : ' WHERE ';
+				$query .= " `date_of_fault` = '".$_POST['date_of_fault']."' ";
+			}
+			
+$recordsTotal = get_tabledata(TBL_FAULTS,true,array(), $query, 'COUNT(ID) as count');
+			$recordsTotal = $recordsTotal->count;
+			$data_list = get_tabledata(TBL_FAULTS,false,array(),$query.$sql);
+			$recordsFiltered = $recordsTotal;
+					
+			if($data_list): foreach($data_list as $fault):
+				
+                $centre = get_tabledata(TBL_CENTRES,true,array('ID'=> $fault->centre));
+				
+                $equipment_type = get_tabledata(TBL_EQUIPMENT_TYPES,true,array('ID'=> $fault->equipment_type));
+				$equipment = get_tabledata(TBL_EQUIPMENTS,true,array('ID'=> $fault->equipment));
+				$fault_type = get_tabledata(TBL_FAULT_TYPES,true,array('ID'=> $fault->fault_type));
+                
+				
+				$row = array();
+			if(is_admin()):
+					ob_start();
+					?>
+					<div class="text-center">
+						<label><input type="checkbox" class="js-switch" <?php checked($fault->approved, 1);?> onclick="approve_switch(this);" data-id="<?php echo $fault->ID;?>" data-action="fault_approve_change"/></label>
+					</div>
+					<?php 
+					$checkbox = ob_get_clean();
+					array_push($row, $checkbox);
+				endif;
+				array_push($row, __($fault->ID));
+				array_push($row, __($fault->name));
+				array_push($row, __($equipment->equipment_code));
+			if($fault->current_servicing_agency==""){
+				array_push($row, __($fault->time_of_fault));	
+			}else if($fault->current_servicing_agency!=""){
+				array_push($row, __($fault->current_servicing_agency));
+			}else{
+				array_push($row, __("NOTHING"));
+			}
+				array_push($row, __($fault->f_type_name));
+			
+			
+			$str = chunk_split($fault->description_of_fault, 40, "<br>");
+				array_push($row, $str);
+			
+			
+						$str2 = chunk_split($fault->action_taken, 40, "<br>");
+				array_push($row, $str2);
+
+			
+			
+			
+			
+			
+			if($fault->doh!=1){
+							array_push($row, "no");
+			}else{
+							array_push($row, "yes");
+			}
+			
+			
+						
+			if($fault->fault_corrected_by_user=1){
+							array_push($row, "yes");
+			}else{
+							array_push($row, "no");
+			}
+				
+			
+						if($fault->fault_corrected_by_user=1){
+							array_push($row, "yes");
+			}else{
+							array_push($row, "no");
+			}
+
+			
+									if($fault->engineer_called_out=1){
+							array_push($row, "yes");
+			}else{
+							array_push($row, "no");
+			}
+
+			array_push($row, __($fault->service_call_no));
+			
+			//double check thissssdfsdfdsfs
+			array_push($row, __($fault->equipment_status));
+			
+			array_push($row, __($fault->equipment_downtime));
+			array_push($row, __($fault->screening_downtime));
+			array_push($row, __($fault->repeat_images));
+			array_push($row, __($fault->cancelled_women));
+			array_push($row, __($fault->technical_recalls));
+
+			
+
+			array_push($row, __($fault->satisfied_servicing_organisation));
+			array_push($row, __($fault->satisfied_service_engineer));
+			array_push($row, __($fault->satisfied_equipment));
+			
+			
+			array_push($row, __($fault->supplier_action));
+			array_push($row, __($fault->supplier_action));
+			array_push($row, __($fault->supplier_comments));
+			
+												if($fault->adverse_incident_report=0){
+							array_push($row, "yes");
+			}else{
+							array_push($row, "no");
+			}
+			
+				array_push($row, date('M d,Y',strtotime($fault->date_of_fault)));
+				array_push($row, date('d M,Y',strtotime($fault->created_on)));
+				
+			
+			
+				ob_start();
+			
+				?>
+				<div class="text-center">
+					<?php if(is_admin()): ?>
+						<a href="<?php echo site_url();?>/view-fault/?id=<?php echo $fault->ID;?>" class="btn btn-dark btn-xs">
+							<i class="fa fa-edit"></i> View
+						</a>
+						<a href="<?php echo site_url();?>/edit-fault/?id=<?php echo $fault->ID;?>" class="btn btn-dark btn-xs">
+							<i class="fa fa-edit"></i> Edit
+						</a>
+						<a href="#" class="btn btn-danger btn-xs" onclick="delete_function(this);" data-id="<?php echo $fault->ID;?>" data-action="delete_fault">
+							<i class="fa fa-trash"></i> Delete
+						</a>
+					<?php else:
+						$future = date('d-m-Y',strtotime(' + 2 day', strtotime($fault->created_on)));
+						$today = date('d-m-Y');
+						if($today == $future):
+							if( user_can('view_fault') ): ?>
+							<p>Overdue </p>
+							<a href="<?php echo site_url();?>/view-fault/?id=<?php echo $fault->ID;?>" class="btn btn-dark btn-xs">
+								<i class="fa fa-edit"></i> View
+							</a>
+							<?php endif; ?>
+						<?php else: ?>
+							<?php if($this->current__user__id == $fault->user_id):
+								if( user_can('edit_fault') ): ?>
+								<a href="<?php echo site_url();?>/edit-fault/?id=<?php echo $fault->ID;?>" class="btn btn-dark btn-xs">
+									<i class="fa fa-edit"></i> Edit
+								</a>
+								<?php endif; ?>
+								
+								<?php if( user_can('delete_fault') ): ?>
+								<a href="#" class="btn btn-danger btn-xs" onclick="javascript:delete_function(this);" data-id="<?php echo $fault->ID;?>" data-action="delete_fault"><i class="fa fa-trash"></i> Delete</a>
+								<?php endif; ?>
+							<?php else: ?>
+								<?php if( user_can('view_fault') ): ?>
+								<a href="<?php echo site_url();?>/view-fault/?id=<?php echo $fault->ID;?>" class="btn btn-dark btn-xs">
+									<i class="fa fa-edit"></i> View
+								</a>
+								<?php endif; ?>
+							<?php endif; ?>
+						<?php endif; ?>
+					<?php endif; ?>
+				</div>
+				<?php 
+				$action = ob_get_clean();
+				array_push($row, $action);
+				$data[] = $row;
+				endforeach;
+			endif;
+			
+			/* Response to client before JSON encoding */
+			$response = array(
+				'draw' => intval($draw),
+				'recordsTotal' => $recordsTotal,
+				'recordsFiltered'=> $recordsFiltered,
+				'data' => $data,
+			);
+			return json_encode($response);
+		}
+		
+		
+		  		public function fetch_all_faults_process(){
 			$orders_columns = array(
 				1 => 'name',
 				2 => 'centre_name',
@@ -1973,13 +2405,13 @@ $recordsTotal = get_tabledata(TBL_FAULTS,true,array(), $query, 'COUNT(ID) as cou
 			public function fetch_all_faults_process2(){
 			 if(is_admin()){
 				 $orders_columns = array(
-				1 => 'name',
-				2 => 'centre_name',
-				3 => 'e_type_name',
-				4 => 'equipment_name',
-				5 => 'f_type_name',
-				6 => 'date_of_fault',
-				7 => 'created_on',
+				2 => 'name',
+				3 => 'centre_name',
+				4 => 'e_type_name',
+				5 => 'equipment_name',
+				6 => 'f_type_name',
+				7 => 'date_of_fault',
+				8 => 'created_on',
 				0 => 'approved',
 			);
 						   }
@@ -2039,11 +2471,15 @@ $recordsTotal = get_tabledata(TBL_FAULTS,true,array(), $query, 'COUNT(ID) as cou
 			$fault_type = get_tabledata(TBL_FAULT_TYPES,true,array('ID'=> $fault->fault_type));
 				
 				$row = array();
+
 				array_push($row, __($fault->name));
 				array_push($row, __($fault->centre_name));
 				array_push($row, __($fault->e_type_name));
 				array_push($row, __($fault->equipment_name));
 				array_push($row, __($fault->f_type_name));
+
+
+
 				
 				array_push($row, date('M d,Y',strtotime($fault->date_of_fault)));
 				//array_push($row, date('d M, Y',$fault->date_of_fault));
