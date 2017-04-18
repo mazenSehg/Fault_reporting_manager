@@ -88,7 +88,7 @@ login_check();
 				$chk;
 												foreach($chk as $res):
 												$chk = $res->answ;
-												echo $chk;
+												
 												endforeach;
 
 												
@@ -150,11 +150,11 @@ login_check();
 								$sql4 = "UPDATE tbl_equipment SET name='$sting' WHERE ID = '$IDD'";
 								$sq5 = $db->query($sql4);
 
-								$sql46 = "UPDATE tbl_equipment SET model='$bowe' WHERE ID = '$IDD'";
-								$sq6 = $db->query($sql46);
-
-								$sql47 = "UPDATE tbl_equipment SET service_agent='$qwey->ID' WHERE ID = '$IDD'";
-								$sq7 = $db->query($sql47);
+//								$sql46 = "UPDATE tbl_equipment SET model='$bowe' WHERE ID = '$IDD'";
+//								$sq6 = $db->query($sql46);
+//
+//								$sql47 = "UPDATE tbl_equipment SET service_agent='$qwey->ID' WHERE ID = '$IDD'";
+//								$sq7 = $db->query($sql47);
 
 
 								endforeach;

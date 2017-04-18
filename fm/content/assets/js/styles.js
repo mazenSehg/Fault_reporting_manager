@@ -48,6 +48,8 @@ $(document).ready(function() {
 
 	$('[data-toggle="tooltip"]').tooltip(); 
 	
+	
+		console.log($(".datatable-buttons").length);
 	var handleDataTableButtons = function() {
 		if ($(".datatable-buttons").length) {
 			$(".datatable-buttons").DataTable({
@@ -66,6 +68,7 @@ $(document).ready(function() {
 	};
 	
 var ajaxhandleDataTableButtons = function() {
+	
 		if ($(".ajax-datatable-buttons").length) {
 			$(".ajax-datatable-buttons").DataTable({
 				

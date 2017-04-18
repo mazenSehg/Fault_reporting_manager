@@ -103,12 +103,19 @@ select {
 				<div class="row">
 					<div class="form-group col-sm-6 col-xs-12">
 						<label for="current-servicing-agency">Current servicing agency </label>
-						<select name="current_servicing_agency" class="form-control select-servicing-agency2"  tabindex="-1" data-placeholder="Choose servicing agency" readonly="true">
+						<select id="select" name="current_servicing_agency" class="form-control select-servicing-agency2"  tabindex="-1" data-placeholder="Choose servicing agency" readonly="true">
 							<option value="">Current servicing agency</option>
 						</select>
 					</div>
 					
 					
+					<script>
+					$('#select').on('mousedown', function(e) {
+   e.preventDefault();
+   this.blur();
+   window.focus();
+});
+					</script>
 		
 					
 
@@ -1041,117 +1048,10 @@ public function all__faults__page(){
 				</div>
 			</div>
 
-<script type="text/javascript">
-
-	function fnExcelReport()
-{
-    var tab_text="<table border='2px'><tr bgcolor='#87AFC6'>";
-    var textRange; var j=0;
-    tab = document.getElementById('datatable-buttons'); // id of table
-
-    for(j = 0 ; j < tab.rows.length ; j++) 
-    {     
-        tab_text=tab_text+tab.rows[j].innerHTML+"</tr>";
-        //tab_text=tab_text+"</tr>";
-    }
-
-    tab_text=tab_text+"</table>";
-    tab_text= tab_text.replace(/<A[^>]*>|<\/A>/g, "");
-    tab_text= tab_text.replace(/<img[^>]*>/gi,""); 
-    tab_text= tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); 
-
-    var ua = window.navigator.userAgent;
-    var msie = ua.indexOf("MSIE "); 
-
-    if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./))      // If Internet Explorer
-    {
-        txtArea1.document.open("txt/html","replace");
-        txtArea1.document.write(tab_text);
-        txtArea1.document.close();
-        txtArea1.focus(); 
-        sa=txtArea1.document.execCommand("SaveAs",true,"faults_export.xls");
-    }  
-    else                 //other browser not tested on IE 11
-        sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(tab_text));  
-
-    return (sa);
-
-}
-	
-	
-</script>
-
-<iframe id="txtArea1" style="display:none"></iframe>
 
 
 
-<?php
-	if(is_admin()){
-		?>
-<form action="<?php $PHP_SELF ;?>" method="POST">
- <input type="submit" name="submit" value="Access database layout">
-</form>
-<?php
-	}
-	?>
 
-
-
-<?php
- if (isset($_POST['submit'] ))
-        {
-	?>
-
-<button id="btnExport" onclick="fnExcelReport();"> EXPORTABLE PAGE</button>
-			<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap ajax-datatable-buttons" cellspacing="0" width="100%" data-table="fetch_all_faults_export" data-order-column="6">
-				<thead>
-					<tr>
-						<?php if(is_admin()): ?>
-						<th>Approved</th>
-						<?php endif; ?>
-						<th>Fault ID</th>
-						<th>Submitted by</th>
-						<th>Equipment<br>code</th>
-						<th>Serviced by</th>
-						<th>Fault<br>Type</th>
-						<th>Description<br>of fault</th>
-						
-						<th>Action<br>Taken</th>
-						<th>DoH</th>
-						<th>User corrected?</th>
-						<th>next service<br>station correction?</th>
-						<th>Engineer<br>called out?</th>
-						<th>Engineer<br>callout ref.</th>
-						<th>Equipment<br>status</th>
-						
-						
-						<th>Equipment<br>downtime</th>
-						<th>Screening<br>downtime</th>
-						<th>Repeat<br>films</th>
-						<th>Cancelled<br>patients</th>
-						<th>Recalled<br>patients</th>
-						<th>Agency<br>satisfaction</th>
-						<th>Engineer<br>satisfaction</th>
-						<th>Equipment<br>satisfaction</th>
-						<th>Enquiry to<br>supplier</th>
-						<th>Supplier<br>action</th>
-						<th>Supplier<br>comment</th>
-						<th>MDA<br>notified</th>
-						
-						
-						<th>Date of Fault</th>
-						<th>Created On</th>
-						
-						<th class="text-center">Actions</th>
-					</tr>
-				</thead>
-			</table>
-
-<?php
-		}else{
-			
-			?>
-			
 <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap ajax-datatable-buttons" cellspacing="0" width="100%" data-table="fetch_all_faults" data-order-column="6">
 				<thead>
 					<tr>
@@ -1173,9 +1073,6 @@ public function all__faults__page(){
 
 
 
-<?php	
-		}
-	?>
 			<div class="fault-modal">
 				<button type="button" class="btn btn-info btn-lg hidden launch-fault-modal" data-toggle="modal" data-target="#fault-modal">Open Modal</button>
 				<div id="fault-modal" class="modal fade" role="dialog">
@@ -1424,7 +1321,7 @@ public function all__faults__page(){
 			
 			//delete here
 							$sq = "SELECT COUNT(*) AS resc FROM tbl_fault WHERE equipment_name IS NULL OR equipment_name='0' OR e_type_name IS NULL OR e_type_name='0' ";
-				$req = $db->get_results($sq);
+				$req = $this->database->get_results($sq);
 				
 				$valll;
 				foreach($req as $row):
@@ -1433,29 +1330,29 @@ public function all__faults__page(){
 						
 				if($valll!=0){
 															$sql = "SELECT * FROM tbl_fault WHERE equipment_name IS NULL OR equipment_name='0' OR e_type_name IS NULL OR e_type_name='0'";
-												$re = $db->get_results($sql);
+												$re = $this->database->get_results($sql);
 												foreach($re as $res){
 													
 													$sql1 = "SELECT * FROM tbl_equipment WHERE ID = $res->equipment";
-													$re1 = $db->get_results($sql1);
+													$re1 = $this->database->get_results($sql1);
 													$equip;
 													foreach($re1 as $res1){
 														$equip = $res1->name;
 														
 														$sql2 = "SELECT * FROM tbl_equipment_type WHERE ID = $res->equipment_type";
-														$re2 = $db->get_results($sql2);
+														$re2 = $this->database->get_results($sql2);
 														$type;
 														foreach ($re2 as $res2){
 														$type = $res2->name;
 															
 															$sql3 = "SELECT * FROM tbl_centres WHERE ID = $res->centre";
-															$re3 = $db->get_results($sql3);
+															$re3 = $this->database->get_results($sql3);
 															$centre;
 															foreach ($re3 as $res3){
 																$centre = $res3->name;
 															
 																$sql4 = "SELECT * FROM tbl_fault_type WHERE ID = $res->fault_type";
-																$re4 = $db->get_results($sql4);
+																$re4 = $this->database->get_results($sql4);
 																$f_type;
 																foreach($re4 as $res4){
 																	$f_type = $res4->name;
@@ -1469,7 +1366,7 @@ public function all__faults__page(){
 													}
 													
 													$sql4 = "UPDATE tbl_fault SET equipment_name='$equip', e_type_name='$type', centre_name='$centre', f_type_name='$f_type' WHERE ID = '$res->ID'";
-										$sq5 = $db->query($sql4);
+										$sq5 = $this->database->query($sql4);
 													}
 													
 												}
@@ -2234,7 +2131,8 @@ $recordsTotal = get_tabledata(TBL_FAULTS,true,array(), $query, 'COUNT(ID) as cou
 		
 		
 		  		public function fetch_all_faults_process(){
-			$orders_columns = array(
+if(is_admin()){
+					$orders_columns = array(
 				1 => 'name',
 				2 => 'centre_name',
 				3 => 'e_type_name',
@@ -2244,7 +2142,21 @@ $recordsTotal = get_tabledata(TBL_FAULTS,true,array(), $query, 'COUNT(ID) as cou
 				7 => 'created_on',
 				0 => 'approved',
 			);
-			$recordsTotal = $recordsFiltered = 0;
+}
+					else{
+
+					$orders_columns = array(
+				0 => 'name',
+				1 => 'centre_name',
+				2 => 'e_type_name',
+				3 => 'equipment_name',
+				4 => 'f_type_name',
+				5 => 'date_of_fault',
+				6 => 'created_on',
+			);
+					}
+
+				$recordsTotal = $recordsFiltered = 0;
 			$draw = $_POST["draw"];
 			$orderByColumnIndex = $_POST['order'][0]['column'];
 			$orderBy = ( array_key_exists( $orderByColumnIndex , $orders_columns ) ) ? $orders_columns[$orderByColumnIndex] : 'created_on';

@@ -838,6 +838,31 @@ class Header{
 								</ul>
 							</li>
 							<?php endif; ?>
+			
+			
+										<li>
+								<a>
+									<i class="fa fa-cog">
+									</i>Help
+									<span class="fa fa-chevron-down">
+									</span>
+								</a>
+								<ul class="nav child_menu">
+									<li>
+										<a href="<?php echo site_url();?>/help/">
+											General Help
+										</a>
+									</li>
+									<li>
+										<a href="<?php echo site_url();?>/contact/">
+											Contact us
+										</a>
+									</li>
+								</ul>
+							</li>
+			
+			
+			
 						</ul>
 					</div>
 				</div>
@@ -878,11 +903,6 @@ class Header{
 								<li>
 									<a href="<?php echo site_url();?>/change-password/">
 										Change Password
-									</a>
-								</li>
-								<li>
-									<a href="javascript:;">
-										Help
 									</a>
 								</li>
 								<li>

@@ -172,11 +172,15 @@ class Equipment{
 	
 
 	public function add__equipment__page(){
+
 		ob_start();
+
 		if( !user_can( 'add_equipment') ):
 			echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
 		else:
 		?>
+
+
 		<form class="add-equipment submit-form" method="post" autocomplete="off">
 			<div class="row">
 
@@ -315,19 +319,19 @@ class Equipment{
 					<label for="year-manufacturered">
 						Year Manufacturered
 					</label>
-					<input type="number" name="year_manufacturered" class="form-control" min="1000" max="9999"/>
+					<input type="number" name="year_manufacturered" class="form-control" min="1990" max="2020"/>
 				</div>
 				<div class="form-group col-sm-4 col-xs-12">
 					<label for="year-installed">
 						Year Installed
 					</label>
-					<input type="number" name="year_installed" class="form-control" min="1000" max="9999"/>
+					<input type="number" name="year_installed" class="form-control" min="1995" max="2020"/>
 				</div>
 				<div class="form-group col-sm-4 col-xs-12">
 					<label for="year-decomissioned">
 						Year Decomissioned
 					</label>
-					<input type="number" name="year_decommisoned" class="form-control" min="1000" max="9999"/>
+					<input type="number" name="year_decommisoned" class="form-control" min="1990" max="2020"/>
 				</div>
 			</div>
 
@@ -409,7 +413,9 @@ class Equipment{
 		</form>
 		<?php endif; ?>
 		<?php
+		
 		$content = ob_get_clean();
+
 		return $content;
 	}
 
@@ -1729,13 +1735,14 @@ class Equipment{
 				$return['message_heading'] = 'Success !';
 				$return['message'] = 'Equipment has been created successfully.';
 				$return['reset_form'] = 1;
+
 			endif;
 		endif;
 
 		return json_encode($return);
-		
-		
-		
+						
+
+
 	}
 
 	public function update__equipment__process(){
