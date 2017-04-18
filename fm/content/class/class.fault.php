@@ -400,10 +400,21 @@ select {
 						<input type="text" name="date_of_fault" class="form-control input-datepicker" readonly="readonly" value="<?php echo ($fault->date_of_fault != '') ? date('M d, Y', strtotime($fault->date_of_fault)) : '';?>" />
 					</div>
 				</div>
+				
+				
+				
+				
 				<div class="row">
 					<div class="form-group col-sm-6 col-xs-12">
 						<label for="current-servicing-agency">Current servicing agency </label>
-						<select name="current_servicing_agency" class="form-control" tabindex="-1" data-placeholder="Choose servicing agency">
+
+							<option value="">Current servicing agency</option>
+
+						
+						<br>
+						<select style="display:none" id="select" name="HIDE" class="form-control select-servicing-agency2"  tabindex="-1" data-placeholder="Choose servicing agency" readonly="true"></select>
+						<select name="current_servicing_agency" readonly="true" class="form-control" tabindex="-1" data-placeholder="Choose servicing agency">
+							
 							<?php
 							$equipment = get_tabledata(TBL_EQUIPMENTS, true, array('ID'=>$fault->equipment) );
 							$data = get_tabledata(TBL_SERVICE_AGENTS, false, array('ID'=> $equipment->service_agent ));
@@ -417,6 +428,8 @@ select {
 						<input type="text" name="time_of_fault" class="form-control" value="<?php _e($fault->time_of_fault);?>" />
 					</div>
 				</div>
+				
+				
 
 				<div class="row">
 					<div class="form-group col-sm-12 col-xs-12">
@@ -753,7 +766,7 @@ select {
 							<?php _e('Current servicing agency');?>
 						</td>
 						<td>
-							<?php if(_e($service_agent->name)!=null){
+							<?php if($service_agent->name!=null){
 				_e($service_agent->name);
 			}else{echo "None selected.";
 			}?>
@@ -1319,59 +1332,7 @@ public function all__faults__page(){
 		public function add__fault__process(){
 						
 			
-			//delete here
-							$sq = "SELECT COUNT(*) AS resc FROM tbl_fault WHERE equipment_name IS NULL OR equipment_name='0' OR e_type_name IS NULL OR e_type_name='0' ";
-				$req = $this->database->get_results($sq);
-				
-				$valll;
-				foreach($req as $row):
-				$valll =  $row->resc;								
-				endforeach;
-						
-				if($valll!=0){
-															$sql = "SELECT * FROM tbl_fault WHERE equipment_name IS NULL OR equipment_name='0' OR e_type_name IS NULL OR e_type_name='0'";
-												$re = $this->database->get_results($sql);
-												foreach($re as $res){
-													
-													$sql1 = "SELECT * FROM tbl_equipment WHERE ID = $res->equipment";
-													$re1 = $this->database->get_results($sql1);
-													$equip;
-													foreach($re1 as $res1){
-														$equip = $res1->name;
-														
-														$sql2 = "SELECT * FROM tbl_equipment_type WHERE ID = $res->equipment_type";
-														$re2 = $this->database->get_results($sql2);
-														$type;
-														foreach ($re2 as $res2){
-														$type = $res2->name;
-															
-															$sql3 = "SELECT * FROM tbl_centres WHERE ID = $res->centre";
-															$re3 = $this->database->get_results($sql3);
-															$centre;
-															foreach ($re3 as $res3){
-																$centre = $res3->name;
-															
-																$sql4 = "SELECT * FROM tbl_fault_type WHERE ID = $res->fault_type";
-																$re4 = $this->database->get_results($sql4);
-																$f_type;
-																foreach($re4 as $res4){
-																	$f_type = $res4->name;
-																	
-																}
-																
-															}
-															
-														}
-														
-													}
-													
-													$sql4 = "UPDATE tbl_fault SET equipment_name='$equip', e_type_name='$type', centre_name='$centre', f_type_name='$f_type' WHERE ID = '$res->ID'";
-										$sq5 = $this->database->query($sql4);
-													}
-													
-												}
 			
-			//to here
 			
 			
 			extract($_POST);
@@ -1414,7 +1375,7 @@ public function all__faults__page(){
 						'satisfied_service_engineer' => $satisfied_service_engineer,
 						'satisfied_equipment' => $satisfied_equipment,
 						'approved' => 0,
-						'doh' => $doh ,
+						'doh' => $doh,
 				);
             
             		
