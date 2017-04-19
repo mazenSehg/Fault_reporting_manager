@@ -53,8 +53,14 @@ if( !class_exists('User') ):
 								<div class="text-center">
 									<strong>OR</strong>
 								</div>
+								
 								<span style="height:5px;display: block;">&nbsp;</span>
-								<button class="btn btn-block btn-warning btn-sm" type="button">Having problem in login ?</button>
+
+								<a href="<?php echo site_url();?>/reset_password/"<button class="btn btn-block btn-warning btn-sm" type="button"><i class="fa fa-question-circle"></i>  Forgot your password ?</button></a>
+								
+								
+								
+								
 							</div>
 						</form>
 					</div>
@@ -71,6 +77,60 @@ if( !class_exists('User') ):
 			return $content;
 		}
 
+		
+		
+		
+		
+				public function forgot__page(){
+			ob_start();
+			?>
+			<div class="row">
+				<div class=" main-box">
+					<div class="col-md-4 col-xs-12 pull-right">
+						<form class="forgot-form" method="get" autocomplete="off">
+							<h3 class="form-title">Forgot Password <i class="fa fa-lock"></i></h3>
+
+							<p>Please input your email in the form below and an email will be sent with a new password</p>
+							<p>Once you have logged in with the new password you are free to change it.</p>
+							<br>
+							<br>
+							<div class="form-group">
+								<label for="user_name">email address: <span class="required">*</span></label>
+								<input type="text" name="user_name" class="form-control input-sm" placeholder=""/>
+							</div>
+	
+							<span style="height:5px;display: block;">&nbsp;</span>
+							<div class="form-group">
+								<input type="hidden" name="action" value="pword_login"/>
+								<button class="btn btn-block btn-success btn-sm" type="submit"><i class="fa fa-lock"></i> Reset password</button>
+							</div>
+							<div class="form-group">
+								<div class="alert alert-success">Please allow a few minutes for a new password to be generated and sent to your email address provided.</div>
+								<div class="alert alert-danger"></div>
+							</div>
+							<div class="form-group">								
+								<span style="height:5px;display: block;">&nbsp;</span>
+
+								<a href="<?php echo site_url();?>/login/"<button class="btn btn-block btn-warning btn-sm" type="button">  Back to Login page </button></a>
+								
+								
+								
+								
+							</div>
+						</form>
+					</div>
+					<div class="col-md-7 col-xs-12 text-center hidden-xs ">
+						<h1 class=" big-title">Welcome to the NCCPM online Fault Reporting System.</h1>
+						<div class="ln_solid"></div>
+						<p>Please login to access the equipment and fault management services.</p>
+					</div>
+					<div class="col-md-1"></div>
+				</div>
+			</div>
+			<?php
+			$content = ob_get_clean();
+			return $content;
+		}
 		public function upload__image__section(){
 			ob_start();
 			?>
@@ -722,6 +782,31 @@ if( !class_exists('User') ):
 				return 0;
 			}
 		}
+		
+		
+		
+				public function reset__login__process(){
+			global $device;
+			extract($_POST);
+			if(email_exists($user_name)){
+				$user = get_user_by('email',$user_name);
+				
+			$user_pass = password_generator();
+			$pword = set_password($user_pass);
+				
+	$result1 = $this->database->update(TBL_USERS,array('user_pass'=> set_password($user_pass)),array('user_email'=> $user_name));
+				
+				//MAILER 
+			$subject = "NCCPM Fault Management System - Login Details";
+			$body = "Welcome, your login email address is: ". $user_name . " and your password is: " . $user_pass . ". The password can be changed once logged in.";
+			 $admn = "admin@admin.com";
+			send_email($admn,$user_name,$user_name, $subject, $body);
+				
+				return 1;
+			}else{
+				return 0;
+			}
+		}
 
 		public function add__user__process(){
 			extract($_POST);
@@ -939,5 +1024,6 @@ if( !class_exists('User') ):
 			endif;
 		}
 	}
+
 endif;
 ?>

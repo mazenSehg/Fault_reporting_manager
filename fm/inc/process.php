@@ -17,6 +17,10 @@
 		switch($_POST['action']):
 			case 'user_login' : 
 				echo $User->user__login__process();
+				break;	
+
+			case 'pword_login' : 
+				echo $User->reset__login__process();
 				break;
 			
 			case 'logout_request':

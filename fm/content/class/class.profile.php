@@ -469,7 +469,6 @@ class Profile{
 		$args     = array('ID'       => $this->user__id,'user_pass'=> $password);
 		$check = get_tabledata(TBL_USERS,true,$args);
 		if($check):
-		$this->user = get_userdata($current_user_id);
 		$new_password = set_password($new_password);
 		$this->database->update(TBL_USERS,array('user_pass'=> $new_password),array('ID'=> $this->user__id));
 		update_user_meta($this->user__id,'reset_password',0);

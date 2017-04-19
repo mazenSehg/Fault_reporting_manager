@@ -403,7 +403,11 @@ select {
 				<div class="row">
 					<div class="form-group col-sm-6 col-xs-12">
 						<label for="current-servicing-agency">Current servicing agency </label>
-						<select name="current_servicing_agency" class="form-control" tabindex="-1" data-placeholder="Choose servicing agency">
+						
+						
+						<select style="display:none" id="select" name="HIDE" class="form-control select-servicing-agency2"  tabindex="-1" data-placeholder="Choose servicing agency" readonly="true"></select>
+						<select name="current_servicing_agency" readonly="true" class="form-control" tabindex="-1" data-placeholder="Choose servicing agency">
+							
 							<?php
 							$equipment = get_tabledata(TBL_EQUIPMENTS, true, array('ID'=>$fault->equipment) );
 							$data = get_tabledata(TBL_SERVICE_AGENTS, false, array('ID'=> $equipment->service_agent ));
@@ -411,6 +415,10 @@ select {
 							echo get_options_list($option_data ,maybe_unserialize($fault->current_servicing_agency));
 							?>
 						</select>
+						
+						
+						
+		
 					</div>
 					<div class="form-group col-sm-6 col-xs-12">
 						<label for="time-of-fault">Servicing agency at time of fault <span class="required">*</span></label>

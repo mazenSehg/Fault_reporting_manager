@@ -275,7 +275,7 @@ var ajaxhandleDataTableButtons = function() {
 		//  USER NAME VALIDATION
 		if(user_name.val() == ''){
 			user_name.parents('.form-group').addClass('has-error');
-			form.find('div.alert-danger').html('<i class="fa fa-times-circle"></i>  &nbsp;<span>Please enter user name or email address</span>');
+			form.find('div.alert-danger').html('<i class="fa fa-times-circle"></i>  &nbsp;<span>Please enter your email address</span>');
 			form.find('div.alert-danger').slideDown();
 			return false;
 		}
@@ -307,7 +307,7 @@ var ajaxhandleDataTableButtons = function() {
 				btn.html(btn_text);
 				if(res == 0 ){ // if failed then go inside 
 					user_pass.parents('.form-group').addClass('has-error');
-					form.find('div.alert-danger').html('<i class="fa fa-times-circle"></i>  &nbsp;<span>Invalid Username or Password</span>');
+					form.find('div.alert-danger').html('<i class="fa fa-times-circle"></i>  &nbsp;<span>Invalid login credentials provided</span>');
 					form.find('div.alert-danger').slideDown();
 					return false;
 				}else if(res == 2 ){
@@ -328,6 +328,74 @@ var ajaxhandleDataTableButtons = function() {
 			}
 		});
 	});
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+		$('form.forgot-form').submit(function(e){
+		e.preventDefault();
+		
+		var form = $(this);
+		var formData = new FormData(this);
+		$('.form-group').removeClass('has-error'); // remove class from form control which show error (red) color 
+		form.find('div.alert').slideUp();
+		
+		var user_name = form.find('input[name="user_name"]');
+			//validation for the username
+					if(user_name.val() == ''){
+			user_name.parents('.form-group').addClass('has-error');
+			form.find('div.alert-danger').html('<i class="fa fa-times-circle"></i>  &nbsp;<span>Please enter your email address</span>');
+			form.find('div.alert-danger').slideDown();
+			return false;
+		}
+					var btn = $(this).find('button[type="submit"]');
+		var btn_text = btn.html();
+		btn.html(btn_text+spinner);
+		btn.attr('disabled',true);
+		
+			
+			
+				// MAKE AJAX PROCESS 
+		$.ajax({ 
+			type : 'POST',
+			data: formData,
+			contentType: false,
+			cache: false,
+			processData:false,
+			url  : ajax_url,
+			success : function(res){
+				console.log(res);
+				btn.attr('disabled',false);
+				btn.html(btn_text);
+				if(res == 0 ){
+					form.find('div.alert-danger').html('<i class="fa fa-times-circle"></i>  &nbsp;<span>Invalid login credentials provided</span>');
+					form.find('div.alert-danger').slideDown();
+					return false;
+				}else if(res == 2 ){
+					form.find('div.alert-danger').html('<i class="fa fa-times-circle"></i>  &nbsp;<span>Your account has been disabled , please contact your company to get it re-enabled.</span>');
+					form.find('div.alert-danger').slideDown();
+					return false;
+				}else if (res == 1 ){ // if success then go inside
+					form.trigger('reset');
+					form.find('button[type="submit"]').hide();
+					form.find('div.alert-success').slideDown();
+					return false;
+				}else{
+					form.trigger('reset');
+					form.find('button[type="submit"]').hide();
+					form.find('div.alert-success').slideDown();
+					return false;
+				}
+			}
+		});
+	});
+	
 	
 	$('.link-logout').click(function(e){
 	 	e.preventDefault();
