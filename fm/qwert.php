@@ -5,28 +5,10 @@ require_once('load.php');
 
 login_check();
 ?>
-	<!DOCTYPE html>
-	<html>
 
-	<head>
-		<title>Edit Region &mdash;
-			<?php echo get_site_name();?>
-		</title>
-		<?php echo $Header->head();?>
-	</head>
 
-	<body class="nav-md">
-		<div class="container body">
-			<div class="main_container">
-				<?php echo $Header->header();?>
-					<!-- page content -->
-					<div class="right_col" role="main">
-						<div class="">
-							<?php echo $Header->page__header('Edit Region'); ?>
-								<div class="row">
-									<div class="col-md-12 col-sm-12 col-xs-12">
-										<div class="x_panel">
-											<div class="x_content">
+
+
 												<?php
 												
 												
@@ -201,31 +183,117 @@ login_check();
 													
 												}
 												**/
-												
-												
-												$sql = "SELECT * FROM tbl_faults";
-												$re = $db->get_results($sql);
-												foreach($re as $res){
-													
-													
-													
-												}
-												
-												?>
-												
-												
-											</div>
-										</div>
-									</div>
-								</div>
-						</div>
-					</div>
-					<!-- /page content -->
-					<!-- footer content -->
-					<?php echo $Footer->footer();?>
-						<!-- /footer content -->
-			</div>
-		</div>
-	</body>
 
-	</html>
+//$sql = "SELECT * FROM tbl_fault";
+//$res = $db->get_results($sql);
+//foreach($res as $val):
+//echo "EQUIPMENT ID: ". $val->equipment;
+//		$sql1 = "SELECT * FROM tbl_equipment WHERE ID = $val->equipment";
+//		$res1 = $db->get_results($sql1);
+//
+//
+//
+//foreach($res1 as $val1):
+//echo "EQUIPMENT CODE: ". $val1->equipment_code;
+//$ams = $val1->equipment_code;
+//echo "<br>";
+//
+//
+//
+//
+//			endforeach;
+//	$sql2 = "UPDATE tbl_fault SET equipment_code='$ams' WHERE equipment = '$val->equipment'";
+//$res4 = $db->query($sql2);
+//
+//endforeach;
+//
+
+
+
+//$sql1 = "SELECT * FROM tbl_fault";
+//$res = $db->get_results($sql1);
+//foreach($res as $vac):
+//
+//$sql1 = "SELECT * FROM tbl_"
+//
+//endforeach;
+
+
+
+
+
+
+		if(isset($_POST['SubmitButton'])){ 
+			$cent = $_POST['centre'];
+			$eqp = $_POST['equipment'];
+			$eqptp = $_POST['equipment_type'];
+			$appr = $_POST['approved'];
+			
+
+
+		
+		$host = 'localhost';
+$user = 'root';
+$pass = '';
+$db = 'fault-management';
+$table = 'tbl_fault';
+$file = 'export';
+		
+		$i = null;
+		$csv_output = null;
+ 
+$link = mysql_connect($host, $user, $pass) or die("Can not connect." . mysql_error());
+mysql_select_db($db) or die("Can not connect.");
+ 
+
+  $csv_output .= "Approved\tFault ID\t Submitted by\t Equipment code\t Serviced by\t Fault Type\t Description of fault\t Action Taken\t DoH \t User corrected?\t next service station correction?\t Engineer called out?\t Engineer callout ref.\t Equipment status\t Equipment downtime\t Screening down time\t Repeat films\t Cancelled patients\t Recalled patients\tSatisfied serviceing Organiation\tAgency satisfaction Engineer satisfaction\tEquipment satisfaction\t Enquiry to supplier\t Supplier action\t Supplier comment\t MDA notified\t Date of Fault\t Created On";
+	 
+	 
+  $i = 28;
+$csv_output .= "\n";
+ 
+if($cent!=""&&$appr!=""&&$eqptp!=""&&$eqp!=""){
+				
+								$values = mysql_query("SELECT approved, ID,  name, equipment_code,  current_servicing_agency,  f_type_name,  description_of_fault,  action_taken, doh, fault_corrected_by_user,  to_fix_at_next_service_visit,  engineer_called_out,  service_call_no,  equipment_status,  equipment_downtime,  screening_downtime,  repeat_images,  cancelled_women,  technical_recalls,  satisfied_servicing_organisation,  satisfied_service_engineer,  satisfied_equipment,  supplier_enquiry,  supplier_action,  supplier_comments,  adverse_incident_report,  date_of_fault, created_on FROM ".$table." WHERE centre=".$cent." AND approved = ".$appr." AND equipment_type = ".$eqptp." AND equipment=".$eqp."");
+				
+			}elseif($cent!=""&&$appr!=""&&$eqptp!=""){
+									$values = mysql_query("SELECT approved, ID,  name, equipment_code,  current_servicing_agency,  f_type_name,  description_of_fault,  action_taken, doh, fault_corrected_by_user,  to_fix_at_next_service_visit,  engineer_called_out,  service_call_no,  equipment_status,  equipment_downtime,  screening_downtime,  repeat_images,  cancelled_women,  technical_recalls,  satisfied_servicing_organisation,  satisfied_service_engineer,  satisfied_equipment,  supplier_enquiry,  supplier_action,  supplier_comments,  adverse_incident_report,  date_of_fault, created_on FROM ".$table." WHERE centre=".$cent." AND approved = ".$appr." AND equipment_type = ".$eqptp."");
+	
+}elseif($cent!=""&&$appr!=""){
+										$values = mysql_query("SELECT approved, ID,  name, equipment_code,  current_servicing_agency,  f_type_name,  description_of_fault,  action_taken, doh, fault_corrected_by_user,  to_fix_at_next_service_visit,  engineer_called_out,  service_call_no,  equipment_status,  equipment_downtime,  screening_downtime,  repeat_images,  cancelled_women,  technical_recalls,  satisfied_servicing_organisation,  satisfied_service_engineer,  satisfied_equipment,  supplier_enquiry,  supplier_action,  supplier_comments,  adverse_incident_report,  date_of_fault, created_on FROM ".$table." WHERE centre=".$cent." AND approved = ".$appr."");
+}elseif($cent!=""&&$eqptp!=""){
+										$values = mysql_query("SELECT approved, ID,  name, equipment_code,  current_servicing_agency,  f_type_name,  description_of_fault,  action_taken, doh, fault_corrected_by_user,  to_fix_at_next_service_visit,  engineer_called_out,  service_call_no,  equipment_status,  equipment_downtime,  screening_downtime,  repeat_images,  cancelled_women,  technical_recalls,  satisfied_servicing_organisation,  satisfied_service_engineer,  satisfied_equipment,  supplier_enquiry,  supplier_action,  supplier_comments,  adverse_incident_report,  date_of_fault, created_on FROM ".$table." WHERE centre=".$cent." AND equipment_type = ".$eqptp."");
+}
+			elseif($cent!=""){
+											$values = mysql_query("SELECT approved, ID,  name, equipment_code,  current_servicing_agency,  f_type_name,  description_of_fault,  action_taken, doh, fault_corrected_by_user,  to_fix_at_next_service_visit,  engineer_called_out,  service_call_no,  equipment_status,  equipment_downtime,  screening_downtime,  repeat_images,  cancelled_women,  technical_recalls,  satisfied_servicing_organisation,  satisfied_service_engineer,  satisfied_equipment,  supplier_enquiry,  supplier_action,  supplier_comments,  adverse_incident_report,  date_of_fault, created_on FROM ".$table." WHERE centre=".$cent."");
+	
+}
+			
+			
+			
+			elseif($cent==""&&$appr==""&&$eqptp==""&&$eqp==""){
+
+	$values = mysql_query("SELECT approved, ID,  name, equipment_code,  current_servicing_agency,  f_type_name,  description_of_fault,  action_taken, doh, fault_corrected_by_user,  to_fix_at_next_service_visit,  engineer_called_out,  service_call_no,  equipment_status,  equipment_downtime,  screening_downtime,  repeat_images,  cancelled_women,  technical_recalls,  satisfied_servicing_organisation,  satisfied_service_engineer,  satisfied_equipment,  supplier_enquiry,  supplier_action,  supplier_comments,  adverse_incident_report,  date_of_fault, created_on FROM ".$table."");
+			}
+while ($rowr = mysql_fetch_row($values)) {
+ for ($j=0;$j<$i;$j++) {
+	 if($rowr[$j]!=null||$rowr[$j]!=""||strlen($rowr[$j])>0){
+  $csv_output .= $rowr[$j]."\t";
+}else{
+	  $csv_output .=""."\t";
+}
+ }
+ $csv_output .= "\n";
+}
+ 
+$filename = $file."_".date("Y-m-d_H-i",time());
+header("Content-type: application/vnd.ms-excel");
+header("Content-disposition: csv" . date("Y-m-d") . ".xls");
+header("Content-disposition: filename=".$filename.".xls");
+print $csv_output;
+exit;
+
+		}
+?>
+												
+										

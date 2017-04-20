@@ -963,11 +963,13 @@ select {
 			endif;
 			$faults = get_tabledata(TBL_FAULTS,false,array(), $query, 'ID');
 			if( !user_can('view_fault') ):
-				echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
+				echo page_not_found('You are not allowed to view this page.',' ');
 			elseif(!$faults):
-				echo page_not_found("Oops! There is no new faults record found",' ',false);
+				echo page_not_found("There are no new faults record found",' ',false);
 			else:
 			?>
+
+<form action="<?php echo site_url();?>/qwert/" method="POST">
 			<div class="row custom-filters">
 				<div class="form-group col-sm-2 col-xs-12">
 					<label for="centre">Centre</label>
@@ -1041,41 +1043,16 @@ select {
 				</div>
 			</div>
 
-			<script type="text/javascript">
-				function fnExcelReport() {
-				    var tab_text = "<table border='2px'><tr bgcolor='#87AFC6'>";
-				    var textRange;
-				    var j = 0;
-				    tab = document.getElementById('datatable-buttons'); // id of table
 
-				    for (j = 0; j < tab.rows.length; j++) {
-				        tab_text = tab_text + tab.rows[j].innerHTML + "</tr>";
-				        //tab_text=tab_text+"</tr>";
-				    }
 
-				    tab_text = tab_text + "</table>";
-				    tab_text = tab_text.replace(/<A[^>]*>|<\/A>/g, "");
-				    tab_text = tab_text.replace(/<img[^>]*>/gi, "");
-				    tab_text = tab_text.replace(/<input[^>]*>|<\/input>/gi, "");
+<?php    
 
-				    var ua = window.navigator.userAgent;
-				    var msie = ua.indexOf("MSIE ");
+?>
 
-				    if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) // If Internet Explorer
-				    {
-				        txtArea1.document.open("txt/html", "replace");
-				        txtArea1.document.write(tab_text);
-				        txtArea1.document.close();
-				        txtArea1.focus();
-				        sa = txtArea1.document.execCommand("SaveAs", true, "faults_export.xls");
-				    } else //other browser not tested on IE 11
-				        sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(tab_text));
 
-				    return (sa);
+  <input type="submit" value="EXPORT REPORT" name="SubmitButton"/>
+</form>
 
-				}
-			</script>
-			<iframe id="txtArea1" style="display:none"></iframe>
 
 			<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap ajax-datatable-buttons" cellspacing="0" width="100%" data-table="fetch_all_faults" data-order-column="6">
 				<thead>
@@ -1333,6 +1310,8 @@ select {
 			if( user_can('add_fault') ):
 				$guid = get_guid(TBL_FAULTS);
 				$doh = ( isset($doh) ) ? 1 : 0;
+			
+
 				$insert_args = array(
 						'ID' => $guid,
 						'centre' => $centre,

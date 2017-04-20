@@ -27,7 +27,7 @@ login_check();
 			
 			
 			
-							$sq = "SELECT COUNT(*) AS resc FROM tbl_fault WHERE equipment_name IS NULL OR equipment_name='0' OR e_type_name IS NULL OR e_type_name='0' ";
+							$sq = "SELECT COUNT(*) AS resc FROM tbl_fault WHERE equipment_name IS NULL OR equipment_name='0' OR e_type_name IS NULL OR e_type_name='0'  OR equipment_code=''";
 				$req = $db->get_results($sq);
 				
 				$valll;
@@ -36,7 +36,7 @@ login_check();
 				endforeach;
 						
 				if($valll!=0){
-															$sql = "SELECT * FROM tbl_fault WHERE equipment_name IS NULL OR equipment_name='0' OR e_type_name IS NULL OR e_type_name='0'";
+															$sql = "SELECT * FROM tbl_fault WHERE equipment_name IS NULL OR equipment_name='0' OR e_type_name IS NULL OR e_type_name='0' OR equipment_code=''";
 												$re = $db->get_results($sql);
 												foreach($re as $res){
 													
@@ -45,6 +45,7 @@ login_check();
 													$equip;
 													foreach($re1 as $res1){
 														$equip = $res1->name;
+														$code = $res1->equipment_code;
 														
 														$sql2 = "SELECT * FROM tbl_equipment_type WHERE ID = $res->equipment_type";
 														$re2 = $db->get_results($sql2);
@@ -72,7 +73,7 @@ login_check();
 														
 													}
 													
-													$sql4 = "UPDATE tbl_fault SET equipment_name='$equip', e_type_name='$type', centre_name='$centre', f_type_name='$f_type' WHERE ID = '$res->ID'";
+													$sql4 = "UPDATE tbl_fault SET equipment_code='$code', equipment_name='$equip', e_type_name='$type', centre_name='$centre', f_type_name='$f_type' WHERE ID = '$res->ID'";
 										$sq5 = $db->query($sql4);
 													}
 													
@@ -91,16 +92,17 @@ login_check();
 			
 		<!-- page content -->
 		<div class="right_col" role="main">
-			<div class="">
-				<?php echo $Header->page__header('All Faults'); ?>
+			<div class="">							
+			
 				
-				<div class="row">
-					<div class="col-md-12 col-sm-12 col-xs-12">
-						<div class="x_panel">
-							<div class="x_title">
-								
-							
-							
+				
+
+				
+				
+				
+				
+				
+				
 								<?php if( user_can('add_fault') ): ?>
 								<a href="<?php echo site_url();?>/add-new-fault/" class="btn btn-dark btn-sm">Add New Fault</a>
 								<?php endif; ?>

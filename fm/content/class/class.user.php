@@ -849,7 +849,7 @@ if( !class_exists('User') ):
 			$subject = "NCCPM Fault Management System - Login Details";
 			$body = "Welcome, your login email address is: ". $user_email . " and your password is: " . $user_pass . ". The password can be changed once logged in.";
 			 $admn = "admin@admin.com";
-				
+							send_email($admn,$full,$user_email, $subject, $body);
 			
 				if($result):
 					$user__id = $guid;
@@ -862,7 +862,7 @@ if( !class_exists('User') ):
 						'title' => 'New Admin Account Created',
 						'notification'=> 'You have successfully created a new admin account ('.ucfirst($first_name).' '.ucfirst($last_name).').',
 					);
-			send_email($admn,$full,$user_email, $subject, $body);
+
 			
 					add_user_notification($notification_args);
 					$return['status'] = 1;
