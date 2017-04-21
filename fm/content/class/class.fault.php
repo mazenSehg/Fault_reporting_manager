@@ -1046,11 +1046,16 @@ select {
 
 
 <?php    
-
+if(is_admin()){
+	?>
+	
+  <input type="submit" value="EXPORT REPORT" name="SubmitButton"/>	
+	<?php
+}
 ?>
 
 
-  <input type="submit" value="EXPORT REPORT" name="SubmitButton"/>
+
 </form>
 
 
@@ -1974,8 +1979,7 @@ select {
 						$future = date('d-m-Y',strtotime(' + 2 day', strtotime($fault->created_on)));
 						$today = date('d-m-Y');
 						if($today == $future):
-							if( user_can('view_fault') ): ?>
-							<p>Overdue </p>
+							if( user_can('view_fault')): ?>
 							<a href="<?php echo site_url();?>/view-fault/?id=<?php echo $fault->ID;?>" class="btn btn-dark btn-xs">
 								<i class="fa fa-edit"></i> View
 							</a>
@@ -2155,7 +2159,6 @@ select {
 						$today = date('d-m-Y');
 						if($today == $future):
 							if( user_can('view_fault') ): ?>
-							<p>Overdue </p>
 							<a href="<?php echo site_url();?>/view-fault/?id=<?php echo $fault->ID;?>" class="btn btn-dark btn-xs">
 								<i class="fa fa-edit"></i> View
 							</a>
@@ -2303,7 +2306,6 @@ select {
 						$today = date('d-m-Y');
 						if($today == $future):
 							if( user_can('view_fault') ): ?>
-							<p>Overdue </p>
 							<a href="<?php echo site_url();?>/view-fault/?id=<?php echo $fault->ID;?>" class="btn btn-dark btn-xs">
 								<i class="fa fa-edit"></i> View
 							</a>

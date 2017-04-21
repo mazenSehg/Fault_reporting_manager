@@ -269,6 +269,20 @@ if($cent!=""&&$appr!=""&&$eqptp!=""&&$eqp!=""){
 	
 }
 			
+						elseif($eqptp!=""){
+											$values = mysql_query("SELECT approved, ID,  name, equipment_code,  current_servicing_agency,  f_type_name,  description_of_fault,  action_taken, doh, fault_corrected_by_user,  to_fix_at_next_service_visit,  engineer_called_out,  service_call_no,  equipment_status,  equipment_downtime,  screening_downtime,  repeat_images,  cancelled_women,  technical_recalls,  satisfied_servicing_organisation,  satisfied_service_engineer,  satisfied_equipment,  supplier_enquiry,  supplier_action,  supplier_comments,  adverse_incident_report,  date_of_fault, created_on FROM ".$table." WHERE equipment_type = ".$eqptp."");
+	
+}
+			
+									elseif($eqp!=""){
+											$values = mysql_query("SELECT approved, ID,  name, equipment_code,  current_servicing_agency,  f_type_name,  description_of_fault,  action_taken, doh, fault_corrected_by_user,  to_fix_at_next_service_visit,  engineer_called_out,  service_call_no,  equipment_status,  equipment_downtime,  screening_downtime,  repeat_images,  cancelled_women,  technical_recalls,  satisfied_servicing_organisation,  satisfied_service_engineer,  satisfied_equipment,  supplier_enquiry,  supplier_action,  supplier_comments,  adverse_incident_report,  date_of_fault, created_on FROM ".$table." WHERE equipment=".$eqp."");
+	
+}
+												elseif($appr!=""){
+											$values = mysql_query("SELECT approved, ID,  name, equipment_code,  current_servicing_agency,  f_type_name,  description_of_fault,  action_taken, doh, fault_corrected_by_user,  to_fix_at_next_service_visit,  engineer_called_out,  service_call_no,  equipment_status,  equipment_downtime,  screening_downtime,  repeat_images,  cancelled_women,  technical_recalls,  satisfied_servicing_organisation,  satisfied_service_engineer,  satisfied_equipment,  supplier_enquiry,  supplier_action,  supplier_comments,  adverse_incident_report,  date_of_fault, created_on FROM ".$table." WHERE approved = ".$appr."");
+	
+}
+			
 			
 			
 			elseif($cent==""&&$appr==""&&$eqptp==""&&$eqp==""){
