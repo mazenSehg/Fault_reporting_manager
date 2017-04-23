@@ -231,12 +231,38 @@ login_check();
 			
 
 
+
+            
+if($_SERVER['SERVER_ADDR'] == '10.161.146.74' || $_SERVER['SERVER_ADDR'] == '10.161.128.46') {
+	$db_name = 'fault_management';
+	$user = 'fault_user';
+	$pass = 'fault_user';
+	$db = '10.161.128.46';
+	
+    if($_SERVER['SERVER_ADDR'] == '10.161.146.74' ) {
+		$user = 'fault_user';
+		$pass = 'fault_user';
+		$db_host = '10.161.128.194';
+        $db = 'fault_management';
+	}
+} else {
 		
 		$host = 'localhost';
 $user = 'root';
 $pass = '';
 $db = 'fault-management';
+}
+
+       
 $table = 'tbl_fault';
+            
+            
+            
+            
+            
+            
+            
+            
 $file = 'export';
 		
 		$i = null;
