@@ -275,7 +275,7 @@ var ajaxhandleDataTableButtons = function() {
 		//  USER NAME VALIDATION
 		if(user_name.val() == ''){
 			user_name.parents('.form-group').addClass('has-error');
-			form.find('div.alert-danger').html('<i class="fa fa-times-circle"></i>  &nbsp;<span>Please enter your email address</span>');
+			form.find('div.alert-danger').html('<i class="fa fa-times-circle"></i>  &nbsp;<span>Please enter your username</span>');
 			form.find('div.alert-danger').slideDown();
 			return false;
 		}

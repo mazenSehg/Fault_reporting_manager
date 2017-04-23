@@ -33,7 +33,7 @@ if( !class_exists('User') ):
 							<h3 class="form-title">Sign In <i class="fa fa-lock"></i></h3>
 
 							<div class="form-group">
-								<label for="user_name">User name <span class="required">*</span></label>
+								<label for="user_name">Username <span class="required">*</span></label>
 								<input type="text" name="user_name" class="form-control input-sm" placeholder=""/>
 							</div>
 							<div class="form-group">
@@ -349,7 +349,24 @@ if( !class_exists('User') ):
 			else:
 			?>
 			<form class="add-user user-form" method="post" autocomplete="off">
-				<div class="row">
+				
+                
+                
+                <div class="row">
+                                    <div class="form-group col-sm-6 col-xs-12">
+						<label for="first_name">
+							Username
+							<span class="required">
+								*
+							</span>
+						</label>
+						<input type="text" name="username" class="form-control require"/>
+					</div>
+                </div>
+                
+                
+                    <div class="row">
+                    
 					<div class="form-group col-sm-6 col-xs-12">
 						<label for="first_name">
 							First Name
@@ -533,7 +550,20 @@ if( !class_exists('User') ):
 			else:
 			?>
 			<form class="edit-user user-form" method="post" autocomplete="off">
-				<div class="row">
+				
+                      <div class="row">
+                            <div class="form-group col-sm-6 col-xs-12">
+						<label for="first_name">
+							Username
+							<span class="required">
+								*
+							</span>
+						</label>
+						<input type="text" name="username" class="form-control require"value="<?php _e($user->username);?>"/>
+					</div>
+                </div>
+                
+                <div class="row">
 					<div class="form-group col-sm-6 col-xs-12">
 						<label for="first_name">First Name <span class="required">*</span></label>
 						<input type="text" name="first_name" class="form-control require" value="<?php _e($user->first_name);?>"/>
@@ -758,8 +788,8 @@ if( !class_exists('User') ):
 		public function user__login__process(){
 			global $device;
 			extract($_POST);
-			if(email_exists($user_name)){
-				$user = get_user_by('email',$user_name);
+			if(username_exists($user_name)){
+				$user = get_user_by('username',$user_name);
 				if(check_password($user_pass,$user->ID)){
 					if(!is_user_active($user->ID)){
 						return 2;
@@ -841,13 +871,14 @@ if( !class_exists('User') ):
 						'user_pass' => $pword,
 						'centre' => $centre,
 						'created_by' => $this->current__user__id,
+                        'username' => $username,
 					)
 				);
 			
 			//MAILER 
 			$full = $first_name . " " . $last_name;
 			$subject = "NCCPM Fault Management System - Login Details";
-			$body = "Welcome, your login email address is: ". $user_email . " and your password is: " . $user_pass . ". The password can be changed once logged in.";
+			$body = "Welcome, your login username is: ". $username . " and your password is: " . $user_pass . ". The password can be changed once logged in. \nPlease do not disclose this information with anybody. \nYou are able to change the password once signed into your account.";
 			 $admn = "admin@admin.com";
 							send_email($admn,$full,$user_email, $subject, $body);
 			

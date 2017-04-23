@@ -175,6 +175,9 @@ if ( !function_exists('get_data_by') ) :
 			case 'email':
 				$db_field = 'user_email';
 				break;
+			case 'username':
+				$db_field = 'username';
+				break;
 			case 'login':
 				/*$value = sanitize_user( $value );*/
 				$db_field = 'user_login';
