@@ -753,7 +753,7 @@ select {
 							<?php _e('Current servicing agency');?>
 						</td>
 						<td>
-							<?php echo ($service_agent->name !=  NULL) ? __($service_agent->name) : 'None selected.'; ?>
+							<?php echo ($fault->current_servicing_agency !=  NULL) ? __($fault->current_servicing_agency) : 'None selected.'; ?>
 						</td>
 					</tr>
 					<tr>
