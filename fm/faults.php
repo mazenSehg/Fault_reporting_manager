@@ -26,8 +26,8 @@ login_check();
 			<?php
 			
             
-$sql = "SELECT * FROM `tbl_fault` WHERE `equipment_name` IS NULL ORDER BY `equipment_code` ASC";
-            $res = $db->get_results($sql);
+$sql  = 'SELECT *  FROM `tbl_fault` WHERE `equipment_name` IS NULL ORDER BY `equipment_name`  DESC';
+            $res = $db->get_results($sql);			
 foreach($res as $q):
             
             $sql1 = "SELECT * FROM tbl_equipment WHERE ID = $q->equipment";
