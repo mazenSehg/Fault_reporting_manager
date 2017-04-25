@@ -2658,6 +2658,11 @@ class Equipment{
 		public function fetch_all_equipments_process(){
 			$orders_columns = array(
 				0 => 'name',
+				1 => 'centre',
+				2 =>  'equipment_code',
+				3 => 'equipment_type',
+				4 => 'model',
+				5 => 'manufacturer',
 				7 => 'created_on',
 				8 => 'approved',
 			);
@@ -2737,8 +2742,7 @@ class Equipment{
 				array_push($row, __($model->name));
 				array_push($row, __($manufacturer->name));
 				array_push($row, __($manufacturer->name));
-				//array_push($row, __($service_agent->name));
-
+				
 				
 				array_push($row, date('M d,Y',strtotime($equipment->created_on)));
 				if(is_admin()):

@@ -88,7 +88,7 @@ var ajaxhandleDataTableButtons = function() {
 				ajax: {
 					url: table_ajax_url,
 					type: 'POST',
-					data: function ( d ) {
+					data: function (d) {
 						d.action = $('.ajax-datatable-buttons').data('table');
 						d.centre = $('.custom-filters select[name="centre"]').val();
 						d.equipment_type = $('.custom-filters select[name="equipment_type"]').val();
