@@ -440,9 +440,21 @@ if( !class_exists('User') ):
 								*
 							</span>
 						</label>
+						<?php
+			if(is_admin()){
+			?>
 						<select name="user_role" class="form-control select_single require" tabindex="-1" data-placeholder="Choose role">
 							<?php echo get_options_list(get_roles()); ?>
 						</select>
+						<?php
+			}else{
+				?>
+						<select name="user_role" class="form-control select_single require" tabindex="-1" data-placeholder="Choose role">
+							<?php echo get_options_list(get_roles2()); ?>
+						</select>	
+						<?php
+			}
+				?>
 					</div>
 					<div class="form-group col-sm-6 col-xs-12">
 						<label for="hostipals">
@@ -610,9 +622,21 @@ if( !class_exists('User') ):
 				<div class="row">
 					<div class="form-group col-sm-6 col-xs-12">
 						<label for="company">User Type <span class="required">*</span></label>
+						<?php
+			if(is_admin()){
+			?>
 						<select name="user_role" class="form-control select_single require" tabindex="-1" data-placeholder="Choose role">
 							<?php echo get_options_list(get_roles(),array($user->user_role)); ?>
 						</select>
+						<?php
+			}else{
+				?>
+						<select name="user_role" class="form-control select_single require" tabindex="-1" data-placeholder="Choose role">
+							<?php echo get_options_list(get_roles2(),array($user->user_role)); ?>
+						</select>	
+						<?php
+			}
+				?>
 					</div>
 					<div class="form-group col-sm-6 col-xs-12">
 						<label for="hostipals">Designation <span class="required">*</span></label>
@@ -704,6 +728,10 @@ if( !class_exists('User') ):
 			return $content;
 		}
 		
+		
+		public function help__page(){
+			
+		}
 		
 
 		public function all__users__page(){
@@ -931,6 +959,7 @@ if( !class_exists('User') ):
 
 				$result = $this->database->update(TBL_USERS,
 					array(
+						'username' => $username,
 						'first_name' => $first_name,
 						'last_name' => $last_name,
 						'user_email' => $user_email,

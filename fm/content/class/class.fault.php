@@ -2268,16 +2268,6 @@ if(is_admin()){
 				$equipment = get_tabledata(TBL_EQUIPMENTS,true,array('ID'=> $fault->equipment));
 				$fault_type = get_tabledata(TBL_FAULT_TYPES,true,array('ID'=> $fault->fault_type));	
 				$row = array();
-
-				array_push($row, __($fault->name));
-				array_push($row, __($fault->centre_name));
-				array_push($row, __($fault->e_type_name));
-				array_push($row, __($fault->equipment_name));
-				array_push($row, __($fault->f_type_name));
-				
-				array_push($row, date('M d,Y',strtotime($fault->date_of_fault)));
-				//array_push($row, date('d M, Y',$fault->date_of_fault));
-				array_push($row, date('d M,Y',strtotime($fault->created_on)));
 				if(is_admin()):
 					ob_start();
 					?>
@@ -2287,9 +2277,17 @@ if(is_admin()){
 					<?php 
 					$checkbox = ob_get_clean();
 					array_push($row, $checkbox);
-				endif;
+				endif;			
+				array_push($row, __($fault->name));
+				array_push($row, __($fault->centre_name));
+				array_push($row, __($fault->e_type_name));
+				array_push($row, __($fault->equipment_name));
+				array_push($row, __($fault->f_type_name));
+				array_push($row, date('M d,Y',strtotime($fault->date_of_fault)));
+				array_push($row, date('d M,Y',strtotime($fault->created_on)));
 				ob_start();
 				?>
+
 				<div class="text-center">
 					<?php if(is_admin()): ?>
 						<a href="<?php echo site_url();?>/view-fault/?id=<?php echo $fault->ID;?>" class="btn btn-dark btn-xs">

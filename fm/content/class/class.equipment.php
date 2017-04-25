@@ -267,10 +267,12 @@ class Equipment{
 							*
 						</span>
 					</label>
-					<select name="supplier" class="form-control select_supplier select_single" tabindex="-1" data-placeholder="Choose supplier">
-						<option value="">
-							Choose supplier
-						</option>
+					<select name="supplier" class="form-control  select_single" tabindex="-1" data-placeholder="Choose supplier">
+<?php
+						$data = get_tabledata(TBL_SUPPLIERS,false,array('approved'=> '1'), 'ORDER BY `name` ASC');
+						$option_data = get_option_data($data,array('ID','name'));
+						echo get_options_list($option_data);
+						?>
 					</select>
 				</div>
 
@@ -1709,7 +1711,7 @@ class Equipment{
 					'equipment_type' => $equipment_type,
 					'manufacturer' => $manufacturer,
 					'model' => $model,
-					'supplier' => NULL,
+					'supplier' => $supplier,
 					'service_agent' => $service_agent,
 					'location_id' => $location_id,
 					'location' => $location,
@@ -2419,6 +2421,7 @@ class Equipment{
 		$equipment_type = get_tabledata(TBL_EQUIPMENT_TYPES, true, array('ID'=> $id ));
 		$suppliers = maybe_unserialize($equipment_type->supplier);
 		$suppliers = (!empty($suppliers)) ? implode(',',$suppliers) : '0';
+		
 		$query = "where `ID` IN (".$suppliers.") AND `approved` = '1' ";
 		$data = get_tabledata(TBL_SUPPLIERS, false, array() , $query);
 		$option_data = get_option_data($data,array('ID','name'));

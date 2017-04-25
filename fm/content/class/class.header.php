@@ -853,11 +853,6 @@ class Header{
 											General Help
 										</a>
 									</li>
-									<li>
-										<a href="<?php echo site_url();?>/contact/">
-											Contact us
-										</a>
-									</li>
 								</ul>
 							</li>
 			

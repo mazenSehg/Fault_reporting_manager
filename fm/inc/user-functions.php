@@ -14,6 +14,17 @@ if ( !function_exists('get_roles') ) :
 	}
 endif;
 
+if ( !function_exists('get_roles2') ) :
+	function get_roles2(){
+		$data = array(
+			'centre_admin' => 'Centre Admin',
+			'general_user' => 'General User',
+			'read_only_user' => 'Read Only User'
+		);
+		return $data;
+	}
+endif;
+
 if ( !function_exists('get_equipment_status') ) :
 	function get_equipment_status($key = ''){
 		$data = array(
@@ -44,7 +55,7 @@ endif;
 
 if( !function_exists('get_designations')):
 	function get_designations(){
-		$data = array('Assistant Practitioner','QA Radiographer','Radiographer','Superintendent Radiographer');
+		$data = array('Assistant Practitioner','QA Radiographer','Radiographer','Superintendent Radiographer','Physicist');
 		return $data;
 	}
 endif;
