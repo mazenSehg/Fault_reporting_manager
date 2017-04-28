@@ -2744,7 +2744,7 @@ class Equipment{
 				array_push($row, __($equipment_type->name));
 				array_push($row, __($model->name));
 				array_push($row, __($manufacturer->name));
-				array_push($row, __($manufacturer->name));
+				array_push($row, __($service_agent->name));
 				
 				
 				array_push($row, date('M d,Y',strtotime($equipment->created_on)));

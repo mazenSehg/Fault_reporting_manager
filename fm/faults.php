@@ -21,7 +21,15 @@ login_check();
 			<div class="main_container">
 				<?php echo $Header->header();?>
 					<?php            
-$sql  = 'SELECT *  FROM `tbl_fault` WHERE `equipment_name` IS NULL ORDER BY `equipment_name`  DESC';
+
+														$sql = "SELECT COUNT(*) as re FROM `tbl_fault` WHERE `equipment_name` IS NULL ORDER BY `equipment_name`  DESC";
+												$res = $db->get_results($sql);
+										
+													$cint = $res[0]->re;
+				
+				
+
+$sql  = 'SELECT *  FROM `tbl_fault` WHERE `equipment_name` IS NULL OR `equipment_code` ID NULL ORDER BY `equipment_name`  DESC';
             $res = $db->get_results($sql);			
 foreach($res as $q):
             $sql1 = "SELECT * FROM tbl_equipment WHERE ID = $q->equipment";
@@ -59,7 +67,9 @@ foreach($res as $q):
 
                 $equipment_code = $res1->equipment_code;     
             
-            $sql4 = "UPDATE tbl_fault SET equipment_code='$equipment_code', equipment_name='$equip', e_type_name='$type', centre_name='$centre', f_type_name='$f_type' WHERE ID = '$q->ID'";
+$bob = mysql_real_escape_string(trim($centre));
+														
+            $sql4 = "UPDATE tbl_fault SET equipment_code='$equipment_code', equipment_name='$equip', e_type_name='$type', centre_name='$bob', f_type_name='$f_type' WHERE ID = '$q->ID'";
 										$sq5 = $db->query($sql4);
             
 
@@ -69,8 +79,6 @@ foreach($res as $q):
             endforeach;
 			
 
-			
-			
 			
 			
 			
