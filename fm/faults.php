@@ -29,7 +29,7 @@ login_check();
 				
 				
 
-$sql  = 'SELECT *  FROM `tbl_fault` WHERE `equipment_name` IS NULL OR `equipment_code` ID NULL ORDER BY `equipment_name`  DESC';
+$sql  = 'SELECT *  FROM `tbl_fault` WHERE `equipment_name` IS NULL OR `equipment_code` IS NULL ORDER BY `equipment_name`  DESC';
             $res = $db->get_results($sql);			
 foreach($res as $q):
             $sql1 = "SELECT * FROM tbl_equipment WHERE ID = $q->equipment";
@@ -68,8 +68,13 @@ foreach($res as $q):
                 $equipment_code = $res1->equipment_code;     
             
 $bob = mysql_real_escape_string(trim($centre));
+$bob2 = mysql_real_escape_string(trim($equip));
+$bob3 = mysql_real_escape_string(trim($equipment_code));
+$bob4 = mysql_real_escape_string(trim($type));
+$bob5 = mysql_real_escape_string(trim($f_type));
+
 														
-            $sql4 = "UPDATE tbl_fault SET equipment_code='$equipment_code', equipment_name='$equip', e_type_name='$type', centre_name='$bob', f_type_name='$f_type' WHERE ID = '$q->ID'";
+            $sql4 = "UPDATE tbl_fault SET equipment_code='$bob3', equipment_name='$bob2', e_type_name='$bob4', centre_name='$bob', f_type_name='$bob5' WHERE ID = '$q->ID'";
 										$sq5 = $db->query($sql4);
             
 
