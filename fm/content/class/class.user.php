@@ -816,6 +816,37 @@ if( !class_exists('User') ):
 		public function user__login__process(){
 			global $device;
 			extract($_POST);
+			
+			
+if(eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$", $user_name)) { 
+
+				if(email_exists($user_name)){
+				$user = get_user_by('email',$user_name);
+				if(check_password($user_pass,$user->ID)){
+					if(!is_user_active($user->ID)){
+						return 2;
+					}else{
+						set_current_user($user->ID);
+						$this->database->insert(TBL_ACCESS_LOG,
+							array(
+								'user_id' => $user->ID,
+								'ip_address'=> $_SERVER['REMOTE_ADDR'],
+								'device' => $device,
+								'user_agent'=> $_SERVER ['HTTP_USER_AGENT']
+							)
+						);
+						return 1;
+					}
+				}else{
+					return 0;
+				}
+			}else{
+				return 0;
+			}
+	
+	
+} 
+else { 
 			if(username_exists($user_name)){
 				$user = get_user_by('username',$user_name);
 				if(check_password($user_pass,$user->ID)){
@@ -839,6 +870,10 @@ if( !class_exists('User') ):
 			}else{
 				return 0;
 			}
+} 
+
+			
+
 		}
 		
 		
