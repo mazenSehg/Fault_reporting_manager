@@ -1031,9 +1031,21 @@ select {
 					</select>
 				</div>
 			
-				<div class="form-group col-sm-2 col-xs-12">
-					<label for="date_of_fault">Date of fault</label>
-					<select name="date_of_fault" class="form-control select_single" tabindex="-1" data-placeholder="Choose date of fault">
+				<div class="form-group col-sm-1 col-xs-12">
+					<label for="date_of_fault">From</label>
+					<select name="date_of_fault" class="form-control select_single" tabindex="-1" data-placeholder="date of fault from">
+						<?php
+						$data = get_tabledata(TBL_FAULTS,false,array('approved'=> '1'), '', 'DISTINCT `date_of_fault`');
+						$option_data = get_option_data($data,array('date_of_fault','date_of_fault'));
+						echo get_options_list($option_data);
+						?>
+					</select>
+				</div>
+				
+				
+				<div class="form-group col-sm-1 col-xs-12">
+					<label for="date_of_fault">To</label>
+					<select name="date_of_fault2" class="form-control select_single" tabindex="-1" data-placeholder="date of fault to">
 						<?php
 						$data = get_tabledata(TBL_FAULTS,false,array('approved'=> '1'), '', 'DISTINCT `date_of_fault`');
 						$option_data = get_option_data($data,array('date_of_fault','date_of_fault'));
@@ -2102,10 +2114,11 @@ if(is_admin()){
 				$query .= " `approved` = '".$_POST['approved']."' ";
 			}
 			
-			if(isset($_POST['date_of_fault']) && $_POST['date_of_fault'] != '' &&  $_POST['date_of_fault'] != 'undefined'){
+			if(isset($_POST['date_of_fault']) && $_POST['date_of_fault'] != '' &&  $_POST['date_of_fault'] != 'undefined' && isset($_POST['date_of_fault2']) && $_POST['date_of_fault2'] != '' &&  $_POST['date_of_fault2'] != 'undefined' ){
 				$query .= ($query != '') ? ' AND ' : ' WHERE ';
-				$query .= " `date_of_fault` = '".$_POST['date_of_fault']."' ";
+				$query .= " `date_of_fault` BETWEEN '".$_POST['date_of_fault']."' AND '".$_POST['date_of_fault2']."' ";
 			}
+			
 			
 			$recordsTotal = get_tabledata(TBL_FAULTS,true,array(), $query, 'COUNT(ID) as count');
 			$recordsTotal = $recordsTotal->count;
@@ -2137,7 +2150,7 @@ if(is_admin()){
 				array_push($row, __($fault->equipment_name));
 				array_push($row, __($fault->f_type_name));
 				
-				array_push($row, date('M d,Y',strtotime($fault->date_of_fault)));
+				array_push($row, date('d M,Y',strtotime($fault->date_of_fault)));
 				//array_push($row, date('d M, Y',$fault->date_of_fault));
 				array_push($row, date('d M,Y',strtotime($fault->created_on)));
 				

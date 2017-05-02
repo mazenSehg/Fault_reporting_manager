@@ -1430,6 +1430,9 @@ class Equipment{
 						<label>
 							<input type="checkbox" class="js-switch" <?php checked($model->approved, 1);?> onClick="javascript:approve_switch(this);" data-id="<?php echo $model->ID;?>" data-action="model_approve_change"/>
 						</label>
+						
+						
+			
 					</td>
 					<?php endif; ?>
 					<td class="text-center">

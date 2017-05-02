@@ -9,12 +9,44 @@ login_check();
 
 
 
-												<?php
-												
-												
-										
-										
-									/**
+
+
+
+
+
+
+<?php
+
+
+
+
+
+
+//TO UPDATE MANUFACTURER IN TBL_EQUIPMENTs
+////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+//
+//
+//	$sql = "SELECT * FROM tbl_equipment WHERE manufacturer = ''";
+//	$r = $db->get_results($sql);
+//foreach($r as $a):
+//
+//	$sql1 = "SELECT * FROM tbl_model WHERE ID = $a->model";
+//	$rr = $db->get_results($sql1);
+//	foreach($rr as $b):
+//
+//		$sql4 = "UPDATE tbl_equipment SET manufacturer='$b->manufacturer' WHERE manufacturer = '$a->manufacturer'";
+//		$sq5 = $db->query($sql4);
+//
+//
+//	endforeach;
+//
+//endforeach;
+
+
+
+
+/**
 												CODE TO UPDATE NAMES, MODEL< SERVICE AGENT FOR FAULTS TABLE
 										
 										
