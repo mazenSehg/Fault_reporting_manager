@@ -39,10 +39,7 @@ login_check();
 				endforeach;
 						
 				if($valll!=0){
-												?>
-				
-								<?php
-				
+											
 				
 				
 				$sql = "SELECT * FROM tbl_equipment WHERE equipment_code IS NULL OR equipment_code=''";
@@ -76,12 +73,7 @@ login_check();
 				
 				endforeach;
 				}
-//				
-//				
-//				
-//				?>
-																<?php
-//				//PLA4L
+
 								$check2 = "SELECT COUNT(*) as answ FROM tbl_equipment WHERE LENGTH(name) < 2";
 				$chk = $db->get_results($check2);
 				
@@ -91,13 +83,7 @@ login_check();
 												
 												endforeach;
 
-												
-				?>
-				
-				
-				
-				
-				<?php
+		
 				
 				if($chk != 0){
 				

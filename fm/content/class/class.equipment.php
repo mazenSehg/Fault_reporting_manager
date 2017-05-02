@@ -2666,6 +2666,7 @@ class Equipment{
 				3 => 'equipment_type',
 				4 => 'model',
 				5 => 'manufacturer',
+				6 => 'service_agent',
 				7 => 'created_on',
 				8 => 'approved',
 			);
@@ -2703,21 +2704,23 @@ class Equipment{
 				$query .= ($query != '') ? ' AND ' : ' WHERE ';
 				$query .= " `centre` = '".$_POST['centre']."' ";
 			}
-			
-			if(isset($_POST['model']) && $_POST['model'] != '' && $_POST['model'] != 'undefined'){
+            
+            if(isset($_POST['equipment_type']) && $_POST['equipment_type'] != '' && $_POST['equipment_type'] != 'undefined'){
 				$query .= ($query != '') ? ' AND ' : ' WHERE ';
-				$query .= " `model` = '".$_POST['model']."' ";
+				$query .= " `equipment_type` = '".$_POST['equipment_type']."' ";
 			}
-			
+						
 			if(isset($_POST['manufacturer']) && $_POST['manufacturer'] != '' && $_POST['manufacturer'] != 'undefined'){
 				$query .= ($query != '') ? ' AND ' : ' WHERE ';
 				$query .= " `manufacturer` = '".$_POST['manufacturer']."' ";
 			}
 			
-			if(isset($_POST['fault_type']) && $_POST['fault_type'] != '' && $_POST['fault_type'] != 'undefined'){
+			if(isset($_POST['model']) && $_POST['model'] != '' && $_POST['model'] != 'undefined'){
 				$query .= ($query != '') ? ' AND ' : ' WHERE ';
-				$query .= " `fault_type` = '".$_POST['fault_type']."' ";
+				$query .= " `model` = '".$_POST['model']."' ";
+                
 			}
+
 			
 			if(isset($_POST['approved']) && $_POST['approved'] != '' &&  $_POST['approved'] != 'undefined'){
 				$query .= ($query != '') ? ' AND ' : ' WHERE ';
