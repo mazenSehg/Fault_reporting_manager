@@ -91,7 +91,6 @@ var ajaxhandleDataTableButtons = function() {
 					data: function (d) {
 
 						d.action = $('.ajax-datatable-buttons').data('table');
-
                         d.centre = $('.custom-filters select[name="centre"]').val();
 						d.equipment_type = $('.custom-filters select[name="equipment_type"]').val();
 						d.equipment = $('.custom-filters select[name="equipment"]').val();
@@ -931,7 +930,6 @@ var ajaxhandleDataTableButtons = function() {
 		}
 	});
 	
-
 	$('.custom-filters select').on('change',function(){
 		var attr_name = $(this).attr('name');
 		if(attr_name == 'centre' || attr_name == 'equipment_type'){
@@ -962,6 +960,7 @@ var ajaxhandleDataTableButtons = function() {
 		
 	});
 });
+
 
 function delete_function(btn){
 	var isDelete = confirm('Are you sure want to delete this record?');

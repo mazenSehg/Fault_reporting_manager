@@ -2718,16 +2718,19 @@ class Equipment{
 			if(isset($_POST['model']) && $_POST['model'] != '' && $_POST['model'] != 'undefined'){
 				$query .= ($query != '') ? ' AND ' : ' WHERE ';
 				$query .= " `model` = '".$_POST['model']."' ";
-                
 			}
+			
 
+			
+
+			
 			
 			if(isset($_POST['approved']) && $_POST['approved'] != '' &&  $_POST['approved'] != 'undefined'){
 				$query .= ($query != '') ? ' AND ' : ' WHERE ';
 				$query .= " `approved` = '".$_POST['approved']."' ";
 			}
 			
-	$recordsTotal = get_tabledata(TBL_FAULTS,true,array(), $query, 'COUNT(ID) as count');
+            $recordsTotal = get_tabledata(TBL_EQUIPMENTS,true,array(), $query, 'COUNT(ID) as count');
 			$recordsTotal = $recordsTotal->count;
 			$data_list = get_tabledata(TBL_EQUIPMENTS,false ,array(), $query.$sql );
 			$recordsFiltered = $recordsTotal;
