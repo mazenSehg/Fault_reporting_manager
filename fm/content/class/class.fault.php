@@ -971,7 +971,7 @@ select {
 
 <form action="<?php echo site_url();?>/qwert/" method="POST">
 			<div class="row custom-filters">
-				<div class="form-group col-sm-2 col-xs-12">
+				<div class="form-group col-sm-2 col-xs-5">
 					<label for="centre">Centre</label>
 					<select name="centre" class="form-control select_single" tabindex="-1" data-placeholder="Choose centre">
 						<?php
@@ -991,7 +991,7 @@ select {
 						?>
 					</select>
 				</div>
-				<div class="form-group col-sm-2 col-xs-12">
+				<div class="form-group col-sm-2 col-xs-5">
 					<label for="equipment-type">Equipment Type</label>
 					<select name="equipment_type" class="form-control select_single" tabindex="-1" data-placeholder="Choose equipment type">
 						<?php
@@ -1001,17 +1001,27 @@ select {
 						?>
 					</select>
 				</div>
-				<div class="form-group col-sm-2 col-xs-12">
+				<div class="form-group col-sm-2 col-xs-5">
 					<label for="equipment">Equipment</label>
 					<select name="equipment" class="form-control select_single" tabindex="-1" data-placeholder="Choose equipment">
 						<?php
-						$data = get_tabledata(TBL_EQUIPMENTS,false,array('approved'=> '1'), 'ORDER BY `name` ASC');
-						$option_data = get_option_data($data,array('ID','name'));
-						echo get_options_list($option_data);
+			
+			
+
+			if(isset($_POST['centre'])  && isset($_POST['equipment_type']) && $_POST['centre'] != ''  && $_POST['equipment_type'] != '' && $_POST['centre'] != '' && $_POST['equipment_type'] != 'undefined' && $_POST['centre'] != 'undefined'){
+			
+				$data = get_tabledata(TBL_EQUIPMENTS,false,array('equipment_type'=> $_POST['equipment_type'], 'centre' => $_POST['centre'],'approved'=>'1'), 'ORDER BY `name` ASC');
+				echo get_options_list($option_data);
+				
+			}else{
+				$data = get_tabledata(TBL_EQUIPMENTS,false,array('approved'=>'1'), 'ORDER BY `name` ASC');
+				echo get_options_list($option_data);
+			}
+
 						?>
 					</select>
 				</div>
-				<div class="form-group col-sm-2 col-xs-12">
+				<div class="form-group col-sm-2 col-xs-5">
 					<label for="fault-type">Fault Type</label>
 					<select name="fault_type" class="form-control select_single" tabindex="-1" data-placeholder="Choose fault type">
 						<?php
@@ -1021,7 +1031,7 @@ select {
 						?>
 					</select>
 				</div>
-				<div class="form-group col-sm-2 col-xs-12">
+				<div class="form-group col-sm-2 col-xs-5">
 					<label for="approved">Approval Status</label>
 					<select name="approved" class="form-control select_single" tabindex="-1" data-placeholder="Choose status">
 						<?php
@@ -1030,8 +1040,10 @@ select {
 						?>
 					</select>
 				</div>
-			
-				<div class="form-group col-sm-1 col-xs-12">
+				
+
+
+				<div class="form-group col-sm-2 col-xs-5">
 					<label for="date_of_fault">From</label>
 					<select name="date_of_fault" class="form-control select_single" tabindex="-1" data-placeholder="date of fault from">
 						<?php
@@ -1043,7 +1055,7 @@ select {
 				</div>
 				
 				
-				<div class="form-group col-sm-1 col-xs-12">
+				<div class="form-group col-sm-2 col-xs-5">
 					<label for="date_of_fault">To</label>
 					<select name="date_of_fault2" class="form-control select_single" tabindex="-1" data-placeholder="date of fault to">
 						<?php

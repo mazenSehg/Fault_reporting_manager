@@ -339,7 +339,13 @@ class Centre{
 	public function all__centres__page(){
 		ob_start();
 		$args = array();
-		$centres = get_tabledata(TBL_CENTRES,false,$args);
+		if(is_admin()){
+		$centres = get_tabledata(TBL_CENTRES,false,$args);			
+		}else{
+					$centres = get_tabledata(TBL_CENTRES,false,array('approved'=>'1'));
+			
+		}
+
 		if( !user_can('view_centre') ):
 			echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
 		elseif(!$centres):

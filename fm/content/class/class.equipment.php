@@ -76,12 +76,26 @@ class Equipment{
 					<label for="model">Model</label>
 					<select name="model" class="form-control select_single" tabindex="-1" data-placeholder="Choose model">
 						<?php
+		
+			if(isset($_POST['manufacturer']) && $_POST['manufacturer'] != '' && $_POST['manufacturer'] != 'undefined'){			
+						$data = get_tabledata(TBL_MODELS,false,array('manufacturer'=>$_POST['manufacturer'],'approved'=> '1'), 'ORDER BY `name` ASC');
+						$option_data = get_option_data($data,array('ID','name'));
+						echo get_options_list($option_data);	
+		}else{
 						$data = get_tabledata(TBL_MODELS,false,array('approved'=> '1'), 'ORDER BY `name` ASC');
 						$option_data = get_option_data($data,array('ID','name'));
-						echo get_options_list($option_data);
+						echo get_options_list($option_data);	
+		}
 						?>
 					</select>
 				</div>
+	
+	
+
+	
+	
+	
+	
 				<div class="form-group col-sm-2 col-xs-12">
 					<label for="approved">Approval Status</label>
 					<select name="approved" class="form-control select_single" tabindex="-1" data-placeholder="Choose status">
@@ -599,7 +613,18 @@ class Equipment{
 					<label for="year-decommisoned">
 						Year Decomissioned
 					</label>
+					<?php 
+		if($equipment->year_decommisoned!=0){
+			?>
+					
 					<input type="number" name="year_decommisoned" class="form-control" min="1000" max="9999" value="<?php _e($equipment->year_decommisoned);?>"/>
+					<?php
+		}else{
+			?>
+<input type="number" name="year_decommisoned" class="form-control" min="1000" max="9999" value=""/>
+					<?php
+		}
+		?>
 				</div>
 			</div>
 
