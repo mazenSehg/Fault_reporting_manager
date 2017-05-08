@@ -484,10 +484,14 @@ class Profile{
 		endif;
 	}
 
+	
+	
+	
+	
+	
 	public function update__profile__process()
 	{
 		extract($_POST);
-
 		$return = array(
 			'status'         => 0,
 			'message_heading'=> 'Failed !',

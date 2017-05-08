@@ -672,11 +672,9 @@ select {
 			$query .= ($query != '') ? ' AND ' : ' WHERE ';
 			$query .= " `ID` = ".$fault__id." ";
 			$fault = get_tabledata(TBL_FAULTS,true,array(), $query);
-			//if( !user_can( 'edit_fault') ):
-			//echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
-			//elseif(!$fault):
-			//echo page_not_found('Oops ! Fault details not found.','Please go back and check again !');
-			//else:
+			if(!$fault):
+			echo page_not_found('Oops ! Fault details not found.','Please go back and check again !');
+			else:
 			$centre = get_tabledata(TBL_CENTRES,true, array('ID'=> $fault->centre));
 			$equipment_type = get_tabledata(TBL_EQUIPMENT_TYPES,true, array('ID'=> $fault->equipment_type));
 			$equipment = get_tabledata(TBL_EQUIPMENTS,true, array('ID'=> $fault->equipment));
@@ -1081,6 +1079,9 @@ if(is_admin()){
 
 
 </form>
+
+
+
 
 
 			<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap ajax-datatable-buttons" cellspacing="0" width="100%" data-table="fetch_all_faults" data-order-column="6">
