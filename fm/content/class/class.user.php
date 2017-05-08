@@ -901,7 +901,7 @@ else {
 			}
 		}
 
-		public function add__user__process(){
+public function add__user__process(){
 			extract($_POST);
 			$return = array(
 				'status' => 0,
@@ -922,29 +922,24 @@ else {
 
 				$user_pass = password_generator();
 				$guid = get_guid(TBL_USERS);
-			$pword = set_password($user_pass);
 				$result = $this->database->insert(TBL_USERS,
 					array(
+						'username' => $username,
 						'ID' => $guid,
 						'first_name' => $first_name,
 						'last_name' => $last_name,
 						'user_email' => $user_email,
 						'user_role' => $user_role,
 						'user_status'=> 1,
-						'user_pass' => $pword,
+						'user_pass' => set_password($user_pass),
 						'centre' => $centre,
 						'created_by' => $this->current__user__id,
-                        'username' => $username,
 					)
 				);
-			
-			//MAILER 
-			$full = $first_name . " " . $last_name;
-			$subject = "NCCPM Fault Management System - Login Details";
-			$body = "Welcome, your login username is: ". $username . " and your password is: " . $user_pass . ". The password can be changed once logged in. \nPlease do not disclose this information with anybody. \nYou are able to change the password once signed into your account.";
-			 $admn = "admin@admin.com";
-							send_email($admn,$full,$user_email, $subject, $body);
-			
+	
+
+	
+	
 				if($result):
 					$user__id = $guid;
 					update_user_meta($user__id,'gender',$gender);
@@ -956,8 +951,6 @@ else {
 						'title' => 'New Admin Account Created',
 						'notification'=> 'You have successfully created a new admin account ('.ucfirst($first_name).' '.ucfirst($last_name).').',
 					);
-
-			
 					add_user_notification($notification_args);
 					$return['status'] = 1;
 					$return['message_heading'] = 'Success !';
@@ -1099,7 +1092,7 @@ else {
 		public function delete__user__process(){
 			extract($_POST);
 			$id = trim($id);
-			if(is_admin() && $this->current__user__id != $id):
+			if($this->current__user__id != $id):
 				$user = get_userdata($id);
 				$args = array('ID'=> $id);
 				$result = $this->database->delete(TBL_USERS,$args);

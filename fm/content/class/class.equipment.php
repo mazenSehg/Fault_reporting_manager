@@ -88,6 +88,9 @@ class Equipment{
 		}
 						?>
 					</select>
+					
+					
+					
 				</div>
 	
 	
@@ -270,6 +273,9 @@ class Equipment{
 							Choose model
 						</option>
 					</select>
+					
+					
+					
 				</div>
 			</div>
 
