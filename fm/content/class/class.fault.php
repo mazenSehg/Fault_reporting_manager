@@ -2160,7 +2160,12 @@ if(is_admin()){
 			endif;
 				array_push($row, __($fault->name));
 				array_push($row, __($fault->centre_name));
-				array_push($row, __($fault->e_type_name));
+
+if($fault->e_type_name!=""){
+				array_push($row, __($fault->e_type_name));	
+}else{
+	array_push($row, __($fault->equipment_type));
+}
 				array_push($row, __($fault->equipment_name));
 				array_push($row, __($fault->f_type_name));
 				
