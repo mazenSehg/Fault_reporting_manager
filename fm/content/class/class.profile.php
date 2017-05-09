@@ -492,6 +492,7 @@ class Profile{
 	public function update__profile__process()
 	{
 		extract($_POST);
+		
 		$return = array(
 			'status'         => 0,
 			'message_heading'=> 'Failed !',
@@ -502,6 +503,7 @@ class Profile{
 		$check = false;
 		if(is_value_exists(TBL_USERS,array('user_email' => $user_email),$this->user__id))
 		{
+			
 			$return['status'] = 2;
 			$return['message_heading'] = 'Email Already Exist';
 			$return['message'] = 'Email address you entered is already exists, please try another email address.';
@@ -509,7 +511,7 @@ class Profile{
 		}
 		else
 		{
-			if($user->first_name == $first_name && $user->last_name == $last_name)
+			if(1!=0)
 			{
 				$check = true;
 			}

@@ -1015,6 +1015,7 @@ select {
 				$data = get_tabledata(TBL_EQUIPMENTS,false,array('approved'=>'1'), 'ORDER BY `name` ASC');
 				echo get_options_list($option_data);
 			}
+			
 
 						?>
 					</select>
