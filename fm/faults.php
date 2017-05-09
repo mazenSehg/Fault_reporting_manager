@@ -24,8 +24,7 @@ login_check();
 
 														$sql = "SELECT COUNT(*) as re FROM `tbl_fault` WHERE `equipment_name` IS NULL ORDER BY `equipment_name`  DESC";
 												$res = $db->get_results($sql);
-										
-													$cint = $res[0]->re;
+												$cint = $res[0]->re;
 				
 				
 
