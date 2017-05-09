@@ -2159,15 +2159,40 @@ if(is_admin()){
 				array_push($row, $checkbox);
 			endif;
 				array_push($row, __($fault->name));
+			
+			
+if($fault->centre_name!=""){
 				array_push($row, __($fault->centre_name));
+}else{
+				array_push($row, __($centre->name));
+}
+			
+			
+
 
 if($fault->e_type_name!=""){
 				array_push($row, __($fault->e_type_name));	
 }else{
-	array_push($row, __($fault->equipment_type));
+				array_push($row, __($equipment_type->name));
 }
-				array_push($row, __($fault->equipment_name));
-				array_push($row, __($fault->f_type_name));
+	
+			
+			
+if($fault->equipment_name!=""){
+				array_push($row, __($fault->equipment_name));	
+}else{
+				array_push($row, __($equipment->name));
+}
+			
+
+			
+			
+if($fault->f_type_name!=""){
+				array_push($row, __($fault->f_type_name));	
+}else{
+				array_push($row, __($fault_type->name));
+}
+			
 				
 				array_push($row, date('d M,Y',strtotime($fault->date_of_fault)));
 				//array_push($row, date('d M, Y',$fault->date_of_fault));
