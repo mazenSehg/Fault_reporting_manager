@@ -98,10 +98,14 @@ var ajaxhandleDataTableButtons = function() {
 						d.manufacturer = $('.custom-filters select[name="manufacturer"]').val();
 						d.model = $('.custom-filters select[name="model"]').val();
 						d.approved = $('.custom-filters select[name="approved"]').val();
-						d.date_of_fault = $('.custom-filters select[name="date_of_fault"]').val();
-						d.date_of_fault2 = $('.custom-filters select[name="date_of_fault2"]').val();
+						d.date_of_fault = $('input[name="date_of_fault"]').daterangepicker().val();
+						d.date_of_fault2 = $('input[name="date_of_fault2"]').daterangepicker().val();
+						
 
-                                                console.log($('.custom-filters select[name="manufacturer"]').val());
+
+                                                console.log($('input[name="date_of_fault"]').daterangepicker().val());
+                                                console.log($('input[name="date_of_fault2"]').daterangepicker().val());
+
 					},
 					complete:function(r){
 						if ($("table .js-switch")[0]) {
