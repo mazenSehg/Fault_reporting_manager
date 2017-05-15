@@ -57,6 +57,8 @@ if( !class_exists('Fault') ):
 						<label for="equipment-type">Equipment Type <span class="required"> *</span></label>
 						<select name="equipment_type" class="form-control select_single fetch-equipment-data select-equipment-type" tabindex="-1" data-placeholder="Choose equipment type">
 							<?php
+			
+			
 							$data = get_tabledata(TBL_EQUIPMENT_TYPES,false,array('approved'=> '1'), 'ORDER BY `name` DESC');
 							$option_data = get_option_data($data,array('ID','name'));
 							echo get_options_list($option_data);
@@ -365,9 +367,11 @@ select {
 					</div>
 					<div class="form-group col-sm-6 col-xs-12">
 						<label for="equipment">Equipment <span class="required"> *</span></label>
+						
+						
 						<select name="equipment" class="form-control select_single require select-equipment fetch-service-agent-data2" tabindex="-1" data-placeholder="Choose equipment">
 							<?php
-							$data = get_tabledata(TBL_EQUIPMENTS,false,array( 'equipment_type' => $fault->equipment_type, 'centre'=> $fault->centre ,'approved' => '1'), 'ORDER BY `name` ASC');
+							$data = get_tabledata(TBL_EQUIPMENTS,false,array( 'equipment_type' => $fault->equipment_type, 'centre'=> $fault->centre ,'approved' => '1', 'decommed'=>'0'), 'ORDER BY `name` ASC');
 							$option_data = get_option_data($data,array('ID','name'));
 							echo get_options_list($option_data, maybe_unserialize($fault->equipment));
 							?>
@@ -405,16 +409,16 @@ select {
 						<label for="current-servicing-agency">Current servicing agency </label>
 						
 						
-						<select style="display:none" id="select" name="HIDE" class="form-control select-servicing-agency2"  tabindex="-1" data-placeholder="Choose servicing agency" readonly="true"></select>
-						<select name="current_servicing_agency" readonly="true" class="form-control" tabindex="-1" data-placeholder="Choose servicing agency">
-							
-							<?php
-							$equipment = get_tabledata(TBL_EQUIPMENTS, true, array('ID'=>$fault->equipment) );
-							$data = get_tabledata(TBL_SERVICE_AGENTS, false, array('ID'=> $equipment->service_agent ));
-							$option_data = get_option_data($data,array('ID','name'));
-							echo get_options_list($option_data ,maybe_unserialize($fault->current_servicing_agency));
-							?>
-						</select>
+					<select name="service_agent" class="form-control select-service-agent select_single require" tabindex="-1" data-placeholder="Choose service agent">
+						<?php
+						$query = "WHERE `approved` = '1' ";
+						$data = get_tabledata(TBL_SERVICE_AGENTS, false, array(),$query);
+						$option_data = get_option_data($data,array('ID','name'));
+						echo get_options_list($option_data , maybe_unserialize($fault->current_servicing_agency));
+						?>
+						<option selected="selected" value="<?php $fault->current_servicing_agency ?>"><?php echo $fault->current_servicing_agency ?></option>
+					</select>
+						
 						
 						
 						
@@ -424,6 +428,7 @@ select {
 						<label for="time-of-fault">Servicing agency at time of fault <span class="required">*</span></label>
 						<input type="text" name="time_of_fault" class="form-control" value="<?php _e($fault->time_of_fault);?>" />
 					</div>
+					
 				</div>
 
 				<div class="row">
@@ -1004,12 +1009,21 @@ select {
 					<select name="equipment" class="form-control select_single" tabindex="-1" data-placeholder="Choose equipment">
 						<?php
 			
-			
 
-			if(isset($_POST['centre'])  && isset($_POST['equipment_type']) && $_POST['centre'] != ''  && $_POST['equipment_type'] != '' && $_POST['centre'] != '' && $_POST['equipment_type'] != 'undefined' && $_POST['centre'] != 'undefined'){
-			
+
+			if(isset($_POST['equipment_type']) && $_POST['equipment_type'] != ''  && $_POST['equipment_type'] != 'undefined'){
+
+			if(isset($_POST['centre']) && $_POST['centre'] != '' && $_POST['centre'] != 'undefined'){
 				$data = get_tabledata(TBL_EQUIPMENTS,false,array('equipment_type'=> $_POST['equipment_type'], 'centre' => $_POST['centre'],'approved'=>'1'), 'ORDER BY `name` ASC');
 				echo get_options_list($option_data);
+			}
+				else
+				{
+				$data = get_tabledata(TBL_EQUIPMENTS,false,array('equipment_type'=> $_POST['equipment_type'],'approved'=>'1'), 'ORDER BY `name` ASC');
+				echo get_options_list($option_data);											
+										}
+				
+
 				
 			}else{
 				$data = get_tabledata(TBL_EQUIPMENTS,false,array('approved'=>'1'), 'ORDER BY `name` ASC');
