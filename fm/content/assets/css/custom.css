@@ -1453,14 +1453,15 @@ table.jambo_table tbody tr.selected td {
 }
 
 .dataTables_length {
-    width: 40%;
-    float: left;
+    display: inline-block;
+    margin-right: 20px;
+    float: right;
 }
 
 .dataTables_filter {
-    width: 50%;
     float: right;
     text-align: right;
+    display: inline-block;
 }
 
 .dataTables_info {
@@ -1994,6 +1995,9 @@ span.right {
 @media (min-width:768px) {
     .tile_count .tile_stats_count .count {
         font-size: 40px;
+    }
+    .custom-export-btn {
+        margin-top: 30px;
     }
 }
 

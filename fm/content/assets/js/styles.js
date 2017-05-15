@@ -1,5 +1,4 @@
 $(document).ready(function() {
-	
 	var cnt = 10;
 	
 	TabbedNotification = function(options) {
@@ -48,8 +47,6 @@ $(document).ready(function() {
 
 	$('[data-toggle="tooltip"]').tooltip(); 
 	
-	
-		console.log($(".datatable-buttons").length);
 	var handleDataTableButtons = function() {
 		if ($(".datatable-buttons").length) {
 			$(".datatable-buttons").DataTable({
@@ -67,11 +64,9 @@ $(document).ready(function() {
 		}
 	};
 	
-var ajaxhandleDataTableButtons = function() {
-	
+	var ajaxhandleDataTableButtons = function() {
 		if ($(".ajax-datatable-buttons").length) {
-			$(".ajax-datatable-buttons").DataTable({
-				
+			$(".ajax-datatable-buttons").DataTable({		
 				order: [[ $(".ajax-datatable-buttons").data('order-column'), "desc" ]],
 				dom: "Bflrtip",
 				lengthMenu: [[10, 25, 50, 100,150,200,250,300,400,450,500], [10, 25, 50, 100,150,200,250,300,400,450,500]],
@@ -89,23 +84,16 @@ var ajaxhandleDataTableButtons = function() {
 					url: table_ajax_url,
 					type: 'POST',
 					data: function (d) {
-
 						d.action = $('.ajax-datatable-buttons').data('table');
-                        d.centre = $('.custom-filters select[name="centre"]').val();
+						d.centre = $('.custom-filters select[name="centre"]').val();
 						d.equipment_type = $('.custom-filters select[name="equipment_type"]').val();
 						d.equipment = $('.custom-filters select[name="equipment"]').val();
 						d.fault_type = $('.custom-filters select[name="fault_type"]').val();
 						d.manufacturer = $('.custom-filters select[name="manufacturer"]').val();
 						d.model = $('.custom-filters select[name="model"]').val();
 						d.approved = $('.custom-filters select[name="approved"]').val();
-						d.date_of_fault = $('input[name="date_of_fault"]').daterangepicker().val();
-						d.date_of_fault2 = $('input[name="date_of_fault2"]').daterangepicker().val();
-						
-
-
-                                                console.log($('input[name="date_of_fault"]').daterangepicker().val());
-                                                console.log($('input[name="date_of_fault2"]').daterangepicker().val());
-
+						d.fault_date_from = $('.custom-filters input[name="fault_date_from"]').val();
+						d.fault_date_to = $('.custom-filters input[name="fault_date_to"]').val();
 					},
 					complete:function(r){
 						if ($("table .js-switch")[0]) {
@@ -124,7 +112,7 @@ var ajaxhandleDataTableButtons = function() {
 
 
 	TableManageButtons = function() {
-		"use 	strict";
+		"use strict";
 		return {
 			init: function() {
 				handleDataTableButtons();
@@ -210,7 +198,6 @@ var ajaxhandleDataTableButtons = function() {
 		calender_style: "picker_1"
 	});
 	
-	
 	var radiobox_names = ['fault_corrected_by_user' ,'to_fix_at_next_service_visit','engineer_called_out'];
 	var radiobox_check = false;
 	$.each( radiobox_names, function( key, value ) {
@@ -246,8 +233,6 @@ var ajaxhandleDataTableButtons = function() {
 			}
 		});
 	});
-
-	
 	
 	var url_filter = /^(http|https|ftp):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/i;
 	var email_filter = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
@@ -960,8 +945,13 @@ var ajaxhandleDataTableButtons = function() {
 		}else{
 			$('.ajax-datatable-buttons > thead > tr th:nth-child(1)').trigger('click');
 		}
-		
 	});
+	$('.custom-filters input').on('blur',function(){
+		setTimeout(function(){
+			$('.ajax-datatable-buttons > thead > tr th:nth-child(1)').trigger('click');
+		},1500);
+	});
+	
 });
 
 

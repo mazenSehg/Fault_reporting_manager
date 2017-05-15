@@ -16,18 +16,13 @@
 			case 'fetch_all_faults':
 				echo $Fault->fetch_all_faults_process();
 				break;
-
 			case 'fetch_all_faults_export':
 				echo $Fault->fetch_all_e_faults_process();
 				break;
-
-
-
 			case 'fetch_all_faults2':
 				echo $Fault->fetch_all_faults_process2();
 				break;
 			default:
-
 				$response = array(
 					"draw" => 0,
 					"recordsTotal" => 0,

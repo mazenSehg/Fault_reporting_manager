@@ -22,6 +22,8 @@ if( !class_exists('Fault') ):
 				echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
 			else:
 			?>
+			<style>select{-webkit-appearance:none;-moz-appearance:none;text-indent:1px;text-overflow:''}div.nahid{display:none}</style>
+			<script>$('#select').on('mousedown', function(e) {e.preventDefault();this.blur();window.focus();});</script>
 			<form class="add-fault submit-form" method="post" autocomplete="off">
 				<div class="row">
 					<div class="col-xs-12">
@@ -57,8 +59,6 @@ if( !class_exists('Fault') ):
 						<label for="equipment-type">Equipment Type <span class="required"> *</span></label>
 						<select name="equipment_type" class="form-control select_single fetch-equipment-data select-equipment-type" tabindex="-1" data-placeholder="Choose equipment type">
 							<?php
-			
-			
 							$data = get_tabledata(TBL_EQUIPMENT_TYPES,false,array('approved'=> '1'), 'ORDER BY `name` DESC');
 							$option_data = get_option_data($data,array('ID','name'));
 							echo get_options_list($option_data);
@@ -94,14 +94,7 @@ if( !class_exists('Fault') ):
 						<input type="text" name="date_of_fault" class="form-control input-datepicker" readonly="readonly" />
 					</div>
 				</div>
-				<style>
-select {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    text-indent: 1px;
-    text-overflow: '';
-}
-				</style>
+				
 				<div class="row">
 					<div class="form-group col-sm-6 col-xs-12">
 						<label for="current-servicing-agency">Current servicing agency </label>
@@ -109,21 +102,6 @@ select {
 							<option value="">Current servicing agency</option>
 						</select>
 					</div>
-					
-					
-					<script>
-					$('#select').on('mousedown', function(e) {
-   e.preventDefault();
-   this.blur();
-   window.focus();
-});
-					</script>
-		
-					
-
-			
-					
-
 					<div class="form-group col-sm-6 col-xs-12">
 						<label for="time-of-fault">Servicing agency at time of fault <span class="required"> *</span></label>
 						<input type="text" name="time_of_fault" class="form-control" />
@@ -152,8 +130,9 @@ select {
 					</div>
 				</div>
 
-<div class="form-group col-sm-4 col-xs-12">
-	<label for="">Fault corrected by user?</label>
+				<div class="row">
+					<div class="form-group col-sm-4 col-xs-12">
+						<label for="">Fault corrected by user?</label>
 						<br/>
 						<label><input type="radio" class="flat custom_radiobox" name="fault_corrected_by_user" value="1" checked/> Yes</label>
 						<label>&nbsp;</label>
@@ -161,7 +140,7 @@ select {
 						<label>&nbsp;</label>
 						<label><input type="radio" class="flat custom_radiobox" name="fault_corrected_by_user" value="2" /> N/A</label>
 					</div>
-<div class="form-group col-sm-4 col-xs-12">
+					<div class="form-group col-sm-4 col-xs-12">
 						<label for="">To fix at next service visit?</label>
 						<br/>
 						<label><input type="radio" class="flat custom_radiobox" name="to_fix_at_next_service_visit" value="1" /> Yes</label>
@@ -170,7 +149,7 @@ select {
 						<label>&nbsp;</label>
 						<label><input type="radio" class="flat custom_radiobox" name="to_fix_at_next_service_visit" value="2" checked/> N/A</label>
 					</div>
-<div class="form-group col-sm-4 col-xs-12">
+					<div class="form-group col-sm-4 col-xs-12">
 						<label for="">Engineer called out?</label>
 						<br/>
 						<label><input type="radio" class="flat custom_radiobox" name="engineer_called_out" value="1" /> Yes</label>
@@ -179,18 +158,12 @@ select {
 						<label>&nbsp;</label>
 						<label><input type="radio" class="flat custom_radiobox" name="engineer_called_out" value="2" checked/> N/A</label>
 					</div>
-<style>				
-				div.nahid {    
-  display:none;
-}
-				</style>		
-				
+				</div>
 				<div align="right">
-				<small>To select another option, please select <b>'no' </b> or <b>'N/A' </b> or first for the question you already responded to.</small>
+					<small>To select another option, please select <b>'no' </b> or <b>'N/A' </b> or first for the question you already responded to.</small>
 				</div>
 				
-				
-								<div class="row">
+				<div class="row">
 					<div class="form-group col-sm-12 col-xs-12">
 						<label for="">Has an adverse incident report been sent to MHRA pr appropriate devolved administration?</label>
 						<br/>
@@ -198,7 +171,8 @@ select {
 						<label>&nbsp;</label>
 						<label><input type="radio" class="flat" name="adverse_incident_report" value="0" /> No</label>
 					</div>
-					</div>
+				</div>
+				
 				<div class="row">
 					<div class="col-xs-12">
 						<h3><?php _e('Fault Severity');?></h3>
@@ -271,12 +245,9 @@ select {
 						<label><input type="radio" class="flat" name="satisfied_equipment" value="0" /> N/A</label>
 					</div>
 				</div>
-                
-                <?php
-			if(is_admin()){
 				
-				?>
-                <div class="row">
+				<?php if(is_admin()){ ?>
+				<div class="row">
 					<div class="form-group col-xs-12">
 						<label for="decommed"><?php _e('DoH Action');?></label>
 						<br/>
@@ -297,10 +268,8 @@ select {
 						<textarea name="supplier_comments" class="form-control" rows="3"></textarea>
 					</div>
 				</div>
-				<?php
-			}
-				?>
-                
+				<?php } ?>
+				
 				<div class="ln_solid"></div>
 				<div class="form-group">
 					<input type="hidden" name="action" value="add_new_fault" />
@@ -406,23 +375,16 @@ select {
 				</div>
 				<div class="row">
 					<div class="form-group col-sm-6 col-xs-12">
-						<label for="current-servicing-agency">Current servicing agency </label>
-						
-						
-					<select name="service_agent" class="form-control select-service-agent select_single require" tabindex="-1" data-placeholder="Choose service agent">
-						<?php
-						$query = "WHERE `approved` = '1' ";
-						$data = get_tabledata(TBL_SERVICE_AGENTS, false, array(),$query);
-						$option_data = get_option_data($data,array('ID','name'));
-						echo get_options_list($option_data , maybe_unserialize($fault->current_servicing_agency));
-						?>
-						<option selected="selected" value="<?php $fault->current_servicing_agency ?>"><?php echo $fault->current_servicing_agency ?></option>
-					</select>
-						
-						
-						
-						
-		
+					<label for="current-servicing-agency">Current servicing agency </label>
+						<select name="service_agent" class="form-control select-service-agent select_single require" tabindex="-1" data-placeholder="Choose service agent">
+							<?php
+							$query = "WHERE `approved` = '1' ";
+							$data = get_tabledata(TBL_SERVICE_AGENTS, false, array(),$query);
+							$option_data = get_option_data($data,array('ID','name'));
+							echo get_options_list($option_data , maybe_unserialize($fault->current_servicing_agency));
+							?>
+							<option selected="selected" value="<?php $fault->current_servicing_agency ?>"><?php echo $fault->current_servicing_agency ?></option>
+						</select>
 					</div>
 					<div class="form-group col-sm-6 col-xs-12">
 						<label for="time-of-fault">Servicing agency at time of fault <span class="required">*</span></label>
@@ -487,15 +449,9 @@ select {
 							Has an adverse incident report been sent to MHRA pr appropriate devolved adminstration?
 						</label>
 						<br/>
-						<label>
-							<input type="radio" class="flat" name="adverse_incident_report" value="1" <?php checked($fault->adverse_incident_report,'1');?> /> Yes
-						</label>
-						<label>
-							&nbsp;
-						</label>
-						<label>
-							<input type="radio" class="flat" name="adverse_incident_report" value="0" <?php checked($fault->adverse_incident_report,'0');?> /> No
-						</label>
+						<label><input type="radio" class="flat" name="adverse_incident_report" value="1" <?php checked($fault->adverse_incident_report,'1');?> /> Yes</label>
+						<label>&nbsp;</label>
+						<label><input type="radio" class="flat" name="adverse_incident_report" value="0" <?php checked($fault->adverse_incident_report,'0');?> /> No</label>
 					</div>
 				</div>
 				<div class="row">
@@ -549,64 +505,33 @@ select {
 					<div class="form-group col-sm-12 col-xs-12">
 						<label for="">Are you satisfied with response of the servicing organisation?</label>
 						<br/>
-						<label>
-							<input type="radio" class="flat" name="satisfied_servicing_organisation" value="1" <?php checked($fault->satisfied_servicing_organisation,'1');?> /> Yes
-						</label>
-						<label>
-							&nbsp;
-						</label>
-						<label>
-							<input type="radio" class="flat" name="satisfied_servicing_organisation" value="0" <?php checked($fault->satisfied_servicing_organisation,'0');?> /> No
-						</label>
-						<label>
-							&nbsp;
-						</label>
-						<label>
-							<input type="radio" class="flat" name="satisfied_servicing_organisation" value="2" <?php checked($fault->satisfied_servicing_organisation,'2');?> /> N/A
-						</label>
+						<label><input type="radio" class="flat" name="satisfied_servicing_organisation" value="1" <?php checked($fault->satisfied_servicing_organisation,'1');?> /> Yes</label>
+						<label>&nbsp;</label>
+						<label><input type="radio" class="flat" name="satisfied_servicing_organisation" value="0" <?php checked($fault->satisfied_servicing_organisation,'0');?> /> No</label>
+						<label>&nbsp;</label>
+						<label><input type="radio" class="flat" name="satisfied_servicing_organisation" value="2" <?php checked($fault->satisfied_servicing_organisation,'2');?> /> N/A</label>
 					</div>
 					<div class="form-group col-sm-12 col-xs-12">
 						<label for="">Are you satisfied with the performance of the service engineer?</label>
 						<br/>
-						<label>
-							<input type="radio" class="flat" name="satisfied_service_engineer" value="1" <?php checked($fault->satisfied_service_engineer,'1');?> /> Yes
-						</label>
-						<label>
-							&nbsp;
-						</label>
-						<label>
-							<input type="radio" class="flat" name="satisfied_service_engineer" value="0" <?php checked($fault->satisfied_service_engineer,'0');?> /> No
-						</label>
-						<label>
-							&nbsp;
-						</label>
-						<label>
-							<input type="radio" class="flat" name="satisfied_service_engineer" value="2" <?php checked($fault->satisfied_service_engineer,'2');?> /> N/A
-						</label>
+						<label><input type="radio" class="flat" name="satisfied_service_engineer" value="1" <?php checked($fault->satisfied_service_engineer,'1');?> /> Yes</label>
+						<label>&nbsp;</label>
+						<label><input type="radio" class="flat" name="satisfied_service_engineer" value="0" <?php checked($fault->satisfied_service_engineer,'0');?> /> No</label>
+						<label>&nbsp;</label>
+						<label><input type="radio" class="flat" name="satisfied_service_engineer" value="2" <?php checked($fault->satisfied_service_engineer,'2');?> /> N/A</label>
 					</div>
 					<div class="form-group col-sm-12 col-xs-12">
 						<label for="">Are you generally satisfied withe the reliability/performance of the equipment?</label>
 						<br/>
-						<label>
-							<input type="radio" class="flat" name="satisfied_equipment" value="1" <?php checked($fault->satisfied_equipment,'1');?> /> Yes
-						</label>
-						<label>
-							&nbsp;
-						</label>
-						<label>
-							<input type="radio" class="flat" name="satisfied_equipment" value="0" <?php checked($fault->satisfied_equipment,'0');?> /> No
-						</label>
-						<label>
-							&nbsp;
-						</label>
-						<label>
-							<input type="radio" class="flat" name="satisfied_equipment" value="2" <?php checked($fault->satisfied_equipment,'2');?> /> N/A
-						</label>
+						<label><input type="radio" class="flat" name="satisfied_equipment" value="1" <?php checked($fault->satisfied_equipment,'1');?> /> Yes</label>
+						<label>&nbsp;</label>
+						<label><input type="radio" class="flat" name="satisfied_equipment" value="0" <?php checked($fault->satisfied_equipment,'0');?> /> No</label>
+						<label>&nbsp;</label>
+						<label><input type="radio" class="flat" name="satisfied_equipment" value="2" <?php checked($fault->satisfied_equipment,'2');?> /> N/A</label>
 					</div>
 				</div>
 				<?php if(is_admin()){ ?>
 				<div class="row">
-					
 					<div class="col-xs-12">
 						<h3><?php _e('Approved');?></h3>
 						<hr>
@@ -615,19 +540,12 @@ select {
 					<div class="form-group col-sm-12 col-xs-12">
 						<label for="">Approved?</label>
 						<br/>
-						<label>
-							<input type="radio" class="flat" name="approved" value="1" <?php checked($fault->approved,'1');?> /> Yes
-						</label>
-						<label>
-							&nbsp;
-						</label>
-						<label>
-							<input type="radio" class="flat" name="approved" value="0" <?php checked($fault->approved,'0');?> /> No
-						</label>
+						<label><input type="radio" class="flat" name="approved" value="1" <?php checked($fault->approved,'1');?> /> Yes</label>
+						<label>&nbsp;</label>
+						<label><input type="radio" class="flat" name="approved" value="0" <?php checked($fault->approved,'0');?> /> No</label>
 					</div>
-
 				</div>
-                
+				
 				<div class="row">
 					<div class="form-group col-xs-12">
 						<label for="decommed"><?php _e('DoH Action');?></label>
@@ -954,7 +872,6 @@ select {
 		}
 
 		public function all__faults__page(){
-	
 			ob_start();
 			$query = '';
 			if(!is_admin()):
@@ -971,196 +888,166 @@ select {
 				echo page_not_found("There are no new faults record found",' ',false);
 			else:
 			?>
+				<form action="<?php echo site_url();?>/qwert/" method="POST">
+					<div class="row custom-filters">
+						<div class="form-group col-sm-2 col-xs-6">
+							<label for="centre">Centre</label>
+							<select name="centre" class="form-control select_single" tabindex="-1" data-placeholder="Choose centre">
+								<?php
+								$query = '';
+								if(!is_admin()):
+									$centres = maybe_unserialize($this->current__user->centre);
+									if(!empty($centres)){
+										$centres = implode(',',$centres);
+										$query = "WHERE `ID` IN (".$centres.")";
+									}
+								endif;
+								$query .= ($query != '') ? ' AND ' : ' WHERE ';
+								$query .= " `approved` = '1' ORDER BY `name` ASC";
+								$data = get_tabledata(TBL_CENTRES,false,array(),$query);
+								$option_data = get_option_data($data,array('ID','name'));
+								echo get_options_list($option_data);
+								?>
+							</select>
+						</div>
+						
+						<div class="form-group col-sm-2 col-xs-6">
+							<label for="equipment-type">Equipment Type</label>
+							<select name="equipment_type" class="form-control select_single" tabindex="-1" data-placeholder="Choose equipment type">
+								<?php
+								$data = get_tabledata(TBL_EQUIPMENT_TYPES,false,array('approved'=> '1'), 'ORDER BY `name` ASC');
+								$option_data = get_option_data($data,array('ID','name'));
+								echo get_options_list($option_data);
+								?>
+							</select>
+						</div>
+						
+						<div class="form-group col-sm-2 col-xs-6">
+							<label for="equipment">Equipment</label>
+							<select name="equipment" class="form-control select_single" tabindex="-1" data-placeholder="Choose equipment">
+							<?php
+							
+							if(isset($_POST['equipment_type']) && $_POST['equipment_type'] != ''  && $_POST['equipment_type'] != 'undefined'){
 
-<form action="<?php echo site_url();?>/qwert/" method="POST">
-			<div class="row custom-filters">
-				<div class="form-group col-sm-2 col-xs-5">
-					<label for="centre">Centre</label>
-					<select name="centre" class="form-control select_single" tabindex="-1" data-placeholder="Choose centre">
-						<?php
-						$query = '';
-						if(!is_admin()):
-							$centres = maybe_unserialize($this->current__user->centre);
-							if(!empty($centres)){
-							$centres = implode(',',$centres);
-								$query = "WHERE `ID` IN (".$centres.")";
+								if(isset($_POST['centre']) && $_POST['centre'] != '' && $_POST['centre'] != 'undefined'){
+									$data = get_tabledata(TBL_EQUIPMENTS,false,array('equipment_type'=> $_POST['equipment_type'], 'centre' => $_POST['centre'],'approved'=>'1'), 'ORDER BY `name` ASC');
+									$option_data = get_option_data($data,array('ID','name'));
+									echo get_options_list($option_data);
+								}else{
+									$data = get_tabledata(TBL_EQUIPMENTS,false,array('equipment_type'=> $_POST['equipment_type'],'approved'=>'1'), 'ORDER BY `name` ASC');
+									$option_data = get_option_data($data,array('ID','name'));
+									echo get_options_list($option_data);											
+								}
+							}else{
+								$data = get_tabledata(TBL_EQUIPMENTS,false,array('approved'=>'1'), 'ORDER BY `name` ASC');
+								$option_data = get_option_data($data,array('ID','name'));
+								echo get_options_list($option_data);
 							}
-						endif;
-						$query .= ($query != '') ? ' AND ' : ' WHERE ';
-						$query .= " `approved` = '1' ORDER BY `name` ASC";
-						$data = get_tabledata(TBL_CENTRES,false,array(),$query);
-						$option_data = get_option_data($data,array('ID','name'));
-						echo get_options_list($option_data);
-						?>
-					</select>
-				</div>
-				<div class="form-group col-sm-2 col-xs-5">
-					<label for="equipment-type">Equipment Type</label>
-					<select name="equipment_type" class="form-control select_single" tabindex="-1" data-placeholder="Choose equipment type">
-						<?php
-						$data = get_tabledata(TBL_EQUIPMENT_TYPES,false,array('approved'=> '1'), 'ORDER BY `name` ASC');
-						$option_data = get_option_data($data,array('ID','name'));
-						echo get_options_list($option_data);
-						?>
-					</select>
-				</div>
-				<div class="form-group col-sm-2 col-xs-5">
-					<label for="equipment">Equipment</label>
-					<select name="equipment" class="form-control select_single" tabindex="-1" data-placeholder="Choose equipment">
-						<?php
-			
+							?>
+							</select>
+						</div>
+						
+						<div class="form-group col-sm-2 col-xs-6">
+							<label for="fault-type">Fault Type</label>
+							<select name="fault_type" class="form-control select_single" tabindex="-1" data-placeholder="Choose fault type">
+								<?php
+								$data = get_tabledata(TBL_FAULT_TYPES,false,array('approved'=> '1'), 'ORDER BY `name` ASC');
+								$option_data = get_option_data($data,array('ID','name'));
+								echo get_options_list($option_data);
+								?>
+							</select>
+						</div>
+						
+						<div class="form-group col-sm-2 col-xs-6">
+							<label for="approved">Approval Status</label>
+							<select name="approved" class="form-control select_single" tabindex="-1" data-placeholder="Choose status">
+								<?php
+								$option_data = array( '1' => 'Approved' , '0' => 'Unapproved');
+								echo get_options_list($option_data);
+								?>
+							</select>
+						</div>
+					
+					</div>
+					<div class="row custom-filters">
+						<div class="form-group col-sm-2 col-xs-6 col col-sm-push-2">
+							<label for="date_of_fault"><?php _e('Fault Date From');?></label>
+							<input type="text" name="fault_date_from" class="form-control input-datepicker" readonly="readonly"/>
+						</div>
+						
+						<div class="form-group col-sm-2 col-xs-6 col-sm-push-2">
+							<label for="date_of_fault"><?php _e('Fault Date To');?></label>
+							<input type="text" name="fault_date_to" class="form-control input-datepicker" readonly="readonly"/>
+						</div>
+						
+						<div class="col-xs-6 col-sm-2 col-sm-pull-4">
+							<?php if(is_admin()){ ?>	
+							 <input type="submit" value="Export Report" name="SubmitButton" class="btn btn-dark btn-sm custom-export-btn"/>	
+							<?php } ?>
+						</div>
+					</div>
+				</form>
 
-
-			if(isset($_POST['equipment_type']) && $_POST['equipment_type'] != ''  && $_POST['equipment_type'] != 'undefined'){
-
-			if(isset($_POST['centre']) && $_POST['centre'] != '' && $_POST['centre'] != 'undefined'){
-				$data = get_tabledata(TBL_EQUIPMENTS,false,array('equipment_type'=> $_POST['equipment_type'], 'centre' => $_POST['centre'],'approved'=>'1'), 'ORDER BY `name` ASC');
-				echo get_options_list($option_data);
-			}
-				else
-				{
-				$data = get_tabledata(TBL_EQUIPMENTS,false,array('equipment_type'=> $_POST['equipment_type'],'approved'=>'1'), 'ORDER BY `name` ASC');
-				echo get_options_list($option_data);											
-										}
-				
-
-				
-			}else{
-				$data = get_tabledata(TBL_EQUIPMENTS,false,array('approved'=>'1'), 'ORDER BY `name` ASC');
-				echo get_options_list($option_data);
-			}
-			
-
-						?>
-					</select>
-				</div>
-				<div class="form-group col-sm-2 col-xs-5">
-					<label for="fault-type">Fault Type</label>
-					<select name="fault_type" class="form-control select_single" tabindex="-1" data-placeholder="Choose fault type">
-						<?php
-						$data = get_tabledata(TBL_FAULT_TYPES,false,array('approved'=> '1'), 'ORDER BY `name` ASC');
-						$option_data = get_option_data($data,array('ID','name'));
-						echo get_options_list($option_data);
-						?>
-					</select>
-				</div>
-				<div class="form-group col-sm-2 col-xs-5">
-					<label for="approved">Approval Status</label>
-					<select name="approved" class="form-control select_single" tabindex="-1" data-placeholder="Choose status">
-						<?php
-						$option_data = array( '1' => 'Approved' , '0' => 'Unapproved');
-						echo get_options_list($option_data);
-						?>
-					</select>
-				</div>
-				
-
-
-				<div class="form-group col-sm-2 col-xs-5">
-					<label for="date_of_fault">From</label>
-					<select name="date_of_fault" class="form-control select_single" tabindex="-1" data-placeholder="date of fault from">
-						<?php
-						$data = get_tabledata(TBL_FAULTS,false,array('approved'=> '1'), '', 'DISTINCT `date_of_fault`');
-						$option_data = get_option_data($data,array('date_of_fault','date_of_fault'));
-						echo get_options_list($option_data);
-						?>
-					</select>
-					 
-				</div>
-				
-				
-				<div class="form-group col-sm-2 col-xs-5">
-					<label for="date_of_fault">To</label>
-					<select name="date_of_fault2" class="form-control select_single" tabindex="-1" data-placeholder="date of fault to">
-						<?php
-						$data = get_tabledata(TBL_FAULTS,false,array('approved'=> '1'), '', 'DISTINCT `date_of_fault`');
-						$option_data = get_option_data($data,array('date_of_fault','date_of_fault'));
-						echo get_options_list($option_data);
-						?>
-					</select>
-				</div>
-			</div>
-
-
-
-<?php    
-if(is_admin()){
-	?>
-	
-  <input type="submit" value="EXPORT REPORT" name="SubmitButton"/>	
-	<?php
-}
-?>
-
-
-
-</form>
-
-
-
-
-
-			<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap ajax-datatable-buttons" cellspacing="0" width="100%" data-table="fetch_all_faults" data-order-column="6">
-				<thead>
-					<tr>
-						<?php if(is_admin()): ?>
-						<th>Approved</th>
-						<?php endif; ?>
-						<th>Submitted By</th>
-						<th>Centre</th>
-						<th>Equipment Type</th>
-						<th>Equipment</th>
-						<th>Fault Type</th>
-						<th>Date of Fault</th>
-						<th>Created On</th>
-						<th class="text-center">Actions</th>
-					</tr>
-				</thead>
-			</table>
-			<div class="fault-modal">
-				<button type="button" class="btn btn-info btn-lg hidden launch-fault-modal" data-toggle="modal" data-target="#fault-modal">Open Modal</button>
-				<div id="fault-modal" class="modal fade" role="dialog">
-					<div class="modal-dialog">
-						<div class="modal-content">
-							<div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap ajax-datatable-buttons" cellspacing="0" width="100%" data-table="fetch_all_faults" data-order-column="6">
+					<thead>
+						<tr>
+							<?php if(is_admin()): ?>
+							<th>Approved</th>
+							<?php endif; ?>
+							<th>Submitted By</th>
+							<th>Centre</th>
+							<th>Equipment Type</th>
+							<th>Equipment</th>
+							<th>Fault Type</th>
+							<th>Date of Fault</th>
+							<th>Created On</th>
+							<th class="text-center">Actions</th>
+						</tr>
+					</thead>
+				</table>
+				<div class="fault-modal">
+					<button type="button" class="btn btn-info btn-lg hidden launch-fault-modal" data-toggle="modal" data-target="#fault-modal">Open Modal</button>
+					<div id="fault-modal" class="modal fade" role="dialog">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal">&times;</button>
+								</div>
+								<form class="fault-modal-form submit-form" method="post" autocomplete="off">
+									<div class="modal-body">
+										<div class="form-group">
+											<label for="decommed"><?php _e('DoH Action');?></label>
+											<br/>
+											<label><input type="checkbox" name="doh" class="js-switch doh-action" /></label>
+										</div>
+										<div class="doh-action-group">
+											<div class="form-group">
+												<label for="supplier_enquiry"><?php _e('Enquiry to Supplier');?></label>
+												<input type="text" name="supplier_enquiry" class="form-control" />
+											</div>
+											<div class="form-group">
+												<label for="supplier_action"><?php _e('Supplier Action');?></label>
+												<input type="text" name="supplier_action" class="form-control" class="form-control" />
+											</div>
+											<div class="form-group">
+												<label for="supplier_comments"><?php _e('Supplier Comments');?></label>
+												<textarea name="supplier_comments" class="form-control" rows="3"></textarea>
+											</div>
+										</div>
+									</div>
+									<div class="modal-footer">
+										<input type="hidden" name="action" value="fault_approve_change_via_modal"/>
+										<input type="hidden" name="id" value=""/>
+										<input type="hidden" name="status" value=""/>
+										<button type="submit" class="btn btn-success"><?php _e('Submit');?></button>
+										<button type="button" class="btn btn-default" data-dismiss="modal"><?php _e('Close');?></button>
+									</div>
+								</form>
 							</div>
-							<form class="fault-modal-form submit-form" method="post" autocomplete="off">
-								<div class="modal-body">
-									<div class="form-group">
-										<label for="decommed"><?php _e('DoH Action');?></label>
-										<br/>
-										<label><input type="checkbox" name="doh" class="js-switch doh-action" /></label>
-									</div>
-									<div class="doh-action-group">
-										<div class="form-group">
-											<label for="supplier_enquiry"><?php _e('Enquiry to Supplier');?></label>
-											<input type="text" name="supplier_enquiry" class="form-control" />
-										</div>
-										<div class="form-group">
-											<label for="supplier_action"><?php _e('Supplier Action');?></label>
-											<input type="text" name="supplier_action" class="form-control" class="form-control" />
-										</div>
-										<div class="form-group">
-											<label for="supplier_comments"><?php _e('Supplier Comments');?></label>
-											<textarea name="supplier_comments" class="form-control" rows="3"></textarea>
-										</div>
-									</div>
-								</div>
-								<div class="modal-footer">
-									<input type="hidden" name="action" value="fault_approve_change_via_modal"/>
-									<input type="hidden" name="id" value=""/>
-									<input type="hidden" name="status" value=""/>
-									<button type="submit" class="btn btn-success"><?php _e('Submit');?></button>
-									<button type="button" class="btn btn-default" data-dismiss="modal"><?php _e('Close');?></button>
-								</div>
-							</form>
 						</div>
 					</div>
 				</div>
-			</div>
-			<?php endif; ?>
-			<?php
+			<?php endif; 
 			$content = ob_get_clean();
 			return $content;
 		}
@@ -1182,25 +1069,24 @@ if(is_admin()){
 				echo page_not_found("THERE ARE NO  new faults record found",' ',false);
 			else:
 			?>
-			<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap ajax-datatable-buttons" cellspacing="0" width="100%" data-table="fetch_all_faults2" data-order-column="6">
-				<thead>
-					<tr>
-						<?php if(is_admin()): ?>
-						<th>Approved</th>
-						<?php endif; ?>
-						<th>Submitted By</th>
-						<th>Centre</th>
-						<th>Equipment Type</th>
-						<th>Equipment</th>
-						<th>Fault Type</th>
-						<th>Date of Fault</th>
-						<th>Created On</th>
-						<th class="text-center">Actions</th>
-					</tr>
-				</thead>
-			</table>
-			<?php endif; ?>
-			<?php
+				<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap ajax-datatable-buttons" cellspacing="0" width="100%" data-table="fetch_all_faults2" data-order-column="6">
+					<thead>
+						<tr>
+							<?php if(is_admin()): ?>
+							<th>Approved</th>
+							<?php endif; ?>
+							<th>Submitted By</th>
+							<th>Centre</th>
+							<th>Equipment Type</th>
+							<th>Equipment</th>
+							<th>Fault Type</th>
+							<th>Date of Fault</th>
+							<th>Created On</th>
+							<th class="text-center">Actions</th>
+						</tr>
+					</thead>
+				</table>
+			<?php endif; 
 			$content = ob_get_clean();
 			return $content;
 		}
@@ -1211,34 +1097,32 @@ if(is_admin()){
 				echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
 			else:
 			?>
-			<form class="add-fault_type submit-form" method="post" autocomplete="off">
-				<div class="form-group">
-					<label for="name">Name <span class="required">*</span></label>
-					<input type="text" name="name" class="form-control require" />
-				</div>
-				<div class="form-group">
-					<label for="equipment-type">Equipment Type <span class="required">*</span></label>
-					<select name="equipment_type[]" class="form-control select_single require" tabindex="-1" data-placeholder="Choose equipment type" multiple="multiple">
-						<?php
-						$data = get_tabledata(TBL_EQUIPMENT_TYPES,false,array('approved'=> '1'), 'ORDER BY `name` ASC');
-						$option_data = get_option_data($data,array('ID','name'));
-						echo get_options_list($option_data);
-						?>
-					</select>
-				</div>
-				<div class="form-group">
-					<label for="description">Description</label>
-					<textarea name="description" class="form-control" rows="5"></textarea>
-				</div>
-				<div class="ln_solid">
-				</div>
-				<div class="form-group">
-					<input type="hidden" name="action" value="add_new_fault_type" />
-					<button class="btn btn-success btn-md" type="submit">Create New Fault Type</button>
-				</div>
-			</form>
-			<?php endif; ?>
-			<?php
+				<form class="add-fault_type submit-form" method="post" autocomplete="off">
+					<div class="form-group">
+						<label for="name">Name <span class="required">*</span></label>
+						<input type="text" name="name" class="form-control require" />
+					</div>
+					<div class="form-group">
+						<label for="equipment-type">Equipment Type <span class="required">*</span></label>
+						<select name="equipment_type[]" class="form-control select_single require" tabindex="-1" data-placeholder="Choose equipment type" multiple="multiple">
+							<?php
+							$data = get_tabledata(TBL_EQUIPMENT_TYPES,false,array('approved'=> '1'), 'ORDER BY `name` ASC');
+							$option_data = get_option_data($data,array('ID','name'));
+							echo get_options_list($option_data);
+							?>
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="description">Description</label>
+						<textarea name="description" class="form-control" rows="5"></textarea>
+					</div>
+					<div class="ln_solid"></div>
+					<div class="form-group">
+						<input type="hidden" name="action" value="add_new_fault_type" />
+						<button class="btn btn-success btn-md" type="submit">Create New Fault Type</button>
+					</div>
+				</form>
+			<?php endif; 
 			$content = ob_get_clean();
 			return $content;
 		}
@@ -1308,8 +1192,7 @@ if(is_admin()){
 					</tr>
 				</thead>
 				<tbody>
-					<?php if($fault_types): foreach($fault_types as $fault_type):
-					?>
+					<?php if($fault_types): foreach($fault_types as $fault_type): ?>
 					<tr>
 						<td><?php _e($fault_type->name);?></td>
 						<td><?php echo date('M d,Y',strtotime($fault_type->created_on));?></td>
@@ -1340,10 +1223,7 @@ if(is_admin()){
 		}
 
 		//Process functions starts here
-		public function add__fault__process(){
-						
-
-			
+		public function add__fault__process(){		
 			extract($_POST);
 			
 			$return = array(
@@ -1356,37 +1236,36 @@ if(is_admin()){
 			if( user_can('add_fault') ):
 				$guid = get_guid(TBL_FAULTS);
 				$doh = ( isset($doh) ) ? 1 : 0;
-			
-
+				
 				$insert_args = array(
-						'ID' => $guid,
-						'centre' => $centre,
-						'name' => $name,
-						'user_id' => $this->current__user__id,
-						'equipment_type' => $equipment_type,
-						'equipment' => $equipment,
-						'fault_type' => $fault_type,
-						'date_of_fault' => date('Y-m-d h:i:s',strtotime($date_of_fault) ) ,
-						'current_servicing_agency' => $current_servicing_agency,
-						'time_of_fault' => $time_of_fault,
-						'description_of_fault' => $description_of_fault,
-						'service_call_no' => $service_call_no,
-						'action_taken' => $action_taken,
-						'fault_corrected_by_user' => (isset($fault_corrected_by_user)) ? $fault_corrected_by_user : 2,
-						'to_fix_at_next_service_visit' => (isset($to_fix_at_next_service_visit)) ? $to_fix_at_next_service_visit : 2,
-						'engineer_called_out' => (isset($engineer_called_out)) ? $engineer_called_out : 2,
-						'adverse_incident_report' => $adverse_incident_report,
-						'equipment_status' => $equipment_status,
-						'equipment_downtime' => $equipment_downtime,
-						'screening_downtime' => $screening_downtime,
-						'repeat_images' => $repeat_images,
-						'cancelled_women' => $cancelled_women,
-						'technical_recalls' => $technical_recalls,
-						'satisfied_servicing_organisation'=> $satisfied_servicing_organisation,
-						'satisfied_service_engineer' => $satisfied_service_engineer,
-						'satisfied_equipment' => $satisfied_equipment,
-						'approved' => 0,
-						'doh' => $doh ,
+					'ID' => $guid,
+					'centre' => $centre,
+					'name' => $name,
+					'user_id' => $this->current__user__id,
+					'equipment_type' => $equipment_type,
+					'equipment' => $equipment,
+					'fault_type' => $fault_type,
+					'date_of_fault' => date('Y-m-d h:i:s',strtotime($date_of_fault) ) ,
+					'current_servicing_agency' => $current_servicing_agency,
+					'time_of_fault' => $time_of_fault,
+					'description_of_fault' => $description_of_fault,
+					'service_call_no' => $service_call_no,
+					'action_taken' => $action_taken,
+					'fault_corrected_by_user' => (isset($fault_corrected_by_user)) ? $fault_corrected_by_user : 2,
+					'to_fix_at_next_service_visit' => (isset($to_fix_at_next_service_visit)) ? $to_fix_at_next_service_visit : 2,
+					'engineer_called_out' => (isset($engineer_called_out)) ? $engineer_called_out : 2,
+					'adverse_incident_report' => $adverse_incident_report,
+					'equipment_status' => $equipment_status,
+					'equipment_downtime' => $equipment_downtime,
+					'screening_downtime' => $screening_downtime,
+					'repeat_images' => $repeat_images,
+					'cancelled_women' => $cancelled_women,
+					'technical_recalls' => $technical_recalls,
+					'satisfied_servicing_organisation'=> $satisfied_servicing_organisation,
+					'satisfied_service_engineer' => $satisfied_service_engineer,
+					'satisfied_equipment' => $satisfied_equipment,
+					'approved' => 0,
+					'doh' => $doh ,
 				);
             
             		
@@ -1429,31 +1308,31 @@ if(is_admin()){
 			if( user_can('edit_fault') ):
 				$doh = ( isset($doh) ) ? 1 : 0;
 				$update_args = array(
-						'centre' => $centre,
-						'name' => $name,
-						'equipment_type' => $equipment_type,
-						'equipment' => $equipment,
-						'fault_type' => $fault_type,
-						'date_of_fault' => date('Y-m-d h:i:s',strtotime($date_of_fault) ) ,
-						'current_servicing_agency' => $current_servicing_agency,
-						'time_of_fault' => $time_of_fault,
-						'description_of_fault' => $description_of_fault,
-						'service_call_no' => $service_call_no,
-						'action_taken' => $action_taken,
-						'fault_corrected_by_user' => (isset($fault_corrected_by_user)) ? $fault_corrected_by_user : 2,
-						'to_fix_at_next_service_visit' => (isset($to_fix_at_next_service_visit)) ? $to_fix_at_next_service_visit : 2,
-						'engineer_called_out' => (isset($engineer_called_out)) ? $engineer_called_out : 2,
-						'adverse_incident_report' => $adverse_incident_report,
-						'equipment_status' => $equipment_status,
-						'equipment_downtime' => $equipment_downtime,
-						'screening_downtime' => $screening_downtime,
-						'repeat_images' => $repeat_images,
-						'cancelled_women' => $cancelled_women,
-						'technical_recalls' => $technical_recalls,
-						'satisfied_servicing_organisation'=> $satisfied_servicing_organisation,
-						'satisfied_service_engineer' => $satisfied_service_engineer,
-						'satisfied_equipment' => $satisfied_equipment,
-						'approved' => $approved
+					'centre' => $centre,
+					'name' => $name,
+					'equipment_type' => $equipment_type,
+					'equipment' => $equipment,
+					'fault_type' => $fault_type,
+					'date_of_fault' => date('Y-m-d h:i:s',strtotime($date_of_fault) ) ,
+					'current_servicing_agency' => $current_servicing_agency,
+					'time_of_fault' => $time_of_fault,
+					'description_of_fault' => $description_of_fault,
+					'service_call_no' => $service_call_no,
+					'action_taken' => $action_taken,
+					'fault_corrected_by_user' => (isset($fault_corrected_by_user)) ? $fault_corrected_by_user : 2,
+					'to_fix_at_next_service_visit' => (isset($to_fix_at_next_service_visit)) ? $to_fix_at_next_service_visit : 2,
+					'engineer_called_out' => (isset($engineer_called_out)) ? $engineer_called_out : 2,
+					'adverse_incident_report' => $adverse_incident_report,
+					'equipment_status' => $equipment_status,
+					'equipment_downtime' => $equipment_downtime,
+					'screening_downtime' => $screening_downtime,
+					'repeat_images' => $repeat_images,
+					'cancelled_women' => $cancelled_women,
+					'technical_recalls' => $technical_recalls,
+					'satisfied_servicing_organisation'=> $satisfied_servicing_organisation,
+					'satisfied_service_engineer' => $satisfied_service_engineer,
+					'satisfied_equipment' => $satisfied_equipment,
+					'approved' => $approved
 				);
 				if( $doh == 1){
 					$update_args['supplier_enquiry'] = $supplier_enquiry;
@@ -1840,7 +1719,6 @@ if(is_admin()){
 			return json_encode($return);
 		}
 		
-        
   		public function fetch_all_e_faults_process(){
 			$orders_columns = array(
 				1 => 'name',
@@ -1920,10 +1798,9 @@ if(is_admin()){
 					
 			if($data_list): foreach($data_list as $fault):		
 				$centre = get_tabledata(TBL_CENTRES,true,array('ID'=> $fault->centre));	
-                		$equipment_type = get_tabledata(TBL_EQUIPMENT_TYPES,true,array('ID'=> $fault->equipment_type));
+				$equipment_type = get_tabledata(TBL_EQUIPMENT_TYPES,true,array('ID'=> $fault->equipment_type));
 				$equipment = get_tabledata(TBL_EQUIPMENTS,true,array('ID'=> $fault->equipment));
 				$fault_type = get_tabledata(TBL_FAULT_TYPES,true,array('ID'=> $fault->fault_type));
-                
 				
 				$row = array();
 				if(is_admin()):
@@ -1941,7 +1818,7 @@ if(is_admin()){
 				array_push($row, __($equipment->equipment_code));
 				if($fault->current_servicing_agency==""){
 					array_push($row, __($fault->time_of_fault));	
-				}else if($fault->current_servicing_agency!=""){
+				}else if($fault->current_servicing_agency != ""){
 					array_push($row, __($fault->current_servicing_agency));
 				}else{
 					array_push($row, __("NOTHING"));
@@ -2143,123 +2020,116 @@ if(is_admin()){
 				$query .= " `approved` = '".$_POST['approved']."' ";
 			}
 			
-			if(isset($_POST['date_of_fault']) && $_POST['date_of_fault'] != '' &&  $_POST['date_of_fault'] != 'undefined' && isset($_POST['date_of_fault2']) && $_POST['date_of_fault2'] != '' &&  $_POST['date_of_fault2'] != 'undefined' ){
+			if(isset($_POST['fault_date_from']) && $_POST['fault_date_from'] != '' && $_POST['fault_date_from'] != 'undefined' && isset($_POST['fault_date_to']) && $_POST['fault_date_to'] != '' &&  $_POST['fault_date_to'] != 'undefined'){
 				$query .= ($query != '') ? ' AND ' : ' WHERE ';
-				$query .= " `date_of_fault` BETWEEN '".$_POST['date_of_fault']."' AND '".$_POST['date_of_fault2']."' ";
-			}
-			
+				$query .= " ( `date_of_fault` >= '".date( 'Y-m-d', strtotime($_POST['fault_date_from']) )."' AND `date_of_fault` <= '".date( 'Y-m-d', strtotime($_POST['fault_date_to']) )."' ) ";
+			}else if(isset($_POST['fault_date_from']) && $_POST['fault_date_from'] != '' &&  $_POST['fault_date_from'] != 'undefined' && ( !isset($_POST['fault_date_to']) || $_POST['fault_date_to'] == '' ||  $_POST['fault_date_to'] == 'undefined' ) ){
+				$query .= ($query != '') ? ' AND ' : ' WHERE ';
+				$query .= "  `date_of_fault` >= '".date( 'Y-m-d', strtotime($_POST['fault_date_from']) )."' ";
+			}else if( (!isset($_POST['fault_date_from']) || $_POST['fault_date_from'] == '' || $_POST['fault_date_from'] == 'undefined' ) && isset($_POST['fault_date_to']) && $_POST['fault_date_to'] != '' &&  $_POST['fault_date_to'] != 'undefined'){
+				$query .= ($query != '') ? ' AND ' : ' WHERE ';
+				$query .= "  `date_of_fault` <= '".date( 'Y-m-d', strtotime($_POST['fault_date_to']) )."' ";
+			}			
 			
 			$recordsTotal = get_tabledata(TBL_FAULTS,true,array(), $query, 'COUNT(ID) as count');
 			$recordsTotal = $recordsTotal->count;
 			$data_list = get_tabledata(TBL_FAULTS,false,array(),$query.$sql);
 			$recordsFiltered = $recordsTotal;
 					
-			if($data_list): foreach($data_list as $fault):
-				
-                	$centre = get_tabledata(TBL_CENTRES,true,array('ID'=> $fault->centre));
-				
-                	$equipment_type = get_tabledata(TBL_EQUIPMENT_TYPES,true,array('ID'=> $fault->equipment_type));
-			$equipment = get_tabledata(TBL_EQUIPMENTS,true,array('ID'=> $fault->equipment));
-			$fault_type = get_tabledata(TBL_FAULT_TYPES,true,array('ID'=> $fault->fault_type));
-                
-			$row = array();
-			if(is_admin()):
-				ob_start();
-				?>
-				<div class="text-center">
-					<label><input type="checkbox" class="js-switch" <?php checked($fault->approved, 1);?> onclick="approve_switch(this);" data-id="<?php echo $fault->ID;?>" data-action="fault_approve_change"/></label>
-				</div>
-				<?php 
-				$checkbox = ob_get_clean();
-				array_push($row, $checkbox);
-			endif;
-				array_push($row, __($fault->name));
-			
-			
-if($fault->centre_name!=""){
-				array_push($row, __($fault->centre_name));
-}else{
-				array_push($row, __($centre->name));
-}
-			
-			
+			if($data_list):
+				foreach($data_list as $fault):
+					$centre = get_tabledata(TBL_CENTRES,true,array('ID'=> $fault->centre));
+					$equipment_type = get_tabledata(TBL_EQUIPMENT_TYPES,true,array('ID'=> $fault->equipment_type));
+					$equipment = get_tabledata(TBL_EQUIPMENTS,true,array('ID'=> $fault->equipment));
+					$fault_type = get_tabledata(TBL_FAULT_TYPES,true,array('ID'=> $fault->fault_type));
+					$row = array();
+					if(is_admin()):
+						ob_start();
+						?>
+						<div class="text-center">
+							<label><input type="checkbox" class="js-switch" <?php checked($fault->approved, 1);?> onclick="approve_switch(this);" data-id="<?php echo $fault->ID;?>" data-action="fault_approve_change"/></label>
+						</div>
+						<?php 
+						$checkbox = ob_get_clean();
+						array_push($row, $checkbox);
+					endif;
+					array_push($row, __($fault->name));
+					
+					if($fault->centre_name != ""){
+						array_push($row, __($fault->centre_name));
+					}else{
+						array_push($row, __($centre->name));
+					}
 
+					if($fault->e_type_name != ""){
+						array_push($row, __($fault->e_type_name));	
+					}else{
+						array_push($row, __($equipment_type->name));
+					}	
+								
+					if($fault->equipment_name != ""){
+						array_push($row, __($fault->equipment_name));	
+					}else{
+						array_push($row, __($equipment->name));
+					}
 
-if($fault->e_type_name!=""){
-				array_push($row, __($fault->e_type_name));	
-}else{
-				array_push($row, __($equipment_type->name));
-}
-	
-			
-			
-if($fault->equipment_name!=""){
-				array_push($row, __($fault->equipment_name));	
-}else{
-				array_push($row, __($equipment->name));
-}
-			
-
-			
-			
-if($fault->f_type_name!=""){
-				array_push($row, __($fault->f_type_name));	
-}else{
-				array_push($row, __($fault_type->name));
-}
-			
-				
-				array_push($row, date('d M,Y',strtotime($fault->date_of_fault)));
-				//array_push($row, date('d M, Y',$fault->date_of_fault));
-				array_push($row, date('d M,Y',strtotime($fault->created_on)));
-				
-				ob_start();
-				?>
-				<div class="text-center">
-					<?php if(is_admin()): ?>
-						<a href="<?php echo site_url();?>/view-fault/?id=<?php echo $fault->ID;?>" class="btn btn-dark btn-xs">
-							<i class="fa fa-edit"></i> View
-						</a>
-						<a href="<?php echo site_url();?>/edit-fault/?id=<?php echo $fault->ID;?>" class="btn btn-dark btn-xs">
-							<i class="fa fa-edit"></i> Edit
-						</a>
-						<a href="#" class="btn btn-danger btn-xs" onclick="delete_function(this);" data-id="<?php echo $fault->ID;?>" data-action="delete_fault">
-							<i class="fa fa-trash"></i> Delete
-						</a>
-					<?php else:
-						$future = date('d-m-Y',strtotime(' + 2 day', strtotime($fault->created_on)));
-						$today = date('d-m-Y');
-						if($today == $future):
-							if( user_can('view_fault') ): ?>
+					if($fault->f_type_name != ""){
+						array_push($row, __($fault->f_type_name));	
+					}else{
+						array_push($row, __($fault_type->name));
+					}
+					
+					array_push($row, date('d M,Y',strtotime($fault->date_of_fault)));
+					//array_push($row, date('d M, Y',$fault->date_of_fault));
+					array_push($row, date('d M,Y',strtotime($fault->created_on)));
+					
+					ob_start();
+					?>
+					<div class="text-center">
+						<?php if(is_admin()): ?>
 							<a href="<?php echo site_url();?>/view-fault/?id=<?php echo $fault->ID;?>" class="btn btn-dark btn-xs">
 								<i class="fa fa-edit"></i> View
 							</a>
-							<?php endif; ?>
-						<?php else: ?>
-							<?php if($this->current__user__id == $fault->user_id):
-								if( user_can('edit_fault') ): ?>
-								<a href="<?php echo site_url();?>/edit-fault/?id=<?php echo $fault->ID;?>" class="btn btn-dark btn-xs">
-									<i class="fa fa-edit"></i> Edit
-								</a>
-								<?php endif; ?>
-								
-								<?php if( user_can('delete_fault') ): ?>
-								<a href="#" class="btn btn-danger btn-xs" onclick="javascript:delete_function(this);" data-id="<?php echo $fault->ID;?>" data-action="delete_fault"><i class="fa fa-trash"></i> Delete</a>
-								<?php endif; ?>
-							<?php else: ?>
-								<?php if( user_can('view_fault') ): ?>
+							<a href="<?php echo site_url();?>/edit-fault/?id=<?php echo $fault->ID;?>" class="btn btn-dark btn-xs">
+								<i class="fa fa-edit"></i> Edit
+							</a>
+							<a href="#" class="btn btn-danger btn-xs" onclick="delete_function(this);" data-id="<?php echo $fault->ID;?>" data-action="delete_fault">
+								<i class="fa fa-trash"></i> Delete
+							</a>
+						<?php else:
+							$future = date('d-m-Y',strtotime(' + 2 day', strtotime($fault->created_on)));
+							$today = date('d-m-Y');
+							if($today == $future):
+								if( user_can('view_fault') ): ?>
 								<a href="<?php echo site_url();?>/view-fault/?id=<?php echo $fault->ID;?>" class="btn btn-dark btn-xs">
 									<i class="fa fa-edit"></i> View
 								</a>
 								<?php endif; ?>
+							<?php else: ?>
+								<?php if($this->current__user__id == $fault->user_id):
+									if( user_can('edit_fault') ): ?>
+									<a href="<?php echo site_url();?>/edit-fault/?id=<?php echo $fault->ID;?>" class="btn btn-dark btn-xs">
+										<i class="fa fa-edit"></i> Edit
+									</a>
+									<?php endif; ?>
+									
+									<?php if( user_can('delete_fault') ): ?>
+									<a href="#" class="btn btn-danger btn-xs" onclick="javascript:delete_function(this);" data-id="<?php echo $fault->ID;?>" data-action="delete_fault"><i class="fa fa-trash"></i> Delete</a>
+									<?php endif; ?>
+								<?php else: ?>
+									<?php if( user_can('view_fault') ): ?>
+									<a href="<?php echo site_url();?>/view-fault/?id=<?php echo $fault->ID;?>" class="btn btn-dark btn-xs">
+										<i class="fa fa-edit"></i> View
+									</a>
+									<?php endif; ?>
+								<?php endif; ?>
 							<?php endif; ?>
 						<?php endif; ?>
-					<?php endif; ?>
-				</div>
-				<?php 
-				$action = ob_get_clean();
-				array_push($row, $action);
-				$data[] = $row;
+					</div>
+					<?php 
+					$action = ob_get_clean();
+					array_push($row, $action);
+					$data[] = $row;
 				endforeach;
 			endif;
 			
@@ -2272,8 +2142,7 @@ if($fault->f_type_name!=""){
 			);
 			return json_encode($response);
 		}
-			
-		
+				
 		public function fetch_all_faults_process2(){
 			 if(is_admin()){
 				 $orders_columns = array(
@@ -2333,7 +2202,7 @@ if($fault->f_type_name!=""){
 				$data_list = get_tabledata(TBL_FAULTS,false,array('approved'=>'0'),$query.$sql);
 				$recordsFiltered = $recordsTotal;
 			}
-						
+			
 			if($data_list): foreach($data_list as $fault):
 				$centre = get_tabledata(TBL_CENTRES,true,array('ID'=> $fault->centre));	
 				$equipment_type = get_tabledata(TBL_EQUIPMENT_TYPES,true,array('ID'=> $fault->equipment_type));
