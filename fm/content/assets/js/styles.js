@@ -925,9 +925,8 @@ $(document).ready(function() {
 				type : 'POST',
 				data: {
 					action: 'fetch_equipment_data',
-					id: $('select[name="equipment_type"]').val(),
-					decommed: 0,
-					equipment_type: $('select[name="centre"]').val(),
+					id: $('.custom-filters select[name="equipment_type"]').val(),
+					centre: $(' .custom-filters select[name="centre"]').val(),
 				},
 				url  : ajax_url,
 				dataType: 'json',
