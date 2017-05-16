@@ -233,6 +233,11 @@
 				echo $Fault->fetch__equipment__data__process();
 				break;
 
+
+			case 'fetch_equipment_data2':
+				echo $Fault->fetch__equipment__data__process2();
+				break;
+
 			case 'fetch_service_agent_data':
 				echo $Fault->fetch__service__agent__data__process();
 				break;	

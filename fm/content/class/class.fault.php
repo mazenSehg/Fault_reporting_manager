@@ -1550,6 +1550,26 @@ if( !class_exists('Fault') ):
 			endif;
 			return json_encode($return);
 		}
+		
+		
+				public function fetch__equipment__data__process2(){
+			extract($_POST);
+			$id = trim($id);
+			$return = array();
+			if($id != ''):
+				$data = '';
+				$args = array('approved' => '1');
+				if(isset($decommed) && $decommed != '')
+					$args['decommed'] = $decommed;
+				
+				if(isset($id) && $id != '')
+				$data = get_tabledata(TBL_MODELS, false, array('manufacturer'=> $id ,'approved' => '1') );
+				$option_data = get_option_data($data,array('ID','name'));
+				$return['models_html'] = get_options_list($option_data);
+
+			endif;
+			return json_encode($return);
+		}
 
 		public function fetch__service__agent__data__process(){
 			extract($_POST);
