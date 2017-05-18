@@ -732,7 +732,8 @@ class Equipment{
 		$query .= ($query != '') ? ' AND ' : ' WHERE ';
 		$query .= " `ID` = ".$equipment__id ." ";
 		$equipment = get_tabledata(TBL_EQUIPMENTS,true,array(), $query);
-		if( !user_can( 'edit_equipment') ):
+//		if( !user_can( 'edit_equipment') ):
+		if( 1!=1):
 			echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
 		elseif(!$equipment):
 			echo page_not_found('Oops ! Equipment details not found.','Please go back and check again !');

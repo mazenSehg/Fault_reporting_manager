@@ -375,17 +375,10 @@ if( !class_exists('Fault') ):
 				</div>
 				<div class="row">
 					<div class="form-group col-sm-6 col-xs-12">
-					<label for="current-servicing-agency">Current servicing agency </label>
-						<select name="service_agent" class="form-control select-service-agent select_single require" tabindex="-1" data-placeholder="Choose service agent">
-							<?php
-							$query = "WHERE `approved` = '1' ";
-							$data = get_tabledata(TBL_SERVICE_AGENTS, false, array(),$query);
-							$option_data = get_option_data($data,array('ID','name'));
-							echo get_options_list($option_data , maybe_unserialize($fault->current_servicing_agency));
-							?>
-							<option selected="selected" value="<?php $fault->current_servicing_agency ?>"><?php echo $fault->current_servicing_agency ?></option>
-						</select>
+						<label for="name">Current Servicing Agency <span class="required">*</span></label>
+						<input type="text" name="service_agent" class="form-control require" value="<?php _e($fault->current_servicing_agency);?>" readonly="readonly" />
 					</div>
+					
 					<div class="form-group col-sm-6 col-xs-12">
 						<label for="time-of-fault">Servicing agency at time of fault <span class="required">*</span></label>
 						<input type="text" name="time_of_fault" class="form-control" value="<?php _e($fault->time_of_fault);?>" />
@@ -939,9 +932,19 @@ if( !class_exists('Fault') ):
 									echo get_options_list($option_data);											
 								}
 							}else{
-								$data = get_tabledata(TBL_EQUIPMENTS,false,array('approved'=>'1'), 'ORDER BY `name` ASC');
-								$option_data = get_option_data($data,array('ID','name'));
-								echo get_options_list($option_data);
+$query = '';
+if(!is_admin()):
+	$centres = maybe_unserialize($this->current__user->centre);
+	if(!empty($centres)){
+		$centres = implode(',',$centres);
+		$query = "WHERE `centre` IN (".$centres.")";
+	}
+endif;
+$query .= ($query != '') ? ' AND ' : ' WHERE ';
+$query .= " `approved` = '1' ORDER BY `name` ASC";
+$data = get_tabledata(TBL_EQUIPMENTS,false,array(),$query);
+$option_data = get_option_data($data,array('ID','name'));
+echo get_options_list($option_data);
 							}
 							?>
 							</select>
@@ -1304,8 +1307,7 @@ if( !class_exists('Fault') ):
 				'message' => 'Could not update fault, Please try again.',
 				'reset_form' => 0
 			);
-
-			if( user_can('edit_fault') ):
+if(is_admin()){
 				$doh = ( isset($doh) ) ? 1 : 0;
 				$update_args = array(
 					'centre' => $centre,
@@ -1314,7 +1316,7 @@ if( !class_exists('Fault') ):
 					'equipment' => $equipment,
 					'fault_type' => $fault_type,
 					'date_of_fault' => date('Y-m-d h:i:s',strtotime($date_of_fault) ) ,
-					'current_servicing_agency' => $current_servicing_agency,
+					'current_servicing_agency' => $service_agent,
 					'time_of_fault' => $time_of_fault,
 					'description_of_fault' => $description_of_fault,
 					'service_call_no' => $service_call_no,
@@ -1333,7 +1335,43 @@ if( !class_exists('Fault') ):
 					'satisfied_service_engineer' => $satisfied_service_engineer,
 					'satisfied_equipment' => $satisfied_equipment,
 					'approved' => $approved
+				);	
+	
+}
+			else
+			{
+				if( user_can('edit_fault') ):
+				$doh = ( isset($doh) ) ? 1 : 0;
+				$update_args = array(
+					'centre' => $centre,
+					'name' => $name,
+					'equipment_type' => $equipment_type,
+					'equipment' => $equipment,
+					'fault_type' => $fault_type,
+					'date_of_fault' => date('Y-m-d h:i:s',strtotime($date_of_fault) ) ,
+					'current_servicing_agency' => $service_agent,
+					'time_of_fault' => $time_of_fault,
+					'description_of_fault' => $description_of_fault,
+					'service_call_no' => $service_call_no,
+					'action_taken' => $action_taken,
+					'fault_corrected_by_user' => (isset($fault_corrected_by_user)) ? $fault_corrected_by_user : 2,
+					'to_fix_at_next_service_visit' => (isset($to_fix_at_next_service_visit)) ? $to_fix_at_next_service_visit : 2,
+					'engineer_called_out' => (isset($engineer_called_out)) ? $engineer_called_out : 2,
+					'adverse_incident_report' => $adverse_incident_report,
+					'equipment_status' => $equipment_status,
+					'equipment_downtime' => $equipment_downtime,
+					'screening_downtime' => $screening_downtime,
+					'repeat_images' => $repeat_images,
+					'cancelled_women' => $cancelled_women,
+					'technical_recalls' => $technical_recalls,
+					'satisfied_servicing_organisation'=> $satisfied_servicing_organisation,
+					'satisfied_service_engineer' => $satisfied_service_engineer,
+					'satisfied_equipment' => $satisfied_equipment,
+					'approved' => 0
 				);
+								endif;
+}
+
 				if( $doh == 1){
 					$update_args['supplier_enquiry'] = $supplier_enquiry;
 					$update_args['supplier_action'] = $supplier_action;
@@ -1356,7 +1394,7 @@ if( !class_exists('Fault') ):
 					$return['status'] = 1;
 					$return['message_heading'] = 'Success !';
 					$return['message'] = 'Fault has been updated successfully.';
-				endif;
+
 			endif;
 			return json_encode($return);
 		}

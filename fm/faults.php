@@ -94,7 +94,9 @@ $bob5 = mysql_real_escape_string(trim($f_type));
 						<div class="right_col" role="main">
 							<div class="">
 								<?php if( user_can('add_fault') ): ?> <a href="<?php echo site_url();?>/add-new-fault/" class="btn btn-dark btn-sm">Add New Fault</a>
-									<?php endif; ?>
+									<?php endif; 
+
+								?>
 										<div class="clearfix"></div>
 							</div>
 							<div class="x_content">
