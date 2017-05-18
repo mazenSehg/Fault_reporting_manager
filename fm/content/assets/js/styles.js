@@ -941,10 +941,33 @@ $(document).ready(function() {
 					$('.ajax-datatable-buttons > thead > tr th:nth-child(1)').trigger('click');
 				}
 			});
-		}else{
+		}else if(attr_name == 'manufacturer'){
+						$.ajax({ 
+				type : 'POST',
+				data: {
+					action: 'fetch_equipment_data2',
+					id: $('.custom-filters select[name="manufacturer"]').val(),
+				},
+				url  : ajax_url,
+				dataType: 'json',
+				success: function(res){
+					console.log(res);
+					$select_multiple.select2("destroy");
+					$select_single.select2("destroy");
+					$('select[name="model"]').html(res['models_html']);
+					$select_single.select2({ allowClear: true });
+					$select_multiple.select2({ allowClear: true });
+					$('.ajax-datatable-buttons > thead > tr th:nth-child(1)').trigger('click');
+				}
+			});
+		}
+		
+		
+		else{
 			$('.ajax-datatable-buttons > thead > tr th:nth-child(1)').trigger('click');
 		}
 	});
+	
 	$('.custom-filters input').on('blur',function(){
 		setTimeout(function(){
 			$('.ajax-datatable-buttons > thead > tr th:nth-child(1)').trigger('click');
