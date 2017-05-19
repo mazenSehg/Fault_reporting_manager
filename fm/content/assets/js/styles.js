@@ -191,6 +191,8 @@ $(document).ready(function() {
 	
 	$select_multiple = $('.select_multiple').select2({ allowClear: true });
 	
+	var d = new Date();
+	var todayDate = '' + (d.getMonth() + 1) + ' ' + d.getDate() + ',' + d.getFullYear();
 	$('.input-datepicker').daterangepicker({
 		format: 'MMMM DD,YYYY',
 		singleDatePicker: true,
@@ -198,6 +200,15 @@ $(document).ready(function() {
 		calender_style: "picker_1"
 	});
 	
+	
+		$('.input-datepicker-today').daterangepicker({
+		format: 'MMMM DD,YYYY',
+		singleDatePicker: true,
+		showDropdowns: true,
+		minDate: 'May 01 ,1950',
+		maxDate: todayDate,
+		calender_style: "picker_1"
+	});
 	var radiobox_names = ['fault_corrected_by_user' ,'to_fix_at_next_service_visit','engineer_called_out'];
 	var radiobox_check = false;
 	$.each( radiobox_names, function( key, value ) {

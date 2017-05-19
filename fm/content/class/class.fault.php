@@ -919,34 +919,36 @@ if( !class_exists('Fault') ):
 							<label for="equipment">Equipment</label>
 							<select name="equipment" class="form-control select_single" tabindex="-1" data-placeholder="Choose equipment">
 							<?php
+								$query = '';
+								if(!is_admin()):
+									$centres = maybe_unserialize($this->current__user->centre);
+									if(!empty($centres)){
+										$centres = implode(',',$centres);
+										$query = "WHERE `centre` IN (".$centres.")";
+									}
+								endif;
+								$query .= ($query != '') ? ' AND ' : ' WHERE ';
 							
-							if(isset($_POST['equipment_type']) && $_POST['equipment_type'] != ''  && $_POST['equipment_type'] != 'undefined'){
+								if(isset($_POST['equipment_type']) && $_POST['equipment_type'] != ''  && $_POST['equipment_type'] != 'undefined'){
 
-								if(isset($_POST['centre']) && $_POST['centre'] != '' && $_POST['centre'] != 'undefined'){
-									$data = get_tabledata(TBL_EQUIPMENTS,false,array('equipment_type'=> $_POST['equipment_type'], 'centre' => $_POST['centre'],'approved'=>'1'), 'ORDER BY `name` ASC');
+									if(isset($_POST['centre']) && $_POST['centre'] != '' && $_POST['centre'] != 'undefined'){
+										$query = " WHERE `equipment_type` = '".$_POST['equipment_type']."' AND `centre` = '".$_POST['centre']."' AND `approved` = '1' ORDER BY `name` ASC";
+										$data = get_tabledata(TBL_EQUIPMENTS,false,array(),$query);
+										$option_data = get_option_data($data,array('ID','name'));
+										echo get_options_list($option_data);	
+									}else{
+										$query .= " `equipment_type` = '".$_POST['equipment_type']."' AND `approved` = '1' ORDER BY `name` ASC";
+										$data = get_tabledata(TBL_EQUIPMENTS,false,array(),$query);
+										$option_data = get_option_data($data,array('ID','name'));
+										echo get_options_list($option_data);							
+									}
+								}else{
+									$query .= " `approved` = '1' ORDER BY `name` ASC";
+									$data = get_tabledata(TBL_EQUIPMENTS,false,array(),$query);
 									$option_data = get_option_data($data,array('ID','name'));
 									echo get_options_list($option_data);
-								}else{
-									$data = get_tabledata(TBL_EQUIPMENTS,false,array('equipment_type'=> $_POST['equipment_type'],'approved'=>'1'), 'ORDER BY `name` ASC');
-									$option_data = get_option_data($data,array('ID','name'));
-									echo get_options_list($option_data);											
 								}
-							}else{
-$query = '';
-if(!is_admin()):
-	$centres = maybe_unserialize($this->current__user->centre);
-	if(!empty($centres)){
-		$centres = implode(',',$centres);
-		$query = "WHERE `centre` IN (".$centres.")";
-	}
-endif;
-$query .= ($query != '') ? ' AND ' : ' WHERE ';
-$query .= " `approved` = '1' ORDER BY `name` ASC";
-$data = get_tabledata(TBL_EQUIPMENTS,false,array(),$query);
-$option_data = get_option_data($data,array('ID','name'));
-echo get_options_list($option_data);
-							}
-							?>
+								?>
 							</select>
 						</div>
 						
@@ -975,12 +977,12 @@ echo get_options_list($option_data);
 					<div class="row custom-filters">
 						<div class="form-group col-sm-2 col-xs-6 col col-sm-push-2">
 							<label for="date_of_fault"><?php _e('Fault Date From');?></label>
-							<input type="text" name="fault_date_from" class="form-control input-datepicker" readonly="readonly"/>
+							<input type="text" name="fault_date_from" class="form-control input-datepicker-today" readonly="readonly"/>
 						</div>
 						
 						<div class="form-group col-sm-2 col-xs-6 col-sm-push-2">
 							<label for="date_of_fault"><?php _e('Fault Date To');?></label>
-							<input type="text" name="fault_date_to" class="form-control input-datepicker" readonly="readonly"/>
+							<input type="text" name="fault_date_to" class="form-control input-datepicker-today" readonly="readonly"/>
 						</div>
 						
 						<div class="col-xs-6 col-sm-2 col-sm-pull-4">
@@ -1543,20 +1545,35 @@ if(is_admin()){
 			$return = array();
 
 			$data = '';
-			$args = array('approved' => '1');
-			if(isset($decommed) && $decommed != '')
-				$args['decommed'] = $decommed;
 			
-			if(isset($id) && $id != '')
-				$args['centre'] = $id;
+			$query = '';
+			if(isset($id) && $id != ''):
+				$query .= " WHERE `centre = '".$id."' ";
+			else:
+				if(!is_admin()):
+					$centres = maybe_unserialize($this->current__user->centre);
+					if(!empty($centres)){
+						$centres = implode(',',$centres);
+						$query .= "WHERE `centre` IN (".$centres.")";
+					}
+				endif;
+			endif;
 				
-			if(isset($equipment_type) && $equipment_type != '')
-				$args['equipment_type'] = $equipment_type;
-				
-			$data = get_tabledata(TBL_EQUIPMENTS,false,$args, 'ORDER BY `name` ASC');
+			if(isset($decommed) && $decommed != ''){
+				$query .= ($query != '') ? ' AND ' : ' WHERE ';
+				$query .= " `decommed` = '".$decommed."' ";
+			}
+			
+			if(isset($equipment_type) && $equipment_type != ''){
+				$query .= ($query != '') ? ' AND ' : ' WHERE ';
+				$query .= " `equipment_type` = '".$equipment_type."' ";
+			}
+
+			$query .= ($query != '') ? ' AND ' : ' WHERE ';
+			$query .= " `approved` = '1' ORDER BY `name` ASC";
+			$data = get_tabledata(TBL_EQUIPMENTS,false,array(),$query);
 			$option_data = get_option_data($data,array('ID','name'));
 			$return['equipment_html'] = get_options_list($option_data);
-
 			return json_encode($return);
 		}
 
