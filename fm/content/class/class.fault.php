@@ -1577,28 +1577,43 @@ if(is_admin()){
 			return json_encode($return);
 		}
 
+
 		public function fetch__equipment__data__process(){
 			extract($_POST);
 			$id = trim($id);
 			$return = array();
+			
+			$query = $data = '';
+			if(isset($centre) && $centre != ''):
+				$query .= " WHERE `centre = '".$centre."' ";
+			else:
+				if(!is_admin()):
+					$centres = maybe_unserialize($this->current__user->centre);
+					if(!empty($centres)){
+						$centres = implode(',',$centres);
+						$query .= "WHERE `centre` IN (".$centres.")";
+					}
+				endif;
+			endif;
+				
+			if(isset($decommed) && $decommed != ''){
+				$query .= ($query != '') ? ' AND ' : ' WHERE ';
+				$query .= " `decommed` = '".$decommed."' ";
+			}
+			
+			if(isset($id) && $id != ''){
+				$query .= ($query != '') ? ' AND ' : ' WHERE ';
+				$query .= " `equipment_type` = '".$id."' ";
+			}
+
+			$query .= ($query != '') ? ' AND ' : ' WHERE ';
+			$query .= " `approved` = '1' ORDER BY `name` ASC";
+			$data = get_tabledata(TBL_EQUIPMENTS,false,array(),$query);
+			$option_data = get_option_data($data,array('ID','name'));
+			$return['equipment_html'] = get_options_list($option_data);
 			if($id != ''):
 				$data = '';
-				$args = array('approved' => '1');
-				if(isset($decommed) && $decommed != '')
-					$args['decommed'] = $decommed;
-				
-				if(isset($id) && $id != '')
-					$args['equipment_type'] = $id;
-					
-				if(isset($centre) && $centre != '')
-					$args['centre'] = $centre;
-					
-				$data = get_tabledata(TBL_EQUIPMENTS,false,$args, 'ORDER BY `name` ASC');
-				$option_data = get_option_data($data,array('ID','name'));
-				$return['equipment_html'] = get_options_list($option_data);
-
-				$data = '';
-				$query= "where `equipment_type` LIKE '%".$id."%' AND `approved` = '1' ORDER BY `name` ASC";
+				$query = "WHERE `equipment_type` LIKE '%".$id."%' AND `approved` = '1' ORDER BY `name` ASC";
 				$data = get_tabledata(TBL_FAULT_TYPES, false, array() , $query);
 				$option_data = get_option_data($data,array('ID','name'));
 				$return['fault_type_html'] = get_options_list($option_data);

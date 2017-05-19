@@ -931,7 +931,7 @@ $(document).ready(function() {
 	
 	$('.custom-filters select').on('change',function(){
 		var attr_name = $(this).attr('name');
-		if(attr_name == 'centre' || attr_name == 'equipment_type'){
+	if(attr_name == 'centre' || attr_name == 'equipment_type'){
 			$.ajax({ 
 				type : 'POST',
 				data: {
