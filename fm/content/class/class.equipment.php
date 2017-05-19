@@ -268,7 +268,7 @@ class Equipment{
 							*
 						</span>
 					</label>
-					<select name="model" class="form-control select_model select_single" tabindex="-1" data-placeholder="Choose model">
+					<select name="model" class="form-control select_model select_single require" tabindex="-1" data-placeholder="Choose model">
 						<option value="">
 							Choose model
 						</option>

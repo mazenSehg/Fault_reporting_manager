@@ -350,7 +350,8 @@ if($cent!=""&&$appr!=""&&$eqptp!=""&&$eqp!=""){
 while ($rowr = mysql_fetch_row($values)) {
  for ($j=0;$j<$i;$j++) {
 	 if($rowr[$j]!=null||$rowr[$j]!=""||strlen($rowr[$j])>0){
-  $csv_output .= $rowr[$j]."\t";
+		 $field = preg_replace('/[\n\r]+/', '', trim($rowr[$j]));
+  $csv_output .= $field."\t";
 }else{
 	  $csv_output .=""."\t";
 }
