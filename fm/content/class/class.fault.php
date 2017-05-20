@@ -1585,7 +1585,7 @@ if(is_admin()){
 			
 			$query = $data = '';
 			if(isset($centre) && $centre != ''):
-				$query .= " WHERE `centre = '".$centre."' ";
+				$query .= " WHERE `centre` = '".$centre."' ";
 			else:
 				if(!is_admin()):
 					$centres = maybe_unserialize($this->current__user->centre);
