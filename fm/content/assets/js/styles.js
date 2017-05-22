@@ -206,7 +206,7 @@ $(document).ready(function() {
 		singleDatePicker: true,
 		showDropdowns: true,
 		minDate: 'May 01 ,1950',
-		maxDate: todayDate,
+		maxDate: 'December 31 ,2017',
 		calender_style: "picker_1"
 	});
 	var radiobox_names = ['fault_corrected_by_user' ,'to_fix_at_next_service_visit','engineer_called_out'];
