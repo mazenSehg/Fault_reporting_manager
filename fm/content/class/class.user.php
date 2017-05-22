@@ -817,11 +817,7 @@ if( !class_exists('User') ):
 		public function user__login__process(){
 			global $device;
 			extract($_POST);
-			
-			
-if(eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$", $user_name)) { 
-
-				if(email_exists($user_name)){
+			if(email_exists($user_name)){	
 				$user = get_user_by('email',$user_name);
 				if(check_password($user_pass,$user->ID)){
 					if(!is_user_active($user->ID)){
@@ -831,9 +827,9 @@ if(eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$"
 						$this->database->insert(TBL_ACCESS_LOG,
 							array(
 								'user_id' => $user->ID,
-								'ip_address'=> $_SERVER['REMOTE_ADDR'],
+								'ip_address' => $_SERVER['REMOTE_ADDR'],
 								'device' => $device,
-								'user_agent'=> $_SERVER ['HTTP_USER_AGENT']
+								'user_agent' => $_SERVER ['HTTP_USER_AGENT']
 							)
 						);
 						return 1;
@@ -844,37 +840,6 @@ if(eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$"
 			}else{
 				return 0;
 			}
-	
-	
-} 
-else { 
-			if(username_exists($user_name)){
-				$user = get_user_by('username',$user_name);
-				if(check_password($user_pass,$user->ID)){
-					if(!is_user_active($user->ID)){
-						return 2;
-					}else{
-						set_current_user($user->ID);
-						$this->database->insert(TBL_ACCESS_LOG,
-							array(
-								'user_id' => $user->ID,
-								'ip_address'=> $_SERVER['REMOTE_ADDR'],
-								'device' => $device,
-								'user_agent'=> $_SERVER ['HTTP_USER_AGENT']
-							)
-						);
-						return 1;
-					}
-				}else{
-					return 0;
-				}
-			}else{
-				return 0;
-			}
-} 
-
-			
-
 		}
 		
 		
@@ -902,136 +867,134 @@ else {
 			}
 		}
 
-public function add__user__process(){
+		public function add__user__process(){
 			extract($_POST);
 			$return = array(
 				'status' => 0,
-				'message_heading'=> 'Failed !',
+				'message_heading' => 'Failed !',
 				'message' => 'Could not create account, Please try again.',
 				'reset_form' => 0
 			);
-
+			
 			if(user_can('add_user')):
 				if(email_exists($user_email)):
-				$return['status'] = 2;
-				$return['message_heading'] = 'Email Already Exist';
-				$return['message'] = 'Email address you entered is already exists, please try another email address.';
-				$return['fields'] = array('user_email');
-			else:
-				if(!isset($centre))
-				$centre = '';
+					$return['status'] = 2;
+					$return['message_heading'] = 'Email Already Exist';
+					$return['message'] = 'Email address you entered is already exists, please try another email address.';
+					$return['fields'] = array('user_email');
+				else:
+					if(!isset($centre))
+						$centre = '';
+						
+					$user_pass = password_generator();
+					$salt = generateSalt();
+					$user_pass = hash('SHA256', encrypt($user_pass, $salt));
+					$salt = base64_encode($salt);
 
-				$user_pass = password_generator();
-				$guid = get_guid(TBL_USERS);
-				$result = $this->database->insert(TBL_USERS,
-					array(
-						'username' => $username,
-						'ID' => $guid,
-						'first_name' => $first_name,
-						'last_name' => $last_name,
-						'user_email' => $user_email,
-						'user_role' => $user_role,
-						'user_status'=> 1,
-						'user_pass' => set_password($user_pass),
-						'centre' => $centre,
-						'created_by' => $this->current__user__id,
-					)
-				);
-	
-
-	
-	
-				if($result):
-					$user__id = $guid;
-					update_user_meta($user__id,'gender',$gender);
-					update_user_meta($user__id,'dob',date('Y-m-d h:i:s',strtotime($dob) ) );
-					update_user_meta($user__id,'user_phone',$user_phone);
-					update_user_meta($user__id,'profile_img',$profile_img);
-					update_user_meta($user__id,'designation',$designation);
-					$notification_args = array(
-						'title' => 'New Admin Account Created',
-						'notification'=> 'You have successfully created a new admin account ('.ucfirst($first_name).' '.ucfirst($last_name).').',
+					$guid = get_guid(TBL_USERS);
+					$result = $this->database->insert(TBL_USERS,
+						array(
+							'ID' => $guid,
+							'first_name' => $first_name,
+							'last_name' => $last_name,
+							'user_email' => $user_email,
+							'user_role' => $user_role,
+							'user_status' => 1,
+							'user_pass' => $user_pass,
+							'user_salt' => $salt,
+							'created_by' => $this->current__user__id,
+						)
 					);
-					add_user_notification($notification_args);
-					$return['status'] = 1;
-					$return['message_heading'] = 'Success !';
-					$return['message'] = 'Account has been successfully created.';
-					$return['reset_form'] = 1;
+					if($result):
+						$user__id = $guid;
+						update_user_meta($user__id,'gender',$gender);
+						update_user_meta($user__id,'dob',date('Y-m-d h:i:s',strtotime($dob) ) );
+						update_user_meta($user__id,'user_phone',$user_phone);
+						update_user_meta($user__id,'profile_img',$profile_img);
+						$notification_args = array(
+							'title' => 'New Account Created',
+							'notification' => 'You have successfully created a new account ('.ucfirst($first_name).' '.ucfirst($last_name).').',
+						);
+						add_user_notification($notification_args);
+						$return['status'] = 1;
+						$return['message_heading'] = 'Success !';
+						$return['message'] = 'Account has been successfully created.';
+						$return['reset_form'] = 1;
 					endif;
 				endif;
 			endif;
-
+			
 			return json_encode($return);
 		}
 
 		public function update__user__process(){
 			extract($_POST);
-
+			
 			$return = array(
 				'status' => 0,
-				'message_heading'=> 'Failed !',
+				'message_heading' => 'Failed !',
 				'message' => 'Could not update account details, Please try again ',
 				'reset_form' => 0
 			);
-
+			
 			if(user_can('edit_user')):
 				$user = get_userdata($user_id);
 				if( is_value_exists(TBL_USERS,array('user_email' => $user_email),$user_id) ):
-				$return['status'] = 2;
-				$return['message_heading'] = 'Email Already Exist';
-				$return['message'] = 'Email address you entered is already exists, please try another email address.';
-				$return['fields'] = array('user_email');
-			else:
-				$check = false;
-				if(!isset($centre))
-					$centre = '';
-
-				$result = $this->database->update(TBL_USERS,
-					array(
-						'username' => $username,
-						'first_name' => $first_name,
-						'last_name' => $last_name,
-						'user_email' => $user_email,
-						'user_status'=> $user_status,
-						'user_role' => $user_role,
-						'centre' => $centre,
-					),
-					array('ID'=> $user_id)
-				);
-				$check = ($result) ? true : false;
-
-				$result1 = false;
-				if($user_pass != ''){
-					$result1 = $this->database->update(TBL_USERS,array('user_pass'=> set_password($user_pass)),array('ID'=> $user_id));
-				}
-				$check = ($result1) ? true : $check;
-				if($result1){
-					//update_user_meta($user_id,'reset_password',1);
-					$notification_args = array(
-						'title' => 'Admin Account Password Reset',
-						'notification'=> 'You have successfully changed ('.ucfirst($first_name).' '.ucfirst($last_name).') account password.',
+					$return['status'] = 2;
+					$return['message_heading'] = 'Email Already Exist';
+					$return['message'] = 'Email address you entered is already exists, please try another email address.';
+					$return['fields'] = array('user_email');
+				else:
+					$check = false;
+					if(!isset($centre))
+						$centre = '';
+					
+					
+					$result = $this->database->update(TBL_USERS,
+						array(
+							'first_name' => $first_name,
+							'last_name' => $last_name,
+							'user_email' => $user_email,
+							'user_status' => $user_status,
+							'user_role' => $user_role,
+						),
+						array('ID' => $user_id)
 					);
-					add_user_notification($notification_args);
-				}
-
-				if($check):
-					update_user_meta($user_id,'gender',$gender);
-					update_user_meta($user_id,'dob',date('Y-m-d h:i:s',strtotime($dob) ) );
-					update_user_meta($user_id,'user_phone',$user_phone);
-					update_user_meta($user_id,'profile_img',$profile_img);
-					update_user_meta($user_id,'designation',$designation);
-					$notification_args = array(
-						'title' => 'Admin Account Details updated',
-						'notification'=> 'You have successfully updated ('.ucfirst($first_name).' '.ucfirst($last_name).') account details.',
-					);
-					add_user_notification($notification_args);
-					$return['status'] = 1;
-					$return['message_heading'] = 'Success !';
-					$return['message'] = 'Account has been successfully updated.';
+					$check = ($result) ? true : false;
+				
+					$result1 = false;
+					if($user_pass != ''){
+						$salt = generateSalt();
+						$user_pass = hash('SHA256', encrypt($user_pass, $salt));
+						$salt = base64_encode($salt);
+						$result1 = $this->database->update(TBL_USERS,array('user_pass' => $user_pass, 'user_salt' => $salt),array('ID' => $user_id));
+					}
+					$check = ($result1) ? true : $check;
+					if($result1){
+						$notification_args = array(
+							'title' => 'User Password Reset',
+							'notification' => 'You have successfully changed ('.ucfirst($first_name).' '.ucfirst($last_name).') account password.',
+						);
+						add_user_notification($notification_args);
+					}
+			
+					if($check):
+						update_user_meta($user_id,'gender',$gender);
+						update_user_meta($user_id,'dob',date('Y-m-d h:i:s',strtotime($dob) ) );
+						update_user_meta($user_id,'user_phone',$user_phone);
+						update_user_meta($user_id,'profile_img',$profile_img);
+						$notification_args = array(
+							'title' => 'Account Details updated',
+							'notification' => 'You have successfully updated ('.ucfirst($first_name).' '.ucfirst($last_name).') account details.',
+						);
+						add_user_notification($notification_args);
+						$return['status'] = 1;
+						$return['message_heading'] = 'Success !';
+						$return['message'] = 'Account has been successfully updated.';
 					endif;
 				endif;
 			endif;
-
+			
 			return json_encode($return);
 		}
 
@@ -1055,30 +1018,28 @@ public function add__user__process(){
 
 		public function account__status__change__process(){
 			extract($_POST);
-			$id = trim($id);
 			$return = array(
 				'status' => 0,
-				'message_heading'=> 'Failed !',
+				'message_heading' => 'Failed !',
 				'message' => 'Could not update user account details, Please try again ',
 				'reset_form' => 0
 			);
 			if(is_admin() && $this->current__user__id != $id):
-				$user = get_userdata($id);
-				$args = array('ID'=> $id);
-				$result = $this->database->update(TBL_USERS,array('user_status'=> $status),$args);
-
+				$user = get_userdata($id);	
+				$args = array('ID' => $id);
+				$result = $this->database->update(TBL_USERS,array('user_status' => $status),$args);
+			
 				if($result):
 					if($status == 0){
 						$notification_args = array(
 							'title' => ucfirst($user->user_role).' Account Disabled',
-							'notification'=> 'You have successfully disbled ('.ucfirst($user->first_name).' '.ucfirst($user->last_name).') account.',
+							'notification' => 'You have successfully disbled ('.ucfirst($user->first_name).' '.ucfirst($user->last_name).') account.',
 						);
 						$return['message'] = 'You have successfully disbled ('.ucfirst($user->first_name).' '.ucfirst($user->last_name).') account.';
-					}
-					else{
+					}else{
 						$notification_args = array(
 							'title' => ucfirst($user->user_role).' Account Enabled',
-							'notification'=> 'You have successfully enabled ('.ucfirst($user->first_name).' '.ucfirst($user->last_name).') account.',
+							'notification' => 'You have successfully enabled ('.ucfirst($user->first_name).' '.ucfirst($user->last_name).') account.',
 						);
 						$return['message'] = 'You have successfully enabled ('.ucfirst($user->first_name).' '.ucfirst($user->last_name).') account.';
 					}
@@ -1092,16 +1053,15 @@ public function add__user__process(){
 
 		public function delete__user__process(){
 			extract($_POST);
-			$id = trim($id);
-			if($this->current__user__id != $id):
-				$user = get_userdata($id);
-				$args = array('ID'=> $id);
+			if(is_admin() && $this->current__user__id != $id):
+				$user = get_userdata($id);	
+				$args  = array('ID' => $id);
 				$result = $this->database->delete(TBL_USERS,$args);
 				if($result):
-					$this->database->delete(TBL_USERMETA,array('user_id'=> $id));
+					$this->database->delete(TBL_USERMETA,array('user_id' => $id));
 					$notification_args = array(
 						'title' => 'Account deleted',
-						'notification'=> 'You have successfully deleted ('.ucfirst($user->first_name).' '.ucfirst($user->last_name).') account.',
+						'notification' => 'You have successfully deleted ('.ucfirst($user->first_name).' '.ucfirst($user->last_name).') account.',
 					);
 					add_user_notification($notification_args);
 					return 1;
