@@ -469,8 +469,11 @@ class Profile{
 		$args     = array('ID'       => $this->user__id,'user_pass'=> $password);
 		$check = get_tabledata(TBL_USERS,true,$args);
 		if($check):
-		$new_password = set_password($new_password);
-		$this->database->update(TBL_USERS,array('user_pass'=> $new_password),array('ID'=> $this->user__id));
+			$this->user = get_userdata($current_user_id);
+			$salt = generateSalt();
+			$new_password = hash('SHA256', encrypt($new_password, $salt));
+			$salt = base64_encode($salt);
+			$this->database->update(TBL_USERS,array('user_pass' => $new_password, 'user_salt' => $salt),array('ID' => $this->user__id));
 		update_user_meta($this->user__id,'reset_password',0);
 
 		$notification_args = array(

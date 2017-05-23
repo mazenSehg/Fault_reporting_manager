@@ -222,9 +222,15 @@ if ( !function_exists('username_exists') ) :
 endif;
 
 if ( !function_exists('set_password') ) :
-	function set_password($password){
-		return md5($password);
-	}
+        function set_password($password, $id = null){
+                if(!$id) {
+                        $id = get_current_user_id();
+                }
+                $row = get_userdata($id);
+                $salt = base64_decode($row->{'user_salt'});
+                $temp = hash('SHA256', encrypt($password, $salt));
+                return $temp;
+        }
 endif;
 
 if ( !function_exists('check_password') ) :
@@ -233,7 +239,8 @@ if ( !function_exists('check_password') ) :
 		if ( !$user = get_user_by( 'id', $user_id ) ) {
 			return false;
 		}
-		$password = set_password($password);
+                $password = set_password($password, $user_id);
+		error_log($password ." : ". $user->user_pass);
 		if($password == $user->user_pass){
 			return true;
 		}else{

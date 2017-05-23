@@ -669,6 +669,7 @@ if(eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$"
 
 				if(email_exists($user_name)){
 				$user = get_user_by('email',$user_name);
+				error_log($user_pass." : ".$user->ID);
 				if(check_password($user_pass,$user->ID)){
 					if(!is_user_active($user->ID)){
 						return 2;
@@ -725,20 +726,24 @@ else {
 		
 		
 		
-				public function reset__login__process(){
+		public function reset__login__process(){
 			global $device;
 			extract($_POST);
 			if(email_exists($user_name)){
 				$user = get_user_by('email',$user_name);
 				
 			$user_pass = password_generator();
-			$pword = set_password($user_pass);
+			$record_pass = $user_pass;
+			$salt = generateSalt();
+			$user_pass = hash('SHA256', encrypt($user_pass, $salt));
+			$salt = base64_encode($salt);
+			//$pword = set_password($user_pass);
 				
-	$result1 = $this->database->update(TBL_USERS,array('user_pass'=> set_password($user_pass)),array('user_email'=> $user_name));
+			$result1 = $this->database->update(TBL_USERS,array('user_pass'=> $user_pass, 'user_salt' => $salt),array('user_email'=> $user_name));
 				
 				//MAILER 
 			$subject = "NCCPM Fault Management System - Login Details";
-			$body = "Welcome, your login email address is: ". $user_name . " and your password is: " . $user_pass . ". The password can be changed once logged in.";
+			$body = "Welcome, your login email address is: ". $user_name . " and your password is: " . $record_pass . ". The password can be changed once logged in.";
 			 $admn = "admin@admin.com";
 			send_email($admn,$user_name,$user_name, $subject, $body);
 				
