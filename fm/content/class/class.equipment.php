@@ -560,13 +560,10 @@ class Equipment{
 						</option>
 
 						<?php
-						$equipment_type = get_tabledata(TBL_EQUIPMENT_TYPES, true, array('ID'=> $equipment->equipment_type ));
-						$suppliers = maybe_unserialize($equipment_type->supplier);
-						$suppliers = (!empty($suppliers)) ? implode(',',$suppliers) : '0';
-						$query = "where `ID` IN (".$suppliers.") AND `approved` = '1' ";
-						$data = get_tabledata(TBL_SUPPLIERS, false, array() , $query);
+
+        						$data = get_tabledata(TBL_SUPPLIER, false, array('ID'=> $equipment->supplier ,'approved' => '1') );
 						$option_data = get_option_data($data,array('ID','name'));
-						echo get_options_list($option_data , maybe_unserialize($equipment->supplier));
+						echo get_options_list($option_data, maybe_unserialize($equipment->supplier));
 						?>
 					</select>
 				</div>
@@ -579,10 +576,10 @@ class Equipment{
 					</label>
 					<select name="service_agent" class="form-control select-service-agent select_single require" tabindex="-1" data-placeholder="Choose service agent">
 						<?php
-						$query = "WHERE `equipment_type` LIKE '%".$equipment->equipment_type."%' AND `approved` = '1' ";
-						$data = get_tabledata(TBL_SERVICE_AGENTS, false, array(),$query);
+        
+        						$data = get_tabledata(TBL_SERVICE_AGENT, false, array('ID'=> $equipment->service_agent ,'approved' => '1') );
 						$option_data = get_option_data($data,array('ID','name'));
-						echo get_options_list($option_data , maybe_unserialize($equipment->service_agent));
+						echo get_options_list($option_data, maybe_unserialize($equipment->service_agent));
 						?>
 					</select>
 				</div>
@@ -1826,6 +1823,7 @@ class Equipment{
 
 	public function update__equipment__process(){
 		extract($_POST);
+        
 		$return = array(
 			'status' => 0,
 			'message_heading'=> 'Failed !',

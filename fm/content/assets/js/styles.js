@@ -801,7 +801,10 @@ $(document).ready(function() {
 			}
 		});
 	});
-	
+
+    
+    
+    
 	$('.fetch-equipment-data').change(function(e){
 		var _this = $(this);
 		var value  = 0;
