@@ -11,7 +11,7 @@ login_check();
 <!DOCTYPE html>
 <html>
 <head>
-	<title>All Equipments &mdash; <?php echo get_site_name();?></title>
+	<title>All Equipment &mdash; <?php echo get_site_name();?></title>
 	
 	<?php echo $Header->head();?>
 </head>

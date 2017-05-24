@@ -88,17 +88,8 @@ class Equipment{
 		}
 						?>
 					</select>
-					
-					
-					
 				</div>
-	
-	
-
-	
-	
-	
-	
+    
 				<div class="form-group col-sm-2 col-xs-12">
 					<label for="approved">Approval Status</label>
 					<select name="approved" class="form-control select_single" tabindex="-1" data-placeholder="Choose status">
@@ -108,6 +99,19 @@ class Equipment{
 						?>
 					</select>
 				</div>
+    
+    
+    				<div class="form-group col-sm-2 col-xs-12">
+					<label for="decommed">Deccomisioned value</label>
+					<select name="decommed" class="form-control select_single" tabindex="-1" data-placeholder="Choose decomisioned value">
+						<?php
+						$option_data = array( '1' => 'yes' , '0' => 'no');
+						echo get_options_list($option_data);
+						?>
+					</select>
+				</div>
+    
+    
 			</div>
 <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap ajax-datatable-buttons" cellspacing="0" width="100%" data-table="fetch_all_equipments" data-order-column="7">
 			<thead>
@@ -341,19 +345,19 @@ class Equipment{
 					<label for="year-manufacturered">
 						Year Manufacturered
 					</label>
-					<input type="number" name="year_manufacturered" class="form-control" min="1990" max="2020"/>
+					<input type="number" name="year_manufacturered" class="form-control" min="1990" max="<?php echo date("Y");?>"/>
 				</div>
 				<div class="form-group col-sm-4 col-xs-12">
 					<label for="year-installed">
 						Year Installed
 					</label>
-					<input type="number" name="year_installed" class="form-control" min="1995" max="2020"/>
+					<input type="number" name="year_installed" class="form-control" min="1995" max="<?php echo date("Y");?>"/>
 				</div>
 				<div class="form-group col-sm-4 col-xs-12">
 					<label for="year-decomissioned">
 						Year Decomissioned
 					</label>
-					<input type="number" name="year_decommisoned" class="form-control" min="1990" max="2020"/>
+					<input type="number" name="year_decommisoned" class="form-control" min="1990" max="<?php echo date("Y");?>"/>
 				</div>
 			</div>
 
@@ -368,7 +372,7 @@ class Equipment{
 			<div class="row">
 				<div class="form-group col-sm-3 col-xs-6" required>
 					<label for="decommed">
-						Decommed
+						Decomissioned
 					</label><br/>
 					<label>
 						<input type="radio" class="flat" name="decommed" value="1"> Yes
@@ -408,6 +412,10 @@ class Equipment{
 						<input type="radio" class="flat" name="x_ray" value="0"> No
 					</label>
 				</div>
+                
+                <?php
+        if(is_admin()){
+        ?>
 				<div class="form-group col-sm-3 col-xs-6">
 					<label for="approved">
 						Approved
@@ -422,6 +430,9 @@ class Equipment{
 						<input type="radio" class="flat" name="approved" value="0" required> No
 					</label>
 				</div>
+                <?php
+        }
+            ?>
 			</div>
 
 			<div class="ln_solid">
@@ -1737,6 +1748,8 @@ class Equipment{
 		$byn = rand(0, 99);
 			$equipment_code = sprintf( "%d%d%d", $centre, $byn,$equipment_type);
 
+        
+        if(is_admin()){
 			$result = $this->database->insert(TBL_EQUIPMENTS,
 				array(
 					'ID' => $guid,
@@ -1761,6 +1774,35 @@ class Equipment{
 					'approved' => $approved
 				)
 			);
+        }else{
+            			$result = $this->database->insert(TBL_EQUIPMENTS,
+				array(
+					'ID' => $guid,
+					'name' => 0,
+					'centre' => $centre,
+					'equipment_code' => NULL,
+					'equipment_type' => $equipment_type,
+					'manufacturer' => $manufacturer,
+					'model' => $model,
+					'supplier' => $supplier,
+					'service_agent' => $service_agent,
+					'location_id' => $location_id,
+					'location' => $location,
+					'serial_number' => $serial_number,
+					'year_manufacturered'=> $year_manufacturered,
+					'year_installed' => $year_installed,
+					'year_decommisoned' => $year_decommisoned,
+					'decommed' => $decommed,
+					'spare' => $spare,
+					'comment' => $comment,
+					'x_ray' => $x_ray,
+					'approved' => 0
+				)
+			);
+        }
+        
+        
+        
 			if($result):
 				$notification_args = array(
 					'title' => 'New equipment created ',
@@ -2763,6 +2805,13 @@ class Equipment{
 			if(isset($_POST['approved']) && $_POST['approved'] != '' &&  $_POST['approved'] != 'undefined'){
 				$query .= ($query != '') ? ' AND ' : ' WHERE ';
 				$query .= " `approved` = '".$_POST['approved']."' ";
+			}
+            
+            
+            if(isset($_POST['decommed']) && $_POST['decommed'] != '' &&  $_POST['decommed'] != 'undefined'){
+                
+				$query .= ($query != '') ? ' AND ' : ' WHERE ';
+				$query .= " `decommed` = '".$_POST['decommed']."' ";
 			}
 			
             $recordsTotal = get_tabledata(TBL_EQUIPMENTS,true,array(), $query, 'COUNT(ID) as count');
