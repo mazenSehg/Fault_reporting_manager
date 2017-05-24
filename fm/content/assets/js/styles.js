@@ -15,6 +15,11 @@ $(document).ready(function() {
 		}
 	};
 
+		Date.prototype.getMonthName = function() {
+    		var monthNames = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
+    		return monthNames[this.getMonth()];
+	}
+	
 	CustomTabs = function(options) {
 		$('.tabbed_notifications > div').hide();
 		$('.tabbed_notifications > div:first-of-type').show();
@@ -192,7 +197,8 @@ $(document).ready(function() {
 	$select_multiple = $('.select_multiple').select2({ allowClear: true });
 	
 	var d = new Date();
-	var todayDate = '' + (d.getMonth() + 1) + ' ' + d.getDate() + ',' + d.getFullYear();
+	var todayDate = '' + (d.getMonthName()) + ' ' + d.getDate() + ',' + d.getFullYear();
+	console.log(todayDate);
 	$('.input-datepicker').daterangepicker({
 		format: 'MMMM DD,YYYY',
 		singleDatePicker: true,
@@ -206,7 +212,7 @@ $(document).ready(function() {
 		singleDatePicker: true,
 		showDropdowns: true,
 		minDate: 'May 01 ,1950',
-		maxDate: 'December 31 ,2017',
+		maxDate: todayDate,
 		calender_style: "picker_1"
 	});
 	var radiobox_names = ['fault_corrected_by_user' ,'to_fix_at_next_service_visit','engineer_called_out'];
@@ -979,12 +985,11 @@ $(document).ready(function() {
 		}
 	});
 	
-	$('.custom-filters input').on('blur',function(){
-		setTimeout(function(){
+	$('.custom-filters input').on('apply.daterangepicker', function(ev, picker) {
+		if($(this).val() != ''){
 			$('.ajax-datatable-buttons > thead > tr th:nth-child(1)').trigger('click');
-		},1500);
+		}
 	});
-	
 });
 
 
