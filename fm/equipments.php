@@ -99,76 +99,66 @@ if(strpos($a->name, $b->name)!== false){
 						//////////////////////////////////////////////////////////////////
 
 
-						$sql = "SELECT * FROM tbl_equipment WHERE manufacturer = '' OR manufacturer IS NULL";
-						$r = $db->get_results($sql);
-						foreach($r as $a):
-
-						$sql1 = "SELECT * FROM tbl_model WHERE ID = $a->model";
-						$rr = $db->get_results($sql1);
-						foreach($rr as $b):
-
-						$sql4 = "UPDATE tbl_equipment SET manufacturer='$b->manufacturer' WHERE manufacturer = '$a->manufacturer'";
-						$sq5 = $db->query($sql4);
-
-
-						endforeach;
-
-						endforeach;
-
-
-
-
-
-
-
-
-
-
-
-
-						$sql = "SELECT COUNT(*) AS resc FROM tbl_equipment WHERE equipment_code IS NULL OR equipment_code=''";
-						$res = $db->get_results($sql);
-
-						$valll;
-						foreach($res as $row):
-						$valll =  $row->resc;								
-						endforeach;
-
-						if($valll!=0){
-
-
-
-							$sql = "SELECT * FROM tbl_equipment WHERE equipment_code IS NULL OR equipment_code=''";
-							$res = $db->get_results($sql);
-							foreach($res as $row):
-
-							$IDD = $row->ID;
-							$val1;
-							$val2;
-
-							$sql1 = "SELECT * FROM tbl_centres WHERE ID = $row->centre";
-							$res1 = $db->get_results($sql1);
-							foreach($res1 as $row1):
-							$val1 = $row1->centre_code;				
-							endforeach;
-
-							$sql2 = "SELECT * FROM tbl_equipment_type WHERE ID = $row->equipment_type";
-							$res2 = $db->get_results($sql2);
-							foreach($res2 as $row2):
-							$val2 = $row2->code;
-							endforeach;
-							$bmw = rand(0, 150);
-							$resol = $val1 . $bmw . $val2;
-
-
-							$ayy = $val1 . $bmw . $val2;
-
-							$sql3 = "UPDATE tbl_equipment SET equipment_code ='$ayy' WHERE ID ='$IDD'";
-							$res3 = $db->query($sql3);
-
-
-							endforeach;
-						}
+//						$sql = "SELECT * FROM tbl_equipment WHERE manufacturer = '' OR manufacturer IS NULL";
+//						$r = $db->get_results($sql);
+//						foreach($r as $a):
+//
+//						$sql1 = "SELECT * FROM tbl_model WHERE ID = $a->model";
+//						$rr = $db->get_results($sql1);
+//						foreach($rr as $b):
+//
+//						$sql4 = "UPDATE tbl_equipment SET manufacturer='$b->manufacturer' WHERE manufacturer = '$a->manufacturer'";
+//						$sq5 = $db->query($sql4);
+//
+//
+//						endforeach;
+//
+//						endforeach;
+//
+//
+//						$sql = "SELECT COUNT(*) AS resc FROM tbl_equipment WHERE equipment_code IS NULL OR equipment_code=''";
+//						$res = $db->get_results($sql);
+//
+//						$valll;
+//						foreach($res as $row):
+//						$valll =  $row->resc;								
+//						endforeach;
+//
+//						if($valll!=0){
+//
+//
+//
+//							$sql = "SELECT * FROM tbl_equipment WHERE equipment_code IS NULL OR equipment_code=''";
+//							$res = $db->get_results($sql);
+//							foreach($res as $row):
+//
+//							$IDD = $row->ID;
+//							$val1;
+//							$val2;
+//
+//							$sql1 = "SELECT * FROM tbl_centres WHERE ID = $row->centre";
+//							$res1 = $db->get_results($sql1);
+//							foreach($res1 as $row1):
+//							$val1 = $row1->centre_code;				
+//							endforeach;
+//
+//							$sql2 = "SELECT * FROM tbl_equipment_type WHERE ID = $row->equipment_type";
+//							$res2 = $db->get_results($sql2);
+//							foreach($res2 as $row2):
+//							$val2 = $row2->code;
+//							endforeach;
+//							$bmw = rand(0, 150);
+//							$resol = $val1 . $bmw . $val2;
+//
+//
+//							$ayy = $val1 . $bmw . $val2;
+//
+//							$sql3 = "UPDATE tbl_equipment SET equipment_code ='$ayy' WHERE ID ='$IDD'";
+//							$res3 = $db->query($sql3);
+//
+//
+//							endforeach;
+//						}
 
 
 						?>
