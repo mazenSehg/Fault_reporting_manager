@@ -116,6 +116,13 @@ if(strpos($a->name, $b->name)!== false){
 						endforeach;
 
 
+							
+
+						//////////////////////////////////////////////////////////////////
+						//*************TO UPDATE EQUIPMENT CODE  TBL_EQUIPMENTs*********//
+						//////////////////////////////////////////////////////////////////
+							
+							
 						$sql = "SELECT COUNT(*) AS resc FROM tbl_equipment WHERE equipment_code IS NULL OR equipment_code=''";
 						$res = $db->get_results($sql);
 
@@ -147,7 +154,20 @@ if(strpos($a->name, $b->name)!== false){
 							foreach($res2 as $row2):
 							$val2 = $row2->code;
 							endforeach;
-							$bmw = rand(0, 150);
+							//$bmw = rand(0, 150);
+							
+$sql3 = "SELECT COUNT(*) AS bob FROM tbl_equipment WHERE equipment_code LIKE '%$val1%' AND equipment_code LIKE '%$val2%'";
+$res3 = $db->get_results($sql3);
+echo $row->equipment_code;
+
+echo $res3[0]->bob;
+
+
+$bmw = $res3[0]->bob;
+							$bmw = $bmw +1;
+
+							
+							
 							$resol = $val1 . $bmw . $val2;
 
 
