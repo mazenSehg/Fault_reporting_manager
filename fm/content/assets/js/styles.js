@@ -99,7 +99,9 @@ $(document).ready(function() {
 						d.approved = $('.custom-filters select[name="approved"]').val();
 						d.fault_date_from = $('.custom-filters input[name="fault_date_from"]').val();
 						d.fault_date_to = $('.custom-filters input[name="fault_date_to"]').val();
-					},
+						d.decommed = $('.custom-filters select[name="decommed"]').val();
+                        console.log($('.custom-filters select[name="decommed"]').val());
+                    },
 					complete:function(r){
 						if ($("table .js-switch")[0]) {
 							var elems = Array.prototype.slice.call(document.querySelectorAll('table .js-switch'));
@@ -799,7 +801,10 @@ $(document).ready(function() {
 			}
 		});
 	});
-	
+
+    
+    
+    
 	$('.fetch-equipment-data').change(function(e){
 		var _this = $(this);
 		var value  = 0;
