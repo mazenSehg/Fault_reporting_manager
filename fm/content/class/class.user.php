@@ -46,7 +46,9 @@ if( !class_exists('User') ):
                             <div class="alert alert-danger"></div>
                         </div>
                         <div class="form-group">
-                            <div class="text-center"> <strong>OR</strong> </div> <span style="height:5px;display: block;">&nbsp;</span> <a href="<?php echo site_url();?>/reset_password/" <button class="btn btn-block btn-warning btn-sm" type="button"><i class="fa fa-question-circle"></i>  Forgot your password ?</button></a> </div>
+                            <div class="text-center"> 
+								<strong>OR</strong> </div> <span style="height:5px;display: block;">&nbsp;</span> <a href="<?php echo site_url();?>/reset_password/" <button class="btn btn-block btn-warning btn-sm" type="button"><i class="fa fa-question-circle"></i>  Forgot your password ?</button></a> 
+				</div>
                     </form>
                 </div>
                 <div class="col-md-7 col-xs-12 text-center hidden-xs ">
@@ -782,10 +784,12 @@ else {
 						array(
 							'ID' => $guid,
 							'first_name' => $first_name,
+							'username' => $username,
 							'last_name' => $last_name,
 							'user_email' => $user_email,
 							'user_role' => $user_role,
 							'user_status' => 1,
+						'centre' => $centre,
 							'user_pass' => $user_pass,
 							'user_salt' => $salt,
 							'created_by' => $this->current__user__id,
@@ -838,11 +842,14 @@ else {
 					
 					$result = $this->database->update(TBL_USERS,
 						array(
+							'username' => $username,
 							'first_name' => $first_name,
 							'last_name' => $last_name,
 							'user_email' => $user_email,
 							'user_status' => $user_status,
 							'user_role' => $user_role,
+							'centre' => $centre,
+
 						),
 						array('ID' => $user_id)
 					);

@@ -320,14 +320,14 @@ class Equipment{
 					<label for="location-id">
 						Local ID
 					</label>
-					<input type="text" name="location_id" class="form-control"/>
+					<input type="text" name="location_id" class="form-control require"/>
 				</div>
 
 				<div class="form-group col-sm-6 col-xs-12">
 					<label for="location">
 						Location
 					</label>
-					<input type="text" name="location" class="form-control"/>
+					<input type="text" name="location" class="form-control require"/>
 				</div>
 			</div>
 
@@ -336,7 +336,7 @@ class Equipment{
 					<label for="serial-number">
 						Serial Number
 					</label>
-					<input type="text" name="serial_number" class="form-control"/>
+					<input type="text" name="serial_number" class="form-control require"/>
 				</div>
 			</div>
 
@@ -345,7 +345,7 @@ class Equipment{
 					<label for="year-manufacturered">
 						Year Manufacturered
 					</label>
-					<input type="number" name="year_manufacturered" class="form-control" min="1990" max="<?php echo date("Y");?>"/>
+					<input type="number" name="year_manufacturered" class="form-control " min="1990" max="<?php echo date("Y");?>"/>
 				</div>
 				<div class="form-group col-sm-4 col-xs-12">
 					<label for="year-installed">
