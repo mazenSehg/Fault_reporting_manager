@@ -100,6 +100,7 @@ $(document).ready(function() {
 						d.fault_date_from = $('.custom-filters input[name="fault_date_from"]').val();
 						d.fault_date_to = $('.custom-filters input[name="fault_date_to"]').val();
 						d.decommed = $('.custom-filters select[name="decommed"]').val();
+                       
                         console.log($('.custom-filters select[name="decommed"]').val());
                     },
 					complete:function(r){

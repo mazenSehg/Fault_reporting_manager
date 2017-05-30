@@ -102,7 +102,7 @@ class Equipment{
     
     
     				<div class="form-group col-sm-2 col-xs-12">
-					<label for="decommed">Deccomisioned value</label>
+					<label for="decommed">Decommisioned value</label>
 					<select name="decommed" class="form-control select_single" tabindex="-1" data-placeholder="Choose decomisioned value">
 						<?php
 						$option_data = array( '1' => 'yes' , '0' => 'no');
