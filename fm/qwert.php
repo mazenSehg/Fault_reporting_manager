@@ -255,6 +255,32 @@ login_check();
 
 
 
+
+
+
+
+
+$sql1 = "SELECT * FROM bob";
+$res1 = $db->get_results($sql1);
+foreach($res1 as $a):
+$sql2 = "SELECT * FROM tbl_fault WHERE ID = '$a->ID'";
+$res2 = $db->get_results($sql2);
+foreach($res2 as $b):
+
+$sql3 = "UPDATE tbl_fault SET date_of_fault='$a->date' WHERE ID = '$b->ID'";
+$res4 = $db->query($sql3);
+
+endforeach;
+
+endforeach;
+
+
+
+
+/**
+
+
+
 		if(isset($_POST['SubmitButton'])){ 
 			$cent = $_POST['centre'];
 			$eqp = $_POST['equipment'];
@@ -367,6 +393,7 @@ print $csv_output;
 exit;
 
 		}
+		**/
 ?>
 												
 										
