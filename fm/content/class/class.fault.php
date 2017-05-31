@@ -977,12 +977,12 @@ if( !class_exists('Fault') ):
 					<div class="row custom-filters">
 						<div class="form-group col-sm-2 col-xs-6 col col-sm-push-2">
 							<label for="date_of_fault"><?php _e('Fault Date From');?></label>
-							<input type="text" name="fault_date_from" class="form-control input-datepicker-today" readonly="readonly"/>
+							<input type="text" name="fault_date_from" class="form-control input-datepicker-today"/>
 						</div>
 						
 						<div class="form-group col-sm-2 col-xs-6 col-sm-push-2">
 							<label for="date_of_fault"><?php _e('Fault Date To');?></label>
-							<input type="text" name="fault_date_to" class="form-control input-datepicker-today" readonly="readonly"/>
+							<input type="text" name="fault_date_to" class="form-control input-datepicker-today"/>
 						</div>
 						
 						<div class="col-xs-6 col-sm-2 col-sm-pull-4">

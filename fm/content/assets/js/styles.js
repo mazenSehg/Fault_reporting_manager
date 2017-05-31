@@ -98,9 +98,14 @@ $(document).ready(function() {
 						d.model = $('.custom-filters select[name="model"]').val();
 						d.approved = $('.custom-filters select[name="approved"]').val();
 						d.fault_date_from = $('.custom-filters input[name="fault_date_from"]').val();
+						console.log($('.custom-filters input[name="fault_date_from"]').val());
 						d.fault_date_to = $('.custom-filters input[name="fault_date_to"]').val();
+						console.log($('.custom-filters input[name="fault_date_to"]').val());		
 						d.decommed = $('.custom-filters select[name="decommed"]').val();
                         console.log($('.custom-filters select[name="decommed"]').val());
+						
+                        
+	   
                     },
 					complete:function(r){
 						if ($("table .js-switch")[0]) {
