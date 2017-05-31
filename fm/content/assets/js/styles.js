@@ -1000,6 +1000,12 @@ $(document).ready(function() {
 			$('.ajax-datatable-buttons > thead > tr th:nth-child(1)').trigger('click');
 		}
 	});
+	    $('.custom-filters input').on('blur', function(ev, picker) {
+		if($(this).val() == ''){
+			$('.ajax-datatable-buttons > thead > tr th:nth-child(1)').trigger('click');
+		}
+	});
+
 });
 
 
