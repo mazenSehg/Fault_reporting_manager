@@ -54,7 +54,7 @@ class Footer{
 					<div class="col-xs-12">
 						<div class="pull-left">
 							<small>
-								Copyright &copy; 2016 <?php echo get_site_name();?> &ndash; All copyrights reserved
+								NCCPM - <?php echo get_site_name();?> &ndash; All copyrights reserved
 							</small>
 						</div>
 						<div class="pull-right">
