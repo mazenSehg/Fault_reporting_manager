@@ -98,13 +98,9 @@ $(document).ready(function() {
 						d.model = $('.custom-filters select[name="model"]').val();
 						d.approved = $('.custom-filters select[name="approved"]').val();
 						d.fault_date_from = $('.custom-filters input[name="fault_date_from"]').val();
-						console.log($('.custom-filters input[name="fault_date_from"]').val());
 						d.fault_date_to = $('.custom-filters input[name="fault_date_to"]').val();
-						console.log($('.custom-filters input[name="fault_date_to"]').val());		
 						d.decommed = $('.custom-filters select[name="decommed"]').val();
-                        console.log($('.custom-filters select[name="decommed"]').val());
-						
-                        
+
 	   
                     },
 					complete:function(r){
@@ -811,6 +807,7 @@ $(document).ready(function() {
     
     
 	$('.fetch-equipment-data').change(function(e){
+				console.log("810");
 		var _this = $(this);
 		var value  = 0;
 		if($('.show-decommed').is(':checked')){
@@ -910,6 +907,7 @@ $(document).ready(function() {
 	});
 	
 	$('.fetch-centre-equipment-data').change(function(e){
+		console.log("912");
 		var _this = $(this);
 		var value  = 0;
 		if($('.show-decommed').is(':checked')){
@@ -947,17 +945,19 @@ $(document).ready(function() {
 	
 	$('.custom-filters select').on('change',function(){
 		var attr_name = $(this).attr('name');
-	if(attr_name == 'centre' || attr_name == 'equipment_type'){
+	if(attr_name == 'centre' || attr_name == 'equipment_type'|| attr_name == 'decommed'){
 			$.ajax({ 
 				type : 'POST',
 				data: {
 					action: 'fetch_equipment_data',
 					id: $('.custom-filters select[name="equipment_type"]').val(),
 					centre: $(' .custom-filters select[name="centre"]').val(),
+					decom: $('.custom-filters select[name="decommed"]').val(),
 				},
 				url  : ajax_url,
 				dataType: 'json',
 				success: function(res){
+					console.log("decom: "+$('.custom-filters select[name="decommed"]').val());
 					console.log(res);
 					$select_multiple.select2("destroy");
 					$select_single.select2("destroy");
@@ -1000,12 +1000,7 @@ $(document).ready(function() {
 			$('.ajax-datatable-buttons > thead > tr th:nth-child(1)').trigger('click');
 		}
 	});
-	    $('.custom-filters input').on('blur', function(ev, picker) {
-		if($(this).val() == ''){
-			$('.ajax-datatable-buttons > thead > tr th:nth-child(1)').trigger('click');
-		}
-	});
-
+	
 });
 
 

@@ -950,7 +950,15 @@ if( !class_exists('Fault') ):
 								}
 								?>
 							</select>
+					<label for="decommed">Decommisioned value</label>
+					<select name="decommed" class="form-control select_single" tabindex="-1" data-placeholder="Choose decomisioned value">
+						<?php
+						$option_data = array( '1' => 'yes' , '0' => 'no');
+						echo get_options_list($option_data);
+						?>
+					</select>
 						</div>
+	
 						
 						<div class="form-group col-sm-2 col-xs-6">
 							<label for="fault-type">Fault Type</label>
@@ -1596,9 +1604,9 @@ if(is_admin()){
 				endif;
 			endif;
 				
-			if(isset($decommed) && $decommed != ''){
+			if(isset($decom) && $decom != ''){
 				$query .= ($query != '') ? ' AND ' : ' WHERE ';
-				$query .= " `decommed` = '".$decommed."' ";
+				$query .= " `decommed` = '".$decom."' ";
 			}
 			
 			if(isset($id) && $id != ''){
