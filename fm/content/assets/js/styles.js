@@ -885,6 +885,7 @@ $(document).ready(function() {
 		if(_this.is(':checked')){
 			var value = 1;
 		}
+		
 		$.ajax({ 
 			type : 'POST',
 			data: {

@@ -1609,6 +1609,13 @@ if(is_admin()){
 				$query .= " `decommed` = '".$decom."' ";
 			}
 			
+			if(isset($decommed) && $decommed != ''){
+				$query .= ($query != '') ? ' AND ' : ' WHERE ';
+				$query .= " `decommed` = '".$decommed."' ";
+			}
+			
+			
+			
 			if(isset($id) && $id != ''){
 				$query .= ($query != '') ? ' AND ' : ' WHERE ';
 				$query .= " `equipment_type` = '".$id."' ";
@@ -1621,7 +1628,7 @@ if(is_admin()){
 			$return['equipment_html'] = get_options_list($option_data);
 			if($id != ''):
 				$data = '';
-				$query = "WHERE `equipment_type` LIKE '%".$id."%' AND `approved` = '1' ORDER BY `name` ASC";
+				$query = "WHERE `equipment_type` LIKE '%".$id."%' AND `approved` = '1'  ORDER BY `name` ASC";
 				$data = get_tabledata(TBL_FAULT_TYPES, false, array() , $query);
 				$option_data = get_option_data($data,array('ID','name'));
 				$return['fault_type_html'] = get_options_list($option_data);
