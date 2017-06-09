@@ -958,12 +958,14 @@ $(document).ready(function() {
 				url  : ajax_url,
 				dataType: 'json',
 				success: function(res){
-					console.log("decom: "+$('.custom-filters select[name="decommed"]').val());
 					console.log(res);
 					$select_multiple.select2("destroy");
 					$select_single.select2("destroy");
 					$('select[name="equipment"]').html(res['equipment_html']);
 					$('select[name="fault_type"]').html(res['fault_type_html']);
+					$('select[name="fault_type"]').html(res['fault_type_html']);
+					$('select[name="model"]').html(res['model_html']);
+					
 					$select_single.select2({ allowClear: true });
 					$select_multiple.select2({ allowClear: true });
 					$('.ajax-datatable-buttons > thead > tr th:nth-child(1)').trigger('click');
@@ -975,6 +977,7 @@ $(document).ready(function() {
 				data: {
 					action: 'fetch_equipment_data2',
 					id: $('.custom-filters select[name="manufacturer"]').val(),
+					eq: $('.custom-filters select[name="equipment_type"]').val(),
 				},
 				url  : ajax_url,
 				dataType: 'json',

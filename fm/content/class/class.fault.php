@@ -1619,6 +1619,7 @@ if(is_admin()){
 			if(isset($id) && $id != ''){
 				$query .= ($query != '') ? ' AND ' : ' WHERE ';
 				$query .= " `equipment_type` = '".$id."' ";
+				
 			}
 
 			$query .= ($query != '') ? ' AND ' : ' WHERE ';
@@ -1626,8 +1627,20 @@ if(is_admin()){
 			$data = get_tabledata(TBL_EQUIPMENTS,false,array(),$query);
 			$option_data = get_option_data($data,array('ID','name'));
 			$return['equipment_html'] = get_options_list($option_data);
+
+			
+			$query .= ($query != '') ? ' AND ' : ' WHERE ';
+			$query .= " `approved` = '1' ORDER BY `name` ASC";
+			$data = get_tabledata(TBL_MODELS,false,array(),$query);
+			$option_data = get_option_data($data,array('ID','name'));
+			$return['model_html'] = get_options_list($option_data);
+			
+
+			
+			
 			if($id != ''):
 				$data = '';
+			
 				$query = "WHERE `equipment_type` LIKE '%".$id."%' AND `approved` = '1'  ORDER BY `name` ASC";
 				$data = get_tabledata(TBL_FAULT_TYPES, false, array() , $query);
 				$option_data = get_option_data($data,array('ID','name'));
@@ -1640,18 +1653,20 @@ if(is_admin()){
 				public function fetch__equipment__data__process2(){
 			extract($_POST);
 			$id = trim($id);
+			$eq = trim($eq);		
 			$return = array();
 			if($id != ''):
 				$data = '';
+					
 				$args = array('approved' => '1');
 				if(isset($decommed) && $decommed != '')
 					$args['decommed'] = $decommed;
 				
-				if(isset($id) && $id != '')
-				$data = get_tabledata(TBL_MODELS, false, array('manufacturer'=> $id ,'approved' => '1') );
+				if(isset($id) && $id != '') {
+				$data = get_tabledata(TBL_MODELS, false, array('equipment_type' => $eq,'manufacturer'=> $id ,'approved' => '1') );
 				$option_data = get_option_data($data,array('ID','name'));
 				$return['models_html'] = get_options_list($option_data);
-
+				}
 			endif;
 			return json_encode($return);
 		}
