@@ -32,7 +32,7 @@ class Equipment{
 		else:
 		?>
 <div class="row custom-filters">
-				<div class="form-group col-sm-2 col-xs-12">
+				<div class="form-group col-sm-3 col-xs-12">
 					<label for="centre">Centre</label>
 					<select name="centre" class="form-control select_single" tabindex="-1" data-placeholder="Choose centre">
 						<?php
@@ -46,7 +46,8 @@ class Equipment{
 						endif;
 						$query .= ($query != '') ? ' AND ' : ' WHERE ';
 						$query .= " `approved` = '1' ORDER BY `name` ASC";
-						$data = get_tabledata(TBL_CENTRES,false,array(),$query);
+//$data = get_tabledata(TBL_USERS,false,array('user_role' => 'trainer'),'',' ID, CONCAT_WS(" ", first_name , last_name) AS name ');
+						$data = get_tabledata(TBL_CENTRES,false,array(),'',' ID, CONCAT_WS(" | ", name , region_name, centre_code) AS name');
 						$option_data = get_option_data($data,array('ID','name'));
 						echo get_options_list($option_data);
 						?>
@@ -225,7 +226,7 @@ class Equipment{
 						endif;
 						$query .= ($query != '') ? ' AND ' : ' WHERE ';
 						$query .= " `approved` = '1' ORDER BY `name` ASC";
-						$data = get_tabledata(TBL_CENTRES,false,array(),$query);
+						$data = get_tabledata(TBL_CENTRES,false,array(),'',' ID, CONCAT_WS(" | ", name , region_name, centre_code) AS name');
 						$option_data = get_option_data($data,array('ID','name'));
 						echo get_options_list($option_data);
 						?>
@@ -484,7 +485,7 @@ class Equipment{
 						endif;
 						$query .= ($query != '') ? ' AND ' : ' WHERE ';
 						$query .= " `approved` = '1' ORDER BY `name` ASC";
-						$data = get_tabledata(TBL_CENTRES,false,array(),$query);
+						$data = get_tabledata(TBL_CENTRES,false,array(),'',' ID, CONCAT_WS(" | ", name , region_name, centre_code) AS name');
 						$option_data = get_option_data($data,array('ID','name'));
 						echo get_options_list($option_data, maybe_unserialize($equipment->centre));
 						?>

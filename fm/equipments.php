@@ -59,7 +59,9 @@ if(strpos($a->name, $b->name)!== false){
 
 						if($b->name!=null){
 							//setting model
+							if($b->name!="N/A"){
 							$sting = $sting . " | " . $b->name;
+							}
 						}
 
 						if($a->serial_number !=null){

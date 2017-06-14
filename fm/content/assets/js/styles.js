@@ -971,7 +971,7 @@ $(document).ready(function() {
 					$('.ajax-datatable-buttons > thead > tr th:nth-child(1)').trigger('click');
 				}
 			});
-		}else if(attr_name == 'manufacturer'){
+		}else if(attr_name == 'manufacturer'|| attr_name == 'equipment_type'){
 						$.ajax({ 
 				type : 'POST',
 				data: {

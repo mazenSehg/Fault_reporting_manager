@@ -23,7 +23,23 @@ login_check();
 		<div class="right_col" role="main">
 			<div class="">
 				<?php echo $Header->page__header('All Centres'); ?>
+				<?php
 				
+$sql1 = "SELECT * FROM tbl_centres WHERE region_name = NULL";
+$res1 = $db->get_results($sql1);
+foreach($res1 as $a):
+
+$sql2 = "SELECT * FROM tbl_region WHERE ID = $a->region";
+$res2 = $db->get_results($sql2);
+foreach($res2 as $b):
+$name = $b->name;
+endforeach;
+
+$sql3 = "UPDATE tbl_centres SET region_name='$name' WHERE ID = '$a->ID'";
+$res3 = $db->query($sql3);
+
+endforeach;
+				?>
 				<div class="row">
 					<div class="col-md-12 col-sm-12 col-xs-12">
 						<div class="x_panel">
