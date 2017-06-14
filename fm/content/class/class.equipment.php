@@ -47,7 +47,7 @@ class Equipment{
 						$query .= ($query != '') ? ' AND ' : ' WHERE ';
 						$query .= " `approved` = '1' ORDER BY `name` ASC";
 //$data = get_tabledata(TBL_USERS,false,array('user_role' => 'trainer'),'',' ID, CONCAT_WS(" ", first_name , last_name) AS name ');
-						$data = get_tabledata(TBL_CENTRES,false,array(),'',' ID, CONCAT_WS(" | ", name , region_name, centre_code) AS name');
+						$data = get_tabledata(TBL_CENTRES,false,array(),$query,' ID, CONCAT_WS(" | ", name , region_name, centre_code) AS name');
 						$option_data = get_option_data($data,array('ID','name'));
 						echo get_options_list($option_data);
 						?>
@@ -226,7 +226,7 @@ class Equipment{
 						endif;
 						$query .= ($query != '') ? ' AND ' : ' WHERE ';
 						$query .= " `approved` = '1' ORDER BY `name` ASC";
-						$data = get_tabledata(TBL_CENTRES,false,array(),'',' ID, CONCAT_WS(" | ", name , region_name, centre_code) AS name');
+						$data = get_tabledata(TBL_CENTRES,false,array(),$query,' ID, CONCAT_WS(" | ", name , region_name, centre_code) AS name');
 						$option_data = get_option_data($data,array('ID','name'));
 						echo get_options_list($option_data);
 						?>
@@ -485,7 +485,7 @@ class Equipment{
 						endif;
 						$query .= ($query != '') ? ' AND ' : ' WHERE ';
 						$query .= " `approved` = '1' ORDER BY `name` ASC";
-						$data = get_tabledata(TBL_CENTRES,false,array(),'',' ID, CONCAT_WS(" | ", name , region_name, centre_code) AS name');
+						$data = get_tabledata(TBL_CENTRES,false,array(),$query,' ID, CONCAT_WS(" | ", name , region_name, centre_code) AS name');
 						$option_data = get_option_data($data,array('ID','name'));
 						echo get_options_list($option_data, maybe_unserialize($equipment->centre));
 						?>
