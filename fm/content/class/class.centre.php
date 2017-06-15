@@ -405,6 +405,7 @@ class Centre{
 						<label>
 							<input type="checkbox" class="js-switch" <?php checked($centre->approved, 1);?> onClick="javascript:approve_switch(this);" data-id="<?php echo $centre->ID;?>" data-action="centre_approve_change"/>
 						</label>
+						<div style="display:none;"><?php echo $centre->approved; ?></div>
 					</td>
 					<?php endif; ?>
 					<td class="text-center">
@@ -585,9 +586,9 @@ class Centre{
 					<?php if(is_admin()): ?>
 					<td class="text-center">
 						<label>
-							<input type="checkbox" class="js-switch" <?php checked($region->approved, 1);?> onClick="javascript:approve_switch(this);" data-id="
-							<?php echo $region->ID;?>" data-action="region_approve_change"/>
+							<input type="checkbox" class="js-switch" <?php checked($region->approved, 1);?> onClick="javascript:approve_switch(this);" data-id="<?php echo $region->ID;?>" data-action="region_approve_change"/>
 						</label>
+						<div style="display:none;"><?php echo $region->approved; ?></div>
 					</td>
 					<?php endif; ?>
 					<td class="text-center">
@@ -733,9 +734,10 @@ class Centre{
 					<?php if(is_admin()): ?>
 					<td class="text-center">
 						<label>
-							<input type="checkbox" class="js-switch" <?php checked($region_body->approved, 1);?> onClick="javascript:approve_switch(this);" data-id="
-							<?php echo $region_body->ID;?>" data-action="region_body_approve_change"/>
+							<input type="checkbox" class="js-switch" <?php checked($region_body->approved, 1);?> onClick="javascript:approve_switch(this);" data-id="<?php echo $region_body->ID;?>" data-action="region_body_approve_change"/>
 						</label>
+						<div style="display:none;"><?php echo $region_body->approved; ?></div>
+						
 					</td>
 					<?php endif; ?>
 					<td class="text-center">

@@ -973,6 +973,7 @@ class Equipment{
 						<label>
 							<input type="checkbox" class="js-switch" <?php checked($equipment__type->approved, 1);?> onClick="javascript:approve_switch(this);" data-id="<?php echo $equipment__type->ID;?>" data-action="equipment_type_approve_change"/>
 						</label>
+						<div style="display:none;"><?php echo $equipment_type->approved; ?></div>
 					</td>
 					<?php endif; ?>
 					<td class="text-center">
@@ -1156,6 +1157,7 @@ class Equipment{
 						<label>
 							<input type="checkbox" class="js-switch" <?php checked($service__agent->approved, 1);?> onClick="javascript:approve_switch(this);" data-id="<?php echo $service__agent->ID;?>" data-action="service_agent_approve_change"/>
 						</label>
+						<div style="display:none;"><?php echo $service__agent->approved; ?></div>
 					</td>
 					<?php endif; ?>
 					
@@ -1326,6 +1328,7 @@ class Equipment{
 						<label>
 							<input type="checkbox" class="js-switch" <?php checked($manufacturer->approved, 1);?> onClick="javascript:approve_switch(this);" data-id="<?php echo $manufacturer->ID;?>" data-action="manufacturer_approve_change"/>
 						</label>
+						<div style="display:none;"><?php echo $manufacturer->approved; ?></div>
 					</td>
 					<?php endif; ?>
 					<td class="text-center">
@@ -1471,7 +1474,7 @@ class Equipment{
 						<label>
 							<input type="checkbox" class="js-switch" <?php checked($model->approved, 1);?> onClick="javascript:approve_switch(this);" data-id="<?php echo $model->ID;?>" data-action="model_approve_change"/>
 						</label>
-						
+						<div style="display:none;"><?php echo $model->approved; ?></div>
 						
 			
 					</td>
@@ -1640,6 +1643,7 @@ class Equipment{
 						<label>
 							<input type="checkbox" class="js-switch" <?php checked($supplier->approved, 1);?> onClick="javascript:approve_switch(this);" data-id="<?php echo $supplier->ID;?>" data-action="supplier_approve_change"/>
 						</label>
+						<div style="display:none;"><?php echo $supplier->approved; ?></div>
 					</td>
 					<?php endif; ?>		
 					<td class="text-center">
@@ -2845,6 +2849,7 @@ class Equipment{
 							<input type="checkbox" class="js-switch" <?php checked($equipment->approved, 1);?> onclick="approve_switch(this);" data-id="<?php echo $equipment->ID;?>" data-action="equipment_approve_change"/>
 						</label>
 					</div>
+					<div style="display:none;"><?php echo $equipment->approved; ?></div>
 					<?php 
 					$checkbox = ob_get_clean();
 					array_push($row, $checkbox);
@@ -2956,6 +2961,7 @@ class Equipment{
 							<input type="checkbox" class="js-switch" <?php checked($equipment->approved, 1);?> onclick="approve_switch(this);" data-id="<?php echo $equipment->ID;?>" data-action="equipment_approve_change"/>
 						</label>
 					</div>
+<div style="display:none;"><?php echo $equipment->approved; ?></div>
 					<?php 
 					$checkbox = ob_get_clean();
 					array_push($row, $checkbox);
