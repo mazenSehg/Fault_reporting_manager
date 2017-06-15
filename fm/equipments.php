@@ -31,7 +31,7 @@ login_check();
 						//////////////////////////////////////////////////////////////////
 
 
-						$sql = "SELECT * FROM tbl_equipment";
+						$sql = "SELECT * FROM tbl_equipment WHERE name = '0'";
 						$r = $db->get_results($sql);
 						foreach($r as $a):
 
