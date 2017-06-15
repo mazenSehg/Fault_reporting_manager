@@ -55,7 +55,7 @@ class Equipment{
 				</div>
 				<div class="form-group col-sm-2 col-xs-12">
 					<label for="equipment-type">Equipment Type</label>
-					<select name="equipment_type" class="form-control select_single" tabindex="-1" data-placeholder="Choose equipment type">
+					<select name="equipment_type" class="form-control select_single fetch-equipment-type-data" tabindex="-1" data-placeholder="Choose equipment type">
 						<?php
 						$data = get_tabledata(TBL_EQUIPMENT_TYPES,false,array('approved'=> '1'), 'ORDER BY `name` ASC');
 						$option_data = get_option_data($data,array('ID','name'));
@@ -63,10 +63,12 @@ class Equipment{
 						?>
 					</select>
 				</div>
+	
 				<div class="form-group col-sm-2 col-xs-12">
 					<label for="manufacturer">Manufacturer</label>
-					<select name="manufacturer" class="form-control select_single" tabindex="-1" data-placeholder="Choose manufacturer">
+					<select name="manufacturer" class="form-control select_single select_manufacturer" tabindex="-1" data-placeholder="Choose manufacturer">
 						<?php
+		
 						$data = get_tabledata(TBL_MANUFACTURERS,false,array('approved'=> '1'), 'ORDER BY `name` ASC');
 						$option_data = get_option_data($data,array('ID','name'));
 						echo get_options_list($option_data);
@@ -2486,11 +2488,12 @@ class Equipment{
 		$data = '';
 
 		$data = '';
+
 		$query= "where `equipment_type` LIKE '%".$id."%' AND `approved` = '1' ";
 		$data = get_tabledata(TBL_MANUFACTURERS, false, array() , $query);
 		$option_data = get_option_data($data,array('ID','name'));
 		$return['manufacturer_html'] = get_options_list($option_data);
-
+		
 		$data = '';
 		$query= "where `equipment_type` LIKE '%".$id."%' AND `approved` = '1' ";
 		$data = get_tabledata(TBL_SERVICE_AGENTS, false, array() , $query);

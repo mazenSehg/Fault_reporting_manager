@@ -1696,6 +1696,7 @@ class Fault{
 		$option_data = get_option_data($data,array('ID','name'));
 		$return['equipment_html'] = get_options_list($option_data);
 
+		
 
 		$query .= ($query != '') ? ' AND ' : ' WHERE ';
 		$query .= " `approved` = '1' ORDER BY `name` ASC";

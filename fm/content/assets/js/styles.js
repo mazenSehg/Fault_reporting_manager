@@ -777,6 +777,7 @@ $(document).ready(function() {
 				$('.select-service-agent').html(res['service_agent_html']);
 				$('.select_manufacturer').html(res['manufacturer_html']);
 				$('.select_supplier').html(res['supplier_html']);
+				
 				$select_single.select2({ allowClear: true });
 				$select_multiple.select2({ allowClear: true });
 			}
