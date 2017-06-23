@@ -89,7 +89,9 @@ $sql1 = "SELECT * FROM tbl_equipment WHERE name is NULL OR name = '0'";
 								$location = $a->location;
 								$string = $string . " | ". $location;
 							}
-
+							
+						$string = mysql_real_escape_string(trim($string));
+							
 						$sql4 = "UPDATE tbl_equipment SET name='$string' WHERE ID = '$a->ID'";
 						$sq5 = $db->query($sql4);
 							
