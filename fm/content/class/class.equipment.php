@@ -634,7 +634,7 @@ class Equipment{
 		if($equipment->year_decommisoned!=0){
 			?>
 					
-					<input type="number" name="year_decommisoned" class="form-control" min="1000" max="9999" value="<?php _e($equipment->year_decommisoned);?>"/>
+					<input type="number" name="year_decommisoned" class="form-control"  max="9999" value="<?php _e($equipment->year_decommisoned);?>"/>
 					<?php
 		}else{
 			?>
@@ -1867,17 +1867,18 @@ class Equipment{
 			)
 		);
 
-		if($result):
-		$notification_args = array(
-			'title' => 'Equipment updated',
-			'notification'=> 'You have successfully updated equipment',
-		);
+			if($result):
+				$notification_args = array(
+					'title' => 'Equipment Update',
+					'notification'=> 'You have successfull updated an equipment',
+				);
 
-		add_user_notification($notification_args);
-		$return['status'] = 1;
-		$return['message_heading'] = 'Success !';
-		$return['message'] = 'Equipment has been updated successfully.';
-		endif;
+				add_user_notification($notification_args);
+				$return['status'] = 1;
+				$return['message_heading'] = 'Success !';
+				$return['message'] = 'Equipment has been updated successfully.';
+				$return['reset_form'] = 1;
+				endif;
 		endif;
 
 		return json_encode($return);
@@ -2839,8 +2840,19 @@ class Equipment{
 				array_push($row, __($equipment->equipment_code));
 				array_push($row, __($equipment_type->name));
 				array_push($row, __($model->name));
+			if($equipment->manufacturer!=0){
 				array_push($row, __($manufacturer->name));
+			}else{
+				array_push($row, __("N/A"));
+				
+			}
+			
+						if($equipment->service_agent!=0){
 				array_push($row, __($service_agent->name));
+			}else{
+				array_push($row, __("N/A"));
+				
+			}
 				
 				
 				array_push($row, date('M d,Y',strtotime($equipment->created_on)));
@@ -2951,8 +2963,19 @@ class Equipment{
 				array_push($row, __($equipment->equipment_code));
 				array_push($row, __($equipment_type->name));
 				array_push($row, __($model->name));
+			if($equipment->manufacturer!=0){
 				array_push($row, __($manufacturer->name));
+			}else{
+				array_push($row, __("N/A"));
+				
+			}
+			
+						if($equipment->service_agent!=0){
 				array_push($row, __($service_agent->name));
+			}else{
+				array_push($row, __("N/A"));
+				
+			}
 
 				
 				array_push($row, date('M d,Y',strtotime($equipment->created_on)));

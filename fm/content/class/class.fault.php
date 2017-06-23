@@ -1128,7 +1128,7 @@ class Fault{
 			$query = "WHERE `centre` IN (".$centres.")";
 		}
 		endif;
-		$faults = get_tabledata(TBL_FAULTS,false,array(), $query, 'ID');
+		$faults = get_tabledata(TBL_FAULTS,false,array('approved' => '0'), $query, 'ID');
 		if( !user_can('view_fault') ):
 		echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
 		elseif(!$faults):
@@ -2354,7 +2354,7 @@ class Fault{
 			$query = "WHERE `centre` IN (".$centres.")";
 		}
 		endif;
-		$recordsTotal = count(get_tabledata(TBL_FAULTS,false,array(), $query, 'ID'));
+		$recordsTotal = count(get_tabledata(TBL_FAULTS,false,array('approved'=>'0'), $query, 'ID'));
 		$sql = sprintf(" ORDER BY %s %s LIMIT %d , %d ", $orderBy,$orderType ,$start , $length);
 		$data = array();
 		if(!empty($_POST['search']['value'])){
