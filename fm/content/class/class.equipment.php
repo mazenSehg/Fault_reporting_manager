@@ -2838,7 +2838,7 @@ class Equipment{
 				array_push($row, __($equipment->name));
 				array_push($row, __($centre->name));
 				array_push($row, __($equipment->equipment_code));
-				array_push($row, __($equipment_type->name));
+				array_push($row, __($equipment->type_name));
 				array_push($row, __($model->name));
 			if($equipment->manufacturer!=0){
 				array_push($row, __($manufacturer->name));
@@ -2961,7 +2961,7 @@ class Equipment{
 				array_push($row, __($equipment->name));
 				array_push($row, __($centre->name));
 				array_push($row, __($equipment->equipment_code));
-				array_push($row, __($equipment_type->name));
+				array_push($row, __($equipment->type_name));
 				array_push($row, __($model->name));
 			if($equipment->manufacturer!=0){
 				array_push($row, __($manufacturer->name));
