@@ -952,7 +952,7 @@ class Equipment{
 					</th>
 					<?php if(is_admin()): ?>
 					<th>
-						Approved
+						Active
 					</th>
 					<?php endif; ?>
 					<th class="text-center">
@@ -1134,7 +1134,7 @@ class Equipment{
 					
 					<?php if(is_admin()): ?>
 					<th>
-						Approved
+						Active
 					</th>
 					<?php endif; ?>
 					<th class="text-center">
@@ -1305,7 +1305,7 @@ class Equipment{
 					</th>
 					<?php if(is_admin()): ?>
 					<th>
-						Approved
+						Active
 					</th>
 					<?php endif; ?>
 					<th class="text-center">
@@ -1451,7 +1451,7 @@ class Equipment{
 					</th>
 					<?php if(is_admin()): ?>
 					<th>
-						Approved
+						Active
 					</th>
 					<?php endif; ?>
 					<th class="text-center">
@@ -1623,7 +1623,7 @@ class Equipment{
 					</th>
 					<?php if(is_admin()): ?>
 					<th>
-						Approved
+						Active
 					</th>
 					<?php endif; ?>
 					<th class="text-center">
@@ -2844,7 +2844,6 @@ class Equipment{
 				array_push($row, __($manufacturer->name));
 			}else{
 				array_push($row, __("N/A"));
-				
 			}
 			
 						if($equipment->service_agent!=0){

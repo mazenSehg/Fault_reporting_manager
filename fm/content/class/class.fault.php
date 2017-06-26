@@ -1252,7 +1252,7 @@ class Fault{
 															<th>Name</th>
 															<th>Created On</th>
 															<?php if(is_admin()): ?>
-																<th>Approved</th>
+																<th>Active</th>
 																<?php endif; ?>
 																	<th class="text-center">Actions</th>
 														</tr>
