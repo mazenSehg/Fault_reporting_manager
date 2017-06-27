@@ -337,21 +337,14 @@ class Centre{
 	}
 
 	public function all__centres__page(){
-		ob_start();
-        
-        				if(isset($_POST['myselect'])){
+		ob_start();        				
+            if(isset($_POST['myselect'])){
 			$args = array('approved'=>$_POST['myselect']);
-		}else{
+ 		}else{
 					$args = array('approved'=>1);
 				}
 		$centres = get_tabledata(TBL_CENTRES,false,$args);
 
-
-
-
-
-
-        
 
 		if( !user_can('view_centre') ):
 			echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
@@ -359,7 +352,6 @@ class Centre{
 			echo page_not_found("There are no New centres record found",' ',false);
 		else:
 		?>
-
 
 <div class="form-group col-sm-2 col-xs-12">
 <form action="#" method="POST">
@@ -371,6 +363,8 @@ class Centre{
     </select>
 </form>
 </div>
+
+
 		<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap datatable-buttons" cellspacing="0" width="100%">
 			<thead>
 				<tr>
