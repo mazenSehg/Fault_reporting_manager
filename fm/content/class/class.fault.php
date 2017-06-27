@@ -31,7 +31,7 @@ if( !class_exists('Fault') ):
 					</div>
 					<div class="form-group col-sm-6 col-xs-12">
 						<label for="centre">Centre <span class="required"> *</span></label>
-						<select name="centre" class="form-control select_single fetch-centre-equipment-data" tabindex="0" data-placeholder="Choose centre">
+						<select name="centre" class="form-control select_single fetch-centre-equipment-data" tabindex="-1" data-placeholder="Choose centre">
 							<?php
 							$query = '';
 							if(!is_admin()):
@@ -51,13 +51,13 @@ if( !class_exists('Fault') ):
 					</div>
 					<div class="form-group col-sm-6 col-xs-12">
 						<label for="name">Name <span class="required">*</span></label>
-						<input type="text" name="name" class="form-control " value="<?php _e($this->current__user->first_name .' '.$this->current__user->last_name);?>" readonly="readonly" tabindex="1"/>
+						<input type="text" name="name" class="form-control " value="<?php _e($this->current__user->first_name .' '.$this->current__user->last_name);?>" readonly="readonly" />
 					</div>
 				</div>
 				<div class="row">
 					<div class="form-group col-sm-6 col-xs-12">
 						<label for="equipment-type">Equipment Type <span class="required"> *</span></label>
-						<select name="equipment_type" class="form-control select_single fetch-equipment-data select-equipment-type" tabindex="-1" data-placeholder="Choose equipment type" tabindex="2">
+						<select name="equipment_type" class="form-control select_single fetch-equipment-data select-equipment-type" tabindex="-1" data-placeholder="Choose equipment type">
 							<?php
 							$data = get_tabledata(TBL_EQUIPMENT_TYPES,false,array('approved'=> '1'), 'ORDER BY `name` DESC');
 							$option_data = get_option_data($data,array('ID','name'));
@@ -67,7 +67,7 @@ if( !class_exists('Fault') ):
 					</div>
 					<div class="form-group col-sm-6 col-xs-12">
 						<label for="equipment">Equipment <span class="required"> *</span></label>
-						<select name="equipment" class="form-control select_single select-equipment fetch-service-agent-data2" tabindex="-1" data-placeholder="Choose equipment" tabindex="3">
+						<select name="equipment" class="form-control select_single select-equipment fetch-service-agent-data2" tabindex="-1" data-placeholder="Choose equipment">
 							<option value="">Choose equipment</option>
 						</select>
 					</div>
@@ -85,32 +85,32 @@ if( !class_exists('Fault') ):
 					</div>
 					<div class="form-group col-sm-6 col-xs-12">
 						<label for="fault-type">Fault Type <span class="required"> *</span></label>
-						<select name="fault_type" class="form-control select_single select-fault-type"  data-placeholder="Choose fault type" tabindex="4">
+						<select name="fault_type" class="form-control select_single select-fault-type" tabindex="-1" data-placeholder="Choose fault type">
 							<option value="">Choose fault type</option>
 						</select>
 					</div>
 					<div class="form-group col-sm-6 col-xs-12">
 						<label for="date-of-fault">Date of Fault</label>
-						<input type="text" name="date_of_fault" class="form-control input-datepicker" readonly="readonly" tabindex="5" />
+						<input type="text" name="date_of_fault" class="form-control input-datepicker" readonly="readonly" />
 					</div>
 				</div>
 				
 				<div class="row">
 					<div class="form-group col-sm-6 col-xs-12">
 						<label for="current-servicing-agency">Current servicing agency </label>
-						<select id="select" name="current_servicing_agency" class="form-control select-servicing-agency2"  tabindex="-1" data-placeholder="Choose servicing agency" readonly="true" tabindex="6">
+						<select id="select" name="current_servicing_agency" class="form-control select-servicing-agency2"  tabindex="-1" data-placeholder="Choose servicing agency" readonly="true">
 							<option value="">Current servicing agency</option>
 						</select>
 					</div>
 					<div class="form-group col-sm-6 col-xs-12">
 						<label for="time-of-fault">Servicing agency at time of fault <span class="required"> *</span></label>
-						<input type="text" name="time_of_fault" class="form-control" tabindex="7"/>
+						<input type="text" name="time_of_fault" class="form-control" />
 					</div>
 				</div>
 				<div class="row">
 					<div class="form-group col-sm-12 col-xs-12">
 						<label for="description-of-fault">Description of Fault</label>
-						<textarea name="description_of_fault" class="form-control" rows="3" tabindex="8"></textarea>
+						<textarea name="description_of_fault" class="form-control" rows="3"></textarea>
 					</div>
 				</div>
 				<div class="row">
@@ -120,13 +120,13 @@ if( !class_exists('Fault') ):
 					<div class="form-group col-sm-6 col-xs-12">
 						<label for="">Service Call No</label>
 						<br/>
-						<input type="text" name="service_call_no" class="form-control"tabindex="9" />
+						<input type="text" name="service_call_no" class="form-control" />
 					</div>
 				</div>
 				<div class="row">
 					<div class="form-group col-sm-12 col-xs-12">
 						<label for="">Please details action taken</label>
-						<textarea name="action_taken" class="form-control" rows="3" tabindex="10"></textarea>
+						<textarea name="action_taken" class="form-control" rows="3"></textarea>
 					</div>
 				</div>
 
@@ -134,29 +134,29 @@ if( !class_exists('Fault') ):
 					<div class="form-group col-sm-4 col-xs-12">
 						<label for="">Fault corrected by user?</label>
 						<br/>
-						<label><input type="radio" class="flat custom_radiobox" name="fault_corrected_by_user" value="1" checked tabindex="11"/> Yes</label>
+						<label><input type="radio" class="flat custom_radiobox" name="fault_corrected_by_user" value="1" checked/> Yes</label>
 						<label>&nbsp;</label>
-						<label><input type="radio" class="flat custom_radiobox" name="fault_corrected_by_user" value="0" tabindex="12"/> No</label>
+						<label><input type="radio" class="flat custom_radiobox" name="fault_corrected_by_user" value="0"/> No</label>
 						<label>&nbsp;</label>
-						<label><input type="radio" class="flat custom_radiobox" name="fault_corrected_by_user" value="2" tabindex="13"/> N/A</label>
+						<label><input type="radio" class="flat custom_radiobox" name="fault_corrected_by_user" value="2" /> N/A</label>
 					</div>
 					<div class="form-group col-sm-4 col-xs-12">
 						<label for="">To fix at next service visit?</label>
 						<br/>
-						<label><input type="radio" class="flat custom_radiobox" name="to_fix_at_next_service_visit" value="1" tabindex="14"/> Yes</label>
+						<label><input type="radio" class="flat custom_radiobox" name="to_fix_at_next_service_visit" value="1" /> Yes</label>
 						<label>&nbsp;</label>
-						<label><input type="radio" class="flat custom_radiobox" name="to_fix_at_next_service_visit" value="0"tabindex="15" /> No</label>
+						<label><input type="radio" class="flat custom_radiobox" name="to_fix_at_next_service_visit" value="0" /> No</label>
 						<label>&nbsp;</label>
-						<label><input type="radio" class="flat custom_radiobox" name="to_fix_at_next_service_visit" value="2"tabindex="16" checked/> N/A</label>
+						<label><input type="radio" class="flat custom_radiobox" name="to_fix_at_next_service_visit" value="2" checked/> N/A</label>
 					</div>
 					<div class="form-group col-sm-4 col-xs-12">
 						<label for="">Engineer called out?</label>
 						<br/>
-						<label><input type="radio" class="flat custom_radiobox" name="engineer_called_out" value="1" tabindex="17"/> Yes</label>
+						<label><input type="radio" class="flat custom_radiobox" name="engineer_called_out" value="1" /> Yes</label>
 						<label>&nbsp;</label>
-						<label><input type="radio" class="flat custom_radiobox" name="engineer_called_out" value="0" tabindex="18" /> No</label>
+						<label><input type="radio" class="flat custom_radiobox" name="engineer_called_out" value="0" /> No</label>
 						<label>&nbsp;</label>
-						<label><input type="radio" class="flat custom_radiobox" name="engineer_called_out" value="2" checked tabindex="19"/> N/A</label>
+						<label><input type="radio" class="flat custom_radiobox" name="engineer_called_out" value="2" checked/> N/A</label>
 					</div>
 				</div>
 				<div align="right">
@@ -167,9 +167,9 @@ if( !class_exists('Fault') ):
 					<div class="form-group col-sm-12 col-xs-12">
 						<label for="">Has an adverse incident report been sent to MHRA pr appropriate devolved administration?</label>
 						<br/>
-						<label><input type="radio" class="flat" name="adverse_incident_report" value="1" tabindex="20" /> Yes</label>
+						<label><input type="radio" class="flat" name="adverse_incident_report" value="1" /> Yes</label>
 						<label>&nbsp;</label>
-						<label><input type="radio" class="flat" name="adverse_incident_report" value="0" tabindex="21"/> No</label>
+						<label><input type="radio" class="flat" name="adverse_incident_report" value="0" /> No</label>
 					</div>
 				</div>
 				
@@ -181,7 +181,7 @@ if( !class_exists('Fault') ):
 					<div class="form-group col-sm-6 col-xs-12">
 						<label for="">Equipment Status</label>
 						<br/>
-						<select name="equipment_status" class="form-control select_single require" tabindex="-1" data-placeholder="Choose equipment status" tabindex="22">
+						<select name="equipment_status" class="form-control select_single require" tabindex="-1" data-placeholder="Choose equipment status">
 							<?php
 							$option_data = get_equipment_status();
 							echo get_options_list($option_data);
@@ -193,56 +193,56 @@ if( !class_exists('Fault') ):
 					<div class="form-group col-sm-2 col-xs-12">
 						<label for="">Total equipment downtime (days)</label>
 						<br/>
-						<input type="number" name="equipment_downtime" class="form-control require" min="0" tabindex="23"/>
+						<input type="number" name="equipment_downtime" class="form-control require" min="0" />
 					</div>
 					<div class="form-group col-sm-2 col-xs-12">
 						<label for="">Total screening downtime (days)</label>
 						<br/>
-						<input type="number" name="screening_downtime" class="form-control require" min="0" tabindex="24" />
+						<input type="number" name="screening_downtime" class="form-control require" min="0" />
 					</div>
 					<div class="form-group col-sm-2 col-xs-12">
 						<label for="">Number of repeat images</label>
 						<br/>
-						<input type="number" name="repeat_images" class="form-control require" min="0" tabindex="25"/>
+						<input type="number" name="repeat_images" class="form-control require" min="0" />
 					</div>
 					<div class="form-group col-sm-2 col-xs-12">
 						<label for="">Number of cancelled women</label>
 						<br/>
-						<input type="number" name="cancelled_women" class="form-control require" min="0"tabindex="26" />
+						<input type="number" name="cancelled_women" class="form-control require" min="0" />
 					</div>
 					<div class="form-group col-sm-2 col-xs-12">
 						<label for="">Number of technical recalls</label>
 						<br/>
-						<input type="number" name="technical_recalls" class="form-control require" min="0" tabindex="27"/>
+						<input type="number" name="technical_recalls" class="form-control require" min="0" />
 					</div>
 				</div>
 				<div class="row">
 					<div class="form-group col-sm-4 col-xs-12">
 						<label for="">Are you satisfied with response of the servicing organisation?</label>
 						<br/>
-						<label><input type="radio" class="flat" name="satisfied_servicing_organisation" value="1" tabindex="28" /> Yes</label>
+						<label><input type="radio" class="flat" name="satisfied_servicing_organisation" value="1" /> Yes</label>
 						<label>&nbsp;</label>
-						<label><input type="radio" class="flat" name="satisfied_servicing_organisation" value="2" tabindex="29"/> No</label>
+						<label><input type="radio" class="flat" name="satisfied_servicing_organisation" value="2" /> No</label>
 						<label>&nbsp;</label>
-						<label><input type="radio" class="flat" name="satisfied_servicing_organisation" value="0" tabindex="30" /> N/A</label>
+						<label><input type="radio" class="flat" name="satisfied_servicing_organisation" value="0" /> N/A</label>
 					</div>
 					<div class="form-group col-sm-4 col-xs-12">
 						<label for="">Are you satisfied with the performance of the service engineer?</label>
 						<br/>
-						<label><input type="radio" class="flat" name="satisfied_service_engineer" value="1" tabindex="31" /> Yes</label>
+						<label><input type="radio" class="flat" name="satisfied_service_engineer" value="1" /> Yes</label>
 						<label>&nbsp;</label>
-						<label><input type="radio" class="flat" name="satisfied_service_engineer" value="2"tabindex="32" /> No</label>
+						<label><input type="radio" class="flat" name="satisfied_service_engineer" value="2" /> No</label>
 						<label>&nbsp;</label>
-						<label><input type="radio" class="flat" name="satisfied_service_engineer" value="0" tabindex="33"/> N/A</label>
+						<label><input type="radio" class="flat" name="satisfied_service_engineer" value="0" /> N/A</label>
 					</div>
 					<div class="form-group col-sm-4 col-xs-12">
 						<label for="">Are you generally satisfied withe the reliability/performance of the equipment?</label>
 						<br/>
-						<label><input type="radio" class="flat" name="satisfied_equipment" value="1" tabindex="34"/> Yes</label>
+						<label><input type="radio" class="flat" name="satisfied_equipment" value="1" /> Yes</label>
 						<label>&nbsp;</label>
-						<label><input type="radio" class="flat" name="satisfied_equipment" value="2" tabindex="35" /> No</label>
+						<label><input type="radio" class="flat" name="satisfied_equipment" value="2" /> No</label>
 						<label>&nbsp;</label>
-						<label><input type="radio" class="flat" name="satisfied_equipment" value="0"tabindex="36" /> N/A</label>
+						<label><input type="radio" class="flat" name="satisfied_equipment" value="0" /> N/A</label>
 					</div>
 				</div>
 				
@@ -914,20 +914,7 @@ if( !class_exists('Fault') ):
 								?>
 							</select>
 						</div>
-					
-                        
-                        
-                                  				<div class="form-group col-sm-2 col-xs-6">
-					<label for="decommed">Decommisioned value</label>
-					<select name="decommed" class="form-control select_single" tabindex="-1" data-placeholder="Choose decomisioned value">
-						<?php
-						$option_data = array( '1' => 'yes' , '0' => 'no');
-						echo get_options_list($option_data);
-						?>
-					</select>
-				</div>
-                        
-                        
+						
 						<div class="form-group col-sm-2 col-xs-6">
 							<label for="equipment">Equipment</label>
 							<select name="equipment" class="form-control select_single" tabindex="-1" data-placeholder="Choose equipment">
@@ -963,10 +950,7 @@ if( !class_exists('Fault') ):
 								}
 								?>
 							</select>
-
 						</div>
-                        
-
 						
 						<div class="form-group col-sm-2 col-xs-6">
 							<label for="fault-type">Fault Type</label>
@@ -990,37 +974,24 @@ if( !class_exists('Fault') ):
 						</div>
 					
 					</div>
-					<div id="bb2" class="row custom-filters">
+					<div class="row custom-filters">
 						<div class="form-group col-sm-2 col-xs-6 col col-sm-push-2">
 							<label for="date_of_fault"><?php _e('Fault Date From');?></label>
-							<input id="bob1" type="text" name="fault_date_from" class="form-control input-datepicker-today" />
+							<input type="text" name="fault_date_from" class="form-control input-datepicker-today"/>
 						</div>
 						
 						<div class="form-group col-sm-2 col-xs-6 col-sm-push-2">
 							<label for="date_of_fault"><?php _e('Fault Date To');?></label>
-							<input id="bob2" type="text" name="fault_date_to" class="form-control input-datepicker-today" />
+							<input type="text" name="fault_date_to" class="form-control input-datepicker-today"/>
 						</div>
 						
 						<div class="col-xs-6 col-sm-2 col-sm-pull-4">
 							<?php if(is_admin()){ ?>	
-							 <input  type="submit" value="Export Report" name="SubmitButton" class="btn btn-dark btn-sm custom-export-btn"/>	
+							 <input type="submit" value="Export Report" name="SubmitButton" class="btn btn-dark btn-sm custom-export-btn"/>	
 							<?php } ?>
 						</div>
-        <button name="btw" type="button" class="btn btn-dark btn-sm custom-export-btn" onclick="ClearFields();">Clear Dates</button>
-                        
-                        <script>
-function ClearFields() {
-
-     document.getElementById("bob1").value = "";
-     document.getElementById("bob2").value = "";
-    $('#bb2').load(window.location.href +  ' #bb2');
-}
-</script>
 					</div>
-                    
-
 				</form>
-
 
 				<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap ajax-datatable-buttons" cellspacing="0" width="100%" data-table="fetch_all_faults" data-order-column="6">
 					<thead>

@@ -21,7 +21,7 @@ if( !class_exists('User') ):
     <?php
 			$content = ob_get_clean();
 			return $content;
-		}
+		} 
 
 		public function login__page(){
 			ob_start();
@@ -56,7 +56,40 @@ if( !class_exists('User') ):
                     <div class="ln_solid"></div>
                     <h3>This service is part of the NHS breast screening (BSP) programme</h3>
                     <p>Please login to access the equipment and fault management services.</p>
-                </div>
+<script>
+	navigator.sayswho= (function(){
+    var ua= navigator.userAgent, tem, 
+    M= ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
+    if(/trident/i.test(M[1])){
+        tem=  /\brv[ :]+(\d+)/g.exec(ua) || [];
+        return 'IE '+(tem[1] || '');
+    }
+    if(M[1]=== 'Chrome'){
+        tem= ua.match(/\b(OPR|Edge)\/(\d+)/);
+        if(tem!= null) return tem.slice(1).join(' ').replace('OPR', 'Opera');
+    }
+    M= M[2]? [M[1], M[2]]: [navigator.appName, navigator.appVersion, '-?'];
+    if((tem= ua.match(/version\/(\d+)/i))!= null) M.splice(1, 1, tem[1]);
+    return M.join(' ');
+})();
+
+
+	if(navigator.sayswho=="MSIE 7"||navigator.sayswho=="MSIE 8"){
+	alert("Your browser is outdated and certain features may not work, please update you internet browser.");	
+	}
+	if (navigator.sayswho.includes('Chrome')){
+console.log(navigator.sayswho);
+		
+		num = navigator.sayswho.replace(/^\D+/g, "");
+		console.log(num);
+		if(num<=49){
+	alert("Your browser is outdated and certain features may not work, please update you internet browser.");	
+	}
+	}
+	
+					</script>                
+
+</div>
                 <div class="col-md-1"></div>
             </div>
         </div>

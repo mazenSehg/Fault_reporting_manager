@@ -98,10 +98,15 @@ $(document).ready(function() {
 						d.model = $('.custom-filters select[name="model"]').val();
 						d.approved = $('.custom-filters select[name="approved"]').val();
 						d.fault_date_from = $('.custom-filters input[name="fault_date_from"]').val();
+						console.log($('.custom-filters input[name="fault_date_from"]').val());
 						d.fault_date_to = $('.custom-filters input[name="fault_date_to"]').val();
+						console.log($('.custom-filters input[name="fault_date_to"]').val());		
 						d.decommed = $('.custom-filters select[name="decommed"]').val();
                        
                         console.log($('.custom-filters select[name="decommed"]').val());
+						
+                        
+	   
                     },
 					complete:function(r){
 						if ($("table .js-switch")[0]) {
@@ -993,6 +998,11 @@ $(document).ready(function() {
 	
 	$('.custom-filters input').on('apply.daterangepicker', function(ev, picker) {
 		if($(this).val() != ''){
+			$('.ajax-datatable-buttons > thead > tr th:nth-child(1)').trigger('click');
+		}
+	});
+    $('.custom-filters input').on('blur', function(ev, picker) {
+		if($(this).val() == ''){
 			$('.ajax-datatable-buttons > thead > tr th:nth-child(1)').trigger('click');
 		}
 	});
