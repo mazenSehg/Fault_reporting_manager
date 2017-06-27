@@ -2819,6 +2819,9 @@ class Equipment{
                 
 				$query .= ($query != '') ? ' AND ' : ' WHERE ';
 				$query .= " `decommed` = '".$_POST['decommed']."' ";
+			}else{
+				$query .= ($query != '') ? ' AND ' : ' WHERE ';
+				$query .= " `decommed` = '0' ";
 			}
 			
             $recordsTotal = get_tabledata(TBL_EQUIPMENTS,true,array(), $query, 'COUNT(ID) as count');

@@ -352,6 +352,9 @@ class Centre{
 			echo page_not_found("There are no New centres record found",' ',false);
 		else:
 		?>
+
+
+
 		<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap datatable-buttons" cellspacing="0" width="100%">
 			<thead>
 				<tr>
@@ -536,7 +539,12 @@ class Centre{
 	public function all__regions__page()
 	{
 		ob_start();
-		$args = array();
+		
+				if(isset($_POST['myselect'])){
+			$args = array('approved'=>$_POST['myselect']);
+		}else{
+					$args = array('approved'=>1);
+				}
 		$regions = get_tabledata(TBL_REGIONS,false,$args);
 
 		if( !user_can('view_region') ):
@@ -545,6 +553,20 @@ class Centre{
 		echo page_not_found("There are no New regions record found",' ',false);
 		else:
 		?>
+
+
+<div class="form-group col-sm-2 col-xs-12">
+<form action="#" method="POST">
+	<label for="approved">Region Status</label>
+    <select name="myselect" id="myselect" class="form-control select_single" data-placeholder="Choose status" onchange="this.form.submit()">
+        <option value=""></option>
+        <option value="0">Not Current</option>
+        <option value="1">Current</option>
+    </select>
+</form>
+</div>
+
+
 		<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap datatable-buttons" cellspacing="0" width="100%">
 			<thead>
 				<tr>
@@ -559,7 +581,7 @@ class Centre{
 					</th>
 					<?php if(is_admin()): ?>
 					<th>
-						Approved
+						Use status
 					</th>
 					<?php endif; ?>
 					<th class="text-center">
@@ -570,7 +592,9 @@ class Centre{
 			<tbody>
 				<?php
 				if($regions):
+
 				foreach($regions as $region):
+
 				$body = get_tabledata(TBL_REGION_BODY,true,array('ID'=> $region->body));
 				?>
 				<tr>
@@ -712,7 +736,7 @@ class Centre{
 					</th>
 					<?php if(is_admin()): ?>
 					<th>
-						Approved
+						Use status
 					</th>
 					<?php endif; ?>
 					<th class="text-center">
