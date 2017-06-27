@@ -338,13 +338,20 @@ class Centre{
 
 	public function all__centres__page(){
 		ob_start();
-		$args = array();
-		if(is_admin()){
-		$centres = get_tabledata(TBL_CENTRES,false,$args);			
+        
+        				if(isset($_POST['myselect'])){
+			$args = array('approved'=>$_POST['myselect']);
 		}else{
-					$centres = get_tabledata(TBL_CENTRES,false,array('approved'=>'1'));
-			
-		}
+					$args = array('approved'=>1);
+				}
+		$centres = get_tabledata(TBL_CENTRES,false,$args);
+
+
+
+
+
+
+        
 
 		if( !user_can('view_centre') ):
 			echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
@@ -352,6 +359,18 @@ class Centre{
 			echo page_not_found("There are no New centres record found",' ',false);
 		else:
 		?>
+
+
+<div class="form-group col-sm-2 col-xs-12">
+<form action="#" method="POST">
+	<label for="approved">Centre Status</label>
+    <select name="myselect" id="myselect" class="form-control select_single" data-placeholder="Choose status" onchange="this.form.submit()">
+        <option value=""></option>
+        <option value="0">Not Current</option>
+        <option value="1">Current</option>
+    </select>
+</form>
+</div>
 		<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap datatable-buttons" cellspacing="0" width="100%">
 			<thead>
 				<tr>
@@ -372,7 +391,7 @@ class Centre{
 					</th>
 					<?php if(is_admin()): ?>
 					<th>
-						Approved
+						Use status
 					</th>
 					<?php endif; ?>
 					<th class="text-center">
@@ -405,6 +424,7 @@ class Centre{
 						<label>
 							<input type="checkbox" class="js-switch" <?php checked($centre->approved, 1);?> onClick="javascript:approve_switch(this);" data-id="<?php echo $centre->ID;?>" data-action="centre_approve_change"/>
 						</label>
+						<div style="display:none;"><?php echo $centre->approved; ?></div>
 					</td>
 					<?php endif; ?>
 					<td class="text-center">
@@ -535,7 +555,12 @@ class Centre{
 	public function all__regions__page()
 	{
 		ob_start();
-		$args = array();
+		
+				if(isset($_POST['myselect'])){
+			$args = array('approved'=>$_POST['myselect']);
+		}else{
+					$args = array('approved'=>1);
+				}
 		$regions = get_tabledata(TBL_REGIONS,false,$args);
 
 		if( !user_can('view_region') ):
@@ -544,6 +569,20 @@ class Centre{
 		echo page_not_found("There are no New regions record found",' ',false);
 		else:
 		?>
+
+
+<div class="form-group col-sm-2 col-xs-12">
+<form action="#" method="POST">
+	<label for="approved">Region Status</label>
+    <select name="myselect" id="myselect" class="form-control select_single" data-placeholder="Choose status" onchange="this.form.submit()">
+        <option value=""></option>
+        <option value="0">Not Current</option>
+        <option value="1">Current</option>
+    </select>
+</form>
+</div>
+
+
 		<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap datatable-buttons" cellspacing="0" width="100%">
 			<thead>
 				<tr>
@@ -558,7 +597,7 @@ class Centre{
 					</th>
 					<?php if(is_admin()): ?>
 					<th>
-						Approved
+						Use status
 					</th>
 					<?php endif; ?>
 					<th class="text-center">
@@ -569,7 +608,9 @@ class Centre{
 			<tbody>
 				<?php
 				if($regions):
+
 				foreach($regions as $region):
+
 				$body = get_tabledata(TBL_REGION_BODY,true,array('ID'=> $region->body));
 				?>
 				<tr>
@@ -585,9 +626,9 @@ class Centre{
 					<?php if(is_admin()): ?>
 					<td class="text-center">
 						<label>
-							<input type="checkbox" class="js-switch" <?php checked($region->approved, 1);?> onClick="javascript:approve_switch(this);" data-id="
-							<?php echo $region->ID;?>" data-action="region_approve_change"/>
+							<input type="checkbox" class="js-switch" <?php checked($region->approved, 1);?> onClick="javascript:approve_switch(this);" data-id="<?php echo $region->ID;?>" data-action="region_approve_change"/>
 						</label>
+						<div style="display:none;"><?php echo $region->approved; ?></div>
 					</td>
 					<?php endif; ?>
 					<td class="text-center">
@@ -711,7 +752,7 @@ class Centre{
 					</th>
 					<?php if(is_admin()): ?>
 					<th>
-						Approved
+						Use status
 					</th>
 					<?php endif; ?>
 					<th class="text-center">
@@ -733,9 +774,10 @@ class Centre{
 					<?php if(is_admin()): ?>
 					<td class="text-center">
 						<label>
-							<input type="checkbox" class="js-switch" <?php checked($region_body->approved, 1);?> onClick="javascript:approve_switch(this);" data-id="
-							<?php echo $region_body->ID;?>" data-action="region_body_approve_change"/>
+							<input type="checkbox" class="js-switch" <?php checked($region_body->approved, 1);?> onClick="javascript:approve_switch(this);" data-id="<?php echo $region_body->ID;?>" data-action="region_body_approve_change"/>
 						</label>
+						<div style="display:none;"><?php echo $region_body->approved; ?></div>
+						
 					</td>
 					<?php endif; ?>
 					<td class="text-center">

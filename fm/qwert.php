@@ -258,6 +258,42 @@ login_check();
 
 
 
+//
+//
+//$sql1 = "SELECT * FROM bob";
+//$res1 = $db->get_results($sql1);
+//foreach($res1 as $a):
+//$sql2 = "SELECT * FROM tbl_fault WHERE ID = '$a->ID'";
+//$res2 = $db->get_results($sql2);
+//foreach($res2 as $b):
+//
+//$sql3 = "UPDATE tbl_fault SET date_of_fault='$a->date' WHERE ID = '$b->ID'";
+//$res4 = $db->query($sql3);
+//
+//endforeach;
+//
+//endforeach;
+
+
+//
+//$sql1 = "SELECT * FROM bob LIMIT 1000000";
+//$res1 = $db->get_results($sql1);
+//foreach($res1 as $a):
+//
+//	$sql2 = "SELECT * FROM tbl_equipment WHERE equipment_code = '$a->code'";
+//	$res2 = $db->get_results($sql2);
+//	foreach($res2 as $b):
+//echo $b->equipment_code;
+//echo "---";
+//echo $a->code;
+//echo "<br>";
+//	$sql3 = "UPDATE tbl_equipment SET decommed='$a->decom' WHERE ID = '$b->ID'";
+//	$res4 = $db->query($sql3);
+//
+//	endforeach;
+//
+//
+//endforeach;
 
 
 

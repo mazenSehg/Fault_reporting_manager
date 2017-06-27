@@ -54,7 +54,7 @@ if( !class_exists('User') ):
                 <div class="col-md-7 col-xs-12 text-center hidden-xs ">
                     <h1 class=" big-title">Welcome to the NCCPM online Fault Reporting System.</h1>
                     <div class="ln_solid"></div>
-                    <h3>This service is part of the NHS breast screening (BSP) programme</h3>
+                    <h3>This service is part of the NHS breast screening programme (NHSBSP)</h3>
                     <p>Please login to access the equipment and fault management services.</p>
 <script>
 	navigator.sayswho= (function(){

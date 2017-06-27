@@ -29,7 +29,7 @@ login_check();
 				
 				
 
-$sql  = 'SELECT *  FROM `tbl_fault` WHERE `equipment_name` IS NULL OR `equipment_code` IS NULL ORDER BY `equipment_name`  DESC';
+$sql  = 'SELECT *  FROM `tbl_fault` WHERE `equipment_name` IS NULL OR `equipment_code` IS NULL LIMIT 100000';
             $res = $db->get_results($sql);			
 foreach($res as $q):
             $sql1 = "SELECT * FROM tbl_equipment WHERE ID = $q->equipment";

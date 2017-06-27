@@ -31,83 +31,88 @@ login_check();
 						//////////////////////////////////////////////////////////////////
 
 
-						$sql = "SELECT * FROM tbl_equipment";
-						$r = $db->get_results($sql);
-						foreach($r as $a):
-
-						$sql1 = "SELECT * FROM tbl_model WHERE ID = $a->model";
-						$rr = $db->get_results($sql1);
-						foreach($rr as $b):
-
-
-if(strpos($a->name, $b->name)!== false){
-
-}else{
+$sql1 = "SELECT * FROM tbl_equipment WHERE name is NULL OR name = '0'";
+							$res1 = $db->get_results($sql1);
+							foreach($res1 as $a):
+							
+							$manufac = NULL;
+							
+							if($a->manufacturer!=null||$a->manufacturer=0){
+							$sql2 = "SELECT * FROM tbl_manufacturer WHERE ID = $a->manufacturer";
+							$res2 = $db->get_results($sql2);
+							foreach($res2 as $b):
+								$manufac = $b->name;
+							endforeach;
+							}
+							
+							$model = NULL;
+							
+							if($a->model!=null){
+							$sql3 = "SELECT * FROM tbl_model WHERE ID = $a->model";
+							$res3 = $db->get_results($sql3);
+							foreach($res3 as $c):
+								$model = $c->name;
+							endforeach;
+							}
+							
+							
 	
+							
+							$string = null;
+							if(isset($manufac)&&!isset($model)){
+								$string = $manufac . " | ";
+							}
+							if(!isset($manufac)&&isset($model)){
+								$string = $manufac . " | ";
+							}
+							if(isset($manufac)&&isset($model)){
+								$string = $manufac . " | " . $model;
+							}
+							
+							
+							
+							
+							if($a->serial_number!=null){
+								$serial = $a->serial_number;							
+								$string = $string . " | ". $serial;
 
-						$sting = null;				
+							}
+							if($a->year_installed!=null){
+							$year_installed = $a->year_installed;
+								$string = $string . " | ". $year_installed;
+							}
+							if($a->location_id!=null){
+								$location_id = $a->location_id;
+								$string = $string . " | ". $location_id;
+							}
+							if($a->location!=null){
+								$location = $a->location;
+								$string = $string . " | ". $location;
+							}
 
-
-						$sql1 = "SELECT * FROM tbl_manufacturer WHERE ID = $a->manufacturer";
-						$aq1 = $db->get_results($sql1);
-
-						foreach ($aq1 as $bob1):
-							//setting manufacturer
-							$sting = $bob1->name; 
-						endforeach;
-
-
-						if($b->name!=null){
-							//setting model
-							$sting = $sting . " | " . $b->name;
-						}
-
-						if($a->serial_number !=null){
-							//setting serial number
-							$sting = $sting . " | " . $a->serial_number;
-						}
-						if($a->year_installed!=null){
-							//setting year installed
-							$sting = $sting . " | " . $a->year_installed;			
-						}
-						if($a->location_id!=null){
-							//setting location ID
-							$sting = $sting . " | " . $a->location_id;
-						}
-						if($a->location != null){
-							//setting location
-							$sting = $sting	. " | ". $a->location;		
-						}
-						$sql4 = "UPDATE tbl_equipment SET name='$sting' WHERE ID = '$a->ID'";
+							$string = mysql_real_escape_string(trim($string));
+						$sql4 = "UPDATE tbl_equipment SET name='$string' WHERE ID = '$a->ID'";
 						$sq5 = $db->query($sql4);
+							
+							endforeach;
 
-
-}
-
-
-
-
-
-						endforeach;
-
-						endforeach;
 
 
 
 						//////////////////////////////////////////////////////////////////
-						//*************TO UPDATE MANUFACTURER IN TBL_EQUIPMENTs*********//
+						//**********TO UPDATE equipment_name IN TBL_EQUIPMENTs**********//
 						//////////////////////////////////////////////////////////////////
 
 
-						$sql = "SELECT * FROM tbl_equipment WHERE manufacturer = '' OR manufacturer IS NULL";
+						$sql = "SELECT * FROM tbl_equipment WHERE type_name IS NULL";
 						$r = $db->get_results($sql);
 						foreach($r as $a):
 
-						$sql1 = "SELECT * FROM tbl_model WHERE ID = $a->model";
+						$sql1 = "SELECT * FROM tbl_equipment_type WHERE ID = $a->equipment_type";
 						$rr = $db->get_results($sql1);
 						foreach($rr as $b):
 
-						$sql4 = "UPDATE tbl_equipment SET manufacturer='$b->manufacturer' WHERE manufacturer = '$a->manufacturer'";
+						$sql4 = "UPDATE tbl_equipment SET type_name='$b->name' WHERE ID = '$a->ID'";
 						$sq5 = $db->query($sql4);
 
 
@@ -118,12 +123,12 @@ if(strpos($a->name, $b->name)!== false){
 
 							
 
-						//////////////////////////////////////////////////////////////////
-						//*************TO UPDATE EQUIPMENT CODE  TBL_EQUIPMENTs*********//
-						//////////////////////////////////////////////////////////////////
+						////////////////////////////////////////////////////////////////
+						///************TO UPDATE EQUIPMENT CODE  TBL_EQUIPMENTs******///
+						////////////////////////////////////////////////////////////////
 							
 							
-						$sql = "SELECT COUNT(*) AS resc FROM tbl_equipment WHERE equipment_code IS NULL OR equipment_code=''";
+						$sql = "SELECT COUNT(*) AS resc FROM tbl_equipment WHERE equipment_code is NULL OR equipment_code=''";
 						$res = $db->get_results($sql);
 
 						$valll;
@@ -135,7 +140,7 @@ if(strpos($a->name, $b->name)!== false){
 
 
 
-							$sql = "SELECT * FROM tbl_equipment WHERE equipment_code IS NULL OR equipment_code=''";
+							$sql = "SELECT * FROM tbl_equipment WHERE equipment_code IS NULL OR equipment_code='' LIMIT 100000";
 							$res = $db->get_results($sql);
 							foreach($res as $row):
 

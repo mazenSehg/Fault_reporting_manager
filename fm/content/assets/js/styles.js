@@ -98,14 +98,9 @@ $(document).ready(function() {
 						d.model = $('.custom-filters select[name="model"]').val();
 						d.approved = $('.custom-filters select[name="approved"]').val();
 						d.fault_date_from = $('.custom-filters input[name="fault_date_from"]').val();
-						console.log($('.custom-filters input[name="fault_date_from"]').val());
 						d.fault_date_to = $('.custom-filters input[name="fault_date_to"]').val();
-						console.log($('.custom-filters input[name="fault_date_to"]').val());		
 						d.decommed = $('.custom-filters select[name="decommed"]').val();
-                       
-                        console.log($('.custom-filters select[name="decommed"]').val());
-						
-                        
+
 	   
                     },
 					complete:function(r){
@@ -782,6 +777,7 @@ $(document).ready(function() {
 				$('.select-service-agent').html(res['service_agent_html']);
 				$('.select_manufacturer').html(res['manufacturer_html']);
 				$('.select_supplier').html(res['supplier_html']);
+				
 				$select_single.select2({ allowClear: true });
 				$select_multiple.select2({ allowClear: true });
 			}
@@ -812,6 +808,7 @@ $(document).ready(function() {
     
     
 	$('.fetch-equipment-data').change(function(e){
+				console.log("810");
 		var _this = $(this);
 		var value  = 0;
 		if($('.show-decommed').is(':checked')){
@@ -889,6 +886,7 @@ $(document).ready(function() {
 		if(_this.is(':checked')){
 			var value = 1;
 		}
+		
 		$.ajax({ 
 			type : 'POST',
 			data: {
@@ -911,6 +909,7 @@ $(document).ready(function() {
 	});
 	
 	$('.fetch-centre-equipment-data').change(function(e){
+		console.log("912");
 		var _this = $(this);
 		var value  = 0;
 		if($('.show-decommed').is(':checked')){
@@ -948,13 +947,14 @@ $(document).ready(function() {
 	
 	$('.custom-filters select').on('change',function(){
 		var attr_name = $(this).attr('name');
-	if(attr_name == 'centre' || attr_name == 'equipment_type'){
+	if(attr_name == 'centre' || attr_name == 'equipment_type'|| attr_name == 'decommed'){
 			$.ajax({ 
 				type : 'POST',
 				data: {
 					action: 'fetch_equipment_data',
 					id: $('.custom-filters select[name="equipment_type"]').val(),
 					centre: $(' .custom-filters select[name="centre"]').val(),
+					decom: $('.custom-filters select[name="decommed"]').val(),
 				},
 				url  : ajax_url,
 				dataType: 'json',
@@ -964,17 +964,21 @@ $(document).ready(function() {
 					$select_single.select2("destroy");
 					$('select[name="equipment"]').html(res['equipment_html']);
 					$('select[name="fault_type"]').html(res['fault_type_html']);
+					$('select[name="fault_type"]').html(res['fault_type_html']);
+					$('select[name="model"]').html(res['model_html']);
+					
 					$select_single.select2({ allowClear: true });
 					$select_multiple.select2({ allowClear: true });
 					$('.ajax-datatable-buttons > thead > tr th:nth-child(1)').trigger('click');
 				}
 			});
-		}else if(attr_name == 'manufacturer'){
+		}else if(attr_name == 'manufacturer'|| attr_name == 'equipment_type'){
 						$.ajax({ 
 				type : 'POST',
 				data: {
 					action: 'fetch_equipment_data2',
 					id: $('.custom-filters select[name="manufacturer"]').val(),
+					eq: $('.custom-filters select[name="equipment_type"]').val(),
 				},
 				url  : ajax_url,
 				dataType: 'json',
@@ -1001,11 +1005,7 @@ $(document).ready(function() {
 			$('.ajax-datatable-buttons > thead > tr th:nth-child(1)').trigger('click');
 		}
 	});
-    $('.custom-filters input').on('blur', function(ev, picker) {
-		if($(this).val() == ''){
-			$('.ajax-datatable-buttons > thead > tr th:nth-child(1)').trigger('click');
-		}
-	});
+	
 });
 
 

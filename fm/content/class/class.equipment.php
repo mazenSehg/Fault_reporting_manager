@@ -32,7 +32,7 @@ class Equipment{
 		else:
 		?>
 <div class="row custom-filters">
-				<div class="form-group col-sm-2 col-xs-12">
+				<div class="form-group col-sm-3 col-xs-12">
 					<label for="centre">Centre</label>
 					<select name="centre" class="form-control select_single" tabindex="-1" data-placeholder="Choose centre">
 						<?php
@@ -46,7 +46,8 @@ class Equipment{
 						endif;
 						$query .= ($query != '') ? ' AND ' : ' WHERE ';
 						$query .= " `approved` = '1' ORDER BY `name` ASC";
-						$data = get_tabledata(TBL_CENTRES,false,array(),$query);
+//$data = get_tabledata(TBL_USERS,false,array('user_role' => 'trainer'),'',' ID, CONCAT_WS(" ", first_name , last_name) AS name ');
+						$data = get_tabledata(TBL_CENTRES,false,array(),$query,' ID, CONCAT_WS(" | ", name , region_name, centre_code) AS name');
 						$option_data = get_option_data($data,array('ID','name'));
 						echo get_options_list($option_data);
 						?>
@@ -54,7 +55,7 @@ class Equipment{
 				</div>
 				<div class="form-group col-sm-2 col-xs-12">
 					<label for="equipment-type">Equipment Type</label>
-					<select name="equipment_type" class="form-control select_single" tabindex="-1" data-placeholder="Choose equipment type">
+					<select name="equipment_type" class="form-control select_single fetch-equipment-type-data" tabindex="-1" data-placeholder="Choose equipment type">
 						<?php
 						$data = get_tabledata(TBL_EQUIPMENT_TYPES,false,array('approved'=> '1'), 'ORDER BY `name` ASC');
 						$option_data = get_option_data($data,array('ID','name'));
@@ -62,10 +63,12 @@ class Equipment{
 						?>
 					</select>
 				</div>
+	
 				<div class="form-group col-sm-2 col-xs-12">
 					<label for="manufacturer">Manufacturer</label>
-					<select name="manufacturer" class="form-control select_single" tabindex="-1" data-placeholder="Choose manufacturer">
+					<select name="manufacturer" class="form-control select_single select_manufacturer" tabindex="-1" data-placeholder="Choose manufacturer">
 						<?php
+		
 						$data = get_tabledata(TBL_MANUFACTURERS,false,array('approved'=> '1'), 'ORDER BY `name` ASC');
 						$option_data = get_option_data($data,array('ID','name'));
 						echo get_options_list($option_data);
@@ -225,7 +228,7 @@ class Equipment{
 						endif;
 						$query .= ($query != '') ? ' AND ' : ' WHERE ';
 						$query .= " `approved` = '1' ORDER BY `name` ASC";
-						$data = get_tabledata(TBL_CENTRES,false,array(),$query);
+						$data = get_tabledata(TBL_CENTRES,false,array(),$query,' ID, CONCAT_WS(" | ", name , region_name, centre_code) AS name');
 						$option_data = get_option_data($data,array('ID','name'));
 						echo get_options_list($option_data);
 						?>
@@ -484,7 +487,7 @@ class Equipment{
 						endif;
 						$query .= ($query != '') ? ' AND ' : ' WHERE ';
 						$query .= " `approved` = '1' ORDER BY `name` ASC";
-						$data = get_tabledata(TBL_CENTRES,false,array(),$query);
+						$data = get_tabledata(TBL_CENTRES,false,array(),$query,' ID, CONCAT_WS(" | ", name , region_name, centre_code) AS name');
 						$option_data = get_option_data($data,array('ID','name'));
 						echo get_options_list($option_data, maybe_unserialize($equipment->centre));
 						?>
@@ -631,7 +634,7 @@ class Equipment{
 		if($equipment->year_decommisoned!=0){
 			?>
 					
-					<input type="number" name="year_decommisoned" class="form-control" min="1000" max="9999" value="<?php _e($equipment->year_decommisoned);?>"/>
+					<input type="number" name="year_decommisoned" class="form-control"  max="9999" value="<?php _e($equipment->year_decommisoned);?>"/>
 					<?php
 		}else{
 			?>
@@ -949,7 +952,7 @@ class Equipment{
 					</th>
 					<?php if(is_admin()): ?>
 					<th>
-						Approved
+						Active
 					</th>
 					<?php endif; ?>
 					<th class="text-center">
@@ -972,6 +975,7 @@ class Equipment{
 						<label>
 							<input type="checkbox" class="js-switch" <?php checked($equipment__type->approved, 1);?> onClick="javascript:approve_switch(this);" data-id="<?php echo $equipment__type->ID;?>" data-action="equipment_type_approve_change"/>
 						</label>
+						<div style="display:none;"><?php echo $equipment_type->approved; ?></div>
 					</td>
 					<?php endif; ?>
 					<td class="text-center">
@@ -1130,7 +1134,7 @@ class Equipment{
 					
 					<?php if(is_admin()): ?>
 					<th>
-						Approved
+						Active
 					</th>
 					<?php endif; ?>
 					<th class="text-center">
@@ -1155,6 +1159,7 @@ class Equipment{
 						<label>
 							<input type="checkbox" class="js-switch" <?php checked($service__agent->approved, 1);?> onClick="javascript:approve_switch(this);" data-id="<?php echo $service__agent->ID;?>" data-action="service_agent_approve_change"/>
 						</label>
+						<div style="display:none;"><?php echo $service__agent->approved; ?></div>
 					</td>
 					<?php endif; ?>
 					
@@ -1300,7 +1305,7 @@ class Equipment{
 					</th>
 					<?php if(is_admin()): ?>
 					<th>
-						Approved
+						Active
 					</th>
 					<?php endif; ?>
 					<th class="text-center">
@@ -1325,6 +1330,7 @@ class Equipment{
 						<label>
 							<input type="checkbox" class="js-switch" <?php checked($manufacturer->approved, 1);?> onClick="javascript:approve_switch(this);" data-id="<?php echo $manufacturer->ID;?>" data-action="manufacturer_approve_change"/>
 						</label>
+						<div style="display:none;"><?php echo $manufacturer->approved; ?></div>
 					</td>
 					<?php endif; ?>
 					<td class="text-center">
@@ -1445,7 +1451,7 @@ class Equipment{
 					</th>
 					<?php if(is_admin()): ?>
 					<th>
-						Approved
+						Active
 					</th>
 					<?php endif; ?>
 					<th class="text-center">
@@ -1470,7 +1476,7 @@ class Equipment{
 						<label>
 							<input type="checkbox" class="js-switch" <?php checked($model->approved, 1);?> onClick="javascript:approve_switch(this);" data-id="<?php echo $model->ID;?>" data-action="model_approve_change"/>
 						</label>
-						
+						<div style="display:none;"><?php echo $model->approved; ?></div>
 						
 			
 					</td>
@@ -1617,7 +1623,7 @@ class Equipment{
 					</th>
 					<?php if(is_admin()): ?>
 					<th>
-						Approved
+						Active
 					</th>
 					<?php endif; ?>
 					<th class="text-center">
@@ -1639,6 +1645,7 @@ class Equipment{
 						<label>
 							<input type="checkbox" class="js-switch" <?php checked($supplier->approved, 1);?> onClick="javascript:approve_switch(this);" data-id="<?php echo $supplier->ID;?>" data-action="supplier_approve_change"/>
 						</label>
+						<div style="display:none;"><?php echo $supplier->approved; ?></div>
 					</td>
 					<?php endif; ?>		
 					<td class="text-center">
@@ -1860,17 +1867,18 @@ class Equipment{
 			)
 		);
 
-		if($result):
-		$notification_args = array(
-			'title' => 'Equipment updated',
-			'notification'=> 'You have successfully updated equipment',
-		);
+			if($result):
+				$notification_args = array(
+					'title' => 'Equipment Update',
+					'notification'=> 'You have successfull updated an equipment',
+				);
 
-		add_user_notification($notification_args);
-		$return['status'] = 1;
-		$return['message_heading'] = 'Success !';
-		$return['message'] = 'Equipment has been updated successfully.';
-		endif;
+				add_user_notification($notification_args);
+				$return['status'] = 1;
+				$return['message_heading'] = 'Success !';
+				$return['message'] = 'Equipment has been updated successfully.';
+				$return['reset_form'] = 1;
+				endif;
 		endif;
 
 		return json_encode($return);
@@ -2481,11 +2489,12 @@ class Equipment{
 		$data = '';
 
 		$data = '';
+
 		$query= "where `equipment_type` LIKE '%".$id."%' AND `approved` = '1' ";
 		$data = get_tabledata(TBL_MANUFACTURERS, false, array() , $query);
 		$option_data = get_option_data($data,array('ID','name'));
 		$return['manufacturer_html'] = get_options_list($option_data);
-
+		
 		$data = '';
 		$query= "where `equipment_type` LIKE '%".$id."%' AND `approved` = '1' ";
 		$data = get_tabledata(TBL_SERVICE_AGENTS, false, array() , $query);
@@ -2810,6 +2819,9 @@ class Equipment{
                 
 				$query .= ($query != '') ? ' AND ' : ' WHERE ';
 				$query .= " `decommed` = '".$_POST['decommed']."' ";
+			}else{
+				$query .= ($query != '') ? ' AND ' : ' WHERE ';
+				$query .= " `decommed` = '0' ";
 			}
 			
             $recordsTotal = get_tabledata(TBL_EQUIPMENTS,true,array(), $query, 'COUNT(ID) as count');
@@ -2829,10 +2841,20 @@ class Equipment{
 				array_push($row, __($equipment->name));
 				array_push($row, __($centre->name));
 				array_push($row, __($equipment->equipment_code));
-				array_push($row, __($equipment_type->name));
+				array_push($row, __($equipment->type_name));
 				array_push($row, __($model->name));
+			if($equipment->manufacturer!=0){
 				array_push($row, __($manufacturer->name));
+			}else{
+				array_push($row, __("N/A"));
+			}
+			
+						if($equipment->service_agent!=0){
 				array_push($row, __($service_agent->name));
+			}else{
+				array_push($row, __("N/A"));
+				
+			}
 				
 				
 				array_push($row, date('M d,Y',strtotime($equipment->created_on)));
@@ -2844,6 +2866,7 @@ class Equipment{
 							<input type="checkbox" class="js-switch" <?php checked($equipment->approved, 1);?> onclick="approve_switch(this);" data-id="<?php echo $equipment->ID;?>" data-action="equipment_approve_change"/>
 						</label>
 					</div>
+					<div style="display:none;"><?php echo $equipment->approved; ?></div>
 					<?php 
 					$checkbox = ob_get_clean();
 					array_push($row, $checkbox);
@@ -2940,10 +2963,21 @@ class Equipment{
 				array_push($row, __($equipment->name));
 				array_push($row, __($centre->name));
 				array_push($row, __($equipment->equipment_code));
-				array_push($row, __($equipment_type->name));
+				array_push($row, __($equipment->type_name));
 				array_push($row, __($model->name));
+			if($equipment->manufacturer!=0){
 				array_push($row, __($manufacturer->name));
+			}else{
+				array_push($row, __("N/A"));
+				
+			}
+			
+						if($equipment->service_agent!=0){
 				array_push($row, __($service_agent->name));
+			}else{
+				array_push($row, __("N/A"));
+				
+			}
 
 				
 				array_push($row, date('M d,Y',strtotime($equipment->created_on)));
@@ -2955,6 +2989,7 @@ class Equipment{
 							<input type="checkbox" class="js-switch" <?php checked($equipment->approved, 1);?> onclick="approve_switch(this);" data-id="<?php echo $equipment->ID;?>" data-action="equipment_approve_change"/>
 						</label>
 					</div>
+<div style="display:none;"><?php echo $equipment->approved; ?></div>
 					<?php 
 					$checkbox = ob_get_clean();
 					array_push($row, $checkbox);
