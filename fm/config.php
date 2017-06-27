@@ -19,7 +19,7 @@ if($_SERVER['SERVER_ADDR'] == '10.161.146.74' || $_SERVER['SERVER_ADDR'] == '10.
 	define( 'CONTENT', 'content' );
 	define('WEBPATH', $webpath);
 } else {
-	define('DB_NAME', 'fault');
+	define('DB_NAME', 'fault-management');
 	define('DB_USER', 'root');
 	define('DB_PASSWORD', '');
 	define('DB_HOST', 'localhost');
