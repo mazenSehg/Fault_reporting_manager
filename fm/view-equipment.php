@@ -20,10 +20,20 @@ login_check();
 		
 		<!-- page content -->
 		<div class="right_col" role="main">
+			
+			
 			<div class="">
 				<?php echo $Header->page__header('View Equipment'); ?>
 				
 				<div class="row">
+					
+										<button onclick="goBack()">Previous page</button>
+
+<script>
+function goBack() {
+    window.history.go(-1);
+}
+</script>
 					<div class="col-md-12 col-sm-12 col-xs-12">
 						<div class="x_panel">
 							<div class="x_content">
