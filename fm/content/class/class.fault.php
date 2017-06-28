@@ -106,7 +106,7 @@ class Fault{
 				</select>
 			</div>
 			<div class="form-group col-sm-6 col-xs-12">
-				<label for="date-of-fault">Date of Fault</label>
+				<label for="date-of-fault">Date of Fault<span class="required">*</span></label>
 				<input type="text" name="date_of_fault" class="form-control input-datepicker" readonly="readonly" /> </div>
 		</div>
 		<div class="row">
@@ -117,8 +117,11 @@ class Fault{
 				</select>
 			</div>
 			<div class="form-group col-sm-6 col-xs-12">
-				<label for="time-of-fault">Servicing agency at time of fault <span class="required"> *</span></label>
-				<input type="text" name="time_of_fault" class="form-control" /> </div>
+				<label for="time-of-fault">Servicing agency at time of fault </label>
+				<input type="text" name="time_of_fault" class="form-control" /> 
+					<div align="right"> <small><b>Only populate</b> this field if the servicing agency has changed and <b>does not match</b> the "Current Servicing Agency" field.</small> </div>
+			</div>
+			
 		</div>
 		<div class="row">
 			<div class="form-group col-sm-12 col-xs-12">
@@ -188,7 +191,7 @@ class Fault{
 					<input type="radio" class="flat" name="adverse_incident_report" value="1" /> Yes</label>
 				<label>&nbsp;</label>
 				<label>
-					<input type="radio" class="flat" name="adverse_incident_report" value="0" /> No</label>
+					<input type="radio" class="flat" name="adverse_incident_report" value="0" checked="checked"/> No</label>
 			</div>
 		</div>
 		<div class="row">
@@ -239,7 +242,7 @@ class Fault{
 					<input type="radio" class="flat" name="satisfied_servicing_organisation" value="2" /> No</label>
 				<label>&nbsp;</label>
 				<label>
-					<input type="radio" class="flat" name="satisfied_servicing_organisation" value="0" /> N/A</label>
+					<input type="radio" class="flat" name="satisfied_servicing_organisation" value="0" checked="checked"/> N/A</label>
 			</div>
 			<div class="form-group col-sm-4 col-xs-12">
 				<label for="">Are you satisfied with the performance of the service engineer?</label>
@@ -251,7 +254,7 @@ class Fault{
 					<input type="radio" class="flat" name="satisfied_service_engineer" value="2" /> No</label>
 				<label>&nbsp;</label>
 				<label>
-					<input type="radio" class="flat" name="satisfied_service_engineer" value="0" /> N/A</label>
+					<input type="radio" class="flat" name="satisfied_service_engineer" value="0" checked="checked"/> N/A</label>
 			</div>
 			<div class="form-group col-sm-4 col-xs-12">
 				<label for="">Are you generally satisfied withe the reliability/performance of the equipment?</label>
@@ -263,7 +266,7 @@ class Fault{
 					<input type="radio" class="flat" name="satisfied_equipment" value="2" /> No</label>
 				<label>&nbsp;</label>
 				<label>
-					<input type="radio" class="flat" name="satisfied_equipment" value="0" /> N/A</label>
+					<input type="radio" class="flat" name="satisfied_equipment" value="0" checked="checked"/> N/A</label>
 			</div>
 		</div>
 		<?php if(is_admin()){ ?>
@@ -1310,7 +1313,15 @@ class Fault{
 		if( user_can('add_fault') ):
 		$guid = get_guid(TBL_FAULTS);
 		$doh = ( isset($doh) ) ? 1 : 0;
-
+		
+		$time = $time_of_fault;
+		$current_servicing_agency;
+if($time_of_fault = $current_servicing_agency){	
+$time = $current_servicing_agency;
+}else{
+	$time = $time_of_fault;
+}
+		
 		$insert_args = array(
 			'ID' => $guid,
 			'centre' => $centre,
@@ -1321,7 +1332,7 @@ class Fault{
 			'fault_type' => $fault_type,
 			'date_of_fault' => date('Y-m-d h:i:s',strtotime($date_of_fault) ) ,
 			'current_servicing_agency' => $current_servicing_agency,
-			'time_of_fault' => $time_of_fault,
+			'time_of_fault' => $time,
 			'description_of_fault' => $description_of_fault,
 			'service_call_no' => $service_call_no,
 			'action_taken' => $action_taken,

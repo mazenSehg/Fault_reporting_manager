@@ -121,8 +121,19 @@ $sql1 = "SELECT * FROM tbl_equipment WHERE name is NULL OR name = '0'";
 						endforeach;
 
 
-							
+						////////////////////////////////////////////////////////////////
+						///************TO SERVICE AGENCY VALUE  TBL_EQUIPMENTS*******///
+						////////////////////////////////////////////////////////////////		
 
+							
+							$sql1 = "SELECT * FROM tbl_equipment WHERE service_agent = 0";
+							$res1 = $db->get_results($sql1);
+							foreach($res1 as $a):
+							
+						$sql4 = "UPDATE tbl_equipment SET service_agent=221 WHERE ID = '$a->ID'";
+						$sq5 = $db->query($sql4);
+							
+							endforeach;
 						////////////////////////////////////////////////////////////////
 						///************TO UPDATE EQUIPMENT CODE  TBL_EQUIPMENTs******///
 						////////////////////////////////////////////////////////////////

@@ -321,14 +321,18 @@ class Equipment{
 			<div class="row">
 				<div class="form-group col-sm-6 col-xs-12">
 					<label for="location-id">
-						Local ID
+						Local ID<span class="required">
+							*
+						</span>
 					</label>
 					<input type="text" name="location_id" class="form-control require"/>
 				</div>
 
 				<div class="form-group col-sm-6 col-xs-12">
 					<label for="location">
-						Location
+						Location<span class="required">
+							*
+						</span>
 					</label>
 					<input type="text" name="location" class="form-control require"/>
 				</div>
@@ -337,7 +341,9 @@ class Equipment{
 			<div class="row">
 				<div class="form-group col-sm-6 col-xs-12">
 					<label for="serial-number">
-						Serial Number
+						Serial Number						<span class="required">
+							*
+						</span>
 					</label>
 					<input type="text" name="serial_number" class="form-control require"/>
 				</div>
@@ -346,21 +352,19 @@ class Equipment{
 			<div class="row">
 				<div class="form-group col-sm-4 col-xs-12">
 					<label for="year-manufacturered">
-						Year Manufacturered
+						Year Manufacturered						<span class="required">
+							*
+						</span>
 					</label>
-					<input type="number" name="year_manufacturered" class="form-control " min="1990" max="<?php echo date("Y");?>"/>
+					<input type="number" name="year_manufacturered" class="form-control required" min="1990" max="<?php echo date("Y");?>"/>
 				</div>
 				<div class="form-group col-sm-4 col-xs-12">
 					<label for="year-installed">
-						Year Installed
+						Year Installed						<span class="required">
+							*
+						</span>
 					</label>
 					<input type="number" name="year_installed" class="form-control" min="1995" max="<?php echo date("Y");?>"/>
-				</div>
-				<div class="form-group col-sm-4 col-xs-12">
-					<label for="year-decomissioned">
-						Year Decomissioned
-					</label>
-					<input type="number" name="year_decommisoned" class="form-control" min="1990" max="<?php echo date("Y");?>"/>
 				</div>
 			</div>
 
@@ -374,22 +378,10 @@ class Equipment{
 
 			<div class="row">
 				<div class="form-group col-sm-3 col-xs-6" required>
-					<label for="decommed">
-						Decomissioned
-					</label><br/>
-					<label>
-						<input type="radio" class="flat" name="decommed" value="1"> Yes
-					</label>
-					<label>
-						&nbsp;
-					</label>
-					<label>
-						<input type="radio" class="flat" name="decommed" value="0"> No
-					</label>
-				</div>
-				<div class="form-group col-sm-3 col-xs-6" required>
 					<label for="spare">
-						Spare
+						Spare						<span class="required">
+							*
+						</span>
 					</label><br/>
 					<label>
 						<input type="radio" class="flat" name="spare" value="1"> Yes
@@ -398,21 +390,7 @@ class Equipment{
 						&nbsp;
 					</label>
 					<label>
-						<input type="radio" class="flat" name="spare" value="0"> No
-					</label>
-				</div>
-				<div class="form-group col-sm-3 col-xs-6" required>
-					<label for="x-ray">
-						X-ray Subtype Digital
-					</label><br/>
-					<label>
-						<input type="radio" class="flat" name="x_ray" value="1"> Yes
-					</label>
-					<label>
-						&nbsp;
-					</label>
-					<label>
-						<input type="radio" class="flat" name="x_ray" value="0"> No
+						<input type="radio" class="flat" name="spare" value="0" checked="checked" > No
 					</label>
 				</div>
                 
@@ -422,6 +400,9 @@ class Equipment{
 				<div class="form-group col-sm-3 col-xs-6">
 					<label for="approved">
 						Approved
+												<span class="required">
+							*
+						</span>
 					</label><br/>
 					<label>
 						<input type="radio" class="flat" name="approved" value="1" required> Yes
@@ -430,7 +411,7 @@ class Equipment{
 						&nbsp;
 					</label>
 					<label>
-						<input type="radio" class="flat" name="approved" value="0" required> No
+						<input type="radio" class="flat" name="approved" value="0" required checked="checked" > No
 					</label>
 				</div>
                 <?php
@@ -1752,7 +1733,6 @@ class Equipment{
 		$byn = rand(0, 99);
 			$equipment_code = sprintf( "%d%d%d", $centre, $byn,$equipment_type);
 
-        
         if(is_admin()){
 			$result = $this->database->insert(TBL_EQUIPMENTS,
 				array(
@@ -1764,17 +1744,19 @@ class Equipment{
 					'manufacturer' => $manufacturer,
 					'model' => $model,
 					'supplier' => $supplier,
+				
 					'service_agent' => $service_agent,
+				
 					'location_id' => $location_id,
 					'location' => $location,
 					'serial_number' => $serial_number,
 					'year_manufacturered'=> $year_manufacturered,
 					'year_installed' => $year_installed,
-					'year_decommisoned' => $year_decommisoned,
-					'decommed' => $decommed,
+					'year_decommisoned' => 0,
+					'decommed' => 0,
 					'spare' => $spare,
 					'comment' => $comment,
-					'x_ray' => $x_ray,
+					'x_ray' => 1,
 					'approved' => $approved
 				)
 			);
@@ -1789,17 +1771,19 @@ class Equipment{
 					'manufacturer' => $manufacturer,
 					'model' => $model,
 					'supplier' => $supplier,
+							
 					'service_agent' => $service_agent,
+							
 					'location_id' => $location_id,
 					'location' => $location,
 					'serial_number' => $serial_number,
 					'year_manufacturered'=> $year_manufacturered,
 					'year_installed' => $year_installed,
-					'year_decommisoned' => $year_decommisoned,
-					'decommed' => $decommed,
+					'year_decommisoned' => 0,
+					'decommed' => 0,
 					'spare' => $spare,
 					'comment' => $comment,
-					'x_ray' => $x_ray,
+					'x_ray' => 1,
 					'approved' => 0
 				)
 			);
@@ -1827,7 +1811,7 @@ class Equipment{
 
 
 	}
-
+  
 	public function update__equipment__process(){
 		extract($_POST);
         
@@ -1858,7 +1842,7 @@ class Equipment{
 					'spare' => $spare,
 					'comment' => $comment,
 					'x_ray' => $x_ray,
-					'approved' => $approved
+					'approved' => $approved,
 			
 
 			),
@@ -1870,7 +1854,7 @@ class Equipment{
 			if($result):
 				$notification_args = array(
 					'title' => 'Equipment Update',
-					'notification'=> 'You have successfull updated an equipment',
+					'notification'=> 'You have successfully updated an equipment',
 				);
 
 				add_user_notification($notification_args);
@@ -2026,25 +2010,15 @@ class Equipment{
 
 	public function add__service__agent__process(){
 		extract($_POST);
-		$id = trim($id);
 		$return = array(
 			'status' => 0,
 			'message_heading'=> 'Failed !',
-			'message' => 'Could not create manufacturer',
+			'message' => 'Could not create Service agent',
 			'reset_form' => 0
 		);
-		if( user_can('add_service_agent') ):
-			$validation_args = array(
-				'name'=> $name,
-			);
 
-			if(is_value_exists(TBL_SERVICE_AGENTS,$validation_args)):
-				$return['status'] = 2;
-				$return['message_heading'] = 'Failed !';
-				$return['message'] = 'Service agent name you entered is already exists, please try another name.';
-				$return['fields'] = array('name');
-			else:
 				$guid = get_guid(TBL_SERVICE_AGENTS);
+		
 				$result = $this->database->insert(TBL_SERVICE_AGENTS,
 					array(
 						'ID' => $guid,
@@ -2065,8 +2039,6 @@ class Equipment{
 					$return['message'] = 'Service agent has been created successfully.';
 					$return['reset_form'] = 1;
 				endif;
-			endif;
-		endif;
 
 		return json_encode($return);
 	}

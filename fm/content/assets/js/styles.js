@@ -886,13 +886,14 @@ $(document).ready(function() {
 		if(_this.is(':checked')){
 			var value = 1;
 		}
-		
+		console.log("GHEHREË");
 		$.ajax({ 
 			type : 'POST',
 			data: {
 				action: 'fetch_equipment_data',
 				id: $('.select-equipment-type').val(),
 				decommed: value,
+				decom: value,
 				centre: $('.fetch-centre-equipment-data').val(),
 			},
 			url  : ajax_url,
