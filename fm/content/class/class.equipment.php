@@ -490,11 +490,9 @@ class Equipment{
 					</select>
 				</div>
 				</div>
-			</div>
 
-			<div class="row">
 				
-			</div>
+
 
 			<div class="row">
 				<div class="form-group col-sm-6 col-xs-12">
@@ -576,7 +574,6 @@ class Equipment{
 					</label>
 					<input type="text" name="location_id" class="form-control" value="<?php _e($equipment->location_id);?>"/>
 				</div>
-
 				<div class="form-group col-sm-6 col-xs-12">
 					<label for="location">
 						Location
@@ -638,7 +635,7 @@ class Equipment{
 			<div class="row">
 				<div class="form-group col-sm-3 col-xs-6">
 					<label for="decommed">
-						Decommed
+						Decomissioned
 					</label><br/>
 					<label>
 						<input type="radio" class="flat" name="decommed" id="decommed" value="1" <?php checked($equipment->decommed,'1');?>/> Yes
@@ -679,31 +676,31 @@ class Equipment{
 						<input type="radio" class="flat" name="x_ray" id="x_ray" value="0" <?php checked($equipment->x_ray,'0');?>/> No
 					</label>
 				</div>
+					
 				<div class="form-group col-sm-3 col-xs-6">
 					<label for="approved">
 						Approved
 					</label><br/>
 					<label>
-						<input type="radio" class="flat" name="approved" id="approved" value="1" <?php checked($equipment->approved,'1');?>/> Yes
+						<input type="radio" class="flat" name="approved" value="1" <?php checked($equipment->approved,'1');?> /> Yes
 					</label>
 					<label>
 						&nbsp;
 					</label>
 					<label>
-						<input type="radio" class="flat" name="approved" id="approved" value="0" <?php checked($equipment->approved,'0');?>/> No
+						<input type="radio" class="flat" name="approved" value="0" <?php checked($equipment->approved,'0');?>/> No
 					</label>
-				</div>
+				</div>	
 			</div>
 
 			<div class="ln_solid">
 			</div>
-			<div class="form-group">
-				<input type="hidden" name="equipment_id" value="<?php echo $equipment->ID;?>"/>
-				<input type="hidden" name="action" value="update_equipment"/>
-				<button class="btn btn-success btn-md" type="submit">
-					Update Equipment
-				</button>
-			</div>
+						<div class="form-group">
+							<input type="hidden" name="equipment_id" value="<?php echo $equipment->ID;?>"/>
+							<input type="hidden" name="action" value="update_equipment" />
+							<button class="btn btn-success btn-md" type="submit">Update Equipment</button>
+						</div>
+
 		</form>
 		<?php endif; ?>
 		<?php
@@ -1819,9 +1816,10 @@ class Equipment{
 			'status' => 0,
 			'message_heading'=> 'Failed !',
 			'message' => 'Could not update Equipment, Please try again.',
-			'data' => $_POST['decommed'].'-AYYY-'.$_POST['spare'],
 			'reset_form' => 0
 		);
+		
+		$return['data'] = $_POST; 
 
 			$update_args = array(
 					'name' => 0,
@@ -1838,6 +1836,7 @@ class Equipment{
 					'year_installed' => $year_installed,
 					'year_decommisoned' => $year_decommisoned,
 					'comment' => $comment,
+				
 					'decommed' => $decommed,
 					'spare' => $spare,
 					'x_ray' => $x_ray,
