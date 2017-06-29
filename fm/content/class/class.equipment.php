@@ -377,7 +377,7 @@ class Equipment{
 			</div>
 
 			<div class="row">
-				<div class="form-group col-sm-3 col-xs-6" required>
+				<div class="form-group col-sm-3 col-xs-6">
 					<label for="spare">
 						Spare						<span class="required">
 							*
@@ -641,13 +641,14 @@ class Equipment{
 						Decommed
 					</label><br/>
 					<label>
-						<input type="radio" class="flat" name="decommed" value="1" <?php echo ($equipment->decommed == 1) ? 'checked' : ''; ?>> Yes
+						<input type="radio" class="flat" name="decommed" id="decommed" value="1" <?php checked($equipment->decommed,'1');?>/> Yes
 					</label>
+					
 					<label>
 						&nbsp;
 					</label>
 					<label>
-						<input type="radio" class="flat" name="decommed" value="0" <?php echo ($equipment->decommed != 1) ? 'checked' : ''; ?>> No
+						<input type="radio" class="flat" name="decommed" id="decommed" value="0" <?php checked($equipment->decommed,'0');?>/> No
 					</label>
 				</div>
 				<div class="form-group col-sm-3 col-xs-6">
@@ -655,13 +656,13 @@ class Equipment{
 						Spare
 					</label><br/>
 					<label>
-						<input type="radio" class="flat" name="spare" value="1" <?php echo ($equipment->spare == 1) ? 'checked' : ''; ?>> Yes
+						<input type="radio" class="flat" name="spare" id="spare" value="1" <?php checked($equipment->spare,'1');?>/> Yes
 					</label>
 					<label>
 						&nbsp;
 					</label>
 					<label>
-						<input type="radio" class="flat" name="spare" value="0" <?php echo ($equipment->spare != 1) ? 'checked' : ''; ?>> No
+						<input type="radio" class="flat" name="spare" id="spare" value="0" <?php checked($equipment->spare,'0');?>/> No
 					</label>
 				</div>
 				<div class="form-group col-sm-3 col-xs-6">
@@ -669,13 +670,13 @@ class Equipment{
 						X-ray Subtype Digital
 					</label><br/>
 					<label>
-						<input type="radio" class="flat" name="x_ray" value="1" <?php echo ($equipment->x_ray == 1) ? 'checked' : ''; ?>> Yes
+						<input type="radio" class="flat" name="x_ray" id="x_ray" value="1" <?php checked($equipment->x_ray,'1');?>/> Yes
 					</label>
 					<label>
 						&nbsp;
 					</label>
 					<label>
-						<input type="radio" class="flat" name="x_ray" value="0" <?php echo ($equipment->x_ray != 1) ? 'checked' : ''; ?>> No
+						<input type="radio" class="flat" name="x_ray" id="x_ray" value="0" <?php checked($equipment->x_ray,'0');?>/> No
 					</label>
 				</div>
 				<div class="form-group col-sm-3 col-xs-6">
@@ -683,13 +684,13 @@ class Equipment{
 						Approved
 					</label><br/>
 					<label>
-						<input type="radio" class="flat" name="approved" value="1" <?php echo ($equipment->approved == 1) ? 'checked' : ''; ?>> Yes
+						<input type="radio" class="flat" name="approved" id="approved" value="1" <?php checked($equipment->approved,'1');?>/> Yes
 					</label>
 					<label>
 						&nbsp;
 					</label>
 					<label>
-						<input type="radio" class="flat" name="approved" value="0" <?php echo ($equipment->approved != 1) ? 'checked' : ''; ?>> No
+						<input type="radio" class="flat" name="approved" id="approved" value="0" <?php checked($equipment->approved,'0');?>/> No
 					</label>
 				</div>
 			</div>
@@ -1730,8 +1731,6 @@ class Equipment{
 		);
 		if( user_can('add_equipment') ):
 			$guid = get_guid(TBL_EQUIPMENTS);
-		$byn = rand(0, 99);
-			$equipment_code = sprintf( "%d%d%d", $centre, $byn,$equipment_type);
 
         if(is_admin()){
 			$result = $this->database->insert(TBL_EQUIPMENTS,
@@ -1780,11 +1779,13 @@ class Equipment{
 					'year_manufacturered'=> $year_manufacturered,
 					'year_installed' => $year_installed,
 					'year_decommisoned' => 0,
-					'decommed' => 0,
-					'spare' => $spare,
 					'comment' => $comment,
+//							
+					'decommed' => 0,
+					'spare' => $spare,	
 					'x_ray' => 1,
 					'approved' => 0
+//
 				)
 			);
         }
@@ -1814,17 +1815,15 @@ class Equipment{
   
 	public function update__equipment__process(){
 		extract($_POST);
-        
 		$return = array(
 			'status' => 0,
 			'message_heading'=> 'Failed !',
-			'message' => 'Could not update equipment, please try again.',
+			'message' => 'Could not update Equipment, Please try again.',
+			'data' => $_POST['decommed'].'-AYYY-'.$_POST['spare'],
 			'reset_form' => 0
 		);
 
-		if( user_can('edit_equipment') ):
-		$result = $this->database->update(TBL_EQUIPMENTS,
-			array(
+			$update_args = array(
 					'name' => 0,
 					'centre' => $centre,
 					'equipment_type' => $equipment_type,
@@ -1838,33 +1837,29 @@ class Equipment{
 					'year_manufacturered'=> $year_manufacturered,
 					'year_installed' => $year_installed,
 					'year_decommisoned' => $year_decommisoned,
+					'comment' => $comment,
 					'decommed' => $decommed,
 					'spare' => $spare,
-					'comment' => $comment,
 					'x_ray' => $x_ray,
 					'approved' => $approved,
-			
+				
+			);	
 
-			),
-			array(
-				'ID'=> $equipment_id
-			)
+
+		$result = $this->database->update(TBL_EQUIPMENTS,$update_args, array( 'ID'=> $equipment_id ) );
+
+		if($result):
+		$notification_args = array(
+			'title' => 'Equipment updated',
+			'notification'=> 'You have successfully updated aan Equipment.',
 		);
 
-			if($result):
-				$notification_args = array(
-					'title' => 'Equipment Update',
-					'notification'=> 'You have successfully updated an equipment',
-				);
+		add_user_notification($notification_args);
+		$return['status'] = 1;
+		$return['message_heading'] = 'Success !';
+		$return['message'] = 'Equipment has been updated successfully.';
 
-				add_user_notification($notification_args);
-				$return['status'] = 1;
-				$return['message_heading'] = 'Success !';
-				$return['message'] = 'Equipment has been updated successfully.';
-				$return['reset_form'] = 1;
-				endif;
 		endif;
-
 		return json_encode($return);
 	}
 
@@ -1915,7 +1910,6 @@ class Equipment{
 					'ID' => $guid,
 					'code' => $code,
 					'name' => $name,
-					'centre' => $centre,
 					'supplier'=> $supplier,
 					'approved'=> 1,
 				)
@@ -1961,7 +1955,6 @@ class Equipment{
 				$result = $this->database->update(TBL_EQUIPMENT_TYPES,
 					array(
 						'name' => $name,
-						'centre' => $centre,
 						'supplier'=> $supplier,
 					),
 					array(

@@ -399,8 +399,8 @@ class Fault{
 				</div>
 				<div class="row">
 					<div class="form-group col-sm-6 col-xs-12">
-						<label for="name">Current Servicing Agency <span class="required">*</span></label>
-						<input type="text" name="service_agent" class="form-control require" value="<?php _e($fault->current_servicing_agency);?>" readonly="readonly" /> </div>
+						<label for="name">Current Servicing Agency</label>
+						<input type="text" name="service_agent" class="form-control" value="<?php _e($fault->current_servicing_agency);?>" readonly="readonly" /> </div>
 					<div class="form-group col-sm-6 col-xs-12">
 						<label for="time-of-fault">Servicing agency at time of fault <span class="required">*</span></label>
 						<input type="text" name="time_of_fault" class="form-control" value="<?php _e($fault->time_of_fault);?>" /> </div>
