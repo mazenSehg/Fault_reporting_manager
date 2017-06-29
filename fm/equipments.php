@@ -26,75 +26,7 @@ login_check();
 								<?php
 
 
-						//////////////////////////////////////////////////////////////////
-						//**********TO UPDATE INCORRECT NAMES IN TBL_EQUIPMENTs*********//
-						//////////////////////////////////////////////////////////////////
-
-
-$sql1 = "SELECT * FROM tbl_equipment WHERE name is NULL OR name = '0' OR name = ''";
-							$res1 = $db->get_results($sql1);
-							foreach($res1 as $a):
-							
-							$manufac = NULL;
-							
-							if($a->manufacturer!=null||$a->manufacturer=0){
-							$sql2 = "SELECT * FROM tbl_manufacturer WHERE ID = $a->manufacturer";
-							$res2 = $db->get_results($sql2);
-							foreach($res2 as $b):
-								$manufac = $b->name;
-							endforeach;
-							}
-							
-							$model = NULL;
-							
-							if($a->model!=null){
-							$sql3 = "SELECT * FROM tbl_model WHERE ID = $a->model";
-							$res3 = $db->get_results($sql3);
-							foreach($res3 as $c):
-								$model = $c->name;
-							endforeach;
-							}
-							
-							
-	
-							
-							$string = null;
-							if(isset($manufac)&&!isset($model)){
-								$string = $manufac . " | ";
-							}
-							if(!isset($manufac)&&isset($model)){
-								$string = $manufac . " | ";
-							}
-							if(isset($manufac)&&isset($model)){
-								$string = $manufac . " | " . $model;
-							}
-							
-							
-							
-							
-							if($a->serial_number!=null){
-								$serial = $a->serial_number;							
-								$string = $string . " | ". $serial;
-
-							}
-							if($a->year_installed!=null){
-							$year_installed = $a->year_installed;
-								$string = $string . " | ". $year_installed;
-							}
-							if($a->location_id!=null){
-								$location_id = $a->location_id;
-								$string = $string . " | ". $location_id;
-							}
-							if($a->location!=null){
-								$location = $a->location;
-								$string = $string . " | ". $location;
-							}
-
-							$string = mysql_real_escape_string(trim($string));
-						$sql4 = "UPDATE tbl_equipment SET name='$string' WHERE ID = '$a->ID'";
-						$sq5 = $db->query($sql4);
-							
-							endforeach;
+						
 
 
 
@@ -120,6 +52,10 @@ $sql1 = "SELECT * FROM tbl_equipment WHERE name is NULL OR name = '0' OR name = 
 
 						endforeach;
 
+                            
+                            
+                            
+
 
 						////////////////////////////////////////////////////////////////
 						///************TO SERVICE AGENCY VALUE  TBL_EQUIPMENTS*******///
@@ -134,6 +70,8 @@ $sql1 = "SELECT * FROM tbl_equipment WHERE name is NULL OR name = '0' OR name = 
 						$sq5 = $db->query($sql4);
 							
 							endforeach;
+                            
+                            
 						////////////////////////////////////////////////////////////////
 						///************TO UPDATE EQUIPMENT CODE  TBL_EQUIPMENTs******///
 						////////////////////////////////////////////////////////////////
