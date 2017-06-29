@@ -31,7 +31,7 @@ login_check();
 						//////////////////////////////////////////////////////////////////
 
 
-$sql1 = "SELECT * FROM tbl_equipment WHERE name is NULL OR name = '0'";
+$sql1 = "SELECT * FROM tbl_equipment WHERE name is NULL OR name = '0' OR name = ''";
 							$res1 = $db->get_results($sql1);
 							foreach($res1 as $a):
 							

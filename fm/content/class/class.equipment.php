@@ -552,11 +552,8 @@ class Equipment{
 				<div class="form-group col-sm-6 col-xs-12">
 					<label for="service-agent">
 						Service Agent
-						<span class="required">
-							*
-						</span>
 					</label>
-					<select name="service_agent" class="form-control select-service-agent select_single require" tabindex="-1" data-placeholder="Choose service agent">
+					<select name="service_agent" class="form-control select-service-agent select_single " tabindex="-1" data-placeholder="Choose service agent">
 						<?php
         
         						$data = get_tabledata(TBL_SERVICE_AGENT, false, array('ID'=> $equipment->service_agent ,'approved' => '1') );
@@ -1726,6 +1723,10 @@ class Equipment{
 			'message' => 'Could not create equipment, please try again.',
 			'reset_form' => 0
 		);
+		
+		if(!isset($service_agent)){
+			$service_agent = 221;
+		}
 		if( user_can('add_equipment') ):
 			$guid = get_guid(TBL_EQUIPMENTS);
 
