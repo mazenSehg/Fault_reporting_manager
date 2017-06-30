@@ -654,9 +654,7 @@ if ( !function_exists('update_names') ) :
 								$location = $a->location;
 								$string = $string . " | ". $location;
 							}
-
-							$string = mysql_real_escape_string(trim($string));
-							
+		
 							endforeach;
 		
 		return $string;    		
