@@ -1853,7 +1853,6 @@ class Equipment{
 
 		
 			$update_args = array(
-					'name' => $name3,
 					'centre' => $centre,
 					'equipment_type' => $equipment_type,
 					'manufacturer' => $manufacturer,
@@ -1878,6 +1877,16 @@ class Equipment{
 
 		$result = $this->database->update(TBL_EQUIPMENTS,$update_args, array( 'ID'=> $equipment_id ) );
 
+		
+		
+				$name3 = update_names($equipment_id);
+			$update_args = array(
+					'name' => $name3,
+				
+			);	
+
+
+		$result2 = $this->database->update(TBL_EQUIPMENTS,$update_args, array( 'ID'=> $equipment_id ) );
 		
 		
 		
