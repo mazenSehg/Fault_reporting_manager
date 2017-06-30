@@ -596,6 +596,8 @@ endif;
 if ( !function_exists('update_names') ) :
 	function update_names($ID){
 				global $db;
+		
+		$string = NULL;
               $sql1 = "SELECT * FROM tbl_equipment WHERE ID = '$ID'";
 							$res1 = $db->get_results($sql1);
 							foreach($res1 as $a):
@@ -654,7 +656,9 @@ if ( !function_exists('update_names') ) :
 								$location = $a->location;
 								$string = $string . " | ". $location;
 							}
-		
+
+							$string = $string;
+							
 							endforeach;
 		
 		return $string;    		

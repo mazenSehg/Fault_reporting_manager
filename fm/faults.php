@@ -67,12 +67,17 @@ foreach($res as $q):
 
                 $equipment_code = $res1->equipment_code;     
             
-$bob = mysql_real_escape_string(trim($centre));
-$bob2 = mysql_real_escape_string(trim($equip));
-$bob3 = mysql_real_escape_string(trim($equipment_code));
-$bob4 = mysql_real_escape_string(trim($type));
-$bob5 = mysql_real_escape_string(trim($f_type));
+//$bob = mysql_real_escape_string(trim($centre));
+//$bob2 = mysql_real_escape_string(trim($equip));
+//$bob3 = mysql_real_escape_string(trim($equipment_code));
+//$bob4 = mysql_real_escape_string(trim($type));
+//$bob5 = mysql_real_escape_string(trim($f_type));
 
+$bob = $centre;
+$bob2 = $equip;
+$bob3 = $equipment_code;
+$bob4 = $type;
+$bob5 = $f_type;
 														
             $sql4 = "UPDATE tbl_fault SET equipment_code='$bob3', equipment_name='$bob2', e_type_name='$bob4', centre_name='$bob', f_type_name='$bob5' WHERE ID = '$q->ID'";
 										$sq5 = $db->query($sql4);
