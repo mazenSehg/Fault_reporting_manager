@@ -543,7 +543,7 @@ class Equipment{
 
 						<?php
 
-        						$data = get_tabledata(TBL_SUPPLIER, false, array('ID'=> $equipment->supplier ,'approved' => '1') );
+        						$data = get_tabledata(TBL_SUPPLIER, false, array('approved' => '1') );
 						$option_data = get_option_data($data,array('ID','name'));
 						echo get_options_list($option_data, maybe_unserialize($equipment->supplier));
 						?>
@@ -556,7 +556,7 @@ class Equipment{
 					<select name="service_agent" class="form-control select-service-agent select_single " tabindex="-1" data-placeholder="Choose service agent">
 						<?php
         
-        						$data = get_tabledata(TBL_SERVICE_AGENT, false, array('ID'=> $equipment->service_agent ,'approved' => '1') );
+        						$data = get_tabledata(TBL_SERVICE_AGENT, false, array('approved' => '1') );
 						$option_data = get_option_data($data,array('ID','name'));
 						echo get_options_list($option_data, maybe_unserialize($equipment->service_agent));
 						?>
@@ -1716,6 +1716,8 @@ class Equipment{
 
 	//Process functions starts here
 	public function add__equipment__process(){
+		
+		
 		extract($_POST);
 		$return = array(
 			'status' => 0,
@@ -1724,13 +1726,19 @@ class Equipment{
 			'reset_form' => 0
 		);
 		
+		
+		
 		if(!isset($service_agent)){
 			$service_agent = 221;
 		}
+		
+		$chk = 0;
+		
 		if( user_can('add_equipment') ):
 			$guid = get_guid(TBL_EQUIPMENTS);
 
         if(is_admin()){
+			$chk=1;
 			$result = $this->database->insert(TBL_EQUIPMENTS,
 				array(
 					'ID' => $guid,
@@ -1758,6 +1766,7 @@ class Equipment{
 				)
 			);
         }else{
+						$chk=1;
             			$result = $this->database->insert(TBL_EQUIPMENTS,
 				array(
 					'ID' => $guid,
@@ -1786,8 +1795,22 @@ class Equipment{
 //
 				)
 			);
+			
         }
         
+		
+		if($chk=1){
+
+							$name = update_names($guid);
+					$update_args = array(
+					'name' => $name,
+				
+			);	
+
+
+		$result = $this->database->update(TBL_EQUIPMENTS,$update_args, array( 'ID'=> $guid));
+		
+			}
         
         
 			if($result):
@@ -1800,8 +1823,12 @@ class Equipment{
 				$return['status'] = 1;
 				$return['message_heading'] = 'Success !';
 				$return['message'] = 'Equipment has been created successfully.';
-				$return['reset_form'] = 1;
+				$return['reset_form'] = 1;			
+			
 
+
+
+		
 			endif;
 		endif;
 
@@ -1820,10 +1847,13 @@ class Equipment{
 			'reset_form' => 0
 		);
 		
-		$return['data'] = $_POST; 
+		$name3 = update_names($equipment_id);
+		
+		
 
+		
 			$update_args = array(
-					'name' => 0,
+					'name' => $name3,
 					'centre' => $centre,
 					'equipment_type' => $equipment_type,
 					'manufacturer' => $manufacturer,
@@ -1848,6 +1878,12 @@ class Equipment{
 
 		$result = $this->database->update(TBL_EQUIPMENTS,$update_args, array( 'ID'=> $equipment_id ) );
 
+		
+		
+		
+		
+		
+		
 		if($result):
 		$notification_args = array(
 			'title' => 'Equipment updated',

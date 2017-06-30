@@ -592,6 +592,81 @@ if ( !function_exists('get_guid') ) :
 	}
 endif;
 
+
+if ( !function_exists('update_names') ) :
+	function update_names($ID){
+				global $db;
+              $sql1 = "SELECT * FROM tbl_equipment WHERE ID = '$ID'";
+							$res1 = $db->get_results($sql1);
+							foreach($res1 as $a):
+							
+							$manufac = NULL;
+							
+							if($a->manufacturer!=null||$a->manufacturer=0){
+							$sql2 = "SELECT * FROM tbl_manufacturer WHERE ID = $a->manufacturer";
+							$res2 = $db->get_results($sql2);
+							foreach($res2 as $b):
+								$manufac = $b->name;
+							endforeach;
+							}
+							
+							$model = NULL;
+							
+							if($a->model!=null){
+							$sql3 = "SELECT * FROM tbl_model WHERE ID = $a->model";
+							$res3 = $db->get_results($sql3);
+							foreach($res3 as $c):
+								$model = $c->name;
+							endforeach;
+							}
+							
+							
+	
+							
+							$string = null;
+							if(isset($manufac)&&!isset($model)){
+								$string = $manufac . " | ";
+							}
+							if(!isset($manufac)&&isset($model)){
+								$string = $manufac . " | ";
+							}
+							if(isset($manufac)&&isset($model)){
+								$string = $manufac . " | " . $model;
+							}
+							
+							
+							
+							
+							if($a->serial_number!=null){
+								$serial = $a->serial_number;							
+								$string = $string . " | ". $serial;
+
+							}
+							if($a->year_installed!=null){
+							$year_installed = $a->year_installed;
+								$string = $string . " | ". $year_installed;
+							}
+							if($a->location_id!=null){
+								$location_id = $a->location_id;
+								$string = $string . " | ". $location_id;
+							}
+							if($a->location!=null){
+								$location = $a->location;
+								$string = $string . " | ". $location;
+							}
+
+							$string = mysql_real_escape_string(trim($string));
+							
+							endforeach;
+		
+		return $string;    		
+	}
+endif;
+
+
+
+
+
 if ( !function_exists('is_in_table') ) :
 	function is_in_table($table_name,$id){
 		$data = get_tabledata($table_name, false, array('ID' => $id));
