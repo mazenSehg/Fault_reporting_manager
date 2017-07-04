@@ -536,7 +536,7 @@ class Equipment{
 							*
 						</span>
 					</label>
-					<select name="supplier" class="form-control select_supplier select_single" tabindex="-1" data-placeholder="Choose supplier">
+					<select name="supplier" class="form-control select_single" tabindex="-1" data-placeholder="Choose supplier">
 						<option value="">
 							Choose supplier
 						</option>
@@ -553,7 +553,7 @@ class Equipment{
 					<label for="service-agent">
 						Service Agent
 					</label>
-					<select name="service_agent" class="form-control select-service-agent select_single " tabindex="-1" data-placeholder="Choose service agent">
+					<select name="service_agent" class="form-control select_single " tabindex="-1" data-placeholder="Choose service agent">
 						<?php
         
         						$data = get_tabledata(TBL_SERVICE_AGENT, false, array('approved' => '1') );
@@ -1896,7 +1896,7 @@ class Equipment{
 		if($result):
 		$notification_args = array(
 			'title' => 'Equipment updated',
-			'notification'=> 'You have successfully updated aan Equipment.',
+			'notification'=> 'You have successfully updated an Equipment.',
 		);
 
 		add_user_notification($notification_args);
