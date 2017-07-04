@@ -76,45 +76,7 @@ login_check();
 						
 						<!-- /top tiles -->
 						<div class="row">
-							<div class="col-md-4 col-sm-4 col-xs-12">
-								<div class="x_panel">
-									<div class="x_title">
-										<h2>Recent Activities</h2>
-										<ul class="nav navbar-right panel_toolbox">
-											<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-										</ul>
-										<div class="clearfix"></div>
-									</div>
-									<div class="x_content">
-										<?php
-									$notifications__query = " ORDER BY `ID` DESC LIMIT 0, 5";
-									$notifications__args = array('user_id' => get_current_user_id(), 'hide' => 0 , 'read' => 0);
-									$notifications__result = get_tabledata(TBL_NOTIFICATIONS,false,$notifications__args,$notifications__query);
-									?>
-											<div class="dashboard-widget-content">
-												<ul class="list-unstyled timeline widget">
-													<?php if($notifications__result): foreach($notifications__result as $notifications): ?>
-														<li>
-															<div class="block">
-																<div class="block_content">
-																	<h2 class="title">
-															<a><?php _e($notifications->title);?></a>
-														</h2>
-																	<div class="byline"> <span><?php echo date('M d, Y h:i a',strtotime($notifications->date));?></span> </div>
-																	<p class="excerpt">
-																		<?php echo strip_tags(stripslashes(htmlspecialchars_decode($notifications->notification)));?>
-																	</p>
-																</div>
-															</div>
-														</li>
-														<?php endforeach;endif; ?>
-												</ul>
-											</div>
-									</div>
-								</div>
-							</div>
-							 
-							<div class="col-md-8 col-sm-7 col-xs-12">
+							<div class="col-md-6 col-sm-10 col-xs-12">
 								<div class="x_panel tile fixed_height_320">
 									<div class="x_title">
 										<h2>Quick Links</h2>
@@ -197,12 +159,11 @@ login_check();
 										</div>
 									</div>
 								</div>
-							</div>
+								
 							<?php
 							if(is_admin()){
 								
 								?>
-							<div class="col-md-5 col-sm-2 col-xs-12">
 								<div class="x_panel tile fixed_height_320">
 									<div class="x_title">
 										<h2>Todo list</h2>
@@ -245,13 +206,58 @@ login_check();
 										</div>
 									</div>
 								</div>
-							</div>
 							<?php
 							}
 							?>
+							</div>
+							
+																		<div class="col-md-4 col-sm-4 col-xs-12">
+								<div class="x_panel fixed_height_300">
+									<div class="x_title">
+										<h2>Recent Activities</h2>
+										<ul class="nav navbar-right panel_toolbox">
+											<li><a class="expand-link"><i class="fa fa-chevron-down"></i></a></li>
+										</ul>
+										<div class="clearfix"></div>
+									</div>
+									<div class="x_content">
+										<?php
+									$notifications__query = " ORDER BY `ID` DESC LIMIT 0, 6";
+									$notifications__args = array('user_id' => get_current_user_id(), 'hide' => 0 , 'read' => 0);
+									$notifications__result = get_tabledata(TBL_NOTIFICATIONS,false,$notifications__args,$notifications__query);
+									?>
+											<div class="dashboard-widget-content">
+												<ul class="list-unstyled timeline widget">
+													<?php if($notifications__result): foreach($notifications__result as $notifications): ?>
+														<li>
+															<div class="block">
+																<div class="block_content">
+																	<h2 class="title">
+															<a><?php _e($notifications->title);?></a>
+														</h2>
+																	<div class="byline"> <span><?php echo date('M d, Y h:i a',strtotime($notifications->date));?></span> </div>
+																	<p class="excerpt">
+																		<?php echo strip_tags(stripslashes(htmlspecialchars_decode($notifications->notification)));?>
+																	</p>
+																</div>
+															</div>
+														</li>
+														<?php endforeach;endif; ?>
+												</ul>
+											</div>
+									</div>
+								</div>
+																			
+							</div>
+
 							
 						</div>
 					</div>
+				
+
+				
+
+
 					<!-- /page content -->
 					<!-- footer content -->
 					<?php echo $Footer->footer();?>
