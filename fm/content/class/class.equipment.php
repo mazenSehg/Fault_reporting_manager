@@ -81,7 +81,7 @@ class Equipment{
 						<?php
 		
 			if(isset($_POST['manufacturer']) && $_POST['manufacturer'] != '' && $_POST['manufacturer'] != 'undefined'){			
-						$data = get_tabledata(TBL_MODELS,false,array('manufacturer'=>$_POST['manufacturer'],'approved'=> '1'), 'ORDER BY `name` ASC');
+						$data =get_tabledata(TBL_MODELS,false,array('manufacturer'=>$_POST['manufacturer'],'manufacturer'=>$_POST['manufacturer'], 'approved'=> '1'), 'ORDER BY `name` ASC');
 						$option_data = get_option_data($data,array('ID','name'));
 						echo get_options_list($option_data);	
 		}else{

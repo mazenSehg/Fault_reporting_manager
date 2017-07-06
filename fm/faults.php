@@ -21,12 +21,8 @@ login_check();
 			<div class="main_container">
 				<?php echo $Header->header();?>
 					<?php            
-
-														$sql = "SELECT COUNT(*) as re FROM `tbl_fault` WHERE `equipment_name` IS NULL ORDER BY `equipment_name`  DESC";
-												$res = $db->get_results($sql);
-										
-													$cint = $res[0]->re;
 				
+								
 				
 
 $sql  = 'SELECT *  FROM `tbl_fault` WHERE `equipment_name` IS NULL OR `equipment_code` IS NULL LIMIT 100000';
