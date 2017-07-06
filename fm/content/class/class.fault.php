@@ -957,7 +957,7 @@ class Fault{
 		</div>
 		<div class="form-group col-sm-2 col-xs-6">
 			<label for="equipment-type">Equipment Type</label>
-			<select name="equipment_type" class="form-control select_single" tabindex="-1" data-placeholder="Choose equipment type">
+			<select name="equipment_type" class="form-control select_single fetch-equipment-type-data" tabindex="-1" data-placeholder="Choose equipment type">
 				<?php
 		$data = get_tabledata(TBL_EQUIPMENT_TYPES,false,array('approved'=> '1'), 'ORDER BY `name` ASC');
 		$option_data = get_option_data($data,array('ID','name'));
@@ -965,6 +965,18 @@ class Fault{
 				?>
 			</select>
 		</div>
+		
+								<div class="form-group col-sm-2 col-xs-6">
+					<label for="manufacturer">Manufacturer</label>
+					<select name="manufacturer" class="form-control select_single select_manufacturer" tabindex="-1" data-placeholder="Choose manufacturer">
+						<?php
+		
+						$data = get_tabledata(TBL_MANUFACTURERS,false,array('approved'=> '1'), 'ORDER BY `name` ASC');
+						$option_data = get_option_data($data,array('ID','name'));
+						echo get_options_list($option_data);
+						?>
+					</select>
+				</div>
 		<div class="form-group col-sm-2 col-xs-6">
 			<label for="equipment">Equipment</label>
 			<select name="equipment" class="form-control select_single" tabindex="-1" data-placeholder="Choose equipment">
@@ -1008,6 +1020,9 @@ class Fault{
 				?>
 			</select>
 		</div>
+		
+		
+
 		<div class="form-group col-sm-2 col-xs-6">
 			<label for="fault-type">Fault Type</label>
 			<select name="fault_type" class="form-control select_single" tabindex="-1" data-placeholder="Choose fault type">
@@ -2211,6 +2226,11 @@ class Fault{
 			$query .= ($query != '') ? ' AND ' : ' WHERE ';
 			$query .= " `approved` = '".$_POST['approved']."' ";
 		}
+		
+		if(isset($_POST['manufacturer']) && $_POST['manufacturer'] != '' &&  $_POST['manufacturer'] != 'undefined'){
+			$query .= ($query != '') ? ' AND ' : ' WHERE ';
+			$query .= " `eq_manufac` = '".$_POST['manufacturer']."' ";
+		}
 
 		if(isset($_POST['fault_date_from']) && $_POST['fault_date_from'] != '' && $_POST['fault_date_from'] != 'undefined' && isset($_POST['fault_date_to']) && $_POST['fault_date_to'] != '' &&  $_POST['fault_date_to'] != 'undefined'){
 			$query .= ($query != '') ? ' AND ' : ' WHERE ';
@@ -2274,6 +2294,7 @@ class Fault{
 		}else{
 			array_push($row, __($fault_type->name));
 		}
+		
 
 		array_push($row, date('d M,Y',strtotime($fault->date_of_fault)));
 		//array_push($row, date('d M, Y',$fault->date_of_fault));
