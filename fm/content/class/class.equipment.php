@@ -545,7 +545,7 @@ class Equipment{
 
         						$data = get_tabledata(TBL_SUPPLIERS, false, array('approved' => '1') );
 						$option_data = get_option_data($data,array('ID','name'));
-						echo get_options_list($option_data, maybe_unserialize());
+						echo get_options_list($option_data, maybe_unserialize($equipment->supplier));
 						?>
 					</select>
 					
