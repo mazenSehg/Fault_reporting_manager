@@ -543,11 +543,12 @@ class Equipment{
 
 						<?php
 
-        						$data = get_tabledata(TBL_SUPPLIER, false, array('approved' => '1') );
+        						$data = get_tabledata(TBL_SUPPLIERS, false, array('approved' => '1') );
 						$option_data = get_option_data($data,array('ID','name'));
-						echo get_options_list($option_data, maybe_unserialize($equipment->supplier));
+						echo get_options_list($option_data, maybe_unserialize());
 						?>
 					</select>
+					
 				</div>
 				<div class="form-group col-sm-6 col-xs-12">
 					<label for="service-agent">
@@ -556,7 +557,7 @@ class Equipment{
 					<select name="service_agent" class="form-control select_single " tabindex="-1" data-placeholder="Choose service agent">
 						<?php
         
-        						$data = get_tabledata(TBL_SERVICE_AGENT, false, array('approved' => '1') );
+        						$data = get_tabledata(TBL_SERVICE_AGENTS, false, array('approved' => '1') );
 						$option_data = get_option_data($data,array('ID','name'));
 						echo get_options_list($option_data, maybe_unserialize($equipment->service_agent));
 						?>
