@@ -57,7 +57,7 @@ class Equipment{
 					<label for="equipment-type">Equipment Type</label>
 					<select name="equipment_type" class="form-control select_single fetch-equipment-type-data" tabindex="-1" data-placeholder="Choose equipment type">
 						<?php
-						$data = get_tabledata(TBL_EQUIPMENT_TYPES,false,array('approved'=> '1'), 'ORDER BY `name` ASC');
+						$data = get_tabledata(TBL_EQUIPMENT_TYPES,false,array(), 'ORDER BY `name` ASC');
 						$option_data = get_option_data($data,array('ID','name'));
 						echo get_options_list($option_data);
 						?>
