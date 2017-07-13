@@ -101,7 +101,7 @@ $(document).ready(function() {
 						d.fault_date_to = $('.custom-filters input[name="fault_date_to"]').val();
 						d.decommed = $('.custom-filters select[name="decommed"]').val();
 
-	   
+	   console.log($('.custom-filters select[name="manufacturer"]').val());
                     },
 					complete:function(r){
 						if ($("table .js-switch")[0]) {
@@ -218,41 +218,43 @@ $(document).ready(function() {
 		maxDate: todayDate,
 		calender_style: "picker_1"
 	});
-	var radiobox_names = ['fault_corrected_by_user' ,'to_fix_at_next_service_visit','engineer_called_out'];
-	var radiobox_check = false;
-	$.each( radiobox_names, function( key, value ) {
-		var _value = $('input[name="'+value+'"]:checked').val();
-		if(radiobox_check == false){
-			$.each( radiobox_names, function( key1, value1 ) {
-				if( value != value1){
-					if(_value == '1'){
-						$('input[name="'+value1+'"][value="2"]').iCheck('check');
-						$('input[name="'+value1+'"]').iCheck('disable');
-						radiobox_check = true;
-					}else{
-						$('input[name="'+value1+'"]').iCheck('enable');
-					}
-				}
-			});
-		}
-	});
 	
-	$('.custom_radiobox').on('ifClicked',function(){
-		var _this = $(this);
-		var value = _this.attr('name');
-		var radiobox_names = ['fault_corrected_by_user' ,'to_fix_at_next_service_visit','engineer_called_out'];
-		var _value = _this.val();
-		$.each( radiobox_names, function( key1, value1 ) {
-			if( value != value1){
-				if(_value == '1' ){
-					$('input[name="'+value1+'"][value="2"]').iCheck('check');
-					$('input[name="'+value1+'"]').iCheck('disable');
-				}else{
-					$('input[name="'+value1+'"]').iCheck('enable');
-				}
-			}
-		});
-	});
+	//un comment if you want to  make the 3 radio actions to be limited to one choice. and add 'custom_radiobox' to the radio class
+//	var radiobox_names = ['fault_corrected_by_user' ,'to_fix_at_next_service_visit','engineer_called_out'];
+//	var radiobox_check = false;
+//	$.each( radiobox_names, function( key, value ) {
+//		var _value = $('input[name="'+value+'"]:checked').val();
+//		if(radiobox_check == false){
+//			$.each( radiobox_names, function( key1, value1 ) {
+//				if( value != value1){
+//					if(_value == '1'){
+//						$('input[name="'+value1+'"][value="2"]').iCheck('check');
+//						$('input[name="'+value1+'"]').iCheck('disable');
+//						radiobox_check = true;
+//					}else{
+//						$('input[name="'+value1+'"]').iCheck('enable');
+//					}
+//				}
+//			});
+//		}
+//	});
+//	
+//	$('.custom_radiobox').on('ifClicked',function(){
+//		var _this = $(this);
+//		var value = _this.attr('name');
+//		var radiobox_names = ['fault_corrected_by_user' ,'to_fix_at_next_service_visit','engineer_called_out'];
+//		var _value = _this.val();
+//		$.each( radiobox_names, function( key1, value1 ) {
+//			if( value != value1){
+//				if(_value == '1' ){
+//					$('input[name="'+value1+'"][value="2"]').iCheck('check');
+//					$('input[name="'+value1+'"]').iCheck('disable');
+//				}else{
+//					$('input[name="'+value1+'"]').iCheck('enable');
+//				}
+//			}
+//		});
+//	});
 	
 	var url_filter = /^(http|https|ftp):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/i;
 	var email_filter = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;

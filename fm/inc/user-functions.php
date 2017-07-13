@@ -28,7 +28,7 @@ endif;
 if ( !function_exists('get_equipment_status') ) :
 	function get_equipment_status($key = ''){
 		$data = array(
-			'1' => 'Equipment still in use',
+			'1' => 'Equipment continued in use',
 			'2' => 'Equipment temporarily out of use',
 			'3' => 'Equipment permanently out of use',
 		);

@@ -161,18 +161,22 @@ class Fault{
 			<label for="">To fix at next service visit?</label>
 			<br/>
 			<label>
-				<input type="radio" class="flat custom_radiobox" name="to_fix_at_next_service_visit" value="1" /> Yes</label>
+				<input type="radio" class="flat custom_radiobox" name="to_fix_at_next_service_visit" value="1" checked /> Yes</label>
 			<label>&nbsp;</label>
 			<label>
-				<input type="radio" class="flat custom_radiobox" name="to_fix_at_next_service_visit" value="0" /> No</label>
+				<input type="radio" class="flat custom_radiobox" name="to_fix_at_next_service_visit" value="0"  /> No</label>
 			<label>&nbsp;</label>
 			<label>
-				<input type="radio" class="flat custom_radiobox" name="to_fix_at_next_service_visit" value="2" checked/> N/A</label>
+				<input type="radio" class="flat custom_radiobox" name="to_fix_at_next_service_visit" value="2"/> N/A</label>
 		</div>
 		<div class="form-group col-sm-4 col-xs-12">
 			<label for="">Engineer called out?</label>
 			<br/>
 			<label>
+				
+				<?php 
+				//to re add the hard code choices add custom_radiobox to the class
+				?>
 				<input type="radio" class="flat custom_radiobox" name="engineer_called_out" value="1" /> Yes</label>
 			<label>&nbsp;</label>
 			<label>
@@ -182,7 +186,6 @@ class Fault{
 				<input type="radio" class="flat custom_radiobox" name="engineer_called_out" value="2" checked/> N/A</label>
 		</div>
 	</div>
-	<div align="right"> <small>To select another option, please select <b>'no' </b> or <b>'N/A' </b> or first for the question you already responded to.</small> </div>
 	<div class="row">
 		<div class="form-group col-sm-12 col-xs-12">
 			<label for="">Has an adverse incident report been sent to MHRA pr appropriate devolved administration?</label>
@@ -435,37 +438,37 @@ class Fault{
 			<label for="">Fault corrected by user?</label>
 			<br/>
 			<label>
-				<input type="radio" class="flat custom_radiobox" name="fault_corrected_by_user" value="1" <?php checked($fault->fault_corrected_by_user,'1');?> /> Yes</label>
+				<input type="radio" class="flat" name="fault_corrected_by_user" value="1" <?php checked($fault->fault_corrected_by_user,'1');?> /> Yes</label>
 			<label>&nbsp;</label>
 			<label>
-				<input type="radio" class="flat custom_radiobox" name="fault_corrected_by_user" value="0" <?php checked($fault->fault_corrected_by_user,'0');?> /> No</label>
+				<input type="radio" class="flat" name="fault_corrected_by_user" value="0" <?php checked($fault->fault_corrected_by_user,'0');?> /> No</label>
 			<label>&nbsp;</label>
 			<label>
-				<input type="radio" class="flat custom_radiobox" name="fault_corrected_by_user" value="2" <?php checked($fault->fault_corrected_by_user,'2');?> /> N/A</label>
+				<input type="radio" class="flat" name="fault_corrected_by_user" value="2" <?php checked($fault->fault_corrected_by_user,'2');?> /> N/A</label>
 		</div>
 		<div class="form-group col-sm-4 col-xs-12">
 			<label for="">To fix at next service visit?</label>
 			<br/>
 			<label>
-				<input type="radio" class="flat custom_radiobox" name="to_fix_at_next_service_visit" value="1" <?php checked($fault->to_fix_at_next_service_visit,'1');?> /> Yes</label>
+				<input type="radio" class="flat" name="to_fix_at_next_service_visit" value="1" <?php checked($fault->to_fix_at_next_service_visit,'1');?> /> Yes</label>
 			<label>&nbsp;</label>
 			<label>
-				<input type="radio" class="flat custom_radiobox" name="to_fix_at_next_service_visit" value="0" <?php checked($fault->to_fix_at_next_service_visit,'0');?> /> No</label>
+				<input type="radio" class="flat" name="to_fix_at_next_service_visit" value="0" <?php checked($fault->to_fix_at_next_service_visit,'0');?> /> No</label>
 			<label>&nbsp;</label>
 			<label>
-				<input type="radio" class="flat custom_radiobox" name="to_fix_at_next_service_visit" value="2" <?php checked($fault->to_fix_at_next_service_visit,'2');?> /> N/A</label>
+				<input type="radio" class="flat" name="to_fix_at_next_service_visit" value="2" <?php checked($fault->to_fix_at_next_service_visit,'2');?> /> N/A</label>
 		</div>
 		<div class="form-group col-sm-4 col-xs-12">
 			<label for="">Engineer called out?</label>
 			<br/>
 			<label>
-				<input type="radio" class="flat custom_radiobox" name="engineer_called_out" value="1" <?php checked($fault->engineer_called_out,'1');?> /> Yes</label>
+				<input type="radio" class="flat" name="engineer_called_out" value="1" <?php checked($fault->engineer_called_out,'1');?> /> Yes</label>
 			<label>&nbsp;</label>
 			<label>
-				<input type="radio" class="flat custom_radiobox" name="engineer_called_out" value="0" <?php checked($fault->engineer_called_out,'0');?> /> No</label>
+				<input type="radio" class="flat" name="engineer_called_out" value="0" <?php checked($fault->engineer_called_out,'0');?> /> No</label>
 			<label>&nbsp;</label>
 			<label>
-				<input type="radio" class="flat custom_radiobox" name="engineer_called_out" value="2" <?php checked($fault->engineer_called_out,'2');?> /> N/A</label>
+				<input type="radio" class="flat" name="engineer_called_out" value="2" <?php checked($fault->engineer_called_out,'2');?> /> N/A</label>
 		</div>
 		<div class="form-group col-sm-12 col-xs-12">
 			<label for=""> Has an adverse incident report been sent to MHRA pr appropriate devolved adminstration? </label>
