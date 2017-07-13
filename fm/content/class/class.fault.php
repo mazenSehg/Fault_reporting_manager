@@ -149,25 +149,25 @@ class Fault{
 			<label for="">Fault corrected by user?</label>
 			<br/>
 			<label>
-				<input type="radio" class="flat custom_radiobox" name="fault_corrected_by_user" value="1" checked/> Yes</label>
+				<input type="radio" class="flat" name="fault_corrected_by_user" value="1" checked/> Yes</label>
 			<label>&nbsp;</label>
 			<label>
-				<input type="radio" class="flat custom_radiobox" name="fault_corrected_by_user" value="0" /> No</label>
+				<input type="radio" class="flat" name="fault_corrected_by_user" value="0" /> No</label>
 			<label>&nbsp;</label>
 			<label>
-				<input type="radio" class="flat custom_radiobox" name="fault_corrected_by_user" value="2" /> N/A</label>
+				<input type="radio" class="flat " name="fault_corrected_by_user" value="2" /> N/A</label>
 		</div>
 		<div class="form-group col-sm-4 col-xs-12">
 			<label for="">To fix at next service visit?</label>
 			<br/>
 			<label>
-				<input type="radio" class="flat custom_radiobox" name="to_fix_at_next_service_visit" value="1" checked /> Yes</label>
+				<input type="radio" class="flat" name="to_fix_at_next_service_visit" value="1" checked /> Yes</label>
 			<label>&nbsp;</label>
 			<label>
-				<input type="radio" class="flat custom_radiobox" name="to_fix_at_next_service_visit" value="0"  /> No</label>
+				<input type="radio" class="flat" name="to_fix_at_next_service_visit" value="0"  /> No</label>
 			<label>&nbsp;</label>
 			<label>
-				<input type="radio" class="flat custom_radiobox" name="to_fix_at_next_service_visit" value="2"/> N/A</label>
+				<input type="radio" class="flat" name="to_fix_at_next_service_visit" value="2"/> N/A</label>
 		</div>
 		<div class="form-group col-sm-4 col-xs-12">
 			<label for="">Engineer called out?</label>
@@ -177,13 +177,13 @@ class Fault{
 				<?php 
 				//to re add the hard code choices add custom_radiobox to the class
 				?>
-				<input type="radio" class="flat custom_radiobox" name="engineer_called_out" value="1" /> Yes</label>
+				<input type="radio" class="flat" name="engineer_called_out" value="1" /> Yes</label>
 			<label>&nbsp;</label>
 			<label>
-				<input type="radio" class="flat custom_radiobox" name="engineer_called_out" value="0" /> No</label>
+				<input type="radio" class="flat" name="engineer_called_out" value="0" /> No</label>
 			<label>&nbsp;</label>
 			<label>
-				<input type="radio" class="flat custom_radiobox" name="engineer_called_out" value="2" checked/> N/A</label>
+				<input type="radio" class="flat" name="engineer_called_out" value="2" checked/> N/A</label>
 		</div>
 	</div>
 	<div class="row">
@@ -216,15 +216,15 @@ class Fault{
 		<div class="form-group col-sm-2 col-xs-12">
 			<label for="">Total equipment downtime (days)</label>
 			<br/>
-			<input type="number" name="equipment_downtime" class="form-control require" min="0" /> </div>
+			<input type="number" step="any" name="equipment_downtime" class="form-control require" min="0" /> </div>
 		<div class="form-group col-sm-2 col-xs-12">
 			<label for="">Total screening downtime (days)</label>
 			<br/>
-			<input type="number" name="screening_downtime" class="form-control require" min="0" /> </div>
+			<input type="number" step="any" step="any" name="screening_downtime" class="form-control require" min="0" /> </div>
 		<div class="form-group col-sm-2 col-xs-12">
 			<label for="">Number of repeat images</label>
 			<br/>
-			<input type="number" name="repeat_images" class="form-control require" min="0" /> </div>
+			<input type="number" step="any" name="repeat_images" class="form-control require" min="0" /> </div>
 		<div class="form-group col-sm-2 col-xs-12">
 			<label for="">Number of cancelled women</label>
 			<br/>
@@ -232,7 +232,7 @@ class Fault{
 		<div class="form-group col-sm-2 col-xs-12">
 			<label for="">Number of technical recalls</label>
 			<br/>
-			<input type="number" name="technical_recalls" class="form-control require" min="0" /> </div>
+			<input type="number"  step="any" name="technical_recalls" class="form-control require" min="0" /> </div>
 	</div>
 	<div class="row">
 		<div class="form-group col-sm-4 col-xs-12">
@@ -499,11 +499,11 @@ class Fault{
 		<div class="form-group col-sm-6 col-xs-12">
 			<label for="">Total equipment downtime (days)</label>
 			<br/>
-			<input type="number" name="equipment_downtime" class="form-control require" min="0" value="<?php _e($fault->equipment_downtime);?>" /> </div>
+			<input type="number" name="equipment_downtime" class="form-control require" min="0"  step="any" value="<?php _e($fault->equipment_downtime);?>" /> </div>
 		<div class="form-group col-sm-6 col-xs-12">
 			<label for="">Total screening downtime (days)</label>
 			<br/>
-			<input type="number" name="screening_downtime" class="form-control require" min="0" value="<?php _e($fault->screening_downtime);?>" /> </div>
+			<input type="number" name="screening_downtime" class="form-control require" min="0"  step="any" value="<?php _e($fault->screening_downtime);?>" /> </div>
 	</div>
 	<div class="row">
 		<div class="form-group col-sm-6 col-xs-12">
@@ -519,7 +519,7 @@ class Fault{
 		<div class="form-group col-sm-6 col-xs-12">
 			<label for="">Number of technical recalls</label>
 			<br/>
-			<input type="number" name="technical_recalls" class="form-control require" min="0" value="<?php _e($fault->technical_recalls);?>" /> </div>
+			<input type="number" name="technical_recalls" class="form-control require" min="0"  step="any" value="<?php _e($fault->technical_recalls);?>" /> </div>
 	</div>
 	<div class="row">
 		<div class="form-group col-sm-12 col-xs-12">
