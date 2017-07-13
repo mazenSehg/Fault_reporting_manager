@@ -1067,13 +1067,12 @@ class Fault{
 			<?php if(is_admin()): ?>
 			<th>Approved</th>
 			<?php endif; ?>
-			<th>Submitted By</th>
+			<th>ID</th>
 			<th>Centre</th>
 			<th>Equipment Type</th>
 			<th>Equipment</th>
 			<th>Fault Type</th>
 			<th>Date of Fault</th>
-			<th>Created On</th>
 			<th class="text-center">Actions</th>
 		</tr>
 	</thead>
@@ -1165,7 +1164,6 @@ class Fault{
 			<th>Equipment</th>
 			<th>Fault Type</th>
 			<th>Date of Fault</th>
-			<th>Created On</th>
 			<th class="text-center">Actions</th>
 		</tr>
 	</thead>
@@ -2150,24 +2148,22 @@ class Fault{
 	public function fetch_all_faults_process(){
 		if(is_admin()){
 			$orders_columns = array(
-				1 => 'name',
+				1 => 'ID',
 				2 => 'centre_name',
 				3 => 'e_type_name',
 				4 => 'equipment_name',
 				5 => 'f_type_name',
 				6 => 'date_of_fault',
-				7 => 'created_on',
 				0 => 'approved',
 			);
 		}else{
 			$orders_columns = array(
-				0 => 'name',
+				0 => 'ID',
 				1 => 'centre_name',
 				2 => 'e_type_name',
 				3 => 'equipment_name',
 				4 => 'f_type_name',
 				5 => 'date_of_fault',
-				6 => 'created_on',
 			);
 		}
 
@@ -2269,7 +2265,7 @@ class Fault{
 		$checkbox = ob_get_clean();
 		array_push($row, $checkbox);
 		endif;
-		array_push($row, __($fault->name));
+		array_push($row, __($fault->ID));
 
 		if($fault->centre_name != ""){
 			array_push($row, __($fault->centre_name));
@@ -2298,7 +2294,6 @@ class Fault{
 
 		array_push($row, date('d M,Y',strtotime($fault->date_of_fault)));
 		//array_push($row, date('d M, Y',$fault->date_of_fault));
-		array_push($row, date('d M,Y',strtotime($fault->created_on)));
 
 		ob_start();
 ?>
@@ -2354,13 +2349,12 @@ class Fault{
 	public function fetch_all_faults_process2(){
 		if(is_admin()){
 			$orders_columns = array(
-				2 => 'name',
+				2 => 'ID',
 				3 => 'centre_name',
 				4 => 'e_type_name',
 				5 => 'equipment_name',
 				6 => 'f_type_name',
 				7 => 'date_of_fault',
-				8 => 'created_on',
 				0 => 'approved',
 			);
 		}
@@ -2372,8 +2366,7 @@ class Fault{
 			2 => 'equipment_name',
 			3 => 'f_type_name',
 			4 => 'date_of_fault',
-			5 => 'created_on',
-			6 => 'name',
+			5 => 'ID',
 		);
 		$recordsTotal = $recordsFiltered = 0;
 		$draw = $_POST["draw"];
@@ -2435,13 +2428,12 @@ class Fault{
 		$checkbox = ob_get_clean();
 		array_push($row, $checkbox);
 		endif;			
-		array_push($row, __($fault->name));
+		array_push($row, __($fault->ID));
 		array_push($row, __($fault->centre_name));
 		array_push($row, __($fault->e_type_name));
 		array_push($row, __($fault->equipment_name));
 		array_push($row, __($fault->f_type_name));
 		array_push($row, date('M d,Y',strtotime($fault->date_of_fault)));
-		array_push($row, date('d M,Y',strtotime($fault->created_on)));
 		ob_start();
 ?>
 <div class="text-center">
