@@ -1,22 +1,11 @@
 <?php
-session_start();
-//Load all functions
-require_once('load.php');
-
-login_check();
-
-
+		
 
 		if(isset($_POST['SubmitButton'])){ 
-//			$centre = $_POST['centre'];
-//			$equipment_type = $_POST['equipment_type'];
-//			$manufacturer = $_POST['manufacturer'];
-//			$equipment = $_POST['equipment'];
-//			$decommed = $_POST['decommed'];
-//			$fault_type = $_POST['fault_type'];
-//			$approved = $_POST['approved'];
-//			$fault_from = $_POST['fault_date_from'];
-//			$fault_to = $_POST['fault_date_to'];
+			$cent = $_POST['centre'];
+			$eqp = $_POST['equipment'];
+			$eqptp = $_POST['equipment_type'];
+			$appr = $_POST['approved'];
 			
 
 
@@ -36,13 +25,38 @@ if($_SERVER['SERVER_ADDR'] == '10.161.146.74' || $_SERVER['SERVER_ADDR'] == '10.
 	}
 } else {
 		
-$host = 'localhost';
-$user = 'root';
-$pass = '';
-$db = 'fault-management';
+$host = '10.161.128.194';
+$user = 'fault_user';
+$pass = 'fault_user';
+$db = 'fault_management';
 }
-			
-			$query = NULL;
+
+       
+$table = 'tbl_fault';
+            
+            
+            
+            
+            
+            
+            
+            
+$file = 'export';
+		
+		$i = null;
+		$csv_output = null;
+ 
+$link = mysql_connect($host, $user, $pass) or die("Can not connect." . mysql_error());
+mysql_select_db($db) or die("Can not connect.");
+ 
+
+  $csv_output .= "Approved\tFault ID\t Submitted by\t Equipment code\t Serviced by\t Fault Type\t Description of fault\t Action Taken\t DoH \t User corrected?\t next service station correction?\t Engineer called out?\t Engineer callout ref.\t Equipment status\t Equipment downtime\t Screening down time\t Repeat films\t Cancelled patients\t Recalled patients\tSatisfied serviceing Organiation\tAgency satisfaction Engineer satisfaction\tEquipment satisfaction\t Enquiry to supplier\t Supplier action\t Supplier comment\t MDA notified\t Date of Fault\t Created On";
+	 
+	 
+  $i = 28;
+$csv_output .= "\n";
+
+						$query = NULL;
 if(isset($_POST['centre']) && $_POST['centre'] != '' && $_POST['centre'] != 'undefined'){
 			$query .= ($query != '') ? ' AND ' : ' WHERE ';
 			$query .= " `centre` = '".$_POST['centre']."' ";
@@ -83,13 +97,28 @@ if(isset($_POST['centre']) && $_POST['centre'] != '' && $_POST['centre'] != 'und
 			$query .= ($query != '') ? ' AND ' : ' WHERE ';
 			$query .= "  `date_of_fault` <= '".date( 'Y-m-d', strtotime($_POST['fault_date_to']) )."' ";
 		}				
-echo "<br>";			
-echo $query;
+
+$values = mysql_query("SELECT * FROM tbl_fault " . $query."");
 			
-exit;
+while ($rowr = mysql_fetch_row($values)) {
+ for ($j=0;$j<$i;$j++) {
+	 if($rowr[$j]!=null||$rowr[$j]!=""||strlen($rowr[$j])>0){
+		 $field = preg_replace('/[\n\r]+/', '', trim($rowr[$j]));
+  $csv_output .= $field."\t";
+}else{
+	  $csv_output .=""."\t";
+}
+ }
+ $csv_output .= "\n";
+}
+ 
+$filename = $file."_".date("Y-m-d_H-i",time());
+header("Content-type: application/vnd.ms-excel");
+header("Content-disposition: csv" . date("Y-m-d") . ".xls");
+header("Content-disposition: filename=".$filename.".xls");
+print $csv_output;
 
 		}
-		
 
 
 ?>
