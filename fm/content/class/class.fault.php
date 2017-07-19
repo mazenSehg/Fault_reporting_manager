@@ -67,8 +67,19 @@ class Fault{
 			</select>
 		</div>
 		<div class="form-group col-sm-6 col-xs-12">
-			<label for="name">Name <span class="required">*</span></label>
-			<input type="text" name="name" class="form-control " value="<?php _e($this->current__user->first_name .' '.$this->current__user->last_name);?>" readonly="readonly" /> </div>
+			<label for="name">Your Full Name <span class="required">*</span></label>
+			<input type="text" name="name" class="form-control " value="<?php _e($this->current__user->first_name .' '.$this->current__user->last_name);?>" readonly="readonly" /> 
+		</div>
+		<?php 
+		if(is_admin()){
+		?>
+		<div class="form-group col-sm-6 col-xs-12">
+			<label for="name">Full name on Fault Submition <span class="required">*</span></label>
+			<input type="text" name="name_submit" class="form-control " value="" /> 
+		</div>
+		<?php
+		}
+			?>
 	</div>
 	<div class="row">
 		<div class="form-group col-sm-6 col-xs-12">
@@ -188,7 +199,7 @@ class Fault{
 	</div>
 	<div class="row">
 		<div class="form-group col-sm-12 col-xs-12">
-			<label for="">Has an adverse incident report been sent to MHRA pr appropriate devolved administration?</label>
+			<label for="">Has an adverse incident report been sent to MHRA or appropriate devolved administration?</label>
 			<br/>
 			<label>
 				<input type="radio" class="flat" name="adverse_incident_report" value="1" /> Yes</label>
@@ -352,6 +363,10 @@ class Fault{
 		<div class="form-group col-sm-6 col-xs-12">
 			<label for="name">Name <span class="required">*</span></label>
 			<input type="text" name="name" class="form-control require" value="<?php _e($fault->name);?>" readonly="readonly" /> </div>
+				<div class="form-group col-sm-6 col-xs-12">
+			<label for="name">Full name on Fault Submition <span class="required">*</span></label>
+			<input type="text" name="name_submit" value="<?php _e($fault->name__submit);?>" class="form-control " value="" /> 
+		</div>
 	</div>
 	<div class="row">
 		<div class="form-group col-sm-6 col-xs-12">
@@ -471,7 +486,7 @@ class Fault{
 				<input type="radio" class="flat" name="engineer_called_out" value="2" <?php checked($fault->engineer_called_out,'2');?> /> N/A</label>
 		</div>
 		<div class="form-group col-sm-12 col-xs-12">
-			<label for=""> Has an adverse incident report been sent to MHRA pr appropriate devolved adminstration? </label>
+			<label for=""> Has an adverse incident report been sent to MHRA or appropriate devolved adminstration? </label>
 			<br/>
 			<label>
 				<input type="radio" class="flat" name="adverse_incident_report" value="1" <?php checked($fault->adverse_incident_report,'1');?> /> Yes</label>
@@ -798,7 +813,7 @@ class Fault{
 		</tr>
 		<tr>
 			<td>
-				<?php _e('Has an adverse incident report been sent to MHRA pr appropriate devolved adminstration?');?>
+				<?php _e('Has an adverse incident report been sent to MHRA or appropriate devolved adminstration?');?>
 			</td>
 			<td>
 				<?php echo ($fault->adverse_incident_report == 1) ? 'Yes' : 'No'; ?>
@@ -1342,6 +1357,7 @@ class Fault{
 			'ID' => $guid,
 			'centre' => $centre,
 			'name' => $name,
+			'name_submit' => $name_submit,
 			'user_id' => $this->current__user__id,
 			'equipment_type' => $equipment_type,
 			'equipment' => $equipment,
@@ -1410,6 +1426,7 @@ class Fault{
 			$update_args = array(
 				'centre' => $centre,
 				'name' => $name,
+				'name_submit' => $name_submit,
 				'equipment_type' => $equipment_type,
 				'equipment' => $equipment,
 				'fault_type' => $fault_type,

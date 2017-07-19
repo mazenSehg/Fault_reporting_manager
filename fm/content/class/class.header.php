@@ -663,7 +663,7 @@ class Header{
 											<?php if( user_can('view_fault') ): ?>
 											<li>
 												<a href="<?php echo site_url();?>/faults/">
-													All Faults
+													Review Faults
 												</a>
 											</li>
 											<li class="hidden">
