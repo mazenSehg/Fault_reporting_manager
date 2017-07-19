@@ -41,7 +41,7 @@ class Fault{
 		window.focus();
 	});
 </script>
-<form class="add-fault submit-form" method="post" autocomplete="off">
+<form class="add-fault submit-form" method="post" onsubmit="setTimeout(function () { window.location.reload(); }, 10)" autocomplete="off">
 	<div class="row">
 		<div class="col-xs-12">
 			<h3><?php _e('Centre with Fault');?></h3>
@@ -227,11 +227,11 @@ class Fault{
 		<div class="form-group col-sm-2 col-xs-12">
 			<label for="">Total equipment downtime (days)</label>
 			<br/>
-			<input type="number" step="any" name="equipment_downtime" class="form-control require" min="0" /> </div>
+			<input type="number"  name="equipment_downtime" class="form-control require" min="0" step="0.1"/> </div>
 		<div class="form-group col-sm-2 col-xs-12">
 			<label for="">Total screening downtime (days)</label>
 			<br/>
-			<input type="number" step="any" step="any" name="screening_downtime" class="form-control require" min="0" /> </div>
+			<input type="number" name="screening_downtime" class="form-control require" min="0" step="0.1"/> </div>
 		<div class="form-group col-sm-2 col-xs-12">
 			<label for="">Number of repeat images</label>
 			<br/>
@@ -514,11 +514,11 @@ class Fault{
 		<div class="form-group col-sm-6 col-xs-12">
 			<label for="">Total equipment downtime (days)</label>
 			<br/>
-			<input type="number" name="equipment_downtime" class="form-control require" min="0"  step="any" value="<?php _e($fault->equipment_downtime);?>" /> </div>
+			<input type="number" name="equipment_downtime" class="form-control require" min="0" step="0.1" value="<?php _e($fault->equipment_downtime);?>" /> </div>
 		<div class="form-group col-sm-6 col-xs-12">
 			<label for="">Total screening downtime (days)</label>
 			<br/>
-			<input type="number" name="screening_downtime" class="form-control require" min="0"  step="any" value="<?php _e($fault->screening_downtime);?>" /> </div>
+			<input type="number" name="screening_downtime" class="form-control require"min="0" step="0.1" value="<?php _e($fault->screening_downtime);?>" /> </div>
 	</div>
 	<div class="row">
 		<div class="form-group col-sm-6 col-xs-12">
