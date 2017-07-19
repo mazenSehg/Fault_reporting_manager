@@ -365,7 +365,7 @@ class Fault{
 			<input type="text" name="name" class="form-control require" value="<?php _e($fault->name);?>" readonly="readonly" /> </div>
 				<div class="form-group col-sm-6 col-xs-12">
 			<label for="name">Full name on Fault Submition <span class="required">*</span></label>
-			<input type="text" name="name_submit" value="<?php _e($fault->name__submit);?>" class="form-control " value="" /> 
+			<input type="text" name="name_submit" value="<?php _e($fault->name_submit);?>" class="form-control " value="" /> 
 		</div>
 	</div>
 	<div class="row">
