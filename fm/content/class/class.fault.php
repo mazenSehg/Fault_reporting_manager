@@ -41,7 +41,7 @@ class Fault{
 		window.focus();
 	});
 </script>
-<form class="add-fault submit-form" method="post" onsubmit="setTimeout(function () { window.location.reload(); }, 10)" autocomplete="off">
+<form class="add-fault submit-form" method="post" autocomplete="off">
 	<div class="row">
 		<div class="col-xs-12">
 			<h3><?php _e('Centre with Fault');?></h3>
