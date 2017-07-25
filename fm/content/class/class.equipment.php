@@ -32,6 +32,7 @@ class Equipment{
 		else:
 		?>
 <div class="row custom-filters">
+	<form action="<?php echo site_url();?>/qwert/" method="POST">
 				<div class="form-group col-sm-3 col-xs-12">
 					<label for="centre">Centre</label>
 					<select name="centre" class="form-control select_single" tabindex="-1" data-placeholder="Choose centre">
@@ -113,8 +114,10 @@ class Equipment{
 						?>
 					</select>
 				</div>
-    
-    
+    			<?php if(is_admin()){ ?>
+			<input type="submit" value="Export Report" name="SubmitButtonEquipment" class="btn btn-dark btn-sm custom-export-btn" />
+			<?php } ?>
+	</form>
 			</div>
 <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap ajax-datatable-buttons" cellspacing="0" width="100%" data-table="fetch_all_equipments" data-order-column="7">
 			<thead>
@@ -426,6 +429,14 @@ class Equipment{
 				<button class="btn btn-success btn-md" type="submit">
 					Create New Equipment
 				</button>
+						<div align="right">
+		<button class="btn btn-success btn-md" onclick="myFunction()">Reset Form</button>
+			</div>
+<script>
+function myFunction() {
+    document.getElementById("faultForm").reset();
+}
+</script>
 			</div>
 		</form>
 		<?php endif; ?>

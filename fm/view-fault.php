@@ -25,8 +25,12 @@ login_check();
 				<?php echo $Header->page__header('View Fault'); ?>
 				
 				<div class="row">
+					<div align="left">
+					<button class="btn btn-warning btn-md" onclick="goBack()">Previous page</button>					
+
+					<button class="btn btn-success btn-md" onclick="window.print();">Print Fault Report</button>
+					</div>
 					
-					<button onclick="goBack()">Previous page</button>
 
 <script>
 function goBack() {

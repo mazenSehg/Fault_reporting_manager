@@ -41,7 +41,7 @@ class Fault{
 		window.focus();
 	});
 </script>
-<form class="add-fault submit-form" method="post" autocomplete="off">
+<form id = "faultForm" class="add-fault submit-form" method="post" autocomplete="off">
 	<div class="row">
 		<div class="col-xs-12">
 			<h3><?php _e('Centre with Fault');?></h3>
@@ -66,20 +66,25 @@ class Fault{
 				?>
 			</select>
 		</div>
-		<div class="form-group col-sm-6 col-xs-12">
-			<label for="name">Your Full Name <span class="required">*</span></label>
-			<input type="text" name="name" class="form-control " value="<?php _e($this->current__user->first_name .' '.$this->current__user->last_name);?>" readonly="readonly" /> 
-		</div>
-		<?php 
-		if(is_admin()){
+		<?php
+		if(is_admin()){	
 		?>
 		<div class="form-group col-sm-6 col-xs-12">
-			<label for="name">Full name on Fault Submition <span class="required">*</span></label>
-			<input type="text" name="name_submit" class="form-control " value="" /> 
-		</div>
+			<label for="name">Name to put on the form <span class="required">*</span></label>
+			<input type="text" name="name" class="form-control " value="" /> 
+		</div>	
+		<?php
+		}else{
+		?>
+		
+		<div class="form-group col-sm-6 col-xs-12">
+			<label for="name">Your Full Name <span class="required">*</span></label>
+			<input type="text" name="name" class="form-control " value="<?php _e($this->current__user->first_name .' '.$this->current__user->last_name);?>" readonly="readonly"/> 
+		</div>		
+		
 		<?php
 		}
-			?>
+		?>
 	</div>
 	<div class="row">
 		<div class="form-group col-sm-6 col-xs-12">
@@ -317,8 +322,17 @@ class Fault{
 	<div class="form-group">
 		<input type="hidden" name="action" value="add_new_fault" />
 		<button class="btn btn-success btn-md" type="submit">Submit fault</button>
+		<div align="right">
+		<button class="btn btn-success btn-md" onclick="myFunction()">Reset Form</button>
+			</div>
 	</div>
 </form>
+
+<script>
+function myFunction() {
+    document.getElementById("faultForm").reset();
+}
+</script>
 <?php endif; ?>
 <?php
 		$content = ob_get_clean();
@@ -361,11 +375,25 @@ class Fault{
 			</select>
 		</div>
 		<div class="form-group col-sm-6 col-xs-12">
-			<label for="name">Name <span class="required">*</span></label>
-			<input type="text" name="name" class="form-control require" value="<?php _e($fault->name);?>" readonly="readonly" /> </div>
-				<div class="form-group col-sm-6 col-xs-12">
-			<label for="name">Full name on Fault Submition <span class="required">*</span></label>
-			<input type="text" name="name_submit" value="<?php _e($fault->name_submit);?>" class="form-control " value="" /> 
+				<?php
+		if(is_admin()){	
+		?>
+		<div class="form-group col-sm-6 col-xs-12">
+			<label for="name">Name to put on the form <span class="required">*</span></label>
+			<input type="text" name="name" class="form-control " value="" /> 
+		</div>	
+		<?php
+		}else{
+		?>
+		
+		<div class="form-group col-sm-6 col-xs-12">
+			<label for="name">Your Full Name <span class="required">*</span></label>
+			<input type="text" name="name" class="form-control " value="<?php _e($this->current__user->first_name .' '.$this->current__user->last_name);?>" readonly="readonly"/> 
+		</div>		
+		
+		<?php
+		}
+		?>
 		</div>
 	</div>
 	<div class="row">
@@ -651,6 +679,7 @@ class Fault{
 		echo page_not_found('Oops ! Fault details not found.','Please go back and check again !');
 		else:
 		$centre = get_tabledata(TBL_CENTRES,true, array('ID'=> $fault->centre));
+		$region = get_tabledata(TBL_REGIONS,true, array('ID'=> $centre->region));
 		$equipment_type = get_tabledata(TBL_EQUIPMENT_TYPES,true, array('ID'=> $fault->equipment_type));
 		$equipment = get_tabledata(TBL_EQUIPMENTS,true, array('ID'=> $fault->equipment));
 		$fault_type = get_tabledata(TBL_FAULT_TYPES,true, array('ID'=> $fault->fault_type));
@@ -664,30 +693,59 @@ class Fault{
 	<thead>
 		<tr>
 			<td class="text-center">
-				<?php _e('Field');?>
+
 			</td>
 			<td class="text-center">
-				<?php _e('Value');?>
+
+			</td>			
+			<td class="text-center">
+
+			</td>
+			<td class="text-center">
+
+			</td>			
+			<td class="text-center">
+
+			</td>
+			<td class="text-center">
+
+			</td>			
+			<td class="text-center">
+
+			</td>
+			<td class="text-center">
+
 			</td>
 		</tr>
 	</thead>
 	<tbody>
 		<tr>
 			<td>
-				<?php _e('Name');?>
-			</td>
-			<td>
-				<?php _e($fault->name);?>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<?php _e('Centre');?>
+				<?php _e('Screening Centre');?>
 			</td>
 			<td>
 				<?php _e($centre->name);?>
 			</td>
+			<td>
+				<?php _e('Programme');?>
+			</td>
+			<td>
+				<?php _e($centre->programme);?>
+			</td>			
+			<td>
+				<?php _e('Screening Centre');?>
+			</td>
+			<td>
+				<?php _e($centre->name);?>
+			</td>
+			<td>
+				<?php _e('Programme');?>
+			</td>
+			<td>
+				<?php _e($centre->programme);?>
+			</td>
 		</tr>
+
 		<tr>
 			<td>
 				<?php _e('Equipment Type');?>
@@ -695,21 +753,36 @@ class Fault{
 			<td>
 				<?php _e($equipment_type->name);?>
 			</td>
+			<td>
+			</td>
+			<td>
+			</td>			
+			</td>
+			<td>
+			</td>
+			<td>
+			</td>
+			<td>
+				<?php _e('Manufacturer');?>
+			</td>
+			<td>
+				<?php _e($equipment_type->name);?>
+			</td>
 		</tr>
 		<tr>
 			<td>
-				<?php _e('Equipment');?>
+				<?php _e('Region');?>
 			</td>
 			<td>
-				<?php _e($equipment->name);?>
+				<?php _e($region->name);?>
 			</td>
 		</tr>
 		<tr>
 			<td>
-				<?php _e('Fault Type');?>
+				<?php _e('Centre Code: ');?>
 			</td>
 			<td>
-				<?php _e($fault_type->name);?>
+				<?php _e($centre->centre_code);?>
 			</td>
 		</tr>
 		<tr>
@@ -1357,7 +1430,7 @@ class Fault{
 			'ID' => $guid,
 			'centre' => $centre,
 			'name' => $name,
-			'name_submit' => $name_submit,
+			'name_submit' => $name,
 			'user_id' => $this->current__user__id,
 			'equipment_type' => $equipment_type,
 			'equipment' => $equipment,
