@@ -27,8 +27,6 @@ login_check();
 				<div class="row">
 					<div align="left">
 					<button class="btn btn-warning btn-md" onclick="goBack()">Previous page</button>					
-
-					<button class="btn btn-success btn-md" onclick="window.print();">Print Fault Report</button>
 					</div>
 					
 

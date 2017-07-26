@@ -665,6 +665,27 @@ function myFunction() {
 		ob_start();
 		$fault__id = $_GET['id'];
 		$query = '';
+		
+		?>
+<div align = "right">
+					<button class="btn btn-success btn-md" onclick="printdiv('div_print');">Print Fault Report</button>
+	</div>
+
+<script language="javascript">
+function printdiv(printpage)
+{
+var headstr = "<html><head><title></title></head><body>";
+var footstr = "</body>";
+var newstr = document.all.item(printpage).innerHTML;
+var oldstr = document.body.innerHTML;
+document.body.innerHTML = headstr+newstr+footstr;
+window.print();
+document.body.innerHTML = oldstr;
+return false;
+}
+</script>
+<?php
+		
 		if(!is_admin()):
 		$centres = maybe_unserialize($this->current__user->centre);
 		if(!empty($centres)){
@@ -682,15 +703,20 @@ function myFunction() {
 		$region = get_tabledata(TBL_REGIONS,true, array('ID'=> $centre->region));
 		$equipment_type = get_tabledata(TBL_EQUIPMENT_TYPES,true, array('ID'=> $fault->equipment_type));
 		$equipment = get_tabledata(TBL_EQUIPMENTS,true, array('ID'=> $fault->equipment));
+		$model = get_tabledata(TBL_MODELS,true, array('ID'=>$equipment->model));
+		$manufacturer = get_tabledata(TBL_MANUFACTURERS, true, array('ID'=>$equipment->manufacturer));
 		$fault_type = get_tabledata(TBL_FAULT_TYPES,true, array('ID'=> $fault->fault_type));
 		$service_agent = get_tabledata(TBL_SERVICE_AGENTS, true, array('ID'=> $fault->current_servicing_agency));
 ?>
 <div class="text-center">
 	<h3>
 		<?php _e('Fault Report');?>
-	</h3> </div>
-<table class="table table-striped table-hover table-bordered">
+	</h3> 
+</div>
+<div id="div_print">
+<table class="table table-bordered table-responsive table-hover table-bordered" id="printTable">
 	<thead>
+		
 		<tr>
 			<td class="text-center">
 
@@ -719,123 +745,137 @@ function myFunction() {
 		</tr>
 	</thead>
 	<tbody>
-		<tr>
-			<td>
-				<?php _e('Screening Centre');?>
-			</td>
-			<td>
-				<?php _e($centre->name);?>
-			</td>
-			<td>
-				<?php _e('Programme');?>
-			</td>
-			<td>
-				<?php _e($centre->programme);?>
-			</td>			
-			<td>
-				<?php _e('Screening Centre');?>
-			</td>
-			<td>
-				<?php _e($centre->name);?>
-			</td>
-			<td>
-				<?php _e('Programme');?>
-			</td>
-			<td>
-				<?php _e($centre->programme);?>
-			</td>
+		<tr class="info" style="color:black; font-weight:bold;">
+					<td>Centre Information</td>
 		</tr>
+		<tr class="active">
 
-		<tr>
 			<td>
-				<?php _e('Equipment Type');?>
+				<?php _e('<p style="color:black;">Screening Centre</p>');?>
 			</td>
 			<td>
-				<?php _e($equipment_type->name);?>
+				<?php _e($centre->name);?>
 			</td>
 			<td>
+				<?php _e('<p style="color:black;">Programme</p>');?>
 			</td>
 			<td>
+				<?php _e($centre->programme);?>
 			</td>			
+			<td>
+				<?php _e('<p style="color:black;">Screening Centre</p>');?>
 			</td>
 			<td>
+				<?php _e($centre->name);?>
 			</td>
 			<td>
+				<?php _e('<p style="color:black;">Programme</p>');?>
 			</td>
 			<td>
-				<?php _e('Manufacturer');?>
-			</td>
-			<td>
-				<?php _e($equipment_type->name);?>
+				<?php _e($centre->programme);?>
 			</td>
 		</tr>
-		<tr>
+		<tr class="active">
 			<td>
-				<?php _e('Region');?>
+				<?php _e('<p style="color:black;">Region</p>');?>
 			</td>
 			<td>
 				<?php _e($region->name);?>
 			</td>
-		</tr>
-		<tr>
 			<td>
-				<?php _e('Centre Code: ');?>
+				<?php _e('<p style="color:black;">Centre Code: </p>');?>
 			</td>
 			<td>
 				<?php _e($centre->centre_code);?>
 			</td>
 		</tr>
-		<tr>
+		<tr class="info" style="color:black; font-weight:bold;">
+					<td>Equipment Information</td>
+		</tr>
+		<tr class="active">
 			<td>
-				<?php _e('Date of Fault');?>
+				<?php _e('<p style="color:black;">Equipment Type</p>');?>
+			</td>
+			<td>
+				<?php _e($equipment_type->name);?>
+			</td>
+			<td>
+				<?php _e('<p style="color:black;">Model</p>');?>
+			</td>
+			<td>
+				<?php _e($model->name);?>
+			</td>			
+			<td>
+				<?php _e('<p style="color:black;">Equipment ID No.</p>');?>
+			</td>
+			<td>
+				<?php _e($equipment->ID);?>
+			</td>
+			<td>
+				<?php _e('<p style="color:black;">Manufacturer</p>');?>
+			</td>
+			<td>
+				<?php _e($manufacturer->name);?>
+			</td>
+		</tr>
+		<tr class="active">
+			<td>
+				<?php _e('<p style="color:black;">Equipment Name</p>');?>
+			</td>
+			<td>
+				<?php _e($equipment->name);?>
+			</td>
+			<td>
+				<?php _e('<p style="color:black;">Installation Date (Year)</p>');?>
+			</td>
+			<td>
+				<?php _e($equipment->year_installed);?>
+			</td>
+			<td>
+				<?php _e('<p style="color:black;">Servicing Agency</p>');?>
+			</td>
+			<td>
+				<?php echo ($fault->current_servicing_agency !=  NULL) ? __($fault->current_servicing_agency) : 'None selected.'; ?>
+			</td>			
+
+		</tr>
+				<tr class="info" style="color:black; font-weight:bold;">
+					<td>Fault Information</td>
+		</tr>
+		<tr class="active">
+
+			<td>
+				<?php _e('<p style="color:black;">Type of Fault</p>');?>
+			</td>
+			<td>
+				<?php _e($fault_type->name);?>
+			</td>
+			<td>
+				<?php _e('<p style="color:black;">Fault ID</p>');?>
+			</td>
+			<td>
+				<?php _e($fault->ID);?>
+			</td>
+			<td>
+				<?php _e('<p style="color:black;">Date of Submition</p>');?>
 			</td>
 			<td>
 				<?php echo ($fault->date_of_fault != '') ? date('M d, Y', strtotime($fault->date_of_fault)) : '';?>
 			</td>
-		</tr>
-		<tr>
 			<td>
-				<?php _e('Current servicing agency');?>
-			</td>
-			<td>
-				<?php echo ($fault->current_servicing_agency !=  NULL) ? __($fault->current_servicing_agency) : 'None selected.'; ?>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<?php _e('Servicing agency at time of fault');?>
-			</td>
-			<td>
-				<?php _e($fault->time_of_fault);?>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<?php _e('Description of Fault');?>
+				<?php _e('<p style="color:black;">Fault Description</p>');?>
 			</td>
 			<td>
 				<?php _e($fault->description_of_fault);?>
 			</td>
 		</tr>
-		<tr>
-			<td>
-				<?php _e('Service Call No');?>
-			</td>
-			<td>
-				<?php _e($fault->service_call_no);?>
-			</td>
+				<tr class="info" style="color:black; font-weight:bold;">
+					<td>Fault Action Taken</td>
 		</tr>
-		<tr>
+		<tr class="active">
+
 			<td>
-				<?php _e('Action Taken');?>
-			</td>
-			<td>
-				<?php _e($fault->action_taken);?>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<?php _e('Fault corrected by user?');?>
+				<?php _e('<p style="color:black;">Fault Corrected by User?</p>');?>
 			</td>
 			<?php
 		$fault_corrected_by_user = $fault->fault_corrected_by_user;
@@ -848,11 +888,9 @@ function myFunction() {
 			?>
 			<td>
 				<?php echo $value; ?>
-			</td>
-		</tr>
-		<tr>
+			</td>>
 			<td>
-				<?php _e('To fix at next service visit?');?>
+				<?php _e('<p style="color:black;">To Fix at next service visit</p>');?>
 			</td>
 			<?php
 		$to_fix_at_next_service_visit = $fault->to_fix_at_next_service_visit;
@@ -866,10 +904,8 @@ function myFunction() {
 			<td>
 				<?php echo $value; ?>
 			</td>
-		</tr>
-		<tr>
 			<td>
-				<?php _e('Engineer called out?');?>
+				<?php _e('<p style="color:black;">Engineer called out</p>');?>
 			</td>
 			<?php
 		$engineer_called_out = $fault->engineer_called_out;
@@ -883,66 +919,84 @@ function myFunction() {
 			<td>
 				<?php echo $value; ?>
 			</td>
-		</tr>
-		<tr>
 			<td>
-				<?php _e('Has an adverse incident report been sent to MHRA or appropriate devolved adminstration?');?>
+				<?php _e('<p style="color:black;">Service Call Number</p>');?>
+			</td>
+			<td>
+				<?php _e($fault->service_call_no);?>
+			</td>
+		</tr>
+		<tr class="active" >
+			<td>
+				<?php _e('<p style="color:black;">Corrective Action Taken</p>');?>
+			</td>
+			<td>
+				<?php _e($fault->action_taken);?>
+			</td>
+			<td>
+				<?php _e('<p style="color:black;">Adver Incident Report Sent to MHRA or Appropriate Develved Administration?</p>');?>
 			</td>
 			<td>
 				<?php echo ($fault->adverse_incident_report == 1) ? 'Yes' : 'No'; ?>
 			</td>
 		</tr>
-		<tr>
+		
+		
+						<tr class="info" style="color:black; font-weight:bold;">
+					<td>Fault Severity</td>
+		</tr>
+		<tr class="active">
+
 			<td>
-				<?php _e('Equipment Status');?>
+				<?php _e('<p style="color:black;">Equipment Status: </p>');?>
 			</td>
 			<td>
 				<?php echo get_equipment_status($fault->equipment_status);?>
 			</td>
+			<td>
+				<?php _e('<p style="color:black;">Total Equipment Downtime (Days): </p>');?>
+			</td>
+			<td>
+<?php _e($fault->equipment_downtime);?>
+			</td>
+			<td>
+				<?php _e('<p style="color:black;">Total Screening Downtime (Days): </p>');?>
+			</td>
+			<td>
+<?php _e($fault->screening_downtime);?>
+			</td>
+			<td>
+				<?php _e('<p style="color:black;">Number of repeat films: </p>');?>
+			</td>
+			<td>
+<?php _e($fault->repeat_images);?>
+			</td>
+
 		</tr>
-		<tr>
+		<tr class="active">
+
 			<td>
-				<?php _e('Total equipment downtime (days)');?>
+				<?php _e('<p style="color:black;">Number of Cancelled Women: </p>');?>
 			</td>
 			<td>
-				<?php _e($fault->equipment_downtime);?>
+				<?php echo ($fault->cancelled_women);?>
 			</td>
+			<td>
+				<?php _e('<p style="color:black;">Number of Technical Recalls: </p>');?>
+			</td>
+						<td>
+<?php _e($fault->screening_downtime);?>
+			</td>
+
 		</tr>
-		<tr>
-			<td>
-				<?php _e('Total screening downtime (days)');?>
-			</td>
-			<td>
-				<?php _e($fault->screening_downtime);?>
-			</td>
+		
+								<tr class="info" style="color:black; font-weight:bold;">
+					<td>Satisfaction</td>
 		</tr>
-		<tr>
+		<tr class="active">
+
 			<td>
-				<?php _e('Number of repeat images');?>
-			</td>
-			<td>
-				<?php _e($fault->repeat_images);?>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<?php _e('Number of cancelled women');?>
-			</td>
-			<td>
-				<?php _e($fault->cancelled_women);?>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<?php _e('Number of technical recalls');?>
-			</td>
-			<td>
-				<?php _e($fault->technical_recalls);?>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<?php _e('Are you satisfied with response of the servicing organisation?');?>
+				<?php _e('<p style="color:black;">Are you Satisfied With the Response of the Servicing Organisation: </p>');?>
 			</td>
 			<?php
 		$satisfied_servicing_organisation = $fault->satisfied_servicing_organisation;
@@ -956,10 +1010,8 @@ function myFunction() {
 			<td>
 				<?php echo $value; ?>
 			</td>
-		</tr>
-		<tr>
 			<td>
-				<?php _e('Are you satisfied with the performance of the service engineer?');?>
+				<?php _e('<p style="color:black;">Are you satisied with the Performance of the Service Engineer: </p>');?>
 			</td>
 			<?php
 		$satisfied_service_engineer = $fault->satisfied_service_engineer;
@@ -973,10 +1025,8 @@ function myFunction() {
 			<td>
 				<?php echo $value; ?>
 			</td>
-		</tr>
-		<tr>
 			<td>
-				<?php _e('Are you generally satisfied withe the reliability/performance of the equipment?');?>
+				<?php _e('<p style="color:black;">Are you generally Satisfied with the Relibility/performance of this equipment? </p>');?>
 			</td>
 			<?php
 		$satisfied_equipment = $fault->satisfied_equipment;
@@ -990,17 +1040,26 @@ function myFunction() {
 			<td>
 				<?php echo $value; ?>
 			</td>
+
 		</tr>
-		<tr>
+		
+		
+										<tr class="info" style="color:black; font-weight:bold;">
+					<td>User Details</td>
+		</tr>
+		<tr class="active">
+
 			<td>
-				<?php _e('Approved');?>
+				<?php _e('<p style="color:black;">Name: </p>');?>
 			</td>
 			<td>
-				<?php echo ($fault->approved == 1) ? 'Yes' : 'No'; ?>
+				<?php echo ($fault->name);?>
 			</td>
+
 		</tr>
 	</tbody>
 </table>
+</div>
 <?php endif; ?>
 <?php
 		$content = ob_get_clean();
