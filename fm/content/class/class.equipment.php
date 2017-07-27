@@ -1429,11 +1429,56 @@ function myFunction() {
 			echo page_not_found("THERE ARE NO  record found for models",' ',false);
 		else:
 		?>
-		<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive table-responsive datatable-buttons" cellspacing="0" width="100%">
+
+<div class="row custom-filters">
+	<form action="<?php echo site_url();?>/qwert/" method="POST">
+				<div class="form-group col-sm-2 col-xs-12">
+					<label for="equipment-type">Equipment Type</label>
+					<select name="equipment_type" class="form-control select_single fetch-equipment-type-data" tabindex="-1" data-placeholder="Choose equipment type">
+						<?php
+						$data = get_tabledata(TBL_EQUIPMENT_TYPES,false,array(), 'ORDER BY `name` ASC');
+						$option_data = get_option_data($data,array('ID','name'));
+						echo get_options_list($option_data);
+						?>
+					</select>
+				</div>
+	
+				<div class="form-group col-sm-2 col-xs-12">
+					<label for="manufacturer">Manufacturer</label>
+					<select name="manufacturer" class="form-control select_single select_manufacturer" tabindex="-1" data-placeholder="Choose manufacturer">
+						<?php
+		
+						$data = get_tabledata(TBL_MANUFACTURERS,false,array('approved'=> '1'), 'ORDER BY `name` ASC');
+						$option_data = get_option_data($data,array('ID','name'));
+						echo get_options_list($option_data);
+						?>
+					</select>
+				</div>
+    
+				<div class="form-group col-sm-2 col-xs-12">
+					<label for="approved">Approval Status</label>
+					<select name="approved" class="form-control select_single" tabindex="-1" data-placeholder="Choose status">
+						<?php
+						$option_data = array( '1' => 'Approved' , '0' => 'Unapproved');
+						echo get_options_list($option_data);
+						?>
+					</select>
+				</div>
+
+	</form>
+			</div>
+
+<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive table-responsive ajax-datatable-buttons" cellspacing="0" width="100%" data-table="fetch_all_models" data-order-column="1">
 			<thead>
 				<tr>
 					<th>
 						Name
+					</th>
+					<th>
+						Manufacturer
+					</th>
+					<th>
+						Equipment Type
 					</th>
 					<th>
 						Created On
@@ -1448,47 +1493,8 @@ function myFunction() {
 					</th>
 				</tr>
 			</thead>
-			<tbody>
-				<?php
-				if($models__list):
-				foreach($models__list as $model):
-				?>
-				<tr>
-					<td>
-						<?php _e($model->name);?>
-					</td>
-					<td>
-						<?php echo date('M d,Y',strtotime($model->created_on));?>
-					</td>
-					<?php if(is_admin()): ?>
-					<td class="text-center">
-						<label>
-							<input type="checkbox" class="js-switch" <?php checked($model->approved, 1);?> onClick="javascript:approve_switch(this);" data-id="<?php echo $model->ID;?>" data-action="model_approve_change"/>
-						</label>
-						<div style="display:none;"><?php echo $model->approved; ?></div>
-						
-			
-					</td>
-					<?php endif; ?>
-					<td class="text-center">
-						<?php if( user_can( 'edit_model') ): ?>
-						<a href="<?php echo site_url();?>/edit-model/?id=<?php echo $model->ID;?>" class="btn btn-dark btn-xs">
-							<i class="fa fa-edit">
-							</i>Edit
-						</a>
-						<?php endif; ?>
-						<?php if( user_can( 'delete_model') ): ?>
-						<a href="#" class="btn btn-danger btn-xs" onclick="javascript:delete_function(this);" data-id="<?php echo $model->ID;?>" data-action="delete_model">
-							<i class="fa fa-trash">
-							</i>Delete
-						</a>
-						<?php endif; ?>
-					</td>
-				</tr>
-				<?php endforeach; endif;
-				?>
-			</tbody>
-		</table>
+</table>
+
 		<?php endif; ?>
 		<?php
 		$content = ob_get_clean();
@@ -1511,20 +1517,35 @@ function myFunction() {
 				</label>
 				<input type="text" name="name" class="form-control require"/>
 			</div>
+			
+			
+			
 			<div class="form-group">
-				<label for="manufacturer">
-					Manufacturer
-					<span class="required">
-						*
-					</span>
-				</label>
-				<select name="manufacturer" class="form-control select_single require" tabindex="-1" data-placeholder="Choose manufacturer">
-					<?php
-					$data = get_tabledata(TBL_MANUFACTURERS,false,array('approved'=> '1'));
-					$option_data = get_option_data($data,array('ID','name'));
-					echo get_options_list($option_data);
-					?>
-				</select>
+					<label for="equipment-type">
+						Equipment Type
+						<span class="required">
+							*
+						</span>
+					</label>
+					<select name="equipment_type" class="form-control select_single require select-equipment-type fetch-equipment-type-data" tabindex="-1" data-placeholder="Choose equipment type">
+						<?php
+						$data = get_tabledata(TBL_EQUIPMENT_TYPES,false,array('approved'=> '1'), 'ORDER BY `name` ASC');
+						$option_data = get_option_data($data,array('ID','name'));
+						echo get_options_list($option_data);
+						?>
+					</select>
+			</div>			<div class="form-group">
+					<label for="manufacturer">
+						Manufacturer
+						<span class="required">
+							*
+						</span>
+					</label>
+					<select name="manufacturer" class="form-control select_manufacturer select_single fetch-manufacturer-data require" tabindex="-1" data-placeholder="Choose manufacturer">
+						<option value="">
+							Choose manufacturer
+						</option>
+					</select>
 			</div>
 			<div class="ln_solid">
 			</div>
@@ -1561,6 +1582,24 @@ function myFunction() {
 				</label>
 				<input type="text" name="name" class="form-control require" value="<?php _e($model->name);?>"/>
 			</div>
+			
+			<div class="form-group">
+				<label for="manufacturer">
+					Equipment Type
+					<span class="required">
+						*
+					</span>
+				</label>
+				<select name="manufacturer" class="form-control select_single require" tabindex="-1" data-placeholder="Choose manufacturer">
+					<?php
+					$data = get_tabledata(TBL_EQUIPMENT_TYPES,false,array('approved'=> '1'));
+					$option_data = get_option_data($data,array('ID','name'));
+					echo get_options_list($option_data,maybe_unserialize($model->equipment_type));
+					?>
+				</select>
+			</div>
+			
+			
 			<div class="form-group">
 				<label for="manufacturer">
 					Manufacturer
@@ -2308,6 +2347,7 @@ function myFunction() {
 					array(
 						'ID' => $guid,
 						'name' => $name,
+						'equipment_type' =>$equipment_type,
 						'manufacturer'=> $manufacturer,
 						'approved' => 1,
 					)
@@ -2772,6 +2812,154 @@ function myFunction() {
 			return json_encode($return);
 		}
 
+	
+	
+		public function fetch_all_models_process(){
+$orders_columns = array(
+				0 => 'name',
+				1 =>  'manufacturer',
+				2 => 'equipment_type',
+				3 => 'created_on',
+				4 => 'approved',
+			);
+			$recordsTotal = $recordsFiltered = 0;
+			$draw = $_POST["draw"];
+			$orderByColumnIndex = $_POST['order'][0]['column'];
+			$orderBy = ( array_key_exists( $orderByColumnIndex , $orders_columns ) ) ? $orders_columns[$orderByColumnIndex] : 'created_on';
+			$orderType = $_POST['order'][0]['dir'];
+			$start = $_POST["start"];
+			$length = $_POST['length'];
+			
+			$query = '';
+			if(!is_admin()):
+				$centres = maybe_unserialize($this->current__user->centre);
+				if(!empty($centres)){
+					$centres = implode(',',$centres);
+					$query = "WHERE `centre` IN (".$centres.")";
+				}
+			endif;
+			
+			$sql = sprintf(" ORDER BY %s %s limit %d , %d ", $orderBy,$orderType ,$start , $length);
+			$data = array();
+			if(!empty($_POST['search']['value'])){
+				$columns = array('ID','name');
+				for($i = 0 ; $i < count($columns);$i++){
+					$column = $columns[$i];
+					$where[] = "$column LIKE '%".$_POST['search']['value']."%'";
+				}
+				$where = implode(" OR " , $where);
+				$query .= ($query != '') ? ' AND ' : ' WHERE ';
+				$query .= $where;	
+			}
+			
+			if(isset($_POST['centre']) && $_POST['centre'] != '' && $_POST['centre'] != 'undefined'){
+				$query .= ($query != '') ? ' AND ' : ' WHERE ';
+				$query .= " `centre` = '".$_POST['centre']."' ";
+			}
+            
+            if(isset($_POST['equipment_type']) && $_POST['equipment_type'] != '' && $_POST['equipment_type'] != 'undefined'){
+				$query .= ($query != '') ? ' AND ' : ' WHERE ';
+				$query .= " `equipment_type` = '".$_POST['equipment_type']."' ";
+			}
+						
+			if(isset($_POST['manufacturer']) && $_POST['manufacturer'] != '' && $_POST['manufacturer'] != 'undefined'){
+				$query .= ($query != '') ? ' AND ' : ' WHERE ';
+				$query .= " `manufacturer` = '".$_POST['manufacturer']."' ";
+			}
+			
+			if(isset($_POST['model']) && $_POST['model'] != '' && $_POST['model'] != 'undefined'){
+				$query .= ($query != '') ? ' AND ' : ' WHERE ';
+				$query .= " `model` = '".$_POST['model']."' ";
+			}
+			
+
+			
+
+			
+			
+			if(isset($_POST['approved']) && $_POST['approved'] != '' &&  $_POST['approved'] != 'undefined'){
+				$query .= ($query != '') ? ' AND ' : ' WHERE ';
+				$query .= " `approved` = '".$_POST['approved']."' ";
+			}
+            
+			
+            $recordsTotal = get_tabledata(TBL_MODELS,true,array(), $query, 'COUNT(ID) as count');
+			$recordsTotal = $recordsTotal->count;
+			$data_list = get_tabledata(TBL_MODELS,false ,array(), $query.$sql );
+			$recordsFiltered = $recordsTotal;
+			
+			
+			if($data_list): foreach($data_list as $model):
+				$equipment_type = get_tabledata(TBL_EQUIPMENT_TYPES,true,array('ID'=>$model->equipment_type));
+				$manufacturer = get_tabledata(TBL_MANUFACTURERS,true,array('ID'=>$model->manufacturer));
+
+				$row = array();
+				array_push($row, __($model->name));
+
+
+			if($model->manufacturer!=0){
+				array_push($row, __($manufacturer->name));
+			}else{
+				array_push($row, __("N/A"));
+			}
+			if($model->equipment_type!=0){
+				array_push($row, __($equipment_type->name));
+			}else{
+				array_push($row, __("N/A"));
+			}
+				
+				
+				array_push($row, date('M d,Y',strtotime($model->created_on)));
+				if(is_admin()):
+					ob_start();
+					?>
+					<div class="text-center">
+						<label>
+							<input type="checkbox" class="js-switch" <?php checked($model->approved, 1);?> onclick="approve_switch(this);" data-id="<?php echo $model->ID;?>" data-action="model_approve_change"/>
+						</label>
+					</div>
+					<div style="display:none;"><?php echo $model->approved; ?></div>
+					<?php 
+					$checkbox = ob_get_clean();
+					array_push($row, $checkbox);
+				endif;
+				ob_start();
+				?>
+				<div class="text-center">
+					<?php if( user_can( 'view_equipment') ): ?>
+					<a href="<?php echo site_url();?>/view-model/?id=<?php echo $model->ID;?>" class="btn btn-dark btn-xs">
+						<i class="fa fa-eye"></i> View
+					</a>
+					<?php endif; ?>
+					<?php if( user_can( 'edit_equipment') ): ?>
+					<a href="<?php echo site_url();?>/edit-model/?id=<?php echo $model->ID;?>" class="btn btn-dark btn-xs">
+						<i class="fa fa-edit"></i> Edit
+					</a>
+					<?php endif; ?>
+					<?php if( user_can( 'delete_equipment') ): ?>
+					<a href="#" class="btn btn-danger btn-xs" onclick="delete_function(this);" data-id="<?php echo $model->ID;?>" data-action="delete_model">
+						<i class="fa fa-trash"></i> Delete
+					</a>
+					<?php endif; ?>
+				</div>
+				<?php 
+				$action = ob_get_clean();
+				array_push($row, $action);
+				$data[] = $row;
+				endforeach;
+			endif;
+			
+			/* Response to client before JSON encoding */
+			$response = array(
+				"draw" => intval($draw),
+				"recordsTotal" => $recordsTotal,
+				"recordsFiltered"=> $recordsFiltered,
+				"data" => $data,
+			);
+			return json_encode($response);
+		}	
+	
+	
 		public function fetch_all_equipments_process(){
 			$orders_columns = array(
 				0 => 'name',

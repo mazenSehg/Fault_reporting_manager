@@ -10,6 +10,9 @@
 			case 'fetch_all_equipments':
 				echo $Equipment->fetch_all_equipments_process();
 				break;
+			case 'fetch_all_models':
+				echo $Equipment->fetch_all_models_process();
+				break;
 			case 'fetch_all_equipments2':
 				echo $Equipment->fetch_all_equipments_process2();
 				break;
