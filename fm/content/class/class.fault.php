@@ -671,19 +671,7 @@ function myFunction() {
 					<button class="btn btn-success btn-md" onclick="printdiv('div_print');">Print Fault Report</button>
 	</div>
 
-<script language="javascript">
-function printdiv(printpage)
-{
-var headstr = "<html><head><title></title></head><body>";
-var footstr = "</body>";
-var newstr = document.all.item(printpage).innerHTML;
-var oldstr = document.body.innerHTML;
-document.body.innerHTML = headstr+newstr+footstr;
-window.print();
-document.body.innerHTML = oldstr;
-return false;
-}
-</script>
+
 <?php
 		
 		if(!is_admin()):
@@ -708,6 +696,7 @@ return false;
 		$fault_type = get_tabledata(TBL_FAULT_TYPES,true, array('ID'=> $fault->fault_type));
 		$service_agent = get_tabledata(TBL_SERVICE_AGENTS, true, array('ID'=> $fault->current_servicing_agency));
 ?>
+
 <div class="text-center">
 	<h3>
 		<?php _e('Fault Report');?>
@@ -716,33 +705,7 @@ return false;
 <div id="div_print">
 <table class="table table-bordered table-responsive table-hover table-bordered" id="printTable">
 	<thead>
-		
-		<tr>
-			<td class="text-center">
 
-			</td>
-			<td class="text-center">
-
-			</td>			
-			<td class="text-center">
-
-			</td>
-			<td class="text-center">
-
-			</td>			
-			<td class="text-center">
-
-			</td>
-			<td class="text-center">
-
-			</td>			
-			<td class="text-center">
-
-			</td>
-			<td class="text-center">
-
-			</td>
-		</tr>
 	</thead>
 	<tbody>
 		<tr class="info" style="color:black; font-weight:bold;">
@@ -888,7 +851,7 @@ return false;
 			?>
 			<td>
 				<?php echo $value; ?>
-			</td>>
+			</td>
 			<td>
 				<?php _e('<p style="color:black;">To Fix at next service visit</p>');?>
 			</td>
@@ -1211,7 +1174,7 @@ return false;
 		</div>
 	</div>
 </form>
-<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap ajax-datatable-buttons" cellspacing="0" width="100%" data-table="fetch_all_faults" data-order-column="6">
+<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive table-responsive ajax-datatable-buttons" cellspacing="0" width="100%" data-table="fetch_all_faults" data-order-column="6">
 	<thead>
 		<tr>
 			<?php if(is_admin()): ?>
@@ -1223,6 +1186,13 @@ return false;
 			<th>Equipment</th>
 			<th>Fault Type</th>
 			<th>Date of Fault</th>
+			<?php
+		if(is_admin()){
+			?>
+			<th>Last Modified</th>
+			<?php
+		}
+		?>
 			<th class="text-center">Actions</th>
 		</tr>
 	</thead>
@@ -1302,7 +1272,7 @@ return false;
 		echo page_not_found("THERE ARE NO  new faults record found",' ',false);
 		else:
 ?>
-<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap ajax-datatable-buttons" cellspacing="0" width="100%" data-table="fetch_all_faults2" data-order-column="6">
+<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive table-responsive ajax-datatable-buttons" cellspacing="0" width="100%" data-table="fetch_all_faults2" data-order-column="6">
 	<thead>
 		<tr>
 			<?php if(is_admin()): ?>
@@ -1412,7 +1382,7 @@ return false;
 		echo page_not_found("THERE ARE NO  new fault types record found",' ',false);
 		else:
 ?>
-<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap datatable-buttons" cellspacing="0" width="100%">
+<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive table-responsive datatable-buttons" cellspacing="0" width="100%">
 	<thead>
 		<tr>
 			<th>Name</th>
@@ -1472,6 +1442,9 @@ return false;
 			'message' => 'Could not create fault, Please try again.',
 			'reset_form' => 0
 		);
+		
+				date_default_timezone_set('Europe/London');
+		$date = date('Y-m-d', time());
 
 		if( user_can('add_fault') ):
 		$guid = get_guid(TBL_FAULTS);
@@ -1508,6 +1481,7 @@ return false;
 			'equipment_downtime' => $equipment_downtime,
 			'screening_downtime' => $screening_downtime,
 			'repeat_images' => $repeat_images,
+			'last_modified' => $date,
 			'cancelled_women' => $cancelled_women,
 			'technical_recalls' => $technical_recalls,
 			'satisfied_servicing_organisation'=> $satisfied_servicing_organisation,
@@ -1553,12 +1527,17 @@ return false;
 			'message' => 'Could not update fault, Please try again.',
 			'reset_form' => 0
 		);
+		
+				date_default_timezone_set('Europe/London');
+		$date = date('Y-m-d', time());
+		
+		
 		if(is_admin()){
 			$doh = ( isset($doh) ) ? 1 : 0;
 			$update_args = array(
 				'centre' => $centre,
 				'name' => $name,
-				'name_submit' => $name_submit,
+				'name_submit' => $name,
 				'equipment_type' => $equipment_type,
 				'equipment' => $equipment,
 				'fault_type' => $fault_type,
@@ -1578,6 +1557,7 @@ return false;
 				'repeat_images' => $repeat_images,
 				'cancelled_women' => $cancelled_women,
 				'technical_recalls' => $technical_recalls,
+				'last_modified' => $date,
 				'satisfied_servicing_organisation'=> $satisfied_servicing_organisation,
 				'satisfied_service_engineer' => $satisfied_service_engineer,
 				'satisfied_equipment' => $satisfied_equipment,
@@ -2306,6 +2286,7 @@ return false;
 				4 => 'equipment_name',
 				5 => 'f_type_name',
 				6 => 'date_of_fault',
+				7 => 'last_modified',
 				0 => 'approved',
 			);
 		}else{
@@ -2446,7 +2427,9 @@ return false;
 
 		array_push($row, date('d M,Y',strtotime($fault->date_of_fault)));
 		//array_push($row, date('d M, Y',$fault->date_of_fault));
-
+if(is_admin()){
+		array_push($row, date('d M,Y',strtotime($fault->last_modified)));
+}
 		ob_start();
 ?>
 <div class="text-center">

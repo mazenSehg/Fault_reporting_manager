@@ -119,7 +119,7 @@ class Equipment{
 			<?php } ?>
 	</form>
 			</div>
-<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap ajax-datatable-buttons" cellspacing="0" width="100%" data-table="fetch_all_equipments" data-order-column="7">
+<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive table-responsive ajax-datatable-buttons" cellspacing="0" width="100%" data-table="fetch_all_equipments" data-order-column="7">
 			<thead>
 				<tr>
 					<th>Name</th>
@@ -130,7 +130,8 @@ class Equipment{
 					<th>Manufacturer</th>
 					<th>Service Agent</th>
 					<th>Created On</th>
-					<?php if(is_admin()): ?>
+					<?php if(is_admin()): ?>					
+					<th>Last modified</th>
 					<th>Approved</th>
 					<?php endif; ?>
 					<th class="text-center">Actions</th>
@@ -172,7 +173,7 @@ class Equipment{
 			echo page_not_found("There are no equipments to authorise",' ',false);
 		else:
 		?>
-<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap ajax-datatable-buttons" cellspacing="0" width="100%" data-table="fetch_all_equipments2" data-order-column="7">
+<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive table-responsive ajax-datatable-buttons" cellspacing="0" width="100%" data-table="fetch_all_equipments2" data-order-column="7">
 			<thead>
 				<tr>
 					<th>Name</th>
@@ -929,7 +930,7 @@ function myFunction() {
 			echo page_not_found("THERE ARE NO  record found for Equipment Types",' ',false);
 		else:
 		?>
-		<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap datatable-buttons" cellspacing="0" width="100%">
+		<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive table-responsive datatable-buttons" cellspacing="0" width="100%">
 			<thead>
 				<tr>
 					<th>
@@ -1110,7 +1111,7 @@ function myFunction() {
 			echo page_not_found("THERE ARE NO  record found for Service Agents",' ',false);
 		else:
 		?>
-		<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap datatable-buttons" cellspacing="0" width="100%">
+		<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive table-responsive datatable-buttons" cellspacing="0" width="100%">
 			<thead>
 				<tr>
 					<th>
@@ -1282,7 +1283,7 @@ function myFunction() {
 			echo page_not_found("THERE ARE NO  record found for Manufacturers",' ',false);
 		else:
 		?>
-		<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap datatable-buttons" cellspacing="0" width="100%">
+		<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive table-responsive datatable-buttons" cellspacing="0" width="100%">
 			<thead>
 				<tr>
 					<th>
@@ -1428,7 +1429,7 @@ function myFunction() {
 			echo page_not_found("THERE ARE NO  record found for models",' ',false);
 		else:
 		?>
-		<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap datatable-buttons" cellspacing="0" width="100%">
+		<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive table-responsive datatable-buttons" cellspacing="0" width="100%">
 			<thead>
 				<tr>
 					<th>
@@ -1600,7 +1601,7 @@ function myFunction() {
 			echo page_not_found("THERE ARE NO  record found for suppliers",' ',false);
 		else:
 		?>
-		<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap datatable-buttons" cellspacing="0" width="100%">
+		<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive table-responsive datatable-buttons" cellspacing="0" width="100%">
 			<thead>
 				<tr>
 					<th>
@@ -1749,7 +1750,10 @@ function myFunction() {
 		if( user_can('add_equipment') ):
 			$guid = get_guid(TBL_EQUIPMENTS);
 
+				date_default_timezone_set('Europe/London');
+		$date = date('Y-m-d', time());
         if(is_admin()){
+			
 			$chk=1;
 			$result = $this->database->insert(TBL_EQUIPMENTS,
 				array(
@@ -1769,6 +1773,7 @@ function myFunction() {
 					'serial_number' => $serial_number,
 					'year_manufacturered'=> $year_manufacturered,
 					'year_installed' => $year_installed,
+					'last_modified' => $date,
 					'year_decommisoned' => 0,
 					'decommed' => 0,
 					'spare' => $spare,
@@ -1799,6 +1804,7 @@ function myFunction() {
 					'year_installed' => $year_installed,
 					'year_decommisoned' => 0,
 					'comment' => $comment,
+					'last_modified' => $date,
 //							
 					'decommed' => 0,
 					'spare' => $spare,	
@@ -1863,6 +1869,8 @@ function myFunction() {
 		
 		
 
+		date_default_timezone_set('Europe/London');
+		$date = date('Y-m-d', time());
 		
 			$update_args = array(
 					'centre' => $centre,
@@ -1878,7 +1886,7 @@ function myFunction() {
 					'year_installed' => $year_installed,
 					'year_decommisoned' => $year_decommisoned,
 					'comment' => $comment,
-				
+					'last_modified' => $date,
 					'decommed' => $decommed,
 					'spare' => $spare,
 					'x_ray' => $x_ray,
@@ -2774,7 +2782,8 @@ function myFunction() {
 				5 => 'manufacturer',
 				6 => 'service_agent',
 				7 => 'created_on',
-				8 => 'approved',
+				8 => 'last_modified',
+				9 => 'approved',
 			);
 			$recordsTotal = $recordsFiltered = 0;
 			$draw = $_POST["draw"];
@@ -2881,6 +2890,7 @@ function myFunction() {
 				
 				array_push($row, date('M d,Y',strtotime($equipment->created_on)));
 				if(is_admin()):
+				array_push($row, date('d M,Y',strtotime($equipment->last_modified)));
 					ob_start();
 					?>
 					<div class="text-center">

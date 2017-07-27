@@ -365,7 +365,7 @@ class Centre{
 </div>
 
 
-		<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap datatable-buttons" cellspacing="0" width="100%">
+		<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive datatable-buttons" cellspacing="0" width="100%">
 			<thead>
 				<tr>
 					<th>
@@ -383,7 +383,11 @@ class Centre{
 					<th>
 						Created On
 					</th>
+
 					<?php if(is_admin()): ?>
+					<th>
+						Last Modified
+					</th>
 					<th>
 						Use status
 					</th>
@@ -413,7 +417,11 @@ class Centre{
 					<td>
 						<?php echo date('M d,Y',strtotime($centre->created_on));?>
 					</td>
+
 					<?php if(is_admin()): ?>
+										<td>
+						<?php echo date('M d,Y',strtotime($centre->last_modified));?>
+					</td>
 					<td class="text-center">
 						<label>
 							<input type="checkbox" class="js-switch" <?php checked($centre->approved, 1);?> onClick="javascript:approve_switch(this);" data-id="<?php echo $centre->ID;?>" data-action="centre_approve_change"/>
@@ -819,6 +827,9 @@ class Centre{
 			'name'=> $name,
 		);
 
+		
+				date_default_timezone_set('Europe/London');
+		$date = date('Y-m-d', time());
 		if(is_value_exists(TBL_CENTRES,$validation_args)):
 		$return['status'] = 2;
 		$return['message_heading'] = 'Failed !';
@@ -845,6 +856,7 @@ class Centre{
 				'support_Rad_email'=> $suppRadE,
 				'programme_manag' => $proMan,
 				'programme_manage_e' => $proManE,
+				'last_modified' => $date,
 
 			)
 		);
@@ -878,7 +890,9 @@ class Centre{
 		$validation_args = array(
 			'name'=> $name,
 		);
-
+		date_default_timezone_set('Europe/London');
+		$date = date('Y-m-d', time());
+		
 		if(is_value_exists(TBL_CENTRES,$validation_args,$centre_id)):
 		$return['status'] = 2;
 		$return['message_heading'] = 'Failed !';
@@ -901,6 +915,7 @@ class Centre{
 				'fax' => $fax,
 				'support_Rad' => $suppRad,
 				'support_Rad_email'=> $suppRadE,
+			'last_modified' => $date,
 				'programme_manag' => $proMan,
 				'programme_manage_e' => $proManE,
 			),
