@@ -69,10 +69,15 @@ class Fault{
 		<?php
 		if(is_admin()){	
 		?>
+		
 		<div class="form-group col-sm-6 col-xs-12">
 			<label for="name">Name to put on the form <span class="required">*</span></label>
-			<input type="text" name="name" class="form-control " value="" /> 
-		</div>	
+			<input type="text" name="name" class="form-control " value="<?php _e($this->current__user->first_name .' '.$this->current__user->last_name);?>" /> 
+			<div align="right">
+		<small>Please replace your name with the name on the Form, if submitting on behalf of someone else</small>
+		</div>
+		</div>
+		
 		<?php
 		}else{
 		?>
@@ -380,8 +385,13 @@ function myFunction() {
 		?>
 		<div class="form-group col-sm-6 col-xs-12">
 			<label for="name">Name to put on the form <span class="required">*</span></label>
-			<input type="text" name="name" class="form-control " value="" /> 
+			<input type="text" name="name" class="form-control " value="<?php _e($fault->name);?>" /> 
+			
+			<div align="right">
+		<small>Please replace your name with the name on the Form, if submitting on behalf of someone else</small>
+		</div>
 		</div>	
+				
 		<?php
 		}else{
 		?>
@@ -389,7 +399,10 @@ function myFunction() {
 		<div class="form-group col-sm-6 col-xs-12">
 			<label for="name">Your Full Name <span class="required">*</span></label>
 			<input type="text" name="name" class="form-control " value="<?php _e($this->current__user->first_name .' '.$this->current__user->last_name);?>" readonly="readonly"/> 
-		</div>		
+		</div>
+		
+			
+			
 		
 		<?php
 		}
@@ -668,8 +681,21 @@ function myFunction() {
 		
 		?>
 <div align = "right">
-					<button class="btn btn-success btn-md" onclick="printdiv('div_print');">Print Fault Report</button>
+					<button class="btn btn-success btn-md" onclick="printDiv()">Print Fault Report</button>
+	
 	</div>
+<script>
+function printDiv()
+{
+var divToPrint=document.getElementById('printableArea');
+var newWin=window.open('','Print-Window','width=400,height=400,top=100,left=100');
+newWin.document.open();
+newWin.document.write('<html><body   onload="window.print()">'+divToPrint.innerHTML+'</body></html>');
+newWin.document.close();
+setTimeout(function(){newWin.close();},10);
+
+}
+</script>
 
 
 <?php
@@ -702,80 +728,67 @@ function myFunction() {
 		<?php _e('Fault Report');?>
 	</h3> 
 </div>
-<div id="div_print">
-<table class="table table-bordered table-responsive table-hover table-bordered" id="printTable">
+<div id="printableArea">
+	
+<table border="2" class="table table-bordered table-responsive table-hover table-bordered" id="printTable">
 	<thead>
 
 	</thead>
 	<tbody>
 		<tr class="info" style="color:black; font-weight:bold;">
-					<td>Centre Information</td>
+					<td><u>Centre Information</u></td>
 		</tr>
 		<tr class="active">
 
 			<td>
-				<?php _e('<p style="color:black;">Screening Centre</p>');?>
+				<?php _e('<strong><p style="color:black;">Screening Centre</p></strong>');?>
 			</td>
 			<td>
 				<?php _e($centre->name);?>
 			</td>
 			<td>
-				<?php _e('<p style="color:black;">Programme</p>');?>
+				<?php _e('<strong><p style="color:black;">Programme</p></strong>');?>
 			</td>
 			<td>
 				<?php _e($centre->programme);?>
 			</td>			
 			<td>
-				<?php _e('<p style="color:black;">Screening Centre</p>');?>
-			</td>
-			<td>
-				<?php _e($centre->name);?>
-			</td>
-			<td>
-				<?php _e('<p style="color:black;">Programme</p>');?>
-			</td>
-			<td>
-				<?php _e($centre->programme);?>
-			</td>
-		</tr>
-		<tr class="active">
-			<td>
-				<?php _e('<p style="color:black;">Region</p>');?>
+				<?php _e('<strong><p style="color:black;">Region</p></strong>');?>
 			</td>
 			<td>
 				<?php _e($region->name);?>
 			</td>
 			<td>
-				<?php _e('<p style="color:black;">Centre Code: </p>');?>
+				<?php _e('<strong><p style="color:black;">Centre Code: </p></strong>');?>
 			</td>
 			<td>
 				<?php _e($centre->centre_code);?>
 			</td>
 		</tr>
 		<tr class="info" style="color:black; font-weight:bold;">
-					<td>Equipment Information</td>
+					<td><u>Equipment Information</u></td>
 		</tr>
 		<tr class="active">
 			<td>
-				<?php _e('<p style="color:black;">Equipment Type</p>');?>
+				<?php _e('<strong><p style="color:black;">Equipment Type</p></strong>');?>
 			</td>
 			<td>
 				<?php _e($equipment_type->name);?>
 			</td>
 			<td>
-				<?php _e('<p style="color:black;">Model</p>');?>
+				<?php _e('<strong><p style="color:black;">Model</p></strong>');?>
 			</td>
 			<td>
 				<?php _e($model->name);?>
 			</td>			
 			<td>
-				<?php _e('<p style="color:black;">Equipment ID No.</p>');?>
+				<?php _e('<strong><p style="color:black;">Equipment ID No.</p></strong>');?>
 			</td>
 			<td>
 				<?php _e($equipment->ID);?>
 			</td>
 			<td>
-				<?php _e('<p style="color:black;">Manufacturer</p>');?>
+				<?php _e('<strong><p style="color:black;">Manufacturer</p></strong>');?>
 			</td>
 			<td>
 				<?php _e($manufacturer->name);?>
@@ -783,19 +796,19 @@ function myFunction() {
 		</tr>
 		<tr class="active">
 			<td>
-				<?php _e('<p style="color:black;">Equipment Name</p>');?>
+				<?php _e('<strong><p style="color:black;">Equipment Name</p></strong>');?>
 			</td>
 			<td>
 				<?php _e($equipment->name);?>
 			</td>
 			<td>
-				<?php _e('<p style="color:black;">Installation Date (Year)</p>');?>
+				<?php _e('<strong><p style="color:black;">Installation Date (Year)</p></strong>');?>
 			</td>
 			<td>
 				<?php _e($equipment->year_installed);?>
 			</td>
 			<td>
-				<?php _e('<p style="color:black;">Servicing Agency</p>');?>
+				<?php _e('<strong><p style="color:black;">Servicing Agency</p></strong>');?>
 			</td>
 			<td>
 				<?php echo ($fault->current_servicing_agency !=  NULL) ? __($fault->current_servicing_agency) : 'None selected.'; ?>
@@ -803,42 +816,42 @@ function myFunction() {
 
 		</tr>
 				<tr class="info" style="color:black; font-weight:bold;">
-					<td>Fault Information</td>
+					<td><u>Fault Information</u></td>
 		</tr>
 		<tr class="active">
 
 			<td>
-				<?php _e('<p style="color:black;">Type of Fault</p>');?>
+				<?php _e('<strong><p style="color:black;">Type of Fault</p></strong>');?>
 			</td>
 			<td>
 				<?php _e($fault_type->name);?>
 			</td>
 			<td>
-				<?php _e('<p style="color:black;">Fault ID</p>');?>
+				<?php _e('<strong><p style="color:black;">Fault ID</p></strong>');?>
 			</td>
 			<td>
 				<?php _e($fault->ID);?>
 			</td>
 			<td>
-				<?php _e('<p style="color:black;">Date of Submition</p>');?>
+				<?php _e('<strong><p style="color:black;">Date of Submition</p></strong>');?>
 			</td>
 			<td>
 				<?php echo ($fault->date_of_fault != '') ? date('M d, Y', strtotime($fault->date_of_fault)) : '';?>
 			</td>
 			<td>
-				<?php _e('<p style="color:black;">Fault Description</p>');?>
+				<?php _e('<strong><p style="color:black;">Fault Description</p></strong>');?>
 			</td>
 			<td>
 				<?php _e($fault->description_of_fault);?>
 			</td>
 		</tr>
 				<tr class="info" style="color:black; font-weight:bold;">
-					<td>Fault Action Taken</td>
+					<td><u>Fault Action Taken</u></td>
 		</tr>
 		<tr class="active">
 
 			<td>
-				<?php _e('<p style="color:black;">Fault Corrected by User?</p>');?>
+				<?php _e('<strong><p style="color:black;">Fault Corrected by User?</p></strong>');?>
 			</td>
 			<?php
 		$fault_corrected_by_user = $fault->fault_corrected_by_user;
@@ -853,7 +866,7 @@ function myFunction() {
 				<?php echo $value; ?>
 			</td>
 			<td>
-				<?php _e('<p style="color:black;">To Fix at next service visit</p>');?>
+				<?php _e('<strong><p style="color:black;">To Fix at next service visit</p></strong>');?>
 			</td>
 			<?php
 		$to_fix_at_next_service_visit = $fault->to_fix_at_next_service_visit;
@@ -868,7 +881,7 @@ function myFunction() {
 				<?php echo $value; ?>
 			</td>
 			<td>
-				<?php _e('<p style="color:black;">Engineer called out</p>');?>
+				<?php _e('<strong><p style="color:black;">Engineer called out</p></strong>');?>
 			</td>
 			<?php
 		$engineer_called_out = $fault->engineer_called_out;
@@ -883,7 +896,7 @@ function myFunction() {
 				<?php echo $value; ?>
 			</td>
 			<td>
-				<?php _e('<p style="color:black;">Service Call Number</p>');?>
+				<?php _e('<strong><p style="color:black;">Service Call Number</p></strong>');?>
 			</td>
 			<td>
 				<?php _e($fault->service_call_no);?>
@@ -891,13 +904,13 @@ function myFunction() {
 		</tr>
 		<tr class="active" >
 			<td>
-				<?php _e('<p style="color:black;">Corrective Action Taken</p>');?>
+				<?php _e('<strong><p style="color:black;">Corrective Action Taken</p></strong>');?>
 			</td>
 			<td>
 				<?php _e($fault->action_taken);?>
 			</td>
 			<td>
-				<?php _e('<p style="color:black;">Adver Incident Report Sent to MHRA or Appropriate Develved Administration?</p>');?>
+				<?php _e('<strong><p style="color:black;">Adver Incident Report Sent to MHRA or Appropriate Develved Administration?</p></strong>');?>
 			</td>
 			<td>
 				<?php echo ($fault->adverse_incident_report == 1) ? 'Yes' : 'No'; ?>
@@ -906,30 +919,30 @@ function myFunction() {
 		
 		
 						<tr class="info" style="color:black; font-weight:bold;">
-					<td>Fault Severity</td>
+					<td><u>Fault Severity</u></td>
 		</tr>
 		<tr class="active">
 
 			<td>
-				<?php _e('<p style="color:black;">Equipment Status: </p>');?>
+				<?php _e('<strong><p style="color:black;">Equipment Status: </p></strong>');?>
 			</td>
 			<td>
 				<?php echo get_equipment_status($fault->equipment_status);?>
 			</td>
 			<td>
-				<?php _e('<p style="color:black;">Total Equipment Downtime (Days): </p>');?>
+				<?php _e('<strong><p style="color:black;">Total Equipment Downtime (Days): </p></strong>');?>
 			</td>
 			<td>
 <?php _e($fault->equipment_downtime);?>
 			</td>
 			<td>
-				<?php _e('<p style="color:black;">Total Screening Downtime (Days): </p>');?>
+				<?php _e('<strong><p style="color:black;">Total Screening Downtime (Days): </p></strong>');?>
 			</td>
 			<td>
 <?php _e($fault->screening_downtime);?>
 			</td>
 			<td>
-				<?php _e('<p style="color:black;">Number of repeat films: </p>');?>
+				<?php _e('<strong><p style="color:black;">Number of repeat films: </p></strong>');?>
 			</td>
 			<td>
 <?php _e($fault->repeat_images);?>
@@ -939,13 +952,13 @@ function myFunction() {
 		<tr class="active">
 
 			<td>
-				<?php _e('<p style="color:black;">Number of Cancelled Women: </p>');?>
+				<?php _e('<strong><p style="color:black;">Number of Cancelled Women: </p></strong>');?>
 			</td>
 			<td>
 				<?php echo ($fault->cancelled_women);?>
 			</td>
 			<td>
-				<?php _e('<p style="color:black;">Number of Technical Recalls: </p>');?>
+				<?php _e('<strong><p style="color:black;">Number of Technical Recalls: </p></strong>');?>
 			</td>
 						<td>
 <?php _e($fault->screening_downtime);?>
@@ -954,12 +967,12 @@ function myFunction() {
 		</tr>
 		
 								<tr class="info" style="color:black; font-weight:bold;">
-					<td>Satisfaction</td>
+					<td><u>Satisfaction</u></td>
 		</tr>
 		<tr class="active">
 
 			<td>
-				<?php _e('<p style="color:black;">Are you Satisfied With the Response of the Servicing Organisation: </p>');?>
+				<?php _e('<strong><p style="color:black;">Are you Satisfied With the Response of the Servicing Organisation: </p></strong>');?>
 			</td>
 			<?php
 		$satisfied_servicing_organisation = $fault->satisfied_servicing_organisation;
@@ -974,7 +987,7 @@ function myFunction() {
 				<?php echo $value; ?>
 			</td>
 			<td>
-				<?php _e('<p style="color:black;">Are you satisied with the Performance of the Service Engineer: </p>');?>
+				<?php _e('<strong><p style="color:black;">Are you satisied with the Performance of the Service Engineer: </p></strong>');?>
 			</td>
 			<?php
 		$satisfied_service_engineer = $fault->satisfied_service_engineer;
@@ -989,7 +1002,7 @@ function myFunction() {
 				<?php echo $value; ?>
 			</td>
 			<td>
-				<?php _e('<p style="color:black;">Are you generally Satisfied with the Relibility/performance of this equipment? </p>');?>
+				<?php _e('<strong><p style="color:black;">Are you generally Satisfied with the Relibility/performance of this equipment? </p></strong>');?>
 			</td>
 			<?php
 		$satisfied_equipment = $fault->satisfied_equipment;
@@ -1008,12 +1021,12 @@ function myFunction() {
 		
 		
 										<tr class="info" style="color:black; font-weight:bold;">
-					<td>User Details</td>
+					<td><u>User Details</u></td>
 		</tr>
 		<tr class="active">
 
 			<td>
-				<?php _e('<p style="color:black;">Name: </p>');?>
+				<?php _e('<strong><p style="color:black;">Name: </p></strong>');?>
 			</td>
 			<td>
 				<?php echo ($fault->name);?>
