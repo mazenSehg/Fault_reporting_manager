@@ -2,7 +2,7 @@
 body{
 	font-family: 'Lato', sans-serif;
 	font-size:13px;
-	font-weight: bold;
+	
 }
 h1,h2,h3,h4,h5,h6{
 	font-family: Oswald;
@@ -24,7 +24,7 @@ h1,h2,h3,h4,h5,h6{
 	cursor: pointer;
 }
 .x_panel{
-	background:#E7E7E7;
+	background:#DCDCDC;
 }
 .datatable-buttons .avatar{
 	float:none;
@@ -51,7 +51,7 @@ form span.required{
 	border-color: #a94442;
 }
 .form-control[readonly]{
-	background: #fff;
+	background: #FFF;
 }
 .editor.btn-toolbar{
 	margin:0;
