@@ -31,6 +31,8 @@ class Equipment{
 			echo page_not_found("THERE ARE NO  record found for Equipments",' ',false);
 		else:
 		?>
+
+
 <div class="row custom-filters">
 	<form action="<?php echo site_url();?>/qwert/" method="POST">
 				<div class="form-group col-sm-3 col-xs-12">
@@ -119,7 +121,7 @@ class Equipment{
 			<?php } ?>
 	</form>
 			</div>
-<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive table-responsive ajax-datatable-buttons" cellspacing="0" width="100%" data-table="fetch_all_equipments" data-order-column="7">
+<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive table-responsive ajax-datatable-buttons" cellspacing="0" width="100%" data-table="fetch_all_equipments" data-order-column="6">
 			<thead>
 				<tr>
 					<th>Name</th>

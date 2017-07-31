@@ -47,10 +47,10 @@ $link = mysql_connect($host, $user, $pass) or die("Can not connect." . mysql_err
 mysql_select_db($db) or die("Can not connect.");
  
 
-  $csv_output .= "";
+  $csv_output .= "Equipment Code\tCentre Code\tEquipment Type\tx-ray Subtype\tSupplier\tManfacturer\tModel\tLocation\tLocal ID\t ID Number\tYear Manufactured\tInstallation Year\tDecommisioned\tYear Decommisioned\tSpare\tComment\tServicing Agent ";
 	 
 	 
-  $i = 21;
+  $i = 17;
 $csv_output .= "\n";
 
 						$query = NULL;
@@ -95,7 +95,7 @@ if(isset($_POST['centre']) && $_POST['centre'] != '' && $_POST['centre'] != 'und
 			$query .= "  `date_of_fault` <= '".date( 'Y-m-d', strtotime($_POST['fault_date_to']) )."' ";
 		}				
 
-$values = mysql_query("SELECT * FROM tbl_equipment " . $query."");
+$values = mysql_query("SELECT equipment_code,centre,type_name,x_ray, supplier, manufacturer, model, location, location_id, serial_number, year_manufacturered, year_installed, decommed, year_decommisoned, spare, comment, service_agent FROM tbl_equipment " . $query."");
 			
 while ($rowr = mysql_fetch_row($values)) {
  for ($j=0;$j<$i;$j++) {
@@ -111,8 +111,8 @@ while ($rowr = mysql_fetch_row($values)) {
  
 $filename = $file."_".date("Y-m-d_H-i",time());
 header("Content-type: application/vnd.ms-excel");
-header("Content-disposition: csv" . date("Y-m-d") . ".xls");
-header("Content-disposition: filename=".$filename.".xls");
+header("Content-disposition: csv" . date("Y-m-d") . ".xlsx");
+header("Content-disposition: filename=".$filename.".xlsx");
 print $csv_output;
 
 		}
@@ -128,14 +128,6 @@ print $csv_output;
 	
 	
 		if(isset($_POST['SubmitButton'])){ 
-			$cent = $_POST['centre'];
-			$eqp = $_POST['equipment'];
-			$eqptp = $_POST['equipment_type'];
-			$appr = $_POST['approved'];
-			
-
-
-
             
 if($_SERVER['SERVER_ADDR'] == '10.161.146.74' || $_SERVER['SERVER_ADDR'] == '10.161.128.46') {
 	$db = 'fault_management';
@@ -176,10 +168,10 @@ $link = mysql_connect($host, $user, $pass) or die("Can not connect." . mysql_err
 mysql_select_db($db) or die("Can not connect.");
  
 
-  $csv_output .= "Approved\tFault ID\t Submitted by\t Equipment code\t Serviced by\t Fault Type\t Description of fault\t Action Taken\t DoH \t User corrected?\t next service station correction?\t Engineer called out?\t Engineer callout ref.\t Equipment status\t Equipment downtime\t Screening down time\t Repeat films\t Cancelled patients\t Recalled patients\tSatisfied serviceing Organiation\tAgency satisfaction Engineer satisfaction\tEquipment satisfaction\t Enquiry to supplier\t Supplier action\t Supplier comment\t MDA notified\t Date of Fault\t Created On";
+  $csv_output .= "Fault ID\tReporter ID\tEquipment Code\tServiced By\tType of Fault\tFault Description\tAction Taken\tDOH Action\tUser corrected Fault\tCorrection at next service Visit\tEngineer called out\tEngineer Callout Number\tEquipment Downtime\tScreening Downtime\tRepeat Films\tCancelled Patients\tRecalled Patients\tAgency Satisfaction\tEngineer Satisfaction\tEquipment use Status\tDate of Fault\tDate of Form\tDate of Entry\tEnquiery to Supplier\tSupplier Act\tSupplier Comment\tMDA Notified";
 	 
 	 
-  $i = 28;
+  $i = 26;
 $csv_output .= "\n";
 
 						$query = NULL;
@@ -224,7 +216,7 @@ if(isset($_POST['centre']) && $_POST['centre'] != '' && $_POST['centre'] != 'und
 			$query .= "  `date_of_fault` <= '".date( 'Y-m-d', strtotime($_POST['fault_date_to']) )."' ";
 		}				
 
-$values = mysql_query("SELECT * FROM tbl_fault " . $query."");
+$values = mysql_query("SELECT ID, user_id, equipment_code, current_servicing_agency, f_type_name, description_of_fault, action_taken, doh, fault_corrected_by_user, to_fix_at_next_service_visit, engineer_called_out, service_call_no, equipment_downtime, screening_downtime, repeat_images, cancelled_women, technical_recalls, satisfied_servicing_organisation, satisfied_service_engineer, equipment_status, date_of_fault, created_on,created_on, supplier_enquiry, supplier_action, supplier_comments, adverse_incident_report  FROM tbl_fault " . $query."");
 			
 while ($rowr = mysql_fetch_row($values)) {
  for ($j=0;$j<$i;$j++) {
@@ -240,8 +232,8 @@ while ($rowr = mysql_fetch_row($values)) {
  
 $filename = $file."_".date("Y-m-d_H-i",time());
 header("Content-type: application/vnd.ms-excel");
-header("Content-disposition: csv" . date("Y-m-d") . ".xls");
-header("Content-disposition: filename=".$filename.".xls");
+header("Content-disposition: csv" . date("Y-m-d") . ".xlsx");
+header("Content-disposition: filename=".$filename.".xlsx");
 print $csv_output;
 
 		}

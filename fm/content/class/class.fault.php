@@ -1199,13 +1199,9 @@ setTimeout(function(){newWin.close();},10);
 			<th>Equipment</th>
 			<th>Fault Type</th>
 			<th>Date of Fault</th>
-			<?php
-		if(is_admin()){
-			?>
-			<th>Last Modified</th>
-			<?php
-		}
-		?>
+			<?php if(is_admin()): ?>					
+			<th>Last modified</th>
+			<?php endif; ?>
 			<th class="text-center">Actions</th>
 		</tr>
 	</thead>
