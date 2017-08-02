@@ -446,7 +446,7 @@ class Equipment{
 					Create New Equipment
 				</button>
 						<div align="right">
-		<button class="btn btn-success btn-md" onclick="myFunction()">Reset Form</button>
+		<button class="btn btn-success btn-md" onClick="window.location.reload()">Reset Form</button>
 			</div>
 <script>
 function myFunction() {

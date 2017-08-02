@@ -328,7 +328,7 @@ class Fault{
 		<input type="hidden" name="action" value="add_new_fault" />
 		<button class="btn btn-success btn-md" type="submit">Submit fault</button>
 		<div align="right">
-		<button class="btn btn-success btn-md" onclick="myFunction()">Reset Form</button>
+		<button class="btn btn-success btn-md" onClick="window.location.reload()">Reset Form</button>
 			</div>
 	</div>
 </form>
