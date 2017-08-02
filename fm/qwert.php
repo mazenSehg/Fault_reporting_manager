@@ -101,7 +101,39 @@ while ($rowr = mysql_fetch_row($values)) {
  for ($j=0;$j<$i;$j++) {
 	 if($rowr[$j]!=null||$rowr[$j]!=""||strlen($rowr[$j])>0){
 		 $field = preg_replace('/[\n\r]+/', '', trim($rowr[$j]));
-  $csv_output .= $field."\t";
+		 if($j==1){
+			 $data = mysql_query("SELECT centre_code AS name FROM tbl_centres WHERE ID = ".$field.";");
+			 while ($da = mysql_fetch_row($data)) {
+			$code =  $da[0];	 
+			 }
+			 $csv_output .= $code."\t";
+		 }else if($j==4){
+			 $data = mysql_query("SELECT name AS name FROM tbl_supplier WHERE ID = ".$field.";");
+			 while ($da = mysql_fetch_row($data)) {
+			$code =  $da[0];	 
+			 }
+			 $csv_output .= $code."\t";
+		 }else if($j==5){
+			 $data = mysql_query("SELECT name AS name FROM tbl_manufacturer WHERE ID = ".$field.";");
+			 while ($da = mysql_fetch_row($data)) {
+			$code =  $da[0];	 
+			 }
+			 $csv_output .= $code."\t";
+		 }else if($j==6){
+			 $data = mysql_query("SELECT name AS name FROM tbl_model WHERE ID = ".$field.";");
+			 while ($da = mysql_fetch_row($data)) {
+			$code =  $da[0];	 
+			 }
+			 $csv_output .= $code."\t";
+		 }else if($j==16){
+			 $data = mysql_query("SELECT name AS name FROM tbl_service_agent WHERE ID = ".$field.";");
+			 while ($da = mysql_fetch_row($data)) {
+			$code =  $da[0];	 
+			 }
+			 $csv_output .= $code."\t";
+		 }else{
+  		$csv_output .= $field."\t";  			 
+		 }
 }else{
 	  $csv_output .=""."\t";
 }

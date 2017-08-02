@@ -788,11 +788,13 @@ $(document).ready(function() {
 	
 	$('.fetch-manufacturer-data').change(function(e){
 		var _this = $(this);
-		$.ajax({ 
+		console.log($('.custom-filters select[name="equipment_type"]').val());
+		$.ajax({
 			type : 'POST',
 			data: {
 				action: 'fetch_manufacturer_data',
-				id: _this.val()
+				id: _this.val(),
+				eq: $('.custom-filters select[name="equipment_type"]').val(),
 			},
 			url  : ajax_url,
 			dataType: 'json',

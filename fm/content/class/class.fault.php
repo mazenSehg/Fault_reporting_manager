@@ -736,29 +736,29 @@ setTimeout(function(){newWin.close();},10);
 	</thead>
 	<tbody>
 		<tr class="info" style="color:black; font-weight:bold;">
-					<td><u>Centre Information</u></td>
+					<td>Centre Information</td>
 		</tr>
 		<tr class="active">
 
-			<td>
+			<td class = 'warning'>
 				<?php _e('<strong><p style="color:black;">Screening Centre</p></strong>');?>
 			</td>
 			<td>
 				<?php _e($centre->name);?>
 			</td>
-			<td>
+			<td class = 'warning'>
 				<?php _e('<strong><p style="color:black;">Programme</p></strong>');?>
 			</td>
 			<td>
 				<?php _e($centre->programme);?>
 			</td>			
-			<td>
+			<td class = 'warning'>
 				<?php _e('<strong><p style="color:black;">Region</p></strong>');?>
 			</td>
 			<td>
 				<?php _e($region->name);?>
 			</td>
-			<td>
+			<td class = 'warning'>
 				<?php _e('<strong><p style="color:black;">Centre Code: </p></strong>');?>
 			</td>
 			<td>
@@ -766,28 +766,28 @@ setTimeout(function(){newWin.close();},10);
 			</td>
 		</tr>
 		<tr class="info" style="color:black; font-weight:bold;">
-					<td><u>Equipment Information</u></td>
+					<td>Equipment Information</td>
 		</tr>
 		<tr class="active">
-			<td>
+			<td class = 'warning'>
 				<?php _e('<strong><p style="color:black;">Equipment Type</p></strong>');?>
 			</td>
 			<td>
 				<?php _e($equipment_type->name);?>
 			</td>
-			<td>
+			<td class = 'warning'>
 				<?php _e('<strong><p style="color:black;">Model</p></strong>');?>
 			</td>
 			<td>
 				<?php _e($model->name);?>
 			</td>			
-			<td>
+			<td class = 'warning'>
 				<?php _e('<strong><p style="color:black;">Equipment ID No.</p></strong>');?>
 			</td>
 			<td>
 				<?php _e($equipment->ID);?>
 			</td>
-			<td>
+			<td class = 'warning'>
 				<?php _e('<strong><p style="color:black;">Manufacturer</p></strong>');?>
 			</td>
 			<td>
@@ -795,19 +795,19 @@ setTimeout(function(){newWin.close();},10);
 			</td>
 		</tr>
 		<tr class="active">
-			<td>
+			<td class = 'warning'>
 				<?php _e('<strong><p style="color:black;">Equipment Name</p></strong>');?>
 			</td>
-			<td>
+			<td colspan="3">
 				<?php _e($equipment->name);?>
 			</td>
-			<td>
+			<td class = 'warning'>
 				<?php _e('<strong><p style="color:black;">Installation Date (Year)</p></strong>');?>
 			</td>
 			<td>
 				<?php _e($equipment->year_installed);?>
 			</td>
-			<td>
+			<td class = 'warning'>
 				<?php _e('<strong><p style="color:black;">Servicing Agency</p></strong>');?>
 			</td>
 			<td>
@@ -816,29 +816,29 @@ setTimeout(function(){newWin.close();},10);
 
 		</tr>
 				<tr class="info" style="color:black; font-weight:bold;">
-					<td><u>Fault Information</u></td>
+					<td>Fault Information</td>
 		</tr>
 		<tr class="active">
 
-			<td>
+			<td class = 'warning'>
 				<?php _e('<strong><p style="color:black;">Type of Fault</p></strong>');?>
 			</td>
 			<td>
 				<?php _e($fault_type->name);?>
 			</td>
-			<td>
+			<td class = 'warning'>
 				<?php _e('<strong><p style="color:black;">Fault ID</p></strong>');?>
 			</td>
 			<td>
 				<?php _e($fault->ID);?>
 			</td>
-			<td>
+			<td class = 'warning'>
 				<?php _e('<strong><p style="color:black;">Date of Submition</p></strong>');?>
 			</td>
 			<td>
 				<?php echo ($fault->date_of_fault != '') ? date('M d, Y', strtotime($fault->date_of_fault)) : '';?>
 			</td>
-			<td>
+			<td class = 'warning'>
 				<?php _e('<strong><p style="color:black;">Fault Description</p></strong>');?>
 			</td>
 			<td>
@@ -846,11 +846,11 @@ setTimeout(function(){newWin.close();},10);
 			</td>
 		</tr>
 				<tr class="info" style="color:black; font-weight:bold;">
-					<td><u>Fault Action Taken</u></td>
+					<td>Fault Action Taken</td>
 		</tr>
 		<tr class="active">
 
-			<td>
+			<td class = 'warning'>
 				<?php _e('<strong><p style="color:black;">Fault Corrected by User?</p></strong>');?>
 			</td>
 			<?php
@@ -865,7 +865,7 @@ setTimeout(function(){newWin.close();},10);
 			<td>
 				<?php echo $value; ?>
 			</td>
-			<td>
+			<td class = 'warning'>
 				<?php _e('<strong><p style="color:black;">To Fix at next service visit</p></strong>');?>
 			</td>
 			<?php
@@ -880,7 +880,7 @@ setTimeout(function(){newWin.close();},10);
 			<td>
 				<?php echo $value; ?>
 			</td>
-			<td>
+			<td class = 'warning'>
 				<?php _e('<strong><p style="color:black;">Engineer called out</p></strong>');?>
 			</td>
 			<?php
@@ -895,7 +895,7 @@ setTimeout(function(){newWin.close();},10);
 			<td>
 				<?php echo $value; ?>
 			</td>
-			<td>
+			<td class = 'warning'>
 				<?php _e('<strong><p style="color:black;">Service Call Number</p></strong>');?>
 			</td>
 			<td>
@@ -903,14 +903,14 @@ setTimeout(function(){newWin.close();},10);
 			</td>
 		</tr>
 		<tr class="active" >
-			<td>
+			<td colspan="3" class = 'warning'>
 				<?php _e('<strong><p style="color:black;">Corrective Action Taken</p></strong>');?>
 			</td>
 			<td>
 				<?php _e($fault->action_taken);?>
 			</td>
-			<td>
-				<?php _e('<strong><p style="color:black;">Adver Incident Report Sent to MHRA or Appropriate Develved Administration?</p></strong>');?>
+			<td colspan="3"  class = 'warning'>
+				<?php _e('<strong><p style="color:black;">Adverse Incident Report Sent to MHRA or Appropriate Develved Administration?</p></strong>');?>
 			</td>
 			<td>
 				<?php echo ($fault->adverse_incident_report == 1) ? 'Yes' : 'No'; ?>
@@ -919,29 +919,29 @@ setTimeout(function(){newWin.close();},10);
 		
 		
 						<tr class="info" style="color:black; font-weight:bold;">
-					<td><u>Fault Severity</u></td>
+					<td>Fault Severity</td>
 		</tr>
 		<tr class="active">
 
-			<td>
+			<td class = 'warning'>
 				<?php _e('<strong><p style="color:black;">Equipment Status: </p></strong>');?>
 			</td>
 			<td>
 				<?php echo get_equipment_status($fault->equipment_status);?>
 			</td>
-			<td>
+			<td class = 'warning'>
 				<?php _e('<strong><p style="color:black;">Total Equipment Downtime (Days): </p></strong>');?>
 			</td>
 			<td>
 <?php _e($fault->equipment_downtime);?>
 			</td>
-			<td>
+			<td class = 'warning'>
 				<?php _e('<strong><p style="color:black;">Total Screening Downtime (Days): </p></strong>');?>
 			</td>
 			<td>
 <?php _e($fault->screening_downtime);?>
 			</td>
-			<td>
+			<td class = 'warning'>
 				<?php _e('<strong><p style="color:black;">Number of repeat films: </p></strong>');?>
 			</td>
 			<td>
@@ -951,13 +951,13 @@ setTimeout(function(){newWin.close();},10);
 		</tr>
 		<tr class="active">
 
-			<td>
+			<td class = 'warning'>
 				<?php _e('<strong><p style="color:black;">Number of Cancelled Women: </p></strong>');?>
 			</td>
 			<td>
 				<?php echo ($fault->cancelled_women);?>
 			</td>
-			<td>
+			<td class = 'warning'>
 				<?php _e('<strong><p style="color:black;">Number of Technical Recalls: </p></strong>');?>
 			</td>
 						<td>
@@ -967,11 +967,11 @@ setTimeout(function(){newWin.close();},10);
 		</tr>
 		
 								<tr class="info" style="color:black; font-weight:bold;">
-					<td><u>Satisfaction</u></td>
+					<td>Satisfaction</td>
 		</tr>
 		<tr class="active">
 
-			<td>
+			<td colspan="2" class = 'warning'>
 				<?php _e('<strong><p style="color:black;">Are you Satisfied With the Response of the Servicing Organisation: </p></strong>');?>
 			</td>
 			<?php
@@ -986,7 +986,7 @@ setTimeout(function(){newWin.close();},10);
 			<td>
 				<?php echo $value; ?>
 			</td>
-			<td>
+			<td colspan="3" class = 'warning'>
 				<?php _e('<strong><p style="color:black;">Are you satisied with the Performance of the Service Engineer: </p></strong>');?>
 			</td>
 			<?php
@@ -998,10 +998,12 @@ setTimeout(function(){newWin.close();},10);
 		case '2' : $value = 'N/A'; break;
 		endswitch;
 			?>
-			<td>
+			<td colspan="2">
 				<?php echo $value; ?>
 			</td>
-			<td>
+		</tr>
+		<tr class="active">
+			<td colspan = "2" class = 'warning'>
 				<?php _e('<strong><p style="color:black;">Are you generally Satisfied with the Relibility/performance of this equipment? </p></strong>');?>
 			</td>
 			<?php
@@ -1021,11 +1023,11 @@ setTimeout(function(){newWin.close();},10);
 		
 		
 										<tr class="info" style="color:black; font-weight:bold;">
-					<td><u>User Details</u></td>
+					<td>User Details</td>
 		</tr>
 		<tr class="active">
 
-			<td>
+			<td class = 'warning'>
 				<?php _e('<strong><p style="color:black;">Name: </p></strong>');?>
 			</td>
 			<td>
@@ -1897,7 +1899,7 @@ setTimeout(function(){newWin.close();},10);
 			$args['decommed'] = $decommed;
 
 		if(isset($id) && $id != '') {
-			$data = get_tabledata(TBL_MODELS, false, array('manufacturer'=> $id ,'approved' => '1') );
+			$data = get_tabledata(TBL_MODELS, false, array('equipment_type'=> $eq, 'manufacturer'=> $id ,'approved' => '1') );
 			$option_data = get_option_data($data,array('ID','name'));
 			$return['models_html'] = get_options_list($option_data);
 		}

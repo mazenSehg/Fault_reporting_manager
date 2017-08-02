@@ -116,6 +116,18 @@ class Equipment{
 						?>
 					</select>
 				</div>
+			<div class="row custom-filters">
+		<div class="form-group col-sm-2 col-xs-6 col col-sm-push-2">
+			<label for="date_of_fault">
+				<?php _e('Created on Date From');?>
+			</label>
+			<input type="text" name="fault_date_from" class="form-control input-datepicker-today" /> </div>
+		<div class="form-group col-sm-2 col-xs-6 col-sm-push-2">
+			<label for="date_of_fault">
+				<?php _e('Created on Date To');?>
+			</label>
+			<input type="text" name="fault_date_to" class="form-control input-datepicker-today" /> </div>
+	</div>
     			<?php if(is_admin()){ ?>
 			<input type="submit" value="Export Report" name="SubmitButtonEquipment" class="btn btn-dark btn-sm custom-export-btn" />
 			<?php } ?>
@@ -240,7 +252,7 @@ class Equipment{
 						?>
 					</select>
 				</div>
-				
+				<div class="row custom-filters">
 				<div class="form-group col-sm-6 col-xs-12">
 					<label for="equipment-type">
 						Equipment Type
@@ -255,6 +267,7 @@ class Equipment{
 						echo get_options_list($option_data);
 						?>
 					</select>
+				</div>
 				</div>
 			</div>
 
@@ -488,6 +501,7 @@ function myFunction() {
 						?>
 					</select>
 					</div>
+				<div class="row custom-filters">
 					<div class="form-group col-sm-6 col-xs-12">
 					<label for="equipment-type">
 						Equipment Type
@@ -502,6 +516,7 @@ function myFunction() {
 						echo get_options_list($option_data, maybe_unserialize($equipment->equipment_type));
 						?>
 					</select>
+				</div>
 				</div>
 				</div>
 
@@ -2589,9 +2604,11 @@ function myFunction() {
 	public function fetch__manufacturer__data__process(){
 		extract($_POST);
 		$id = trim($id);
+		$eq = trim($eq);
+		
 		$return = array();
 
-		$data = get_tabledata(TBL_MODELS, false, array('manufacturer'=> $id ,'approved' => '1') );
+		$data = get_tabledata(TBL_MODELS, false, array('equipment_type' =>$eq,'manufacturer'=> $id ,'approved' => '1') );
 		$option_data = get_option_data($data,array('ID','name'));
 		$return['model_html'] = get_options_list($option_data);
 
@@ -3044,6 +3061,17 @@ $orders_columns = array(
 				$query .= ($query != '') ? ' AND ' : ' WHERE ';
 				$query .= " `decommed` = '0' ";
 			}
+			
+				if(isset($_POST['fault_date_from']) && $_POST['fault_date_from'] != '' && $_POST['fault_date_from'] != 'undefined' && isset($_POST['fault_date_to']) && $_POST['fault_date_to'] != '' &&  $_POST['fault_date_to'] != 'undefined'){
+			$query .= ($query != '') ? ' AND ' : ' WHERE ';
+			$query .= " ( `date_of_fault` >= '".date( 'Y-m-d', strtotime($_POST['fault_date_from']) )."' AND `created_on` <= '".date( 'Y-m-d', strtotime($_POST['fault_date_to']) )."' ) ";
+		}else if(isset($_POST['fault_date_from']) && $_POST['fault_date_from'] != '' &&  $_POST['fault_date_from'] != 'undefined' && ( !isset($_POST['fault_date_to']) || $_POST['fault_date_to'] == '' ||  $_POST['fault_date_to'] == 'undefined' ) ){
+			$query .= ($query != '') ? ' AND ' : ' WHERE ';
+			$query .= "  `created_on` >= '".date( 'Y-m-d', strtotime($_POST['fault_date_from']) )."' ";
+		}else if( (!isset($_POST['fault_date_from']) || $_POST['fault_date_from'] == '' || $_POST['fault_date_from'] == 'undefined' ) && isset($_POST['fault_date_to']) && $_POST['fault_date_to'] != '' &&  $_POST['fault_date_to'] != 'undefined'){
+			$query .= ($query != '') ? ' AND ' : ' WHERE ';
+			$query .= "  `created_on` <= '".date( 'Y-m-d', strtotime($_POST['fault_date_to']) )."' ";
+				}
 			
             $recordsTotal = get_tabledata(TBL_EQUIPMENTS,true,array(), $query, 'COUNT(ID) as count');
 			$recordsTotal = $recordsTotal->count;
