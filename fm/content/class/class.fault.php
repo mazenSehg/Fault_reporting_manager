@@ -690,7 +690,8 @@ function printDiv()
 var divToPrint=document.getElementById('printableArea');
 var newWin=window.open('','Print-Window','width=400,height=400,top=100,left=100');
 newWin.document.open();
-newWin.document.write('<html><body   onload="window.print()">'+divToPrint.innerHTML+'</body></html>');
+newWin.document.write('<html><link href="<?php echo CSS_URL;?>bootstrap.min.css" rel="stylesheet"/><<body style="font-size:5px;"   onload="window.print()"><span style="font-size:5px">' + divToPrint.innerHTML + '<span></body></html>');
+	
 newWin.document.close();
 setTimeout(function(){newWin.close();},10);
 
@@ -728,9 +729,18 @@ setTimeout(function(){newWin.close();},10);
 		<?php _e('Fault Report');?>
 	</h3> 
 </div>
+<!---
+<link href="../assets/css/css/print.css" rel="stylesheet" media="print" />
+--->
+
+
+
+	<font size="">
+
 <div id="printableArea">
 	
-<table border="2" class="table table-bordered table-responsive table-hover table-bordered" id="printTable">
+	
+<table class="table table-bordered table-responsive table-hover table-bordered"  style="font-size:10px;" id="printTable">
 	<thead>
 
 	</thead>
@@ -740,25 +750,25 @@ setTimeout(function(){newWin.close();},10);
 		</tr>
 		<tr class="active">
 
-			<td class = 'warning'>
+			<td bgcolor="##CEECF5" class = 'warning'>
 				<?php _e('<strong><p style="color:black;">Screening Centre</p></strong>');?>
 			</td>
 			<td>
 				<?php _e($centre->name);?>
 			</td>
-			<td class = 'warning'>
+			<td bgcolor="##CEECF5" class = 'warning'>
 				<?php _e('<strong><p style="color:black;">Programme</p></strong>');?>
 			</td>
 			<td>
 				<?php _e($centre->programme);?>
 			</td>			
-			<td class = 'warning'>
+			<td bgcolor="##CEECF5" class = 'warning'>
 				<?php _e('<strong><p style="color:black;">Region</p></strong>');?>
 			</td>
 			<td>
 				<?php _e($region->name);?>
 			</td>
-			<td class = 'warning'>
+			<td bgcolor="##CEECF5" class = 'warning'>
 				<?php _e('<strong><p style="color:black;">Centre Code: </p></strong>');?>
 			</td>
 			<td>
@@ -769,25 +779,25 @@ setTimeout(function(){newWin.close();},10);
 					<td>Equipment Information</td>
 		</tr>
 		<tr class="active">
-			<td class = 'warning'>
+			<td bgcolor="##CEECF5" class = 'warning'>
 				<?php _e('<strong><p style="color:black;">Equipment Type</p></strong>');?>
 			</td>
 			<td>
 				<?php _e($equipment_type->name);?>
 			</td>
-			<td class = 'warning'>
+			<td bgcolor="##CEECF5" class = 'warning'>
 				<?php _e('<strong><p style="color:black;">Model</p></strong>');?>
 			</td>
 			<td>
 				<?php _e($model->name);?>
 			</td>			
-			<td class = 'warning'>
+			<td bgcolor="##CEECF5" class = 'warning'>
 				<?php _e('<strong><p style="color:black;">Equipment ID No.</p></strong>');?>
 			</td>
 			<td>
 				<?php _e($equipment->ID);?>
 			</td>
-			<td class = 'warning'>
+			<td bgcolor="##CEECF5" class = 'warning'>
 				<?php _e('<strong><p style="color:black;">Manufacturer</p></strong>');?>
 			</td>
 			<td>
@@ -795,19 +805,19 @@ setTimeout(function(){newWin.close();},10);
 			</td>
 		</tr>
 		<tr class="active">
-			<td class = 'warning'>
+			<td bgcolor="##CEECF5" class = 'warning'>
 				<?php _e('<strong><p style="color:black;">Equipment Name</p></strong>');?>
 			</td>
 			<td colspan="3">
 				<?php _e($equipment->name);?>
 			</td>
-			<td class = 'warning'>
+			<td bgcolor="##CEECF5" class = 'warning'>
 				<?php _e('<strong><p style="color:black;">Installation Date (Year)</p></strong>');?>
 			</td>
 			<td>
 				<?php _e($equipment->year_installed);?>
 			</td>
-			<td class = 'warning'>
+			<td bgcolor="##CEECF5" class = 'warning'>
 				<?php _e('<strong><p style="color:black;">Servicing Agency</p></strong>');?>
 			</td>
 			<td>
@@ -820,25 +830,25 @@ setTimeout(function(){newWin.close();},10);
 		</tr>
 		<tr class="active">
 
-			<td class = 'warning'>
+			<td bgcolor="##CEECF5" class = 'warning'>
 				<?php _e('<strong><p style="color:black;">Type of Fault</p></strong>');?>
 			</td>
 			<td>
 				<?php _e($fault_type->name);?>
 			</td>
-			<td class = 'warning'>
+			<td bgcolor="##CEECF5" class = 'warning'>
 				<?php _e('<strong><p style="color:black;">Fault ID</p></strong>');?>
 			</td>
 			<td>
 				<?php _e($fault->ID);?>
 			</td>
-			<td class = 'warning'>
+			<td bgcolor="##CEECF5" class = 'warning'>
 				<?php _e('<strong><p style="color:black;">Date of Submition</p></strong>');?>
 			</td>
 			<td>
 				<?php echo ($fault->date_of_fault != '') ? date('M d, Y', strtotime($fault->date_of_fault)) : '';?>
 			</td>
-			<td class = 'warning'>
+			<td bgcolor="##CEECF5" class = 'warning'>
 				<?php _e('<strong><p style="color:black;">Fault Description</p></strong>');?>
 			</td>
 			<td>
@@ -850,7 +860,7 @@ setTimeout(function(){newWin.close();},10);
 		</tr>
 		<tr class="active">
 
-			<td class = 'warning'>
+			<td bgcolor="##CEECF5" class = 'warning'>
 				<?php _e('<strong><p style="color:black;">Fault Corrected by User?</p></strong>');?>
 			</td>
 			<?php
@@ -903,10 +913,10 @@ setTimeout(function(){newWin.close();},10);
 			</td>
 		</tr>
 		<tr class="active" >
-			<td colspan="3" class = 'warning'>
+			<td colspan="1" class = 'warning'>
 				<?php _e('<strong><p style="color:black;">Corrective Action Taken</p></strong>');?>
 			</td>
-			<td>
+			<td colspan="3">
 				<?php _e($fault->action_taken);?>
 			</td>
 			<td colspan="3"  class = 'warning'>
@@ -1038,6 +1048,8 @@ setTimeout(function(){newWin.close();},10);
 	</tbody>
 </table>
 </div>
+	</font>
+		
 <?php endif; ?>
 <?php
 		$content = ob_get_clean();
