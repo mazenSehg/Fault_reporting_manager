@@ -142,9 +142,9 @@ while ($rowr = mysql_fetch_row($values)) {
 }
  
 $filename = $file."_".date("Y-m-d_H-i",time());
-header("Content-type: application/vnd.ms-excel");
-header("Content-disposition: csv" . date("Y-m-d") . ".xlsx");
-header("Content-disposition: filename=".$filename.".xlsx");
+header("Content-type: application/xls");
+header("Content-disposition: csv" . date("Y-m-d") . ".xls");
+header("Content-disposition: filename=".$filename.".xls");
 print $csv_output;
 
 		}
@@ -263,9 +263,9 @@ while ($rowr = mysql_fetch_row($values)) {
 }
  
 $filename = $file."_".date("Y-m-d_H-i",time());
-header("Content-type: application/vnd.ms-excel");
-header("Content-disposition: csv" . date("Y-m-d") . ".xlsx");
-header("Content-disposition: filename=".$filename.".xlsx");
+header("Content-type: application/xls");
+header("Content-disposition: csv" . date("Y-m-d") . ".xls");
+header("Content-disposition: filename=".$filename.".xls");
 print $csv_output;
 
 		}
