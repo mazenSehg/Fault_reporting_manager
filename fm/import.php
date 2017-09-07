@@ -43,6 +43,8 @@ login_check();
 
                                     foreach($res2 as $b):
 //removes all faults which already existed in database
+                                echo "Fault exists already, will remove... from old table";
+                                echo "<br>";
                                 $sql3 = "DELETE FROM faults WHERE id=$b->ID";
                                 echo "REMOVING DUPLICATE OF FAULT ID: ".$b->ID."<br>";
                                 $res4 = $db->query($sql3);
@@ -80,12 +82,11 @@ login_check();
                                 
                                 endforeach;
                                 endforeach;
-                              //  echo "INSERTING NEW FAULT: ID-".$a->id." Equipment ID-".$eq_id." Fault Type ID-".$ft_id." Centre ID-".$centre;
+                              echo "INSERTING NEW FAULT: ID-".$a->id." Equipment ID-".$eq_id." Fault Type ID-".$ft_id." Centre ID-".$centre;
                                 echo "<br>";
                                 
                                 $sql10 = "INSERT INTO tbl_fault (`ID`, `created_on`, `centre`, `name`, `user_id`, `equipment_type`, `equipment`, `fault_type`, `date_of_fault`, `current_servicing_agency`, `time_of_fault`, `description_of_fault`, `service_call_no`, `action_taken`, `fault_corrected_by_user`, `to_fix_at_next_service_visit`, `engineer_called_out`, `adverse_incident_report`, `equipment_status`, `equipment_downtime`, `screening_downtime`, `repeat_images`, `cancelled_women`, `technical_recalls`, `satisfied_servicing_organisation`, `satisfied_service_engineer`, `satisfied_equipment`, `doh`, `supplier_enquiry`, `supplier_action`, `supplier_comments`, `approved`, `equipment_name`, `e_type_name`, `centre_name`, `f_type_name`, `equipment_code`) VALUES ('$a->id',DEFAULT,'$centre','$a->created_by',NULL,'$eq_tp','$eq_id','$ft_id','$a->fault_date','$a->serviced_by', '$a->serviced_by','$a->description','$a->service_call_number','$a->action_description', '$a->fault_corrected_by_user','$a->fix_at_next_service', '$a->engineer_called_out','$a->incident_report_submitted','$a->eq_use_code','$a->equipment_down_time', '$a->screening_down_time', '$a->number_repeat_films', '$a->number_cancelled_women', '$a->number_recalls', '$a->satisfied_so', '$a->satisfied_se', '$a->satisfied_eq',DEFAULT,'$a->reason_for_enquiry','$a->response_requested', '$a->supplier_comment', '$a->approved',NULL,NULL,NULL,NULL,NULL);";
                                 
-                                echo $sql10;
                                 
                                 $res10 = $db->query($sql10);
                                 
