@@ -5,6 +5,9 @@ if($_SERVER['SERVER_ADDR'] == '10.161.146.74' || $_SERVER['SERVER_ADDR'] == '10.
 	$db_password = 'fault_user';
 	$db_host = '10.161.128.46';
 	$webpath = 'WebProjects/fault_reporting_php/nccpm_faultreporting_php/fm';
+		$db_user = 'fault_user';
+		$db_password = 'fault_user';
+		$db_host = '10.161.128.194';
 	if($_SERVER['SERVER_ADDR'] == '10.161.146.74' ) {
 		$db_user = 'fault_user';
 		$db_password = 'fault_user';

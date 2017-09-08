@@ -354,7 +354,7 @@ console.log(navigator.sayswho);
 								*
 							</span> </label>
                                         <input type="text" name="user_email" class="form-control require" /> </div>
-                                    <div class="form-group col-sm-6 col-xs-12">
+                                    <div class="form-group col-sm-6 col-xs-12" style='display:none;'>
                                         <label for="dob"> Date of birth </label>
                                         <input type="text" name="dob" class="form-control input-datepicker" readonly="readonly" /> </div>
                                 </div>
@@ -497,7 +497,7 @@ console.log(navigator.sayswho);
                                             <div class="form-group col-sm-6 col-xs-12">
                                                 <label for="email">Email <span class="required">*</span></label>
                                                 <input type="text" name="user_email" class="form-control require" value="<?php _e($user->user_email);?>" /> </div>
-                                            <div class="form-group col-sm-6 col-xs-12">
+                                            <div class="form-group col-sm-6 col-xs-12" style='display:none;'>
                                                 <label for="dob">Date of birth</label>
                                                 <?php
 						$dob = trim(get_user_meta($user->ID,'dob'));

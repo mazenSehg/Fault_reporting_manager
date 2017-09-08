@@ -677,6 +677,7 @@ function myFunction() {
 	public function view__fault__page(){
 		ob_start();
 		$fault__id = $_GET['id'];
+		$filters = $_GET['filters'];
 		$query = '';
 		
 		?>
@@ -2457,31 +2458,31 @@ if(is_admin()){
 ?>
 <div class="text-center">
 	<?php if(is_admin()): ?>
-	<a href="<?php echo site_url();?>/view-fault/?id=<?php echo $fault->ID;?>" class="btn btn-dark btn-xs"> <i class="fa fa-edit"></i> View </a>
-	<a href="<?php echo site_url();?>/edit-fault/?id=<?php echo $fault->ID;?>" class="btn btn-dark btn-xs"> <i class="fa fa-edit"></i> Edit </a>
+	<a href="#" onclick="view_function(this); return false;" data-id="<?php echo $fault->ID;?>" data-action="view_fault" class="btn btn-dark btn-xs"> <i class="fa fa-edit"></i> View </a>
+	<a href="#" onclick="edit_function(this); return false;" data-id="<?php echo $fault->ID;?>" data-action="edit_fault" class="btn btn-dark btn-xs"> <i class="fa fa-edit"></i> Edit </a>
 	<a href="#" class="btn btn-danger btn-xs" onclick="delete_function(this);" data-id="<?php echo $fault->ID;?>" data-action="delete_fault"> <i class="fa fa-trash"></i> Delete </a>
 	<?php else:
 		$future = date('d-m-Y',strtotime(' + 2 day', strtotime($fault->created_on)));
 		$today = date('d-m-Y');
 		if($today == $future):
 		if( user_can('view_fault') ): ?>
-	<a href="<?php echo site_url();?>/view-fault/?id=<?php echo $fault->ID;?>" class="btn btn-dark btn-xs"> <i class="fa fa-edit"></i> View </a>
+	<a href="#" onclick="view_function(this); return false;" data-id="<?php echo $fault->ID;?>" data-action="view_fault" class="btn btn-dark btn-xs"> <i class="fa fa-edit"></i> View </a>
 	<?php endif; ?>
 	
 	<?php else: ?>
 	<?php if($this->current__user__id == $fault->user_id):
 		if( user_can('edit_fault') ): ?>
-	<a href="<?php echo site_url();?>/edit-fault/?id=<?php echo $fault->ID;?>" class="btn btn-dark btn-xs"> <i class="fa fa-edit"></i> Edit </a>
+	<a href="#" onclick="edit_function(this); return false;" data-id="<?php echo $fault->ID;?>" data-action="edit_fault" class="btn btn-dark btn-xs"> <i class="fa fa-edit"></i> Edit </a>
 	<?php endif; ?>
 		<?php if( user_can('view_fault') ): ?>
-	<a href="<?php echo site_url();?>/view-fault/?id=<?php echo $fault->ID;?>" class="btn btn-dark btn-xs"> <i class="fa fa-edit"></i> View </a>
+	<a href="#" onclick="view_function(this); return false;" data-id="<?php echo $fault->ID;?>" data-action="view_fault" class="btn btn-dark btn-xs"> <i class="fa fa-edit"></i> View </a>
 	<?php endif; ?>
 	
 	<?php if( user_can('delete_fault') ): ?> <a href="#" class="btn btn-danger btn-xs" onclick="javascript:delete_function(this);" data-id="<?php echo $fault->ID;?>" data-action="delete_fault"><i class="fa fa-trash"></i> Delete</a>
 	<?php endif; ?>
 	<?php else: ?>
 	<?php if( user_can('view_fault') ): ?>
-	<a href="<?php echo site_url();?>/view-fault/?id=<?php echo $fault->ID;?>" class="btn btn-dark btn-xs"> <i class="fa fa-edit"></i> View </a>
+	<a href="#" onclick="view_function(this); return false;" data-id="<?php echo $fault->ID;?>" data-action="view_fault" class="btn btn-dark btn-xs"> <i class="fa fa-edit"></i> View </a>
 	<?php endif; ?>
 	<?php endif; ?>
 	<?php endif; ?>
@@ -2596,25 +2597,25 @@ if(is_admin()){
 ?>
 <div class="text-center">
 	<?php if(is_admin()): ?>
-	<a href="<?php echo site_url();?>/view-fault/?id=<?php echo $fault->ID;?>" class="btn btn-dark btn-xs"> <i class="fa fa-edit"></i> View </a>
-	<a href="<?php echo site_url();?>/edit-fault/?id=<?php echo $fault->ID;?>" class="btn btn-dark btn-xs"> <i class="fa fa-edit"></i> Edit </a>
+	<a href="#" onclick="view_function(this); return false;" data-id="<?php echo $fault->ID;?>" data-action="view_fault" class="btn btn-dark btn-xs"> <i class="fa fa-edit"></i> View </a>
+	<a href="#" onclick="edit_function(this); return false;" data-id="<?php echo $fault->ID;?>" data-action="edit_fault" class="btn btn-dark btn-xs"> <i class="fa fa-edit"></i> Edit </a>
 	<a href="#" class="btn btn-danger btn-xs" onclick="delete_function(this);" data-id="<?php echo $fault->ID;?>" data-action="delete_fault"> <i class="fa fa-trash"></i> Delete </a>
 	<?php else:
 		$future = date('d-m-Y',strtotime(' + 2 day', strtotime($fault->created_on)));
 		$today = date('d-m-Y');
 		if($today == $future):
 		if( user_can('view_fault') ): ?>
-	<a href="<?php echo site_url();?>/view-fault/?id=<?php echo $fault->ID;?>" class="btn btn-dark btn-xs"> <i class="fa fa-edit"></i> View </a>
+	<a href="#" onclick="view_function(this); return false;" data-id="<?php echo $fault->ID;?>" data-action="view_fault" class="btn btn-dark btn-xs"> <i class="fa fa-edit"></i> View </a>
 	<?php endif; ?>
 	<?php else: ?>
 	<?php if($this->current__user__id == $fault->user_id):
 		if( user_can('edit_fault') ): ?>
-	<a href="<?php echo site_url();?>/edit-fault/?id=<?php echo $fault->ID;?>" class="btn btn-dark btn-xs"> <i class="fa fa-edit"></i> Edit </a>
+	<a href="#" onclick="edit_function(this); return false;" data-id="<?php echo $fault->ID;?>" data-action="edit_fault" class="btn btn-dark btn-xs"> <i class="fa fa-edit"></i> Edit </a>
 	<?php endif; ?>
 	<?php if( user_can('delete_fault') ): ?> <a href="#" class="btn btn-danger btn-xs" onclick="javascript:delete_function(this);" data-id="<?php echo $fault->ID;?>" data-action="delete_fault"><i class="fa fa-trash"></i> Delete</a>
 	<?php endif; ?>
 	<?php if( user_can('view_fault') ): ?>
-	<a href="<?php echo site_url();?>/view-fault/?id=<?php echo $fault->ID;?>" class="btn btn-dark btn-xs"> <i class="fa fa-edit"></i> View </a>
+	<a href="#" onclick="view_function(this); return false;" data-id="<?php echo $fault->ID;?>" data-action="view_fault" class="btn btn-dark btn-xs"> <i class="fa fa-edit"></i> View </a>
 	<?php endif; ?>
 
 	<?php endif; ?>
