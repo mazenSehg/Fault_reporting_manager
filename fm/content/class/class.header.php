@@ -835,6 +835,11 @@ class Header{
 											Manage Roles
 										</a>
 									</li>
+									<li>
+										<a href="<?php echo site_url();?>/import/">
+											Import from access
+										</a>
+									</li>
 								</ul>
 							</li>
 							<?php endif; ?>
