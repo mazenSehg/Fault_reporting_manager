@@ -959,7 +959,7 @@ $(document).ready(function() {
 					action: 'fetch_equipment_data',
 					id: $('.custom-filters select[name="equipment_type"]').val(),
 					centre: $(' .custom-filters select[name="centre"]').val(),
-					decom: $('.custom-filters select[name="decommed"]').val(),
+					decom: $('.custom-filters select[name="decommed"]').val()
 				},
 				url  : ajax_url,
 				dataType: 'json',
@@ -968,7 +968,6 @@ $(document).ready(function() {
 					$select_multiple.select2("destroy");
 					$select_single.select2("destroy");
 					$('select[name="equipment"]').html(res['equipment_html']);
-					$('select[name="fault_type"]').html(res['fault_type_html']);
 					$('select[name="fault_type"]').html(res['fault_type_html']);
 					$('select[name="model"]').html(res['model_html']);
 					
@@ -982,8 +981,10 @@ $(document).ready(function() {
 				type : 'POST',
 				data: {
 					action: 'fetch_equipment_data2',
+					centre: $(' .custom-filters select[name="centre"]').val(),
 					id: $('.custom-filters select[name="manufacturer"]').val(),
-					eq: $('.custom-filters select[name="equipment_type"]').val(),
+					decom: $('.custom-filters select[name="decommed"]').val(),
+					eq: $('.custom-filters select[name="equipment_type"]').val()
 				},
 				url  : ajax_url,
 				dataType: 'json',
@@ -992,6 +993,7 @@ $(document).ready(function() {
 					$select_multiple.select2("destroy");
 					$select_single.select2("destroy");
 					$('select[name="model"]').html(res['models_html']);
+					$('select[name="equipment"]').html(res['equipment_html']);
 					$select_single.select2({ allowClear: true });
 					$select_multiple.select2({ allowClear: true });
 					$('.ajax-datatable-buttons > thead > tr th:nth-child(1)').trigger('click');
@@ -1013,6 +1015,85 @@ $(document).ready(function() {
 	
 });
 
+function view_function_model(btn) {
+	var btn = $(btn);
+	var id = btn.data('id');
+	var action = btn.data('action');
+	var eq = $('.custom-filters select[name="equipment_type"]').val();
+	var man = $('.custom-filters select[name="manufacturer"]').val();
+	var approved = $('.custom-filters select[name="approved"]').val();
+	var filter_options = {};
+	filter_options.man = man;
+	filter_options.eq = eq;
+	filter_options.approved = approved;
+	var encode = JSON.stringify(filter_options);
+	window.location.href = "../view-model/?id="+id+"&filters="+encode;
+}
+
+function edit_function_model(btn) {
+	var btn = $(btn);
+	var id = btn.data('id');
+	var action = btn.data('action');
+	var eq = $('.custom-filters select[name="equipment_type"]').val();
+	var man = $('.custom-filters select[name="manufacturer"]').val();
+	var approved = $('.custom-filters select[name="approved"]').val();
+	var filter_options = {};
+	filter_options.man = man;
+	filter_options.eq = eq;
+	filter_options.approved = approved;
+	var encode = JSON.stringify(filter_options);
+	window.location.href = "../edit-model/?id="+id+"&filters="+encode;
+}
+
+function view_function_eq(btn) {
+	var btn = $(btn);
+	var id = btn.data('id');
+	var action = btn.data('action');
+	var man = $('.custom-filters select[name="manufacturer"]').val();
+	var centre = $(' .custom-filters select[name="centre"]').val();
+	var decom = $('.custom-filters select[name="decommed"]').val();
+	var eq = $('.custom-filters select[name="equipment_type"]').val();
+	var model = $('.custom-filters select[name="model"]').val();
+	var approved = $('.custom-filters select[name="approved"]').val();
+	var fault_date_from = $('.custom-filters input[name="fault_date_from"]').val();
+	var fault_date_to = $('.custom-filters input[name="fault_date_to"]').val();
+	var filter_options = {};
+	filter_options.man = man;
+	filter_options.centre = centre;
+	filter_options.decom = decom;
+	filter_options.eq = eq;
+	filter_options.model = model;
+	filter_options.approved = approved;
+	filter_options.fault_date_from = fault_date_from;
+	filter_options.fault_date_to = fault_date_to;
+	var encode = JSON.stringify(filter_options);
+	window.location.href = "../view-equipment/?id="+id+"&filters="+encode;
+}
+
+function edit_function_eq(btn) {
+	var btn = $(btn);
+	var id = btn.data('id');
+	var action = btn.data('action');
+	var man = $('.custom-filters select[name="manufacturer"]').val();
+	var centre = $(' .custom-filters select[name="centre"]').val();
+	var decom = $('.custom-filters select[name="decommed"]').val();
+	var eq = $('.custom-filters select[name="equipment_type"]').val();
+	var model = $('.custom-filters select[name="model"]').val();
+	var approved = $('.custom-filters select[name="approved"]').val();
+	var fault_date_from = $('.custom-filters input[name="fault_date_from"]').val();
+	var fault_date_to = $('.custom-filters input[name="fault_date_to"]').val();
+	var filter_options = {};
+	filter_options.man = man;
+	filter_options.centre = centre;
+	filter_options.decom = decom;
+	filter_options.eq = eq;
+	filter_options.model = model;
+	filter_options.approved = approved;
+	filter_options.fault_date_from = fault_date_from;
+	filter_options.fault_date_to = fault_date_to;
+	var encode = JSON.stringify(filter_options);
+	window.location.href = "../edit-equipment/?id="+id+"&filters="+encode;
+}
 
 function view_function(btn) {
 	var btn = $(btn);
@@ -1045,7 +1126,27 @@ function edit_function(btn) {
 	var btn = $(btn);
 	var id = btn.data('id');
 	var action = btn.data('action');
-	window.location.href = "./edit-fault/?id="+id;
+	var man = $('.custom-filters select[name="manufacturer"]').val();
+	var centre = $(' .custom-filters select[name="centre"]').val();
+	var decom = $('.custom-filters select[name="decommed"]').val();
+	var eq = $('.custom-filters select[name="equipment_type"]').val();
+	var equipment = $('.custom-filters select[name="equipment"]').val();
+	var fault_type = $('.custom-filters select[name="fault_type"]').val();
+	var approved = $('.custom-filters select[name="approved"]').val();
+	var fault_date_from = $('.custom-filters input[name="fault_date_from"]').val();
+	var fault_date_to = $('.custom-filters input[name="fault_date_to"]').val();
+	var filter_options = {};
+	filter_options.man = man;
+	filter_options.centre = centre;
+	filter_options.decom = decom;
+	filter_options.eq = eq;
+	filter_options.equipment = equipment;
+	filter_options.fault_type = fault_type;
+	filter_options.approved = approved;
+	filter_options.fault_date_from = fault_date_from;
+	filter_options.fault_date_to = fault_date_to;
+	var encode = JSON.stringify(filter_options);
+	window.location.href = "../edit-fault/?id="+id+"&filters="+encode;
 }
 
 function delete_function(btn){

@@ -4,6 +4,8 @@ session_start();
 require_once('load.php');
 
 login_check();
+$filters = $_GET['filters'];
+$_SESSION['filters'] = json_decode($filters);
 ?>
 <!DOCTYPE html>
 <html>

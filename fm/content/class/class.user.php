@@ -808,6 +808,7 @@ else {
 						$centre = '';
 						
 					$user_pass = password_generator();
+					$record_pass = $user_pass;
 					$salt = generateSalt();
 					$user_pass = hash('SHA256', encrypt($user_pass, $salt));
 					$salt = base64_encode($salt);
@@ -829,6 +830,10 @@ else {
 						)
 					);
 					if($result):
+						$subject = "NCCPM Fault Management System - Login Details";
+						$body = "Welcome, your login email address is: ". $user_name . " and your password is: " . $record_pass . ". The password can be changed once logged in.";
+						 $admn = "admin@admin.com";
+						send_email($admn,$user_name,$user_name, $subject, $body);
 						$user__id = $guid;
 						update_user_meta($user__id,'gender',$gender);
 						update_user_meta($user__id,'dob',date('Y-m-d h:i:s',strtotime($dob) ) );

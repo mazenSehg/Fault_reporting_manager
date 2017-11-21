@@ -48,7 +48,7 @@ class Fault{
 			<hr> </div>
 		<div class="form-group col-sm-6 col-xs-12">
 			<label for="centre">Centre <span class="required"> *</span></label>
-			<select name="centre" class="form-control select_single fetch-centre-equipment-data" tabindex="-1" data-placeholder="Choose centre">
+			<select name="centre" class="form-control select_single fetch-centre-equipment-data require" tabindex="-1" data-placeholder="Choose centre">
 				<?php
 		$query = '';
 		if(!is_admin()):
@@ -72,7 +72,7 @@ class Fault{
 		
 		<div class="form-group col-sm-6 col-xs-12">
 			<label for="name">Name to put on the form <span class="required">*</span></label>
-			<input type="text" name="name" class="form-control " value="<?php _e($this->current__user->first_name .' '.$this->current__user->last_name);?>" /> 
+			<input type="text" name="name" class="form-control require" value="<?php _e($this->current__user->first_name .' '.$this->current__user->last_name);?>" /> 
 			<div align="right">
 		<small>Please replace your name with the name on the Form, if submitting on behalf of someone else</small>
 		</div>
@@ -94,7 +94,7 @@ class Fault{
 	<div class="row">
 		<div class="form-group col-sm-6 col-xs-12">
 			<label for="equipment-type">Equipment Type <span class="required"> *</span></label>
-			<select name="equipment_type" class="form-control select_single fetch-equipment-data select-equipment-type" tabindex="-1" data-placeholder="Choose equipment type">
+			<select name="equipment_type" class="form-control select_single fetch-equipment-data select-equipment-type require" tabindex="-1" data-placeholder="Choose equipment type">
 				<?php
 		$data = get_tabledata(TBL_EQUIPMENT_TYPES,false,array('approved'=> '1'), 'ORDER BY `name` DESC');
 		$option_data = get_option_data($data,array('ID','name'));
@@ -104,7 +104,7 @@ class Fault{
 		</div>
 		<div class="form-group col-sm-6 col-xs-12">
 			<label for="equipment">Equipment <span class="required"> *</span></label>
-			<select name="equipment" class="form-control select_single select-equipment fetch-service-agent-data2" tabindex="-1" data-placeholder="Choose equipment">
+			<select name="equipment" class="form-control select_single select-equipment fetch-service-agent-data2 require" tabindex="-1" data-placeholder="Choose equipment">
 				<option value="">Choose equipment</option>
 			</select>
 		</div>
@@ -122,13 +122,13 @@ class Fault{
 			<hr> </div>
 		<div class="form-group col-sm-6 col-xs-12">
 			<label for="fault-type">Fault Type <span class="required"> *</span></label>
-			<select name="fault_type" class="form-control select_single select-fault-type" tabindex="-1" data-placeholder="Choose fault type">
+			<select name="fault_type" class="form-control select_single select-fault-type require" tabindex="-1" data-placeholder="Choose fault type">
 				<option value="">Choose fault type</option>
 			</select>
 		</div>
 		<div class="form-group col-sm-6 col-xs-12">
 			<label for="date-of-fault">Date of Fault<span class="required">*</span></label>
-			<input type="text" name="date_of_fault" class="form-control input-datepicker" readonly="readonly" /> </div>
+			<input type="text" name="date_of_fault" class="form-control input-datepicker require" readonly="readonly" /> </div>
 	</div>
 	<div class="row">
 		<div class="form-group col-sm-6 col-xs-12">
@@ -161,7 +161,7 @@ class Fault{
 	</div>
 	<div class="row">
 		<div class="form-group col-sm-12 col-xs-12">
-			<label for="">Please details action taken</label>
+			<label for="">Please detail action taken</label>
 			<textarea name="action_taken" class="form-control" rows="3"></textarea>
 		</div>
 	</div>
@@ -237,23 +237,23 @@ class Fault{
 		<div class="form-group col-sm-2 col-xs-12">
 			<label for="">Total equipment downtime (days)</label>
 			<br/>
-			<input type="number"  name="equipment_downtime" class="form-control require" min="0" step="0.1"/> </div>
+			<input type="number"  name="equipment_downtime" class="form-control require" min="0" step="0.1" value='0'/> </div>
 		<div class="form-group col-sm-2 col-xs-12">
 			<label for="">Total screening downtime (days)</label>
 			<br/>
-			<input type="number" name="screening_downtime" class="form-control require" min="0" step="0.1"/> </div>
+			<input type="number" name="screening_downtime" class="form-control require" min="0" step="0.1" value='0'/> </div>
 		<div class="form-group col-sm-2 col-xs-12">
 			<label for="">Number of repeat images</label>
 			<br/>
-			<input type="number" step="any" name="repeat_images" class="form-control require" min="0" /> </div>
+			<input type="number" step="any" name="repeat_images" class="form-control require" min="0" value='0'/> </div>
 		<div class="form-group col-sm-2 col-xs-12">
 			<label for="">Number of cancelled women</label>
 			<br/>
-			<input type="number" name="cancelled_women" class="form-control require" min="0" /> </div>
+			<input type="number" name="cancelled_women" class="form-control require" min="0" value='0'/> </div>
 		<div class="form-group col-sm-2 col-xs-12">
 			<label for="">Number of technical recalls</label>
 			<br/>
-			<input type="number"  step="any" name="technical_recalls" class="form-control require" min="0" /> </div>
+			<input type="number"  step="any" name="technical_recalls" class="form-control require" min="0" value='0'/> </div>
 	</div>
 	<div class="row">
 		<div class="form-group col-sm-4 col-xs-12">
@@ -483,7 +483,7 @@ function myFunction() {
 	</div>
 	<div class="row">
 		<div class="form-group col-sm-12 col-xs-12">
-			<label for="">Please details action taken</label>
+			<label for="">Please detail action taken</label>
 			<textarea name="action_taken" class="form-control" rows="3">
 				<?php _e($fault->action_taken);?>
 			</textarea>
@@ -677,12 +677,11 @@ function myFunction() {
 	public function view__fault__page(){
 		ob_start();
 		$fault__id = $_GET['id'];
-		$filters = $_GET['filters'];
 		$query = '';
 		
 		?>
 <div align = "right">
-					<button class="btn btn-success btn-md" onclick="printDiv()">Print Fault Report</button>
+					<button class="btn btn-success btn-md" onclick="window.open('../inc/report.php?1=1&cmd=printFaultReport&fault_id=<?php echo($fault__id) ?>');">Print Fault Report</button>
 	
 	</div>
 <script>
@@ -741,7 +740,7 @@ setTimeout(function(){newWin.close();},10);
 <div id="printableArea">
 	
 	
-<table class="table table-bordered table-responsive table-hover table-bordered"  style="font-size:10px;" id="printTable">
+<table class="table table-bordered table-responsive table-hover table-bordered"  style="font-size:12px; color: black;" id="printTable">
 	<thead>
 
 	</thead>
@@ -835,7 +834,7 @@ setTimeout(function(){newWin.close();},10);
 				<?php _e('<strong><p style="color:black;">Type of Fault</p></strong>');?>
 			</td>
 			<td>
-				<?php _e($fault_type->name);?>
+				<?php _e($fault->f_type_name);?>
 			</td>
 			<td bgcolor="##CEECF5" class = 'warning'>
 				<?php _e('<strong><p style="color:black;">Fault ID</p></strong>');?>
@@ -921,7 +920,7 @@ setTimeout(function(){newWin.close();},10);
 				<?php _e($fault->action_taken);?>
 			</td>
 			<td colspan="3"  class = 'warning'>
-				<?php _e('<strong><p style="color:black;">Adverse Incident Report Sent to MHRA or Appropriate Develved Administration?</p></strong>');?>
+				<?php _e('<strong><p style="color:black;">Adverse Incident Report Sent to MHRA or Appropriate Devolved Administration?</p></strong>');?>
 			</td>
 			<td>
 				<?php echo ($fault->adverse_incident_report == 1) ? 'Yes' : 'No'; ?>
@@ -1060,6 +1059,7 @@ setTimeout(function(){newWin.close();},10);
 	public function all__faults__page(){
 		ob_start();
 		$query = '';
+		$filters = $_SESSION['filters'];	
 		if(!is_admin()):
 		$centres = maybe_unserialize($this->current__user->centre);
 		if(!empty($centres)){
@@ -1092,7 +1092,7 @@ setTimeout(function(){newWin.close();},10);
 		$query .= " `approved` = '1' ORDER BY `name` ASC";
 		$data = get_tabledata(TBL_CENTRES,false,array(),$query,' ID, CONCAT_WS(" | ", name , region_name, centre_code) AS name');
 		$option_data = get_option_data($data,array('ID','name'));
-		echo get_options_list($option_data);
+		echo get_options_list($option_data, $filters->{'centre'});
 				?>
 			</select>
 		</div>
@@ -1102,7 +1102,7 @@ setTimeout(function(){newWin.close();},10);
 				<?php
 		$data = get_tabledata(TBL_EQUIPMENT_TYPES,false,array('approved'=> '1'), 'ORDER BY `name` ASC');
 		$option_data = get_option_data($data,array('ID','name'));
-		echo get_options_list($option_data);
+		echo get_options_list($option_data, $filters->{'eq'});
 				?>
 			</select>
 		</div>
@@ -1114,7 +1114,7 @@ setTimeout(function(){newWin.close();},10);
 		
 						$data = get_tabledata(TBL_MANUFACTURERS,false,array('approved'=> '1'), 'ORDER BY `name` ASC');
 						$option_data = get_option_data($data,array('ID','name'));
-						echo get_options_list($option_data);
+						echo get_options_list($option_data, $filters->{'man'});
 						?>
 					</select>
 				</div>
@@ -1138,18 +1138,18 @@ setTimeout(function(){newWin.close();},10);
 				$query = " WHERE `equipment_type` = '".$_POST['equipment_type']."' AND `centre` = '".$_POST['centre']."' AND `approved` = '1' ORDER BY `name` ASC";
 				$data = get_tabledata(TBL_EQUIPMENTS,false,array(),$query);
 				$option_data = get_option_data($data,array('ID','name'));
-				echo get_options_list($option_data);	
+				echo get_options_list($option_data, $filters->{'equipment'});	
 			}else{
 				$query .= " `equipment_type` = '".$_POST['equipment_type']."' AND `approved` = '1' ORDER BY `name` ASC";
 				$data = get_tabledata(TBL_EQUIPMENTS,false,array(),$query);
 				$option_data = get_option_data($data,array('ID','name'));
-				echo get_options_list($option_data);							
+				echo get_options_list($option_data, $filters->{'equipment'});	
 			}
 		}else{
 			$query .= " `approved` = '1' ORDER BY `name` ASC";
 			$data = get_tabledata(TBL_EQUIPMENTS,false,array(),$query);
 			$option_data = get_option_data($data,array('ID','name'));
-			echo get_options_list($option_data);
+			echo get_options_list($option_data, $filters->{'equipment'});	
 		}
 				?>
 			</select>
@@ -1157,7 +1157,7 @@ setTimeout(function(){newWin.close();},10);
 			<select name="decommed" class="form-control select_single" tabindex="-1" data-placeholder="Choose decomisioned value">
 				<?php
 		$option_data = array( '1' => 'yes' , '0' => 'no');
-		echo get_options_list($option_data);
+		echo get_options_list($option_data, $filters->{'decom'});
 				?>
 			</select>
 		</div>
@@ -1170,7 +1170,7 @@ setTimeout(function(){newWin.close();},10);
 				<?php
 		$data = get_tabledata(TBL_FAULT_TYPES,false,array('approved'=> '1'), 'ORDER BY `name` ASC');
 		$option_data = get_option_data($data,array('ID','name'));
-		echo get_options_list($option_data);
+		echo get_options_list($option_data, $filters->{'fault_type'});
 				?>
 			</select>
 		</div>
@@ -1179,7 +1179,7 @@ setTimeout(function(){newWin.close();},10);
 			<select name="approved" class="form-control select_single" tabindex="-1" data-placeholder="Choose status">
 				<?php
 		$option_data = array( '1' => 'Approved' , '0' => 'Unapproved');
-		echo get_options_list($option_data);
+		echo get_options_list($option_data, $filters->{'approved'});
 				?>
 			</select>
 		</div>
@@ -1189,12 +1189,12 @@ setTimeout(function(){newWin.close();},10);
 			<label for="date_of_fault">
 				<?php _e('Fault Date From');?>
 			</label>
-			<input type="text" name="fault_date_from" class="form-control input-datepicker-today" /> </div>
+			<input type="text" name="fault_date_from" class="form-control input-datepicker-today" value="<?php echo($filters->{'fault_date_from'}) ?>"/> </div>
 		<div class="form-group col-sm-2 col-xs-6 col-sm-push-2">
 			<label for="date_of_fault">
 				<?php _e('Fault Date To');?>
 			</label>
-			<input type="text" name="fault_date_to" class="form-control input-datepicker-today" /> </div>
+			<input type="text" name="fault_date_to" class="form-control input-datepicker-today" value="<?php echo($filters->{'fault_date_to'}) ?>"/> </div>
 		<div class="col-xs-6 col-sm-2 col-sm-pull-4">
 			<?php if(is_admin()){ ?>
 			<input type="submit" value="Export Report" name="SubmitButton" class="btn btn-dark btn-sm custom-export-btn" />
@@ -1907,9 +1907,42 @@ setTimeout(function(){newWin.close();},10);
 		if($id != ''):
 		$data = '';
 
-		$args = array('approved' => '1');
-		if(isset($decommed) && $decommed != '')
-			$args['decommed'] = $decommed;
+		$query = $data = '';
+                if(isset($centre) && $centre != ''):
+                $query .= " WHERE `centre` = '".$centre."' ";
+                else:
+                if(!is_admin()):
+                $centres = maybe_unserialize($this->current__user->centre);
+                if(!empty($centres)){
+                        $centres = implode(',',$centres);
+                        $query .= "WHERE `centre` IN (".$centres.")";
+                }
+                endif;
+                endif;
+
+                if(isset($decom) && $decom != ''){
+                        $query .= ($query != '') ? ' AND ' : ' WHERE ';
+                        $query .= " `decommed` = '".$decom."' ";
+                }else{
+                        $query .= ($query != '') ? ' AND ' : ' WHERE ';
+                        $query .= " `decommed` = '0' ";
+                }
+
+                if(isset($eq) && $eq != ''){
+                        $query .= ($query != '') ? ' AND ' : ' WHERE ';
+                        $query .= " `equipment_type` = '".$eq."' ";
+                }
+
+                if(isset($id) && $id != ''){
+                        $query .= ($query != '') ? ' AND ' : ' WHERE ';
+                        $query .= " `manufacturer` = '".$id."' ";
+                }
+
+                $query .= ($query != '') ? ' AND ' : ' WHERE ';
+                $query .= " `approved` = '1' ORDER BY `name` ASC";
+                $data = get_tabledata(TBL_EQUIPMENTS,false,array(),$query);
+                $option_data = get_option_data($data,array('ID','name'));
+                $return['equipment_html'] = get_options_list($option_data);
 
 		if(isset($id) && $id != '') {
 			$data = get_tabledata(TBL_MODELS, false, array('equipment_type'=> $eq, 'manufacturer'=> $id ,'approved' => '1') );
@@ -2259,26 +2292,26 @@ setTimeout(function(){newWin.close();},10);
 ?>
 <div class="text-center">
 	<?php if(is_admin()): ?>
-	<a href="<?php echo site_url();?>/view-fault/?id=<?php echo $fault->ID;?>" class="btn btn-dark btn-xs"> <i class="fa fa-edit"></i> View </a>
-	<a href="<?php echo site_url();?>/edit-fault/?id=<?php echo $fault->ID;?>" class="btn btn-dark btn-xs"> <i class="fa fa-edit"></i> Edit </a>
+	<a href="#" onclick="view_function(this); return false;" data-id="<?php echo $fault->ID;?>" data-action="view_fault" class="btn btn-dark btn-xs"> <i class="fa fa-edit"></i> View </a>
+	<a href="#" onclick="edit_function(this); return false;" data-id="<?php echo $fault->ID;?>" data-action="edit_fault" class="btn btn-dark btn-xs"> <i class="fa fa-edit"></i> Edit </a>
 	<a href="#" class="btn btn-danger btn-xs" onclick="delete_function(this);" data-id="<?php echo $fault->ID;?>" data-action="delete_fault"> <i class="fa fa-trash"></i> Delete </a>
 	<?php else:
 		$future = date('d-m-Y',strtotime(' + 2 day', strtotime($fault->created_on)));
 		$today = date('d-m-Y');
 		if($today == $future):
 		if( user_can('view_fault')): ?>
-	<a href="<?php echo site_url();?>/view-fault/?id=<?php echo $fault->ID;?>" class="btn btn-dark btn-xs"> <i class="fa fa-edit"></i> View </a>
+	<a href="#" onclick="view_function(this); return false;" data-id="<?php echo $fault->ID;?>" data-action="view_fault" class="btn btn-dark btn-xs"> <i class="fa fa-edit"></i> View </a>
 	<?php endif; ?>
 	<?php else: ?>
 	<?php if($this->current__user__id == $fault->user_id):
 		if( user_can('edit_fault') ): ?>
-	<a href="<?php echo site_url();?>/edit-fault/?id=<?php echo $fault->ID;?>" class="btn btn-dark btn-xs"> <i class="fa fa-edit"></i> Edit </a>
+	<a href="#" onclick="edit_function(this); return false;" data-id="<?php echo $fault->ID;?>" data-action="edit_fault" class="btn btn-dark btn-xs"> <i class="fa fa-edit"></i> Edit </a>
 	<?php endif; ?>
 	<?php if( user_can('delete_fault') ): ?> <a href="#" class="btn btn-danger btn-xs" onclick="javascript:delete_function(this);" data-id="<?php echo $fault->ID;?>" data-action="delete_fault"><i class="fa fa-trash"></i> Delete</a>
 	<?php endif; ?>
 	<?php else: ?>
 	<?php if( user_can('view_fault') ): ?>
-	<a href="<?php echo site_url();?>/view-fault/?id=<?php echo $fault->ID;?>" class="btn btn-dark btn-xs"> <i class="fa fa-edit"></i> View </a>
+	<a href="#" onclick="view_function(this); return false;" data-id="<?php echo $fault->ID;?>" data-action="view_fault" class="btn btn-dark btn-xs"> <i class="fa fa-edit"></i> View </a>
 	<?php endif; ?>
 	<?php endif; ?>
 	<?php endif; ?>

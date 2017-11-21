@@ -49,4 +49,10 @@ if( !class_exists('Footer') ):
 endif;
 
 $Footer = new Footer();
+
+if( !class_exists('Exports') ):
+	require_once( ABSPATH . CONTENT . '/class/class.exports.php');
+endif;
+
+$Exports = new Exports();
 ?>

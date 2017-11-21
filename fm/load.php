@@ -17,4 +17,12 @@ require_once( ABSPATH . INC . '/constant.php');
 //Call the all global classes
 require_once( ABSPATH . INC . '/classes.php');
 
+require( 'inc/pdf_js.php' );
+class PDF_AutoPrint extends PDF_JavaScript {
+        function AutoPrint($dialog=false){
+                    $param=($dialog ? 'true' : 'false');
+                    $script="print($param);";
+                    $this->IncludeJS($script);
+        }
+}
 ?>

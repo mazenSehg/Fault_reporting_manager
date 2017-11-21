@@ -11,6 +11,12 @@ if ( !function_exists('require_db') ) :
 	}
 endif;
 
+if ( !function_exists('checkSpacing') ) :
+	function checkSpacing($val) {
+		return $val;
+	}
+endif;
+
 if ( !function_exists('site_url') ) :
 	function site_url(){
 		if (!empty($_SERVER['HTTPS']) && ('on' == $_SERVER['HTTPS'])):

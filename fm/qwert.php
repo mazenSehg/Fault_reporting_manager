@@ -251,15 +251,15 @@ if(isset($_POST['centre']) && $_POST['centre'] != '' && $_POST['centre'] != 'und
 $values = mysql_query("SELECT ID, user_id, equipment_code, current_servicing_agency, f_type_name, description_of_fault, action_taken, doh, fault_corrected_by_user, to_fix_at_next_service_visit, engineer_called_out, service_call_no, equipment_downtime, screening_downtime, repeat_images, cancelled_women, technical_recalls, satisfied_servicing_organisation, satisfied_service_engineer, equipment_status, date_of_fault, created_on,created_on, supplier_enquiry, supplier_action, supplier_comments, adverse_incident_report  FROM tbl_fault " . $query."");
 			
 while ($rowr = mysql_fetch_row($values)) {
- for ($j=0;$j<$i;$j++) {
-	 if($rowr[$j]!=null||$rowr[$j]!=""||strlen($rowr[$j])>0){
-		 $field = preg_replace('/[\n\r]+/', '', trim($rowr[$j]));
-  $csv_output .= $field."\t";
-}else{
-	  $csv_output .=""."\t";
-}
- }
- $csv_output .= "\n";
+	for ($j=0;$j<$i;$j++) {
+		if($rowr[$j]!=null||$rowr[$j]!=""||strlen($rowr[$j])>0) {
+			$field = preg_replace('/[\n\r]+/', '', trim($rowr[$j]));
+			$csv_output .= $field."\t";
+		} else {
+			$csv_output .= ""."\t";
+		}
+	}
+	$csv_output .= "\n";
 }
  
 $filename = $file."_".date("Y-m-d_H-i",time());

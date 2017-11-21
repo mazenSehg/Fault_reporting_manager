@@ -4,6 +4,8 @@ session_start();
 require_once('load.php');
 
 login_check();
+$filters = $_GET['filters'];
+$_SESSION['filters'] = json_decode($filters);
 ?>
 <!DOCTYPE html>
 <html>
@@ -27,7 +29,7 @@ login_check();
 				
 				<div class="row">
 					
-										<button onclick="goBack()">Previous page</button>
+					<button class="btn btn-warning btn-md" onclick="goBack()">Previous page</button>					
 
 <script>
 function goBack() {

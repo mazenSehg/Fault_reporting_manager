@@ -17,6 +17,7 @@ class Equipment{
 	public function all__equipments__page(){
 		ob_start();
 		$query = '';
+		$filters = $_SESSION['filters'];	
 		if(!is_admin()):
 			$centres = maybe_unserialize($this->current__user->centre);
 			if(!empty($centres)){
@@ -52,7 +53,7 @@ class Equipment{
 //$data = get_tabledata(TBL_USERS,false,array('user_role' => 'trainer'),'',' ID, CONCAT_WS(" ", first_name , last_name) AS name ');
 						$data = get_tabledata(TBL_CENTRES,false,array(),$query,' ID, CONCAT_WS(" | ", name , region_name, centre_code) AS name');
 						$option_data = get_option_data($data,array('ID','name'));
-						echo get_options_list($option_data);
+						echo get_options_list($option_data, $filters->{'centre'});
 						?>
 					</select>
 				</div>
@@ -62,7 +63,7 @@ class Equipment{
 						<?php
 						$data = get_tabledata(TBL_EQUIPMENT_TYPES,false,array(), 'ORDER BY `name` ASC');
 						$option_data = get_option_data($data,array('ID','name'));
-						echo get_options_list($option_data);
+						echo get_options_list($option_data, $filters->{'eq'});
 						?>
 					</select>
 				</div>
@@ -74,7 +75,7 @@ class Equipment{
 		
 						$data = get_tabledata(TBL_MANUFACTURERS,false,array('approved'=> '1'), 'ORDER BY `name` ASC');
 						$option_data = get_option_data($data,array('ID','name'));
-						echo get_options_list($option_data);
+						echo get_options_list($option_data, $filters->{'man'});
 						?>
 					</select>
 				</div>
@@ -86,11 +87,11 @@ class Equipment{
 			if(isset($_POST['manufacturer']) && $_POST['manufacturer'] != '' && $_POST['manufacturer'] != 'undefined'){			
 						$data =get_tabledata(TBL_MODELS,false,array('manufacturer'=>$_POST['manufacturer'],'manufacturer'=>$_POST['manufacturer'], 'approved'=> '1'), 'ORDER BY `name` ASC');
 						$option_data = get_option_data($data,array('ID','name'));
-						echo get_options_list($option_data);	
+						echo get_options_list($option_data, $filters->{'model'});	
 		}else{
 						$data = get_tabledata(TBL_MODELS,false,array('approved'=> '1'), 'ORDER BY `name` ASC');
 						$option_data = get_option_data($data,array('ID','name'));
-						echo get_options_list($option_data);	
+						echo get_options_list($option_data, $filters->{'model'});	
 		}
 						?>
 					</select>
@@ -101,7 +102,7 @@ class Equipment{
 					<select name="approved" class="form-control select_single" tabindex="-1" data-placeholder="Choose status">
 						<?php
 						$option_data = array( '1' => 'Approved' , '0' => 'Unapproved');
-						echo get_options_list($option_data);
+						echo get_options_list($option_data, $filters->{'approved'});
 						?>
 					</select>
 				</div>
@@ -112,7 +113,7 @@ class Equipment{
 					<select name="decommed" class="form-control select_single" tabindex="-1" data-placeholder="Choose decomisioned value">
 						<?php
 						$option_data = array( '1' => 'yes' , '0' => 'no');
-						echo get_options_list($option_data);
+						echo get_options_list($option_data, $filters->{'decom'});
 						?>
 					</select>
 				</div>
@@ -121,12 +122,12 @@ class Equipment{
 			<label for="date_of_fault">
 				<?php _e('Created on Date From');?>
 			</label>
-			<input type="text" name="fault_date_from" class="form-control input-datepicker-today" /> </div>
+			<input type="text" name="fault_date_from" class="form-control input-datepicker-today" value="<?php echo($filters->{'fault_date_from'}) ?>"/> </div>
 		<div class="form-group col-sm-2 col-xs-6 col-sm-push-2">
 			<label for="date_of_fault">
 				<?php _e('Created on Date To');?>
 			</label>
-			<input type="text" name="fault_date_to" class="form-control input-datepicker-today" /> </div>
+			<input type="text" name="fault_date_to" class="form-control input-datepicker-today" value="<?php echo($filters->{'fault_date_to'}) ?>"/> </div>
 	</div>
     			<?php if(is_admin()){ ?>
 			<input type="submit" value="Export Report" name="SubmitButtonEquipment" class="btn btn-dark btn-sm custom-export-btn" />
@@ -1440,6 +1441,7 @@ function myFunction() {
 	public function all__models__page(){
 		ob_start();
 		$models__list = get_tabledata(TBL_MODELS,false);
+		$filters = $_SESSION['filters'];	
 		if( !user_can( 'view_model') ):
 			echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
 		elseif(!$models__list):
@@ -1455,7 +1457,7 @@ function myFunction() {
 						<?php
 						$data = get_tabledata(TBL_EQUIPMENT_TYPES,false,array(), 'ORDER BY `name` ASC');
 						$option_data = get_option_data($data,array('ID','name'));
-						echo get_options_list($option_data);
+						echo get_options_list($option_data, $filters->{'eq'});
 						?>
 					</select>
 				</div>
@@ -1467,7 +1469,7 @@ function myFunction() {
 		
 						$data = get_tabledata(TBL_MANUFACTURERS,false,array('approved'=> '1'), 'ORDER BY `name` ASC');
 						$option_data = get_option_data($data,array('ID','name'));
-						echo get_options_list($option_data);
+						echo get_options_list($option_data, $filters->{'man'});
 						?>
 					</select>
 				</div>
@@ -1477,7 +1479,7 @@ function myFunction() {
 					<select name="approved" class="form-control select_single" tabindex="-1" data-placeholder="Choose status">
 						<?php
 						$option_data = array( '1' => 'Approved' , '0' => 'Unapproved');
-						echo get_options_list($option_data);
+						echo get_options_list($option_data, $filters->{'approved'});
 						?>
 					</select>
 				</div>
@@ -2945,17 +2947,17 @@ $orders_columns = array(
 				ob_start();
 				?>
 				<div class="text-center">
-					<?php if( user_can( 'view_equipment') ): ?>
-					<a href="<?php echo site_url();?>/view-model/?id=<?php echo $model->ID;?>" class="btn btn-dark btn-xs">
+					<?php if( user_can( 'view_model') ): ?>
+					<a style="display:none;" href="#" onclick="view_function_model(this); return false;" data-id="<?php echo $model->ID;?>" data-action="view_model" class="btn btn-dark btn-xs">
 						<i class="fa fa-eye"></i> View
 					</a>
 					<?php endif; ?>
-					<?php if( user_can( 'edit_equipment') ): ?>
-					<a href="<?php echo site_url();?>/edit-model/?id=<?php echo $model->ID;?>" class="btn btn-dark btn-xs">
+					<?php if( user_can( 'edit_model') ): ?>
+					<a href="#" onclick="edit_function_model(this); return false;" data-id="<?php echo $model->ID;?>" data-action="edit_model" class="btn btn-dark btn-xs">
 						<i class="fa fa-edit"></i> Edit
 					</a>
 					<?php endif; ?>
-					<?php if( user_can( 'delete_equipment') ): ?>
+					<?php if( user_can( 'delete_model') ): ?>
 					<a href="#" class="btn btn-danger btn-xs" onclick="delete_function(this);" data-id="<?php echo $model->ID;?>" data-action="delete_model">
 						<i class="fa fa-trash"></i> Delete
 					</a>
@@ -3125,12 +3127,12 @@ $orders_columns = array(
 				?>
 				<div class="text-center">
 					<?php if( user_can( 'view_equipment') ): ?>
-					<a href="<?php echo site_url();?>/view-equipment/?id=<?php echo $equipment->ID;?>" class="btn btn-dark btn-xs">
+					<a href='#' onclick="view_function_eq(this); return false;" data-id="<?php echo $equipment->ID;?>" data-action="view_equipment" class="btn btn-dark btn-xs">
 						<i class="fa fa-eye"></i> View
 					</a>
 					<?php endif; ?>
 					<?php if( user_can( 'edit_equipment') ): ?>
-					<a href="<?php echo site_url();?>/edit-equipment/?id=<?php echo $equipment->ID;?>" class="btn btn-dark btn-xs">
+					<a href="#" onclick="edit_function_eq(this); return false;" data-id="<?php echo $equipment->ID;?>" data-action="edit_equipment" class="btn btn-dark btn-xs">
 						<i class="fa fa-edit"></i> Edit
 					</a>
 					<?php endif; ?>

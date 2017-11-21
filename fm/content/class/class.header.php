@@ -109,7 +109,9 @@ class Header{
 		<script src="<?php echo JS_URL;?>jquery.flot.spline.js"></script>
 		<script src="<?php echo JS_URL;?>curvedLines.js"></script>
 		<!-- jVectorMap -->
+		<!--
 		<script src="<?php echo JS_URL;?>jquery-jvectormap-2.0.3.min.js"></script>
+		-->
 		<!-- bootstrap-daterangepicker -->
 		<script src="<?php echo JS_URL;?>moment.min.js"></script>
 		<script src="<?php echo JS_URL;?>fullcalendar.min.js"></script>
@@ -817,6 +819,14 @@ class Header{
 							
 
 							<?php if(is_admin()): ?>
+                                                        <li>
+                                                                <a  href="<?php echo site_url();?>/exports/">
+                                                                        <i class="fa fa-cog">
+                                                                        </i>Exports
+                                                                </a>
+                                                        </li>
+                                                        <?php endif; ?>
+							<?php if(is_admin()): ?>
 							<li>
 								<a>
 									<i class="fa fa-cog">
@@ -856,6 +866,11 @@ class Header{
 									<li>
 										<a href="<?php echo site_url();?>/help/">
 											General Help
+										</a>
+									</li>
+									<li>
+										<a href="<?php echo site_url();?>/contact/">
+											Contact
 										</a>
 									</li>
 								</ul>

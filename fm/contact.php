@@ -9,7 +9,7 @@ login_check();
 <!DOCTYPE html>
 <html>
 <head>
-	<title>All Users &mdash; <?php echo get_site_name();?></title>
+	<title>Contact</title>
 	
 	<?php echo $Header->head();?>
 </head>
@@ -22,20 +22,26 @@ login_check();
 		<!-- page content -->
 		<div class="right_col" role="main">
 			<div class="">
-				<?php echo $Header->page__header('All Users'); ?>
 				
 				<div class="row">
 					<div class="col-md-12 col-sm-12 col-xs-12">
 						<div class="x_panel">
-							<?php if( user_can('add_user') ): ?>
-							<div class="x_title">
-								<a href="<?php echo site_url();?>/add-new-user/" class="btn btn-dark btn-sm">Add New User</a>
-								<div class="clearfix"></div>
-							</div>
-							<?php endif; ?>
-							<div class="x_content">
-								<?php echo $User->all__users__page(); ?>
-							</div>
+							For any enquires, please use the following contact information:<br />
+							<h2>Email:</h2>
+							rsc-tr.nccpm@nhs.net
+							<h2>Telephone:</h2>
+							01483 408310
+							<h2>Fax:</h2>
+							01483 406742
+							<h2>Address:</h2>
+							NCCPM<br />
+							Medical Physics<br />
+							Level B<br />
+							St Luke's Wing<br />
+							Royal Surrey County Hospital<br />
+							Egerton Road<br />
+							Guildford<br />
+							GU2 7XX<br />
 						</div>
 					</div>
 				</div>
