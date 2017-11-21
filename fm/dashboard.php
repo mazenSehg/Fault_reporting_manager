@@ -87,7 +87,7 @@ login_check();
 									</div>
 									<div class="x_content">
 										<div class="dashboard-widget-content">
-											<ul class="quick-list">
+											<ul class="quick-list" style='width: 45% !important;'>
 												<?php
 												if(is_admin()): 
 												?>
@@ -126,7 +126,7 @@ login_check();
 												endif;
 												?>
 											</ul>
-											<ul class="quick-list">
+											<ul class="quick-list" style='width: 45% !important;'>
 											<?php
 											if(user_can('add_manufacturer')):
 											?>
@@ -179,13 +179,11 @@ login_check();
 													<?php
 												$sql = "SELECT COUNT(*) as re FROM tbl_fault WHERE approved = 0";
 												$res = $db->get_results($sql);
-												echo "<br>";
+												echo ": ";
 												?>
-													<div align="center">
 													<?php
 													print_r($res[0]->re);
 												?>
-														</div>
 												</li>
 											</ul>
 											<ul class="quick-list">
@@ -194,13 +192,11 @@ login_check();
 												$ap = 1;
 												$sql = "SELECT COUNT(*) as re2 FROM tbl_equipment WHERE approved = 0";
 												$res = $db->get_results($sql);
-												echo "<br>";
+												echo ": ";
 ?>
-													<div align="center">
 													<?php
 													print_r($res[0]->re2);
 												?>
-														</div>
 												</li>
 											</ul>
 										</div>

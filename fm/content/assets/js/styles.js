@@ -914,7 +914,7 @@ $(document).ready(function() {
 	});
 	
 	$('.fetch-centre-equipment-data').change(function(e){
-		console.log("912");
+		console.log("aaa912");
 		var _this = $(this);
 		var value  = 0;
 		if($('.show-decommed').is(':checked')){

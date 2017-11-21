@@ -1797,7 +1797,7 @@ setTimeout(function(){newWin.close();},10);
 
 		$query = '';
 		if(isset($id) && $id != ''):
-		$query .= " WHERE `centre = '".$id."' ";
+		$query .= " WHERE `centre` = '".$id."' ";
 		else:
 		if(!is_admin()):
 		$centres = maybe_unserialize($this->current__user->centre);
@@ -1820,6 +1820,7 @@ setTimeout(function(){newWin.close();},10);
 
 		$query .= ($query != '') ? ' AND ' : ' WHERE ';
 		$query .= " `approved` = '1' ORDER BY `name` ASC";
+		$return['debug'] = $query;
 		$data = get_tabledata(TBL_EQUIPMENTS,false,array(),$query);
 		$option_data = get_option_data($data,array('ID','name'));
 		$return['equipment_html'] = get_options_list($option_data);

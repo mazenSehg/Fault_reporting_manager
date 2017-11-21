@@ -1842,7 +1842,7 @@ ul.to_do p {
 }
 
 ul.quick-list {
-    width: 45%;
+    width: 85%;
     padding-left: 0;
     display: inline-block;
 }
