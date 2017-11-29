@@ -21,7 +21,7 @@ login_check();
 		<!-- page content -->
 		<div class="right_col" role="main">
 			<div class="">
-				<?php echo $Header->page__header('Edit Service Agent'); ?>
+				<?php echo $Header->page__header('Edit Manufacturers'); ?>
 				
 				<div class="row">
 					<div class="col-md-12 col-sm-12 col-xs-12">
