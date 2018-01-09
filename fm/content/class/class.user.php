@@ -75,16 +75,15 @@ if( !class_exists('User') ):
 
 
 	if(navigator.sayswho=="MSIE 7"||navigator.sayswho=="MSIE 8"){
-	alert("Your browser is outdated and certain features may not work, please update you internet browser.");	
+		alert("Your browser is outdated and certain features may not work, please update you internet browser.");	
 	}
-	if (navigator.sayswho.includes('Chrome')){
-console.log(navigator.sayswho);
-		
+	if (navigator.sayswho.indexOf('Chrome') >= 0){
+		console.log(navigator.sayswho);
 		num = navigator.sayswho.replace(/^\D+/g, "");
 		console.log(num);
 		if(num<=49){
-	alert("Your browser is outdated and certain features may not work, please update you internet browser.");	
-	}
+			alert("Your browser is outdated and certain features may not work, please update you internet browser.");	
+		}
 	}
 	
 					</script>                
@@ -446,11 +445,11 @@ console.log(navigator.sayswho);
                                             <br/>
                                             <div class="radio-inline">
                                                 <label>
-                                                    <input type="radio" class="flat" name="user_status" value="0"> Yes </label>
+                                                    <input type="radio" class="flata" name="user_status" value="0"> Yes </label>
                                             </div>
                                             <div class="radio-inline">
                                                 <label>
-                                                    <input type="radio" class="flat" name="user_status" value="1" checked> No </label>
+                                                    <input type="radio" class="flata" name="user_status" value="1" checked> No </label>
                                             </div>
                                         </div>
                                     </div>
@@ -595,11 +594,11 @@ console.log(navigator.sayswho);
                                                 <br/>
                                                 <div class="radio-inline">
                                                     <label>
-                                                        <input type="radio" class="flat" name="user_status" value="0" <?php echo ($user->user_status == 0) ? 'checked' : '';?>> Yes </label>
+                                                        <input type="radio" class="flata" name="user_status" value="0" <?php echo ($user->user_status == 0) ? 'checked' : '';?>> Yes </label>
                                                 </div>
                                                 <div class="radio-inline">
                                                     <label>
-                                                        <input type="radio" class="flat" name="user_status" value="1" <?php echo ($user->user_status == 1) ? 'checked' : '';?>> No </label>
+                                                        <input type="radio" class="flata" name="user_status" value="1" <?php echo ($user->user_status == 1) ? 'checked' : '';?>> No </label>
                                                 </div>
                                             </div>
                                         </div>

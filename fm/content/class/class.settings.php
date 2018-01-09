@@ -148,13 +148,13 @@ class Settings
 								<?php _e($data);?>
 							</td>
 							<td>
-								<input type="checkbox" class="flat" value="1" name="centre_admin_<?php echo $key;?>" <?php checked($users_capabilities['centre_admin'][$key], 1);?>>
+								<input type="checkbox" class="flata" value="1" name="centre_admin_<?php echo $key;?>" <?php checked($users_capabilities['centre_admin'][$key], 1);?>>
 							</td>
 							<td>
-								<input type="checkbox" class="flat" value="1" name="general_user_<?php echo $key;?>" <?php checked($users_capabilities['general_user'][$key],1); ?>>
+								<input type="checkbox" class="flata" value="1" name="general_user_<?php echo $key;?>" <?php checked($users_capabilities['general_user'][$key],1); ?>>
 							</td>
 							<td>
-								<input type="checkbox" class="flat" value="1" name="read_only_user_<?php echo $key;?>" <?php checked($users_capabilities['read_only_user'][$key],1); ?>>
+								<input type="checkbox" class="flata" value="1" name="read_only_user_<?php echo $key;?>" <?php checked($users_capabilities['read_only_user'][$key],1); ?>>
 							</td>
 						</tr>
 						<?php endforeach; ?>

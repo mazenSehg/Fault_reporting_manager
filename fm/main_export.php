@@ -7,6 +7,8 @@ require_once 'inc/PHPExcel.php';
 ini_set('memory_limit', '-1');
 set_time_limit(300);
 
+error_reporting(1);
+
 login_check();
 
 if(isset($_POST['exportSubmitButton'])){ 
@@ -41,6 +43,10 @@ if(isset($_POST['exportSubmitButton'])){
                 $pass = 'fault_user';
                 $db = 'fault_management';
         }
+	$host = '10.161.128.194';
+	$user = 'fault_user';
+	$pass = 'fault_user';
+	$db = 'fault_management';
         $link = mysqli_connect($host, $user, $pass, $db) or die("Can not connect." . mysqli_error());
 
 
@@ -86,6 +92,11 @@ if(isset($_POST['exportSubmitButton'])){
                 $queryfa .= " `approved` = '".$_POST['exportapproved']."' ";
         }
 
+        if(isset($_POST['exportfault_type']) && $_POST['exportfault_type'] != '' && $_POST['exportfault_type'] != 'undefined'){
+                $queryfa .= ($queryfa != '') ? ' AND ' : ' WHERE ';
+                $queryfa .= " f.fault_type = '".$_POST['exportfault_type']."' ";
+        }
+
         if(isset($_POST['exportfault_date_from']) && $_POST['exportfault_date_from'] != '' && $_POST['exportfault_date_from'] != 'undefined' && isset($_POST['exportfault_date_to']) && $_POST['exportfault_date_to'] != '' &&  $_POST['exportfault_date_to'] != 'undefined'){
                 $queryfa .= ($queryfa != '') ? ' AND ' : ' WHERE ';
                 $queryfa .= " ( `date_of_fault` >= '".date( 'Y-m-d', strtotime($_POST['exportfault_date_from']) )."' AND `date_of_fault` <= '".date( 'Y-m-d', strtotime($_POST['exportfault_date_to']) )."' ) ";
@@ -97,12 +108,23 @@ if(isset($_POST['exportSubmitButton'])){
                 $queryfa .= "  `date_of_fault` <= '".date( 'Y-m-d', strtotime($_POST['exportfault_date_to']) )."' ";
         }
 
+	if(isset($_POST['exportcreate_date_from']) && $_POST['exportcreate_date_from'] != '' && $_POST['exportcreate_date_from'] != 'undefined' && isset($_POST['exportcreate_date_to']) && $_POST['exportcreate_date_to'] != '' &&  $_POST['exportcreate_date_to'] != 'undefined'){
+		$queryfa .= ($queryfa != '') ? ' AND ' : ' WHERE ';
+		$queryfa .= " ( f.created_on >= '".date( 'Y-m-d', strtotime($_POST['exportcreate_date_from']) )."' AND f.created_on <= '".date( 'Y-m-d', strtotime($_POST['exportcreate_date_to']) )."' ) ";
+	}else if(isset($_POST['exportcreate_date_from']) && $_POST['exportcreate_date_from'] != '' &&  $_POST['exportcreate_date_from'] != 'undefined' && ( !isset($_POST['exportcreate_date_to']) || $_POST['exportcreate_date_to'] == '' ||  $_POST['exportcreate_date_to'] == 'undefined' ) ){
+		$queryfa .= ($queryfa != '') ? ' AND ' : ' WHERE ';
+		$queryfa .= "  f.created_on >= '".date( 'Y-m-d', strtotime($_POST['exportcreate_date_from']) )."' ";
+	}else if( (!isset($_POST['exportcreate_date_from']) || $_POST['exportcreate_date_from'] == '' || $_POST['exportcreate_date_from'] == 'undefined' ) && isset($_POST['exportcreate_date_to']) && $_POST['exportcreate_date_to'] != '' &&  $_POST['exportcreate_date_to'] != 'undefined'){
+		$queryfa .= ($queryfa != '') ? ' AND ' : ' WHERE ';
+		$queryfa .= "  f.created_on <= '".date( 'Y-m-d', strtotime($_POST['exportcreate_date_to']) )."' ";
+	}
+
         $i = null;
 	$objPHPExcel->setActiveSheetIndex(0);
-	$sql = "SELECT f.ID, user_id, f.equipment_code, null, null, f.current_servicing_agency, null, null, f.f_type_name, f.description_of_fault, action_taken, doh, fault_corrected_by_user, to_fix_at_next_service_visit, engineer_called_out, service_call_no, null,  equipment_downtime, screening_downtime, repeat_images, cancelled_women, technical_recalls, satisfied_servicing_organisation, satisfied_service_engineer, f.equipment_status, date_of_fault, f.created_on, f.created_on, supplier_enquiry, supplier_action, supplier_comments, adverse_incident_report  FROM tbl_fault f JOIN tbl_equipment e ON (f.equipment = e.ID) " . $queryfa;
+	$sql = "SELECT f.ID, user_id, f.equipment_code, null, null, f.current_servicing_agency, null, null, f.f_type_name, f.description_of_fault, action_taken, doh, fault_corrected_by_user, to_fix_at_next_service_visit, engineer_called_out, service_call_no, null,  equipment_downtime, screening_downtime, repeat_images, cancelled_women, technical_recalls, satisfied_servicing_organisation, satisfied_service_engineer, satisfied_equipment,  f.equipment_status, date_of_fault, null, f.created_on, supplier_enquiry, supplier_action, supplier_comments, adverse_incident_report  FROM tbl_fault f JOIN tbl_equipment e ON (f.equipment = e.ID) " . $queryfa;
 	error_log($sql);
 
-	$i = 26;
+	$i = 32;
 	$result = mysqli_query($link, $sql);
 	$start_row = 2;
         while ($rowr = mysqli_fetch_row($result)) {
@@ -117,9 +139,9 @@ if(isset($_POST['exportSubmitButton'])){
 
         $i = null;
 	$objPHPExcel->setActiveSheetIndex(1);
-        $i = 17;
+        $i = 18;
         //$csv_output .= "Equipment Code\tCentre Code\tEquipment Type\tx-ray Subtype\tSupplier\tManfacturer\tModel\tLocation\tLocal ID\t ID Number\tYear Manufactured\tInstallation Year\tDecommisioned\tYear Decommisioned\tSpare\tComment\tServicing Agent ";
-	$sql = "SELECT e.equipment_code, c.centre_code, et.name, e.x_ray, s.name, m.name, mo.name, e.location, e.location_id, e.serial_number, e.year_manufacturered, e.year_installed, e.decommed, e.year_decommisoned, e.spare, e.comment, null,  sa.name FROM tbl_equipment e LEFT OUTER JOIN tbl_centres c ON (e.centre = c.ID) LEFT OUTER JOIN tbl_equipment_type et ON (e.equipment_type = et.ID) LEFT OUTER JOIN tbl_supplier s ON (e.supplier = s.ID) LEFT OUTER JOIN tbl_manufacturer m ON (e.manufacturer = m.ID) LEFT OUTER JOIN tbl_model mo ON (e.model = mo.ID) LEFT OUTER JOIN tbl_service_agent sa ON (e.service_agent = sa.ID) " . $queryeq;
+	$sql = "SELECT e.equipment_code, c.centre_code, et.name, e.x_ray, s.name, m.name, mo.name, e.location, e.location_id, e.serial_number, e.year_manufacturered, e.year_installed, e.decommed, e.year_decommisoned, e.spare, e.tomo, e.comment, null,  sa.name FROM tbl_equipment e LEFT OUTER JOIN tbl_centres c ON (e.centre = c.ID) LEFT OUTER JOIN tbl_equipment_type et ON (e.equipment_type = et.ID) LEFT OUTER JOIN tbl_supplier s ON (e.supplier = s.ID) LEFT OUTER JOIN tbl_manufacturer m ON (e.manufacturer = m.ID) LEFT OUTER JOIN tbl_model mo ON (e.model = mo.ID) LEFT OUTER JOIN tbl_service_agent sa ON (e.service_agent = sa.ID) " . $queryeq;
 	error_log($sql);
 	$result = mysqli_query($link, $sql);
 	$start_row = 2;

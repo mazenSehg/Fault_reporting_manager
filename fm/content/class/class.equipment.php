@@ -398,19 +398,36 @@ class Equipment{
 
 			<div class="row">
 				<div class="form-group col-sm-3 col-xs-6">
+					<label for="tomo">
+						Tomo						<span class="required">
+							*
+						</span>
+					</label><br/>
+					<label>
+						<input type="radio" class="flata" name="tomo" value="1"> Yes
+					</label>
+					<label>
+						&nbsp;
+					</label>
+					<label>
+						<input type="radio" class="flata" name="tomo" value="0" checked="checked" > No
+					</label>
+				</div>
+
+				<div class="form-group col-sm-3 col-xs-6">
 					<label for="spare">
 						Spare						<span class="required">
 							*
 						</span>
 					</label><br/>
 					<label>
-						<input type="radio" class="flat" name="spare" value="1"> Yes
+						<input type="radio" class="flata" name="spare" value="1"> Yes
 					</label>
 					<label>
 						&nbsp;
 					</label>
 					<label>
-						<input type="radio" class="flat" name="spare" value="0" checked="checked" > No
+						<input type="radio" class="flata" name="spare" value="0" checked="checked" > No
 					</label>
 				</div>
                 
@@ -425,13 +442,13 @@ class Equipment{
 						</span>
 					</label><br/>
 					<label>
-						<input type="radio" class="flat" name="approved" value="1" required> Yes
+						<input type="radio" class="flata" name="approved" value="1" required> Yes
 					</label>
 					<label>
 						&nbsp;
 					</label>
 					<label>
-						<input type="radio" class="flat" name="approved" value="0" required checked="checked" > No
+						<input type="radio" class="flata" name="approved" value="0" required checked="checked" > No
 					</label>
 				</div>
                 <?php
@@ -666,14 +683,14 @@ function myFunction() {
 						Decomissioned
 					</label><br/>
 					<label>
-						<input type="radio" class="flat" name="decommed" id="decommed" value="1" <?php checked($equipment->decommed,'1');?>/> Yes
+						<input type="radio" class="flata" name="decommed" id="decommed" value="1" <?php checked($equipment->decommed,'1');?>/> Yes
 					</label>
 					
 					<label>
 						&nbsp;
 					</label>
 					<label>
-						<input type="radio" class="flat" name="decommed" id="decommed" value="0" <?php checked($equipment->decommed,'0');?>/> No
+						<input type="radio" class="flata" name="decommed" id="decommed" value="0" <?php checked($equipment->decommed,'0');?>/> No
 					</label>
 				</div>
 				<div class="form-group col-sm-3 col-xs-6">
@@ -681,13 +698,27 @@ function myFunction() {
 						Spare
 					</label><br/>
 					<label>
-						<input type="radio" class="flat" name="spare" id="spare" value="1" <?php checked($equipment->spare,'1');?>/> Yes
+						<input type="radio" class="flata" name="spare" id="spare" value="1" <?php checked($equipment->spare,'1');?>/> Yes
 					</label>
 					<label>
 						&nbsp;
 					</label>
 					<label>
-						<input type="radio" class="flat" name="spare" id="spare" value="0" <?php checked($equipment->spare,'0');?>/> No
+						<input type="radio" class="flata" name="spare" id="spare" value="0" <?php checked($equipment->spare,'0');?>/> No
+					</label>
+				</div>
+				<div class="form-group col-sm-3 col-xs-6">
+					<label for="tomo">
+						Tomo
+					</label><br/>
+					<label>
+						<input type="radio" class="flata" name="tomo" id="tomo" value="1" <?php checked($equipment->tomo,'1');?>/> Yes
+					</label>
+					<label>
+						&nbsp;
+					</label>
+					<label>
+						<input type="radio" class="flata" name="tomo" id="tomo" value="0" <?php checked($equipment->tomo,'0');?>/> No
 					</label>
 				</div>
 				<div class="form-group col-sm-3 col-xs-6">
@@ -695,13 +726,13 @@ function myFunction() {
 						X-ray Subtype Digital
 					</label><br/>
 					<label>
-						<input type="radio" class="flat" name="x_ray" id="x_ray" value="1" <?php checked($equipment->x_ray,'1');?>/> Yes
+						<input type="radio" class="flata" name="x_ray" id="x_ray" value="1" <?php checked($equipment->x_ray,'1');?>/> Yes
 					</label>
 					<label>
 						&nbsp;
 					</label>
 					<label>
-						<input type="radio" class="flat" name="x_ray" id="x_ray" value="0" <?php checked($equipment->x_ray,'0');?>/> No
+						<input type="radio" class="flata" name="x_ray" id="x_ray" value="0" <?php checked($equipment->x_ray,'0');?>/> No
 					</label>
 				</div>
 					
@@ -710,13 +741,13 @@ function myFunction() {
 						Approved
 					</label><br/>
 					<label>
-						<input type="radio" class="flat" name="approved" value="1" <?php checked($equipment->approved,'1');?> /> Yes
+						<input type="radio" class="flata" name="approved" value="1" <?php checked($equipment->approved,'1');?> /> Yes
 					</label>
 					<label>
 						&nbsp;
 					</label>
 					<label>
-						<input type="radio" class="flat" name="approved" value="0" <?php checked($equipment->approved,'0');?>/> No
+						<input type="radio" class="flata" name="approved" value="0" <?php checked($equipment->approved,'0');?>/> No
 					</label>
 				</div>	
 			</div>
@@ -905,6 +936,14 @@ function myFunction() {
 					</td>
 					<td>
 						<?php echo ($equipment->spare == 1) ? 'Yes' : 'No'; ?>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<?php _e('Tomo');?>
+					</td>
+					<td>
+						<?php echo ($equipment->tomo == 1) ? 'Yes' : 'No'; ?>
 					</td>
 				</tr>
 				<tr>
@@ -1835,6 +1874,7 @@ function myFunction() {
 					'year_decommisoned' => 0,
 					'decommed' => 0,
 					'spare' => $spare,
+					'tomo' => $tomo,
 					'comment' => $comment,
 					'x_ray' => 1,
 					'approved' => $approved
@@ -1866,6 +1906,7 @@ function myFunction() {
 //							
 					'decommed' => 0,
 					'spare' => $spare,	
+					'tomo' => $tomo,
 					'x_ray' => 1,
 					'approved' => 0
 //
@@ -1947,6 +1988,7 @@ function myFunction() {
 					'last_modified' => $date,
 					'decommed' => $decommed,
 					'spare' => $spare,
+					'tomo' => $tomo,
 					'x_ray' => $x_ray,
 					'approved' => $approved,
 				
@@ -3103,7 +3145,7 @@ $orders_columns = array(
 						if($equipment->service_agent!=0){
 				array_push($row, __($service_agent->name));
 			}else{
-				array_push($row, __("N/A"));
+				array_push($row, "");
 				
 			}
 				
@@ -3227,7 +3269,7 @@ $orders_columns = array(
 						if($equipment->service_agent!=0){
 				array_push($row, __($service_agent->name));
 			}else{
-				array_push($row, __("N/A"));
+				array_push($row, "");
 				
 			}
 

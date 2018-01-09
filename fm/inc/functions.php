@@ -581,6 +581,14 @@ endif;
 
 if ( !function_exists('get_guid') ) :
 	function get_guid($table_name, $length = 6){
+		global $db;
+              	$sql = "SELECT MAX(ID) as id FROM $table_name ";
+		error_log($sql);
+		$row = $db->get_row($sql);
+		$id = $row->{'id'};
+		$next = intval($id)+1;
+		return $next;
+		/*
 		if($length < 2)		
 			$length = 6;
 					
@@ -595,6 +603,7 @@ if ( !function_exists('get_guid') ) :
 				break;				
 		}while (true);				
 		return $pass;    		
+		*/
 	}
 endif;
 

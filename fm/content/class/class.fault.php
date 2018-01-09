@@ -132,10 +132,11 @@ class Fault{
 	</div>
 	<div class="row">
 		<div class="form-group col-sm-6 col-xs-12">
-			<label for="current-servicing-agency">Current servicing agency </label>
-			<select id="select" name="current_servicing_agency" class="form-control select-servicing-agency2" tabindex="-1" data-placeholder="Choose servicing agency" readonly="true">
+			<label for="current-servicing-agency">Current Servicing Agency </label>
+			<input type="text" name="current_servicing_agency" id="current_service_agent" class="form-control select-servicing-agency2" value="" readonly="readonly" /> 
+			<!--<select id="select" name="current_servicing_agency" class="form-control select-servicing-agency2" tabindex="-1" data-placeholder="Choose servicing agency" readonly="true">
 				<option value="">Current servicing agency</option>
-			</select>
+			</select>-->
 		</div>
 		<div class="form-group col-sm-6 col-xs-12">
 			<label for="time-of-fault">Servicing agency at time of fault </label>
@@ -170,10 +171,10 @@ class Fault{
 			<label for="">Fault corrected by user?</label>
 			<br/>
 			<label>
-				<input type="radio" class="flat" name="fault_corrected_by_user" value="1" checked/> Yes</label>
+				<input type="radio" class="flata" name="fault_corrected_by_user" value="1" checked/> Yes</label>
 			<label>&nbsp;</label>
 			<label>
-				<input type="radio" class="flat" name="fault_corrected_by_user" value="0" /> No</label>
+				<input type="radio" class="flata" name="fault_corrected_by_user" value="0" /> No</label>
 			<label>&nbsp;</label>
 			<label>
 				<input type="radio" class="flat " name="fault_corrected_by_user" value="2" /> N/A</label>
@@ -182,13 +183,13 @@ class Fault{
 			<label for="">To fix at next service visit?</label>
 			<br/>
 			<label>
-				<input type="radio" class="flat" name="to_fix_at_next_service_visit" value="1" checked /> Yes</label>
+				<input type="radio" class="flata" name="to_fix_at_next_service_visit" value="1" checked /> Yes</label>
 			<label>&nbsp;</label>
 			<label>
-				<input type="radio" class="flat" name="to_fix_at_next_service_visit" value="0"  /> No</label>
+				<input type="radio" class="flata" name="to_fix_at_next_service_visit" value="0"  /> No</label>
 			<label>&nbsp;</label>
 			<label>
-				<input type="radio" class="flat" name="to_fix_at_next_service_visit" value="2"/> N/A</label>
+				<input type="radio" class="flata" name="to_fix_at_next_service_visit" value="2"/> N/A</label>
 		</div>
 		<div class="form-group col-sm-4 col-xs-12">
 			<label for="">Engineer called out?</label>
@@ -198,13 +199,13 @@ class Fault{
 				<?php 
 				//to re add the hard code choices add custom_radiobox to the class
 				?>
-				<input type="radio" class="flat" name="engineer_called_out" value="1" /> Yes</label>
+				<input type="radio" class="flata" name="engineer_called_out" value="1" /> Yes</label>
 			<label>&nbsp;</label>
 			<label>
-				<input type="radio" class="flat" name="engineer_called_out" value="0" /> No</label>
+				<input type="radio" class="flata" name="engineer_called_out" value="0" /> No</label>
 			<label>&nbsp;</label>
 			<label>
-				<input type="radio" class="flat" name="engineer_called_out" value="2" checked/> N/A</label>
+				<input type="radio" class="flata" name="engineer_called_out" value="2" checked/> N/A</label>
 		</div>
 	</div>
 	<div class="row">
@@ -212,10 +213,10 @@ class Fault{
 			<label for="">Has an adverse incident report been sent to MHRA or appropriate devolved administration?</label>
 			<br/>
 			<label>
-				<input type="radio" class="flat" name="adverse_incident_report" value="1" /> Yes</label>
+				<input type="radio" class="flata" name="adverse_incident_report" value="1" /> Yes</label>
 			<label>&nbsp;</label>
 			<label>
-				<input type="radio" class="flat" name="adverse_incident_report" value="0" checked="checked"/> No</label>
+				<input type="radio" class="flata" name="adverse_incident_report" value="0" checked="checked"/> No</label>
 		</div>
 	</div>
 	<div class="row">
@@ -259,38 +260,41 @@ class Fault{
 		<div class="form-group col-sm-4 col-xs-12">
 			<label for="">Are you satisfied with response of the servicing organisation?</label>
 			<br/>
-			<label>
-				<input type="radio" class="flat" name="satisfied_servicing_organisation" value="1" /> Yes</label>
+			<label> <input type="radio" class="flata" name="satisfied_servicing_organisation" value="1" /> Yes</label>
 			<label>&nbsp;</label>
 			<label>
-				<input type="radio" class="flat" name="satisfied_servicing_organisation" value="2" /> No</label>
+				<input type="radio" class="flata" name="satisfied_servicing_organisation" value="2" /> No</label>
 			<label>&nbsp;</label>
 			<label>
-				<input type="radio" class="flat" name="satisfied_servicing_organisation" value="0" checked="checked"/> N/A</label>
+				<input type="radio" class="flata" name="satisfied_servicing_organisation" value="0" checked="checked"/> N/A</label>
 		</div>
 		<div class="form-group col-sm-4 col-xs-12">
 			<label for="">Are you satisfied with the performance of the service engineer?</label>
 			<br/>
 			<label>
-				<input type="radio" class="flat" name="satisfied_service_engineer" value="1" /> Yes</label>
+				<input type="radio" class="flata" name="satisfied_service_engineer" value="1" /> Yes</label>
 			<label>&nbsp;</label>
 			<label>
-				<input type="radio" class="flat" name="satisfied_service_engineer" value="2" /> No</label>
+				<input type="radio" class="flata" name="satisfied_service_engineer" value="2" /> No</label>
 			<label>&nbsp;</label>
 			<label>
-				<input type="radio" class="flat" name="satisfied_service_engineer" value="0" checked="checked"/> N/A</label>
+				<input type="radio" class="flata" name="satisfied_service_engineer" value="0" checked="checked"/> N/A</label>
 		</div>
 		<div class="form-group col-sm-4 col-xs-12">
-			<label for="">Are you generally satisfied withe the reliability/performance of the equipment?</label>
+			<label for="">Are you generally satisfied with the reliability/performance of the equipment?</label>
 			<br/>
+			<select name="satisfied_equipment" style='width:200px;' class="form-control select_single require" data-placeholder="Choose ">
+				<option value=""></option>
+				<option value="1">Yes</option>
+				<option value="2">No</option>
+                        </select>
+			<!--
 			<label>
-				<input type="radio" class="flat" name="satisfied_equipment" value="1" /> Yes</label>
+				<input type="radio" class="sr-only form-control flat require" name="satisfied_equipment" value="1"  > Yes</label>
 			<label>&nbsp;</label>
 			<label>
-				<input type="radio" class="flat" name="satisfied_equipment" value="2" /> No</label>
-			<label>&nbsp;</label>
-			<label>
-				<input type="radio" class="flat" name="satisfied_equipment" value="0" checked="checked"/> N/A</label>
+				<input type="radio" class="sr-only form-control flat require" name="satisfied_equipment" value="2"  > No</label>
+			-->
 		</div>
 	</div>
 	<?php if(is_admin()){ ?>
@@ -494,46 +498,46 @@ function myFunction() {
 			<label for="">Fault corrected by user?</label>
 			<br/>
 			<label>
-				<input type="radio" class="flat" name="fault_corrected_by_user" value="1" <?php checked($fault->fault_corrected_by_user,'1');?> /> Yes</label>
+				<input type="radio" class="flata" name="fault_corrected_by_user" value="1" <?php checked($fault->fault_corrected_by_user,'1');?> /> Yes</label>
 			<label>&nbsp;</label>
 			<label>
-				<input type="radio" class="flat" name="fault_corrected_by_user" value="0" <?php checked($fault->fault_corrected_by_user,'0');?> /> No</label>
+				<input type="radio" class="flata" name="fault_corrected_by_user" value="0" <?php checked($fault->fault_corrected_by_user,'0');?> /> No</label>
 			<label>&nbsp;</label>
 			<label>
-				<input type="radio" class="flat" name="fault_corrected_by_user" value="2" <?php checked($fault->fault_corrected_by_user,'2');?> /> N/A</label>
+				<input type="radio" class="flata" name="fault_corrected_by_user" value="2" <?php checked($fault->fault_corrected_by_user,'2');?> /> N/A</label>
 		</div>
 		<div class="form-group col-sm-4 col-xs-12">
 			<label for="">To fix at next service visit?</label>
 			<br/>
 			<label>
-				<input type="radio" class="flat" name="to_fix_at_next_service_visit" value="1" <?php checked($fault->to_fix_at_next_service_visit,'1');?> /> Yes</label>
+				<input type="radio" class="flata" name="to_fix_at_next_service_visit" value="1" <?php checked($fault->to_fix_at_next_service_visit,'1');?> /> Yes</label>
 			<label>&nbsp;</label>
 			<label>
-				<input type="radio" class="flat" name="to_fix_at_next_service_visit" value="0" <?php checked($fault->to_fix_at_next_service_visit,'0');?> /> No</label>
+				<input type="radio" class="flata" name="to_fix_at_next_service_visit" value="0" <?php checked($fault->to_fix_at_next_service_visit,'0');?> /> No</label>
 			<label>&nbsp;</label>
 			<label>
-				<input type="radio" class="flat" name="to_fix_at_next_service_visit" value="2" <?php checked($fault->to_fix_at_next_service_visit,'2');?> /> N/A</label>
+				<input type="radio" class="flata" name="to_fix_at_next_service_visit" value="2" <?php checked($fault->to_fix_at_next_service_visit,'2');?> /> N/A</label>
 		</div>
 		<div class="form-group col-sm-4 col-xs-12">
 			<label for="">Engineer called out?</label>
 			<br/>
 			<label>
-				<input type="radio" class="flat" name="engineer_called_out" value="1" <?php checked($fault->engineer_called_out,'1');?> /> Yes</label>
+				<input type="radio" class="flata" name="engineer_called_out" value="1" <?php checked($fault->engineer_called_out,'1');?> /> Yes</label>
 			<label>&nbsp;</label>
 			<label>
-				<input type="radio" class="flat" name="engineer_called_out" value="0" <?php checked($fault->engineer_called_out,'0');?> /> No</label>
+				<input type="radio" class="flata" name="engineer_called_out" value="0" <?php checked($fault->engineer_called_out,'0');?> /> No</label>
 			<label>&nbsp;</label>
 			<label>
-				<input type="radio" class="flat" name="engineer_called_out" value="2" <?php checked($fault->engineer_called_out,'2');?> /> N/A</label>
+				<input type="radio" class="flata" name="engineer_called_out" value="2" <?php checked($fault->engineer_called_out,'2');?> /> N/A</label>
 		</div>
 		<div class="form-group col-sm-12 col-xs-12">
 			<label for=""> Has an adverse incident report been sent to MHRA or appropriate devolved adminstration? </label>
 			<br/>
 			<label>
-				<input type="radio" class="flat" name="adverse_incident_report" value="1" <?php checked($fault->adverse_incident_report,'1');?> /> Yes</label>
+				<input type="radio" class="flata" name="adverse_incident_report" value="1" <?php checked($fault->adverse_incident_report,'1');?> /> Yes</label>
 			<label>&nbsp;</label>
 			<label>
-				<input type="radio" class="flat" name="adverse_incident_report" value="0" <?php checked($fault->adverse_incident_report,'0');?> /> No</label>
+				<input type="radio" class="flata" name="adverse_incident_report" value="0" <?php checked($fault->adverse_incident_report,'0');?> /> No</label>
 		</div>
 	</div>
 	<div class="row">
@@ -582,37 +586,36 @@ function myFunction() {
 			<label for="">Are you satisfied with response of the servicing organisation?</label>
 			<br/>
 			<label>
-				<input type="radio" class="flat" name="satisfied_servicing_organisation" value="1" <?php checked($fault->satisfied_servicing_organisation,'1');?> /> Yes</label>
+				<input type="radio" class="flata" name="satisfied_servicing_organisation" value="1" <?php checked($fault->satisfied_servicing_organisation,'1');?> /> Yes</label>
 			<label>&nbsp;</label>
 			<label>
-				<input type="radio" class="flat" name="satisfied_servicing_organisation" value="0" <?php checked($fault->satisfied_servicing_organisation,'0');?> /> No</label>
+				<input type="radio" class="flata" name="satisfied_servicing_organisation" value="0" <?php checked($fault->satisfied_servicing_organisation,'0');?> /> No</label>
 			<label>&nbsp;</label>
 			<label>
-				<input type="radio" class="flat" name="satisfied_servicing_organisation" value="2" <?php checked($fault->satisfied_servicing_organisation,'2');?> /> N/A</label>
+				<input type="radio" class="flata" name="satisfied_servicing_organisation" value="2" <?php checked($fault->satisfied_servicing_organisation,'2');?> /> N/A</label>
 		</div>
 		<div class="form-group col-sm-12 col-xs-12">
 			<label for="">Are you satisfied with the performance of the service engineer?</label>
 			<br/>
 			<label>
-				<input type="radio" class="flat" name="satisfied_service_engineer" value="1" <?php checked($fault->satisfied_service_engineer,'1');?> /> Yes</label>
+				<input type="radio" class="flata" name="satisfied_service_engineer" value="1" <?php checked($fault->satisfied_service_engineer,'1');?> /> Yes</label>
 			<label>&nbsp;</label>
 			<label>
-				<input type="radio" class="flat" name="satisfied_service_engineer" value="0" <?php checked($fault->satisfied_service_engineer,'0');?> /> No</label>
+				<input type="radio" class="flata" name="satisfied_service_engineer" value="0" <?php checked($fault->satisfied_service_engineer,'0');?> /> No</label>
 			<label>&nbsp;</label>
 			<label>
-				<input type="radio" class="flat" name="satisfied_service_engineer" value="2" <?php checked($fault->satisfied_service_engineer,'2');?> /> N/A</label>
+				<input type="radio" class="flata" name="satisfied_service_engineer" value="2" <?php checked($fault->satisfied_service_engineer,'2');?> /> N/A</label>
 		</div>
 		<div class="form-group col-sm-12 col-xs-12">
-			<label for="">Are you generally satisfied withe the reliability/performance of the equipment?</label>
+			<label for="">Are you generally satisfied with the reliability/performance of the equipment?</label>
 			<br/>
 			<label>
-				<input type="radio" class="flat" name="satisfied_equipment" value="1" <?php checked($fault->satisfied_equipment,'1');?> /> Yes</label>
+				<input type="radio" class="flata" name="satisfied_equipment" value="1" <?php checked($fault->satisfied_equipment,'1');?> /> Yes</label>
 			<label>&nbsp;</label>
 			<label>
-				<input type="radio" class="flat" name="satisfied_equipment" value="0" <?php checked($fault->satisfied_equipment,'0');?> /> No</label>
-			<label>&nbsp;</label>
-			<label>
-				<input type="radio" class="flat" name="satisfied_equipment" value="2" <?php checked($fault->satisfied_equipment,'2');?> /> N/A</label>
+				<input type="radio" class="flata" name="satisfied_equipment" value="0" <?php checked($fault->satisfied_equipment,'0');?> /> No</label>
+			<!--<label>&nbsp;</label>
+			<label> <input type="radio" class="flata" name="satisfied_equipment" value="2" <?php checked($fault->satisfied_equipment,'2');?> /> N/A</label>-->
 		</div>
 	</div>
 	<?php if(is_admin()){ ?>
@@ -624,10 +627,10 @@ function myFunction() {
 			<label for="">Approved?</label>
 			<br/>
 			<label>
-				<input type="radio" class="flat" name="approved" value="1" <?php checked($fault->approved,'1');?> /> Yes</label>
+				<input type="radio" class="flata" name="approved" value="1" <?php checked($fault->approved,'1');?> /> Yes</label>
 			<label>&nbsp;</label>
 			<label>
-				<input type="radio" class="flat" name="approved" value="0" <?php checked($fault->approved,'0');?> /> No</label>
+				<input type="radio" class="flata" name="approved" value="0" <?php checked($fault->approved,'0');?> /> No</label>
 		</div>
 	</div>
 	<div class="row">
@@ -682,6 +685,7 @@ function myFunction() {
 		?>
 <div align = "right">
 					<button class="btn btn-success btn-md" onclick="window.open('../inc/report.php?1=1&cmd=printFaultReport&fault_id=<?php echo($fault__id) ?>');">Print Fault Report</button>
+					<button class="btn btn-success btn-md" onclick="window.open('../inc/report.php?1=1&cmd=exportFaultReport&fault_id=<?php echo($fault__id) ?>');">Export Fault Report</button>
 	
 	</div>
 <script>
@@ -834,7 +838,7 @@ setTimeout(function(){newWin.close();},10);
 				<?php _e('<strong><p style="color:black;">Type of Fault</p></strong>');?>
 			</td>
 			<td>
-				<?php _e($fault->f_type_name);?>
+				<?php _e($fault_type->name);?>
 			</td>
 			<td bgcolor="##CEECF5" class = 'warning'>
 				<?php _e('<strong><p style="color:black;">Fault ID</p></strong>');?>
@@ -988,9 +992,9 @@ setTimeout(function(){newWin.close();},10);
 		$satisfied_servicing_organisation = $fault->satisfied_servicing_organisation;
 		$value = '';
 		switch($satisfied_servicing_organisation):
-		case '0' : $value = 'No'; break;
+		case '2' : $value = 'No'; break;
 		case '1' : $value = 'Yes'; break;
-		case '2' : $value = 'N/A'; break;
+		case '0' : $value = 'N/A'; break;
 		endswitch;
 			?>
 			<td>
@@ -1003,9 +1007,9 @@ setTimeout(function(){newWin.close();},10);
 		$satisfied_service_engineer = $fault->satisfied_service_engineer;
 		$value = '';
 		switch($satisfied_service_engineer):
-		case '0' : $value = 'No'; break;
+		case '2' : $value = 'No'; break;
 		case '1' : $value = 'Yes'; break;
-		case '2' : $value = 'N/A'; break;
+		case '0' : $value = 'N/A'; break;
 		endswitch;
 			?>
 			<td colspan="2">
@@ -1014,15 +1018,15 @@ setTimeout(function(){newWin.close();},10);
 		</tr>
 		<tr class="active">
 			<td colspan = "2" class = 'warning'>
-				<?php _e('<strong><p style="color:black;">Are you generally Satisfied with the Relibility/performance of this equipment? </p></strong>');?>
+				<?php _e('<strong><p style="color:black;">Are you generally Satisfied with the relibility/performance of this equipment? </p></strong>');?>
 			</td>
 			<?php
 		$satisfied_equipment = $fault->satisfied_equipment;
 		$value = '';
 		switch($satisfied_equipment):
-		case '0' : $value = 'No'; break;
+		case '2' : $value = 'No'; break;
 		case '1' : $value = 'Yes'; break;
-		case '2' : $value = 'N/A'; break;
+		case '0' : $value = 'N/A'; break;
 		endswitch;
 			?>
 			<td>
@@ -1215,7 +1219,7 @@ setTimeout(function(){newWin.close();},10);
 			<th>Fault Type</th>
 			<th>Date of Fault</th>
 			<?php if(is_admin()): ?>					
-			<th>Last modified</th>
+			<th>Date of Entry</th>
 			<?php endif; ?>
 			<th class="text-center">Actions</th>
 		</tr>
@@ -1476,7 +1480,7 @@ setTimeout(function(){newWin.close();},10);
 
 		$time = $time_of_fault;
 		$current_servicing_agency;
-		if($time_of_fault = $current_servicing_agency){	
+		if($time_of_fault == $current_servicing_agency){	
 			$time = $current_servicing_agency;
 		}else{
 			$time = $time_of_fault;
@@ -1977,8 +1981,9 @@ setTimeout(function(){newWin.close();},10);
 		$data = '';
 		$equipment = get_tabledata(TBL_EQUIPMENTS, true, array('ID'=> $id) );
 		$data = get_tabledata(TBL_SERVICE_AGENTS, false, array('ID'=> $equipment->service_agent ));
-		$option_data = get_option_data($data,array('ID','name'));
-		$return['servicing_agency_html2'] = get_options_list2($option_data);
+		//$option_data = get_option_data($data,array('ID','name'));
+		//$return['servicing_agency_html2'] = get_options_list2($option_data);
+		$return['servicing_agency_html2'] = $data[0]->name;
 		endif;
 		return json_encode($return);
 	}
@@ -2232,7 +2237,8 @@ setTimeout(function(){newWin.close();},10);
 		}else{
 			array_push($row, __("NOTHING"));
 		}
-		array_push($row, __($fault->f_type_name));
+		//array_push($row, __($fault->f_type_name));
+		array_push($row, __($fault_type->name));
 
 		$str = chunk_split($fault->description_of_fault, 40, "<br>");
 		array_push($row, $str);
@@ -2476,17 +2482,17 @@ setTimeout(function(){newWin.close();},10);
 			array_push($row, __($equipment->name));
 		}
 
-		if($fault->f_type_name != ""){
-			array_push($row, __($fault->f_type_name));	
-		}else{
+		//if($fault->f_type_name != ""){
+		//	array_push($row, __($fault->f_type_name));	
+		//}else{
 			array_push($row, __($fault_type->name));
-		}
+		//}
 		
 
 		array_push($row, date('d M,Y',strtotime($fault->date_of_fault)));
 		//array_push($row, date('d M, Y',$fault->date_of_fault));
 if(is_admin()){
-		array_push($row, date('d M,Y',strtotime($fault->last_modified)));
+		array_push($row, date('d M,Y',strtotime($fault->created_on)));
 }
 		ob_start();
 ?>
@@ -2625,7 +2631,8 @@ if(is_admin()){
 		array_push($row, __($fault->centre_name));
 		array_push($row, __($fault->e_type_name));
 		array_push($row, __($fault->equipment_name));
-		array_push($row, __($fault->f_type_name));
+		//array_push($row, __($fault->f_type_name));
+		array_push($row, __($fault_type->name));
 		array_push($row, date('M d,Y',strtotime($fault->date_of_fault)));
 		ob_start();
 ?>

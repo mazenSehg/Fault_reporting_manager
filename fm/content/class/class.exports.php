@@ -163,15 +163,26 @@ class Exports{
 			</div>
 
 		<div class="form-group col-sm-2 col-xs-6 col">
-			<label for="exportdate_of_fault">
-				<?php _e('Fault Date From');?>
+                        <label for="exportdate_of_fault">
+                                <?php _e('Fault Date From');?>
+                        </label>
+                        <input type="text" name="exportfault_date_from" class="form-control input-datepicker-today" value="<?php echo($filters->{'fault_date_from'}) ?>"/> </div>
+                <div class="form-group col-sm-2 col-xs-6 ">
+                        <label for="exportdate_of_fault">
+                                <?php _e('Fault Date To');?>
+                        </label>
+                        <input type="text" name="exportfault_date_to" class="form-control input-datepicker-today" value="<?php echo($filters->{'fault_date_to'}) ?>"/> </div>
+
+		<div class="form-group col-sm-2 col-xs-6 col">
+			<label for="exportdate_of_create">
+				<?php _e('Create Date From');?>
 			</label>
-			<input type="text" name="exportfault_date_from" class="form-control input-datepicker-today" value="<?php echo($filters->{'fault_date_from'}) ?>"/> </div>
+			<input type="text" name="exportcreate_date_from" class="form-control input-datepicker-today" value="<?php echo($filters->{'create_date_from'}) ?>"/> </div>
 		<div class="form-group col-sm-2 col-xs-6 ">
-			<label for="exportdate_of_fault">
-				<?php _e('Fault Date To');?>
+			<label for="exportdate_of_create">
+				<?php _e('Create Date To');?>
 			</label>
-			<input type="text" name="exportfault_date_to" class="form-control input-datepicker-today" value="<?php echo($filters->{'fault_date_to'}) ?>"/> </div>
+			<input type="text" name="exportcreate_date_to" class="form-control input-datepicker-today" value="<?php echo($filters->{'create_date_to'}) ?>"/> </div>
 	</fieldset>
 	</div>
 	<div class="row custom-filters">
@@ -272,14 +283,25 @@ class Exports{
 		}
 
 		if(isset($_POST['fault_date_from']) && $_POST['fault_date_from'] != '' && $_POST['fault_date_from'] != 'undefined' && isset($_POST['fault_date_to']) && $_POST['fault_date_to'] != '' &&  $_POST['fault_date_to'] != 'undefined'){
+                        $query .= ($query != '') ? ' AND ' : ' WHERE ';
+                        $query .= " ( `date_of_fault` >= '".date( 'Y-m-d', strtotime($_POST['fault_date_from']) )."' AND `date_of_fault` <= '".date( 'Y-m-d', strtotime($_POST['fault_date_to']) )."' ) ";
+                }else if(isset($_POST['fault_date_from']) && $_POST['fault_date_from'] != '' &&  $_POST['fault_date_from'] != 'undefined' && ( !isset($_POST['fault_date_to']) || $_POST['fault_date_to'] == '' ||  $_POST['fault_date_to'] == 'undefined' ) ){
+                        $query .= ($query != '') ? ' AND ' : ' WHERE ';
+                        $query .= "  `date_of_fault` >= '".date( 'Y-m-d', strtotime($_POST['fault_date_from']) )."' ";
+                }else if( (!isset($_POST['fault_date_from']) || $_POST['fault_date_from'] == '' || $_POST['fault_date_from'] == 'undefined' ) && isset($_POST['fault_date_to']) && $_POST['fault_date_to'] != '' &&  $_POST['fault_date_to'] != 'undefined'){
+                        $query .= ($query != '') ? ' AND ' : ' WHERE ';
+                        $query .= "  `date_of_fault` <= '".date( 'Y-m-d', strtotime($_POST['fault_date_to']) )."' ";
+                }
+
+		if(isset($_POST['create_date_from']) && $_POST['create_date_from'] != '' && $_POST['create_date_from'] != 'undefined' && isset($_POST['create_date_to']) && $_POST['create_date_to'] != '' &&  $_POST['create_date_to'] != 'undefined'){
 			$query .= ($query != '') ? ' AND ' : ' WHERE ';
-			$query .= " ( `date_of_fault` >= '".date( 'Y-m-d', strtotime($_POST['fault_date_from']) )."' AND `date_of_fault` <= '".date( 'Y-m-d', strtotime($_POST['fault_date_to']) )."' ) ";
-		}else if(isset($_POST['fault_date_from']) && $_POST['fault_date_from'] != '' &&  $_POST['fault_date_from'] != 'undefined' && ( !isset($_POST['fault_date_to']) || $_POST['fault_date_to'] == '' ||  $_POST['fault_date_to'] == 'undefined' ) ){
+			$query .= " ( `created_on` >= '".date( 'Y-m-d', strtotime($_POST['create_date_from']) )."' AND `created_on` <= '".date( 'Y-m-d', strtotime($_POST['create_date_to']) )."' ) ";
+		}else if(isset($_POST['create_date_from']) && $_POST['create_date_from'] != '' &&  $_POST['create_date_from'] != 'undefined' && ( !isset($_POST['create_date_to']) || $_POST['create_date_to'] == '' ||  $_POST['create_date_to'] == 'undefined' ) ){
 			$query .= ($query != '') ? ' AND ' : ' WHERE ';
-			$query .= "  `date_of_fault` >= '".date( 'Y-m-d', strtotime($_POST['fault_date_from']) )."' ";
-		}else if( (!isset($_POST['fault_date_from']) || $_POST['fault_date_from'] == '' || $_POST['fault_date_from'] == 'undefined' ) && isset($_POST['fault_date_to']) && $_POST['fault_date_to'] != '' &&  $_POST['fault_date_to'] != 'undefined'){
+			$query .= "  `created_on` >= '".date( 'Y-m-d', strtotime($_POST['create_date_from']) )."' ";
+		}else if( (!isset($_POST['create_date_from']) || $_POST['create_date_from'] == '' || $_POST['create_date_from'] == 'undefined' ) && isset($_POST['create_date_to']) && $_POST['create_date_to'] != '' &&  $_POST['create_date_to'] != 'undefined'){
 			$query .= ($query != '') ? ' AND ' : ' WHERE ';
-			$query .= "  `date_of_fault` <= '".date( 'Y-m-d', strtotime($_POST['fault_date_to']) )."' ";
+			$query .= "  `created_on` <= '".date( 'Y-m-d', strtotime($_POST['create_date_to']) )."' ";
 		}			
 
 		$recordsTotal = get_tabledata(TBL_FAULTS,true,array(), $query, 'COUNT(ID) as count');

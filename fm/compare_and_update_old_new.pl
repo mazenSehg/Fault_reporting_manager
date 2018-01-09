@@ -55,11 +55,13 @@ my %mod_lookup_string;
 
 ############# FAULT TYPE
 my %existing_ft;
+my %existing_ft_lookup;
 my $sql = "select * FROM fault_management.tbl_fault_type";
 my $sth = $mysql_con->prepare($sql);
 $sth->execute();
 while (@data = $sth->fetchrow_array()) {
-	$existing_ft{$data[1]} = \@data;
+	$existing_ft{$data[1]} = [@data];
+	$existing_ft_lookup{$data[0]} = $data[1];
 }
 $sth->finish();
 
@@ -88,12 +90,16 @@ $sth->finish();
 #########################
 
 ############# EQUIPMENT TYPE
+my %current_eq_type;
+my %current_eq_type_name;
 %existing_ft = ();
 $sql = "select * FROM fault_management.tbl_equipment_type";
 $sth = $mysql_con->prepare($sql);
 $sth->execute();
 while (@data = $sth->fetchrow_array()) {
         $existing_ft{$data[1]} = \@data;
+	$current_eq_type{$data[0]} = $data[2];
+	$current_eq_type_name{$data[2]} = $data[0];
 }
 $sth->finish();
 
@@ -290,6 +296,7 @@ while (@data = $sth->fetchrow_array()) {
 #########################
 
 ############# equipment
+my $man_needs_fixing;
 %existing_ft = ();
 my %existing_eq = ();
 $sql = "select * FROM fault_management.tbl_equipment";
@@ -298,6 +305,18 @@ $sth->execute();
 while (@data = $sth->fetchrow_array()) {
         $existing_ft{$data[3]} = [@data];
         $existing_eq{$data[0]} = [@data];
+	$man_id = $data[5];
+	my $eq_code = $data[3];
+	if(!$eq_code) {
+		print "NO CODE\n";
+	}
+	if($man_id) {
+		if($man_id == 0) {
+			$man_needs_fixing{$data[0]} = 1;
+		}
+	} else {
+		$man_needs_fixing{$data[0]} = 1;
+	}
 }
 $sth->finish();
 
@@ -305,6 +324,8 @@ $sql = "select * FROM equipment";
 $sth = $mysql_con->prepare($sql);
 $sth->execute();
 my $counter  = 0;
+
+#$commit = 1;
 
 while (@data = $sth->fetchrow_array()) {
 	my $sa_id;
@@ -324,17 +345,57 @@ while (@data = $sth->fetchrow_array()) {
 		my $name = $man_name." | ".$mod_name." | ".$data[1]." | ".$data[11]." | ".$data[7]." | ".$data[8];
 
 		$temp = "INSERT INTO fault_management.tbl_equipment values (null, '".sQuote($name)."', '$centre_id', '".$data[2]."', '$eq_type', '".$man_lookup{$data[5]}."', '".$mod_lookup{$data[6]}."', '$sup_id', '$sa_id', '".$data[7]."', '".$data[8]."', '".$data[1]."', '".$data[9]."', '".$data[11]."', '".$data[13]."', '".$data[12]."', '".$data[14]."', '".$data[15]."', '".$data[10]."', 1, '".$data[19]."', '".$type_name."', '".$data[21]."')";
-                print $temp."\n";
+                #print $temp."\n";
                 $last_id = 'PLACEHOLDER';
                 if($commit) {
-                        my $sth2 = $mysql_con->prepare($temp);
-                        $sth2->execute();
-                        $last_id = $sth2->{mysql_insertid};
-                        $sth2->finish();
+                        #my $sth2 = $mysql_con->prepare($temp);
+                        #$sth2->execute();
+                        #$last_id = $sth2->{mysql_insertid};
+                        #$sth2->finish();
                 }
                 $eq_lookup{$data[0]} = $last_id;
-		$counter++;
         } else {
+		my $match_eq_id = $existing_ft{$data[2]}[0];
+		my $match_eq_type_id = $existing_ft{$data[2]}[4];
+		my $match_eq_type_name = $current_eq_type{$match_eq_type_id};
+		my $old_old_eq_type = $data[3];
+		my $eq_type = $et_lookup{$data[3]};
+		my $type_name = $et_lookup_string{$data[3]};
+		if($match_eq_type_name ne $type_name) {
+			my $should_be = $current_eq_type_name{$type_name};
+			print "Matched Equipment ID: $match_eq_id, Old Equipment ID: ".$data[0].", Matched Eq Type ID: $match_eq_type_id ($match_eq_type_name), Old Eq Type ID: $old_old_eq_type ($type_name) - Should be eq_type_id: $should_be\n";
+			my $sql = "UPDATE fault_management.tbl_equipment SET equipment_type = '$should_be', type_name = '$type_name' WHERE ID = $match_eq_id";
+			print $sql."\n";
+			if($commit) {
+				my $sth2 = $mysql_con->prepare($sql);
+				$sth2->execute();
+				$sth2->finish();
+			}
+			my $sql = "UPDATE fault_management.tbl_fault SET equipment_type = '$should_be', e_type_name = '$type_name' WHERE equipment = $match_eq_id";
+			print $sql."\n";
+			if($commit) {
+				my $sth2 = $mysql_con->prepare($sql);
+				$sth2->execute();
+				$sth2->finish();
+			}
+			$counter++;
+		}
+		if(exists($man_needs_fixing{$existing_ft{$data[2]}[0]})) {
+			#my $name = $man_name." | ".$mod_name." | ".$data[1]." | ".$data[11]." | ".$data[7]." | ".$data[8];
+			#my $old_man_id = $data[5];
+			#my $eq_id = $existing_ft{$data[2]}[0];
+			#my $new_man_id = $man_lookup{$old_man_id};
+			#if($old_man_id) {
+			#	my $sql = "UPDATE fault_management.tbl_equipment SET manufacturer = '$new_man_id' WHERE ID = $eq_id";
+			#	print $sql."\n";
+			#	if($commit) {
+			#		my $sth2 = $mysql_con->prepare($sql);
+			#		$sth2->execute();
+			#		$sth2->finish();
+			#	}
+			#}
+			#print "THIS EQ (MAN) needs fixing: ".$existing_ft{$data[2]}[0]." ($old_man_id) - $name [$data[0]]\n";
+		}
                 $eq_lookup{$data[0]} = $existing_ft{$data[2]}[0];
                 #print $data[0]." maps to ".$existing_ft{$data[2]}[0]."\n";
 		if($sa_id) {
@@ -345,20 +406,50 @@ while (@data = $sth->fetchrow_array()) {
 #########################
 print $counter. " equipment missing\n";
 
+exit();
+
 
 #############  faults
 my %fault_names;
+my %fault_names_old;
+my %fault_names_dup;
 my %fault_names_count;
 my %fault_dates;
+my $max = 0;
 %existing_ft = ();
 $sql = "select * FROM fault_management.tbl_fault";
 $sth = $mysql_con->prepare($sql);
 $sth->execute();
+my $ft_count = 0;
 while (@data = $sth->fetchrow_array()) {
         $existing_ft{$data[0]} = [@data];
-	$fault_names{$data[12]}{$data[9]} = [@data];
+	$data[12] =~ s/'//g;
+	$data[9] =~ s/'//g;
+	my $ft = $data[8];
+	my $ft_name = $data[36];
+	$ft_look = $existing_ft_lookup{$ft}; 
+	if($ft_name ne $ft_look) {
+		my $temp = "UPDATE fault_management.tbl_fault set f_type_name = '".$ft_look."' WHERE ID = ".$data[0];
+		my $sth2 = $mysql_con->prepare($temp);
+		$sth2->execute();
+		$sth2->finish();
+		print "\n$temp";
+		$ft_count++;
+	}
+	#$fault_names{$data[12]}{$data[9]} = [@data];
+	$fault_names{$data[12]}{$data[9]}{$data[14]} = [@data];
+	$fault_names_dup{$data[12]}{$data[9]}{$data[14]}{$data[0]} = [@data];
+	$fault_names_count{$data[12]}{$data[9]}{$data[14]}++;
+	if($data[0] > $max) {
+		$max = $data[0];
+	}
+	if($data[0] == 182) {
+		print "DEBUG: b$data[12]b\nb$data[14]b\n";
+	}
 }
 $sth->finish();
+
+print "\nTotal: $ft_count\n";
 
 $sql = "select * FROM faults";
 $sth = $mysql_con->prepare($sql);
@@ -367,19 +458,57 @@ $counter  = 0;
 $commit = 0;
 
 while (@data = $sth->fetchrow_array()) {
-	$fault_names_count{$data[4]}{$data[3]}++;
         #if(!exists($existing_ft{$data[0]})) {
-		if(exists($fault_names{$data[4]}{$data[3]})) {
-			my $matched_id = $fault_names{$data[4]}{$data[3]}[0];
+		$data[4] =~ s/'//g;
+		$data[3] =~ s/'//g;
+		$data[7] =~ s/'//g;
+			if($data[0] == 182) {
+				print "DEBUG: a$data[4]a\na$data[7]a\n";
+				#exit();
+			}
+		$fault_names_old{$data[4]}{$data[3]}{$data[7]} = [@data];
+		#if(exists($fault_names{$data[4]}{$data[3]})) {
+		if(exists($fault_names{$data[4]}{$data[3]}{$data[7]})) {
+			my $old_ft_id = $data[2];
+			my $old_created_on = $data[24];
+			my $new_created_on = $fault_names{$data[4]}{$data[3]}{$data[7]}[1];
+			my $should_be_ft_id = $lookup_old_ft{$data[2]};
+			my $ft_name  = $ft_lookup{$should_be_ft_id};
+			#my $ft_id = $fault_names{$data[4]}{$data[3]}[8];
+			my $ft_id = $fault_names{$data[4]}{$data[3]}{$data[7]}[8];
+			my $matched_id = $fault_names{$data[4]}{$data[3]}{$data[7]}[0];
+			if($old_created_on ne $new_created_on) {
+				print "UH OH $matched_id ($old_ft_id) - $old_created_on = $new_created_on\n";
+				my $temp = "UPDATE fault_management.tbl_fault set created_on = '$old_created_on' WHERE ID = '$matched_id'";
+				print $temp."\n";
+				$counter++;
+				my $sth2 = $mysql_con->prepare($temp);
+				$sth2->execute();
+				$sth2->finish();
+			} else {
+				print "Matched $matched_id ($old_ft_id) - $old_created_on = $new_created_on\n";
+			}
+			if($should_be_ft_id != $ft_id) {
+				print "UHOH!!!!!: $matched_id has the wrong FT (Old: $old_ft_id, Current: $ft_id, Should be: $should_be_ft_id) - Old f_id: $data[0], New f_id: $matched_id\n";
+				my $temp = "UPDATE fault_management.tbl_fault set fault_type = '$should_be_ft_id' WHERE ID = '$matched_id'";
+				print $temp."\n";
+				$counter++;
+				if($commit) {
+					#my $sth2 = $mysql_con->prepare($temp);
+					#$sth2->execute();
+					#$sth2->finish();
+				}
+			}
+
 			#print "\tFault exists, with name/date matching (Old: ".$data[0].", New: ".$matched_id.")\n";
 			if(!exists($existing_ft{$data[0]})) {
-				print "\tOld ID is not in the new DB, so I could change the ID....\n";
-				my $temp = "UPDATE tbl_fault set ID = '".$data[0]."' WHERE ID = '$matched_id'";
+				#print "\tOld ID is not in the new DB, so I could change the ID....\n";
+				my $temp = "UPDATE fault_management.tbl_fault set ID = '".$data[0]."' WHERE ID = '$matched_id'";
 				#print $temp."\n";
 				if($commit) {
-					my $sth2 = $mysql_con->prepare($temp);
-					$sth2->execute();
-					$sth2->finish();
+					#my $sth2 = $mysql_con->prepare($temp);
+					#$sth2->execute();
+					#$sth2->finish();
 				}
 			}
 		} else {
@@ -389,27 +518,88 @@ while (@data = $sth->fetchrow_array()) {
 			my @ex_eq = @{$existing_eq{$eq_id}};
 			my $centre_id = $ex_eq[2];
 			my $centre_name = $cen_name{$ex_eq[2]};
+			if(!$centre_name) {
+				next;
+			}
 			my $eq_type_id = $ex_eq[4];
 			my $eq_type_name = $ex_eq[21];
 			my $eq_name = $ex_eq[1];
 			my $eq_code = $ex_eq[3];
 			my $man_name = $man_name_lookup{$ex_eq[5]};
+			my $desc = $data[4];
+			$desc =~ s/'//g;
+			my $act_desc = $data[7];
+			$act_desc =~ s/'//g;
+			$centre_name =~ s/'//g;
+			$eq_name =~ s/'//g;
+			$data[16] =~ s/'//g;
+			$data[17] =~ s/'//g;
+			$data[6] =~ s/'//g;
+			if(!$man_name) {
+				print "DEBUG: $ex_eq[5] $data[0] ($eq_id)\n";
+			}
 
 			my $ft_id = $lookup_old_ft{$data[2]};
 			my $ft_name  = $ft_lookup{$ft_id};
+			if(!$ft_name) {
+				print "DEBUG: ($ft_id) ($data[2] $olf_ft_id) ($ft_name)\n";
+			}
 
-			my $sql = "INSERT INTO tbl_faults VALUES (null, '".$data[24]."', '".$centre_id."', '".$data[23]."', '".$data[23]."', '', '$eq_type_id', '$eq_id', '$ft_id, '".$data[3]."', '".$data[5]."', '', '".$data[4]."', '".$data[6]."', '".$data[7]."', '".$data[27]."', '".$data[28]."', '".$data[29]."', '".$data[8]."', '".$data[9]."', '".$data[10]."', '".$data[11]."', '".$data[12]."', '".$data[13]."', '".$data[14]."', '".$data[18]."', '".$data[19]."', '".$data[20]."', '".$data[15]."', '".$data[16]."', '', '".$data[17]."', '".$data[22]."', '$eq_name', '$eq_type_name', '$centre_name', '$ft_name', '$eq_code', '$man_name', '".$data[26]."')";
-
+			my $theid;
+			if(!exists($existing_ft{$data[0]})) {
+				$theid = $data[0];		
+			} else {
+				$max++;
+				$theid = $max;
+			}
+			my $sql = "INSERT INTO fault_management.tbl_fault VALUES ($theid, '".$data[24]."', '".$centre_id."', '".$data[23]."', '".$data[23]."', '', '$eq_type_id', '$eq_id', '$ft_id', '".$data[3]."', '".$data[5]."', '', '".$desc."', '".$data[6]."', '".$act_desc."', '".$data[27]."', '".$data[28]."', '".$data[29]."', '".$data[8]."', '".$data[9]."', '".$data[10]."', '".$data[11]."', '".$data[12]."', '".$data[13]."', '".$data[14]."', '".$data[18]."', '".$data[19]."', '".$data[20]."', '".$data[15]."', '".$data[16]."', '', '".$data[17]."', '".$data[22]."', '$eq_name', '$eq_type_name', '$centre_name', '$ft_name', '$eq_code', '$man_name', '".$data[26]."')";
 			print $sql."\n";
-			$counter++;
-			exit();
+			if($commit) {
+				#my $sth2 = $mysql_con->prepare($sql);
+				#$sth2->execute();
+				#$sth2->finish();
+			}
+			$fault_names{$data[4]}{$data[3]}{$data[7]} = [@data];
 		}
         #}
 }
 #########################
 print $counter. " faults missing\n";
+exit();
 
+my $county = 0;
+foreach $name (keys %fault_names) {
+	foreach $date (keys %{$fault_names{$name}}) {
+		foreach $act (keys %{$fault_names{$name}{$date}}) {
+			if(!exists($fault_names_old{$name}{$date}{$act})) {
+				my @temp = keys %{$fault_names_dup{$name}{$date}{$act}};
+				$f_id = join(', ', @temp);
+				print "IN NEW, NOT OLD: $f_id\n";
+				$county++;
+			}
+		}
+	}
+}
 #//LOOP THORUGH EACH AND check none are > 1
+foreach $name (keys %fault_names_count) {
+	foreach $date (keys %{$fault_names_count{$name}}) {
+		foreach $act (keys %{$fault_names_count{$name}{$date}}) {
+			if($fault_names_count{$name}{$date}{$act} > 1) {
+				my @temp = keys %{$fault_names_dup{$name}{$date}{$act}};
+				pop(@temp);
+				$f_id = join(', ', @temp);
+				my $temp = "DELETE FROM fault_management.tbl_fault WHERE ID in ($f_id)";
+				print $temp."\n";
+				if($commit) {
+					my $sth2 = $mysql_con->prepare($temp);
+					$sth2->execute();
+					$sth2->finish();
+				}
+			}
+		}
+	}
+}
+print "\n$county duplicates\n";
 #fault_names_count
 exit();
 

@@ -3,6 +3,7 @@
 session_start();
 //Load all functions
 require_once('load.php');
+error_reporting(1);
 
 login_check();
 
@@ -47,10 +48,10 @@ $link = mysql_connect($host, $user, $pass) or die("Can not connect." . mysql_err
 mysql_select_db($db) or die("Can not connect.");
  
 
-  $csv_output .= "Equipment Code\tCentre Code\tEquipment Type\tx-ray Subtype\tSupplier\tManfacturer\tModel\tLocation\tLocal ID\t ID Number\tYear Manufactured\tInstallation Year\tDecommisioned\tYear Decommisioned\tSpare\tComment\tServicing Agent ";
+  $csv_output .= "Equipment Code\tCentre Code\tEquipment Type\tx-ray Subtype\tSupplier\tManfacturer\tModel\tLocation\tLocal ID\t ID Number\tYear Manufactured\tInstallation Year\tDecommisioned\tYear Decommisioned\tSpare\tTomo\tComment\tServicing Agent ";
 	 
 	 
-  $i = 17;
+  $i = 18;
 $csv_output .= "\n";
 
 						$query = NULL;
@@ -95,7 +96,9 @@ if(isset($_POST['centre']) && $_POST['centre'] != '' && $_POST['centre'] != 'und
 			$query .= "  `date_of_fault` <= '".date( 'Y-m-d', strtotime($_POST['fault_date_to']) )."' ";
 		}				
 
-$values = mysql_query("SELECT equipment_code,centre,type_name,x_ray, supplier, manufacturer, model, location, location_id, serial_number, year_manufacturered, year_installed, decommed, year_decommisoned, spare, comment, service_agent FROM tbl_equipment " . $query."");
+$sql = "SELECT equipment_code,centre,equipment_type,x_ray, supplier, manufacturer, model, location, location_id, serial_number, year_manufacturered, year_installed, decommed, year_decommisoned, spare, tomo, comment, service_agent FROM tbl_equipment " . $query;
+error_log($sql);
+$values = mysql_query($sql);
 			
 while ($rowr = mysql_fetch_row($values)) {
  for ($j=0;$j<$i;$j++) {

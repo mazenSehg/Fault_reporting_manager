@@ -280,7 +280,14 @@ $(document).ready(function() {
 		e.preventDefault();
 		
 		var form = $(this);
-		var formData = new FormData(this);
+		var formData = [];
+		if(typeof FormData !== 'undefined') {
+			formData = new FormData(this);
+		} else {
+			form.filter(':input').each(function(){
+				formData[this.name] = this.value;
+			});
+		}
 		$('.form-group').removeClass('has-error'); // remove class from form control which show error (red) color 
 		form.find('div.alert').slideUp();
 		
@@ -877,7 +884,7 @@ $(document).ready(function() {
 				console.log(res);
 				$select_multiple.select2("destroy");
 				$select_single.select2("destroy");
-				$('.select-servicing-agency2').html(res['servicing_agency_html2']);
+				$('.select-servicing-agency2').val(res['servicing_agency_html2']);
 				$select_single.select2({ allowClear: true });
 				$select_multiple.select2({ allowClear: true });
 			}

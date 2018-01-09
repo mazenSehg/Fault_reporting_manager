@@ -105,10 +105,6 @@ $bob5 = $f_type;
 								echo $Fault->all__faults__page(); ?>
 							</div>
 						</div>
-			</div>
-		</div>
-		</div>
-		</div>
 		<!-- /page content -->
 		<!-- footer content -->
 		<?php echo $Footer->footer();?>
