@@ -10,6 +10,26 @@ class Centre{
 		$this->database = $db;
 	}
 
+	public function getCentreList() {
+		ob_start();
+
+		$type = $_REQUEST['type'];
+		$return = array();
+		if($type == 'all') {
+			$centres = get_tabledata(TBL_CENTRES,false,array('approved' => 1));
+			foreach($centres as $row) {
+				$return[] = $row->ID;
+			}
+		} else {
+			$query = "WHERE `region` IN (".$type.") AND `approved` = '1' ";
+			$centres = get_tabledata(TBL_CENTRES,false,array(), $query);
+			foreach($centres as $row) {
+				$return[] = $row->ID;
+			}
+		}
+		return json_encode($return);
+	}
+
 	public function add__centre__page(){
 		ob_start();
 		if( !user_can( 'add_centre') ):
@@ -25,6 +45,12 @@ class Centre{
 					</span>
 				</label>
 				<input type="text" name="name" class="form-control require" />
+			</div>
+			<div class="form-group">
+				<label for="programme">
+					Trust
+				</label>
+				<input type="text" name="trust" class="form-control" />
 			</div>
 			<div class="form-group">
 				<label for="programme">
@@ -156,6 +182,12 @@ class Centre{
 				</label>
 				<input type="text" name="proManE" class="form-control require" />
 			</div>
+			<div class="form-group">
+				<label for="programme">
+					Comment
+				</label>
+				<input type="text" name="comment" class="form-control" />
+			</div>
 			<div class="ln_solid">
 			</div>
 			<div class="form-group">
@@ -190,6 +222,12 @@ class Centre{
 					</span>
 				</label>
 				<input type="text" name="name" class="form-control require" value="<?php _e($centre->name);?>" />
+			</div>
+			<div class="form-group">
+				<label for="programme">
+					Trust	
+				</label>
+				<input type="text" name="trust" class="form-control" value="<?php _e($centre->trust);?>" />
 			</div>
 			<div class="form-group">
 				<label for="programme">
@@ -319,6 +357,12 @@ class Centre{
 					</span>
 				</label>
 				<input type="text" name="proManE" class="form-control require" value = "<?php _e($centre->programme_manage_e);?>" />
+			</div>
+			<div class="form-group">
+				<label for="programme">
+					Comment
+				</label>
+				<input type="text" name="comment" class="form-control" value="<?php _e($centre->comment);?>" />
 			</div>
 			<div class="ln_solid">
 			</div>
@@ -842,6 +886,7 @@ class Centre{
 				'ID' => $guid,
 				'name' => $name,
 				'programme' => $programme,
+				'trust' => $trust,
 				'region' => $region,
 				'centre_code' => $centre_code,
 				'approved' => 1,
@@ -852,6 +897,7 @@ class Centre{
 				'postcode' => $postcode,
 				'phone' => $phone,
 				'fax' => $fax,
+				'comment' => $comment,
 				'support_Rad' => $suppRad,
 				'support_Rad_email'=> $suppRadE,
 				'programme_manag' => $proMan,
@@ -903,6 +949,7 @@ class Centre{
 			array(
 				'name' => $name,
 				'programme' => $programme,
+				'trust' => $trust,
 				'region' => $region,
 				'centre_code' => $centre_code,
 				'approved' => 1,
@@ -913,6 +960,7 @@ class Centre{
 				'postcode' => $postcode,
 				'phone' => $phone,
 				'fax' => $fax,
+				'comment' => $comment,
 				'support_Rad' => $suppRad,
 				'support_Rad_email'=> $suppRadE,
 			'last_modified' => $date,

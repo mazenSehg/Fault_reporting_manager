@@ -64,7 +64,7 @@
 				break;
 
 
-            case 'fault_approve_change_via_modal':
+		    case 'fault_approve_change_via_modal':
 				echo $Fault->fault__approve__change__via__modal__process();
 				break;
 
@@ -91,6 +91,10 @@
 				
 			case 'update_centre':
 				echo $Centre->update__centre__process();
+				break;
+				
+			case 'getCentreList':
+				echo $Centre->getCentreList();
 				break;
 				
 			case 'delete_centre':

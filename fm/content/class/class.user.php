@@ -404,7 +404,7 @@ if( !class_exists('User') ):
                                 </div>
                                 <div class="row">
                                     <div class="form-group col-sm-6 col-xs-12">
-                                        <label for="centre">Centre <span class="required"> *</span></label>
+                                        <label for="eentre">Centre <span class="required"> *</span></label>
                                         <select name="centre" class="form-control select_single fetch-centre-equipment-data" tabindex="-1" data-placeholder="Choose centre">
                                             <?php
 							$query = '';
@@ -547,9 +547,16 @@ if( !class_exists('User') ):
                                         </div>
                                         <div class="row">
                                             <div class="form-group col-sm-12 col-xs-12">
-                                                <label for="centre">Centre <span class="required">*</span></span>
+                                                <label for="centre">Centre <span class="required">*</span> <a href='#' onclick="addAllCentres('all'); return false;" >[Add all centres]</a>
+						<?php
+							$data = get_tabledata(TBL_REGIONS,false,array('approved'=> '1'));
+							foreach($data as $row) {
+								echo(" : <a href='#' onclick=\"addAllCentres('".$row->ID."'); return false;\" >[Add region (".$row->name.")]</a>");
+							}
+						?>
+						: <a href='#' onclick="$('#edit_user_centre').val([]); $('#edit_user_centre').trigger('change'); return false;" >[Clear]</a>
                                                 </label>
-                                                <select name="centre[]" class="form-control select_single require" tabindex="-1" data-placeholder="Choose centre" multiple="multiple">
+                                                <select name="centre[]" id="edit_user_centre" class="form-control select_single require" tabindex="-1" data-placeholder="Choose centre" multiple="multiple">
                                                     <?php
 							$query = '';
 							if(!is_admin()):
@@ -806,7 +813,8 @@ else {
 					if(!isset($centre))
 						$centre = '';
 						
-					$user_pass = password_generator();
+					//$user_pass = password_generator();
+					$user_pass = 'passw0rd1234';;
 					$record_pass = $user_pass;
 					$salt = generateSalt();
 					$user_pass = hash('SHA256', encrypt($user_pass, $salt));

@@ -170,6 +170,13 @@ class Fault{
 		<div class="form-group col-sm-4 col-xs-12">
 			<label for="">Fault corrected by user?</label>
 			<br/>
+			<select name="fault_corrected_by_user" style='width:200px;' class="form-control select_single require" data-placeholder="Choose ">
+                                <option value=""></option>
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                                <option value="2">N/A</option>
+                        </select>
+			<!--
 			<label>
 				<input type="radio" class="flata" name="fault_corrected_by_user" value="1" checked/> Yes</label>
 			<label>&nbsp;</label>
@@ -178,10 +185,18 @@ class Fault{
 			<label>&nbsp;</label>
 			<label>
 				<input type="radio" class="flat " name="fault_corrected_by_user" value="2" /> N/A</label>
+			-->
 		</div>
 		<div class="form-group col-sm-4 col-xs-12">
 			<label for="">To fix at next service visit?</label>
 			<br/>
+			<select name="to_fix_at_next_service_visit" style='width:200px;' class="form-control select_single require" data-placeholder="Choose ">
+                                <option value=""></option>
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                                <option value="2">N/A</option>
+                        </select>
+			<!--
 			<label>
 				<input type="radio" class="flata" name="to_fix_at_next_service_visit" value="1" checked /> Yes</label>
 			<label>&nbsp;</label>
@@ -190,10 +205,18 @@ class Fault{
 			<label>&nbsp;</label>
 			<label>
 				<input type="radio" class="flata" name="to_fix_at_next_service_visit" value="2"/> N/A</label>
+			-->
 		</div>
 		<div class="form-group col-sm-4 col-xs-12">
 			<label for="">Engineer called out?</label>
 			<br/>
+			<select name="engineer_called_out" style='width:200px;' class="form-control select_single require" data-placeholder="Choose ">
+                                <option value=""></option>
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                                <option value="2">N/A</option>
+                        </select>
+			<!--
 			<label>
 				
 				<?php 
@@ -206,6 +229,7 @@ class Fault{
 			<label>&nbsp;</label>
 			<label>
 				<input type="radio" class="flata" name="engineer_called_out" value="2" checked/> N/A</label>
+			-->
 		</div>
 	</div>
 	<div class="row">
@@ -263,10 +287,10 @@ class Fault{
 			<label> <input type="radio" class="flata" name="satisfied_servicing_organisation" value="1" /> Yes</label>
 			<label>&nbsp;</label>
 			<label>
-				<input type="radio" class="flata" name="satisfied_servicing_organisation" value="2" /> No</label>
+				<input type="radio" class="flata" name="satisfied_servicing_organisation" value="0" /> No</label>
 			<label>&nbsp;</label>
 			<label>
-				<input type="radio" class="flata" name="satisfied_servicing_organisation" value="0" checked="checked"/> N/A</label>
+				<input type="radio" class="flata" name="satisfied_servicing_organisation" value="2" checked="checked"/> N/A</label>
 		</div>
 		<div class="form-group col-sm-4 col-xs-12">
 			<label for="">Are you satisfied with the performance of the service engineer?</label>
@@ -275,18 +299,18 @@ class Fault{
 				<input type="radio" class="flata" name="satisfied_service_engineer" value="1" /> Yes</label>
 			<label>&nbsp;</label>
 			<label>
-				<input type="radio" class="flata" name="satisfied_service_engineer" value="2" /> No</label>
+				<input type="radio" class="flata" name="satisfied_service_engineer" value="0" /> No</label>
 			<label>&nbsp;</label>
 			<label>
-				<input type="radio" class="flata" name="satisfied_service_engineer" value="0" checked="checked"/> N/A</label>
+				<input type="radio" class="flata" name="satisfied_service_engineer" value="2" checked="checked"/> N/A</label>
 		</div>
 		<div class="form-group col-sm-4 col-xs-12">
 			<label for="">Are you generally satisfied with the reliability/performance of the equipment?</label>
 			<br/>
-			<select name="satisfied_equipment" style='width:200px;' class="form-control select_single require" data-placeholder="Choose ">
-				<option value=""></option>
+			<select name="satisfied_equipment" style='width:200px;' class="form-control select_single " data-placeholder="Choose ">
+				<option value="2"></option>
 				<option value="1">Yes</option>
-				<option value="2">No</option>
+				<option value="0">No</option>
                         </select>
 			<!--
 			<label>
@@ -614,8 +638,8 @@ function myFunction() {
 			<label>&nbsp;</label>
 			<label>
 				<input type="radio" class="flata" name="satisfied_equipment" value="0" <?php checked($fault->satisfied_equipment,'0');?> /> No</label>
-			<!--<label>&nbsp;</label>
-			<label> <input type="radio" class="flata" name="satisfied_equipment" value="2" <?php checked($fault->satisfied_equipment,'2');?> /> N/A</label>-->
+			<label>&nbsp;</label>
+			<label> <input type="radio" class="flata" name="satisfied_equipment" value="2" <?php checked($fault->satisfied_equipment,'2');?> /> N/A</label>
 		</div>
 	</div>
 	<?php if(is_admin()){ ?>
@@ -986,30 +1010,30 @@ setTimeout(function(){newWin.close();},10);
 		<tr class="active">
 
 			<td colspan="2" class = 'warning'>
-				<?php _e('<strong><p style="color:black;">Are you Satisfied With the Response of the Servicing Organisation: </p></strong>');?>
+				<?php _e('<strong><p style="color:black;">Are you satisfied With the Response of the Servicing Organisation: </p></strong>');?>
 			</td>
 			<?php
 		$satisfied_servicing_organisation = $fault->satisfied_servicing_organisation;
 		$value = '';
 		switch($satisfied_servicing_organisation):
-		case '2' : $value = 'No'; break;
+		case '0' : $value = 'No'; break;
 		case '1' : $value = 'Yes'; break;
-		case '0' : $value = 'N/A'; break;
+		case '2' : $value = 'N/A'; break;
 		endswitch;
 			?>
 			<td>
 				<?php echo $value; ?>
 			</td>
 			<td colspan="3" class = 'warning'>
-				<?php _e('<strong><p style="color:black;">Are you satisied with the Performance of the Service Engineer: </p></strong>');?>
+				<?php _e('<strong><p style="color:black;">Are you satisfied with the Performance of the Service Engineer: </p></strong>');?>
 			</td>
 			<?php
 		$satisfied_service_engineer = $fault->satisfied_service_engineer;
 		$value = '';
 		switch($satisfied_service_engineer):
-		case '2' : $value = 'No'; break;
+		case '0' : $value = 'No'; break;
 		case '1' : $value = 'Yes'; break;
-		case '0' : $value = 'N/A'; break;
+		case '2' : $value = 'N/A'; break;
 		endswitch;
 			?>
 			<td colspan="2">
@@ -1018,15 +1042,15 @@ setTimeout(function(){newWin.close();},10);
 		</tr>
 		<tr class="active">
 			<td colspan = "2" class = 'warning'>
-				<?php _e('<strong><p style="color:black;">Are you generally Satisfied with the relibility/performance of this equipment? </p></strong>');?>
+				<?php _e('<strong><p style="color:black;">Are you generally satisfied with the relibility/performance of this equipment? </p></strong>');?>
 			</td>
 			<?php
 		$satisfied_equipment = $fault->satisfied_equipment;
 		$value = '';
 		switch($satisfied_equipment):
-		case '2' : $value = 'No'; break;
+		case '0' : $value = 'No'; break;
 		case '1' : $value = 'Yes'; break;
-		case '0' : $value = 'N/A'; break;
+		case '2' : $value = 'N/A'; break;
 		endswitch;
 			?>
 			<td>
@@ -1206,7 +1230,7 @@ setTimeout(function(){newWin.close();},10);
 		</div>
 	</div>
 </form>
-<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive table-responsive ajax-datatable-buttons" cellspacing="0" width="100%" data-table="fetch_all_faults" data-order-column="6">
+<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive table-responsive ajax-datatable-buttons" cellspacing="0" width="100%" data-table="fetch_all_faults" data-order-column="1">
 	<thead>
 		<tr>
 			<?php if(is_admin()): ?>

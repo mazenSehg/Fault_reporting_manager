@@ -1,3 +1,17 @@
+function addAllCentres(thetype) {
+	$.ajax({
+		type : 'POST',
+		url : ajax_url,
+		data : { 'action' : 'getCentreList', type: thetype },
+		success : function (res){
+			console.log(res);
+			res = jQuery.parseJSON(res);
+			$("#edit_user_centre").val(res);
+			$("#edit_user_centre").trigger('change');
+		}
+	});
+}
+
 $(document).ready(function() {
 	var cnt = 10;
 	

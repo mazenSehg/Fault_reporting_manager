@@ -583,6 +583,9 @@ if ( !function_exists('get_guid') ) :
 	function get_guid($table_name, $length = 6){
 		global $db;
               	$sql = "SELECT MAX(ID) as id FROM $table_name ";
+		if($table_name == 'tbl_fault') {
+              		$sql = "SELECT MAX(ID) as id FROM $table_name WHERE id not like '10000%' ";
+		}
 		error_log($sql);
 		$row = $db->get_row($sql);
 		$id = $row->{'id'};
