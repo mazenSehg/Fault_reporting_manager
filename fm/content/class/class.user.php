@@ -842,6 +842,7 @@ else {
 						 $admn = "admin@admin.com";
 						send_email($admn,$user_name,$user_name, $subject, $body);
 						$user__id = $guid;
+						update_user_meta($user__id,'designation',$designation);
 						update_user_meta($user__id,'gender',$gender);
 						update_user_meta($user__id,'dob',date('Y-m-d h:i:s',strtotime($dob) ) );
 						update_user_meta($user__id,'user_phone',$user_phone);
@@ -917,6 +918,7 @@ else {
 					}
 			
 					if($check):
+						update_user_meta($user_id,'designation',$designation);
 						update_user_meta($user_id,'gender',$gender);
 						update_user_meta($user_id,'dob',date('Y-m-d h:i:s',strtotime($dob) ) );
 						update_user_meta($user_id,'user_phone',$user_phone);
