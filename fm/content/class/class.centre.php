@@ -147,7 +147,7 @@ class Centre{
 			</div>
 			<div class="form-group">
 				<label for="centre-code">
-					Support Radiologist
+					Superintendent Radiographer
 					<span class="required">
 						*
 					</span>
@@ -156,7 +156,7 @@ class Centre{
 			</div>
 			<div class="form-group">
 				<label for="centre-code">
-					Support Radiologist email
+					Superintendent Radiographer email
 					<span class="required">
 						*
 					</span>
@@ -324,7 +324,7 @@ class Centre{
 			</div>
 			<div class="form-group">
 				<label for="centre-code">
-					Support Radiologist
+					Superintendent Radiographer	
 					<span class="required">
 						*
 					</span>
@@ -333,7 +333,7 @@ class Centre{
 			</div>
 			<div class="form-group">
 				<label for="centre-code">
-					Support Radiologist email
+					Superintendent Radiographer email
 					<span class="required">
 						*
 					</span>

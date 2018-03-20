@@ -403,6 +403,7 @@ class Equipment{
 							*
 						</span>
 					</label><br/>
+					<!--
 					<label>
 						<input type="radio" class="flata" name="tomo" value="1"> Yes
 					</label>
@@ -412,6 +413,14 @@ class Equipment{
 					<label>
 						<input type="radio" class="flata" name="tomo" value="0" checked="checked" > No
 					</label>
+					-->
+					<select name="tomo" style='width:200px;' class="form-control select_single require" data-placeholder="Choose ">
+						<option value=""></option>
+						<option value="0">Not Tomo (0)</option>
+						<option value="1">Tomo Ready (1)</option>
+						<option value="2">Tomo Assessment (2)</option>
+						<option value="3">Tomo Screening (3)</option>
+					</select>
 				</div>
 
 				<div class="form-group col-sm-3 col-xs-6">
@@ -709,8 +718,9 @@ function myFunction() {
 				</div>
 				<div class="form-group col-sm-3 col-xs-6">
 					<label for="tomo">
-						Tomo
+						Tomo 
 					</label><br/>
+					<!--
 					<label>
 						<input type="radio" class="flata" name="tomo" id="tomo" value="1" <?php checked($equipment->tomo,'1');?>/> Yes
 					</label>
@@ -720,6 +730,14 @@ function myFunction() {
 					<label>
 						<input type="radio" class="flata" name="tomo" id="tomo" value="0" <?php checked($equipment->tomo,'0');?>/> No
 					</label>
+					-->
+					<select name="tomo" style='width:200px;' class="form-control select_single require" data-placeholder="Choose ">
+                                                <option value=""></option>
+                                                <option value="0" <?php if($equipment->tomo == 0) { echo("selected"); } ?>>Not Tomo (0)</option>
+                                                <option value="1" <?php if($equipment->tomo == 1) { echo("selected"); } ?>>Tomo Ready (1)</option>
+                                                <option value="2" <?php if($equipment->tomo == 2) { echo("selected"); } ?>>Tomo Assessment (2)</option>
+                                                <option value="3" <?php if($equipment->tomo == 3) { echo("selected"); } ?>>Tomo Screening (3)</option>
+                                        </select>
 				</div>
 				<div class="form-group col-sm-3 col-xs-6">
 					<label for="x-ray">
@@ -943,7 +961,9 @@ function myFunction() {
 						<?php _e('Tomo');?>
 					</td>
 					<td>
-						<?php echo ($equipment->tomo == 1) ? 'Yes' : 'No'; ?>
+						<?php 
+							echo ($equipment->tomo); 
+						?>
 					</td>
 				</tr>
 				<tr>
@@ -994,6 +1014,9 @@ function myFunction() {
 						Name
 					</th>
 					<th>
+						Code	
+					</th>
+					<th>
 						Created On
 					</th>
 					<?php if(is_admin()): ?>
@@ -1012,6 +1035,9 @@ function myFunction() {
 				<tr>
 					<td>
 						<?php _e($equipment__type->name);?>
+					</td>
+					<td>
+						<?php _e($equipment__type->code);?>
 					</td>
 					<td>
 						<?php echo date('M d,Y',strtotime($equipment__type->created_on));?>
@@ -1970,6 +1996,9 @@ function myFunction() {
 
 		date_default_timezone_set('Europe/London');
 		$date = date('Y-m-d', time());
+		if(!is_admin()) {
+			$approved = 0;
+		}
 		
 			$update_args = array(
 					'centre' => $centre,

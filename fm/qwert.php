@@ -14,7 +14,7 @@ if($_SERVER['SERVER_ADDR'] == '10.161.146.74' || $_SERVER['SERVER_ADDR'] == '10.
 	$user = 'fault_user';
 	$pass = 'fault_user';
 	$host = '10.161.128.46';
-		$host = '10.161.128.46';
+		$host = '10.161.128.194';
     if($_SERVER['SERVER_ADDR'] == '10.161.146.74' ) {
 		$user = 'fault_user';
 		$pass = 'fault_user';
@@ -169,7 +169,7 @@ if($_SERVER['SERVER_ADDR'] == '10.161.146.74' || $_SERVER['SERVER_ADDR'] == '10.
 	$user = 'fault_user';
 	$pass = 'fault_user';
 	$host = '10.161.128.46';
-		$host = '10.161.128.46';
+	$host = '10.161.128.194';
     if($_SERVER['SERVER_ADDR'] == '10.161.146.74' ) {
 		$user = 'fault_user';
 		$pass = 'fault_user';
@@ -251,15 +251,29 @@ if(isset($_POST['centre']) && $_POST['centre'] != '' && $_POST['centre'] != 'und
 			$query .= "  `date_of_fault` <= '".date( 'Y-m-d', strtotime($_POST['fault_date_to']) )."' ";
 		}				
 
-$values = mysql_query("SELECT ID, user_id, equipment_code, current_servicing_agency, f_type_name, description_of_fault, action_taken, doh, fault_corrected_by_user, to_fix_at_next_service_visit, engineer_called_out, service_call_no, equipment_downtime, screening_downtime, repeat_images, cancelled_women, technical_recalls, satisfied_servicing_organisation, satisfied_service_engineer, equipment_status, date_of_fault, created_on,created_on, supplier_enquiry, supplier_action, supplier_comments, adverse_incident_report  FROM tbl_fault " . $query."");
+$values = mysql_query("SELECT ID, user_id, equipment_code, current_servicing_agency, f_type_name, description_of_fault, action_taken, doh, fault_corrected_by_user, to_fix_at_next_service_visit, engineer_called_out, service_call_no, equipment_downtime, screening_downtime, repeat_images, cancelled_women, technical_recalls, satisfied_servicing_organisation, satisfied_service_engineer, equipment_status, date_of_fault, created_on,created_on, supplier_enquiry, supplier_action, supplier_comments, adverse_incident_report, equipment, fault_type  FROM tbl_fault " . $query."");
 			
 while ($rowr = mysql_fetch_row($values)) {
 	for ($j=0;$j<$i;$j++) {
-		if($rowr[$j]!=null||$rowr[$j]!=""||strlen($rowr[$j])>0) {
-			$field = preg_replace('/[\n\r]+/', '', trim($rowr[$j]));
-			$csv_output .= $field."\t";
+		if($j == 2) {
+			 $data = mysql_query("SELECT equipment_code AS name FROM tbl_equipment WHERE ID = '".$rowr[27]."';");
+			 while ($da = mysql_fetch_row($data)) {
+				$code =  $da[0];	 
+			 }
+			$csv_output .= $code."\t";
+		} elseif($j == 4) {
+			 $data = mysql_query("SELECT name FROM tbl_fault_type WHERE ID = '".$rowr[28]."';");
+			 while ($da = mysql_fetch_row($data)) {
+				$code =  $da[0];	 
+			 }
+			$csv_output .= $code."\t";
 		} else {
-			$csv_output .= ""."\t";
+			if($rowr[$j]!=null||$rowr[$j]!=""||strlen($rowr[$j])>0) {
+				$field = preg_replace('/[\n\r]+/', '', trim($rowr[$j]));
+				$csv_output .= $field."\t";
+			} else {
+				$csv_output .= ""."\t";
+			}
 		}
 	}
 	$csv_output .= "\n";

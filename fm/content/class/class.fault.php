@@ -48,7 +48,7 @@ class Fault{
 			<hr> </div>
 		<div class="form-group col-sm-6 col-xs-12">
 			<label for="centre">Centre <span class="required"> *</span></label>
-			<select name="centre" class="form-control select_single fetch-centre-equipment-data require" tabindex="-1" data-placeholder="Choose centre">
+			<select name="centre" id='centre_combo' class="form-control select_single fetch-centre-equipment-data require" tabindex="-1" data-placeholder="Choose centre" title="Select your centre from the list" data-toggle="tooltip">
 				<?php
 		$query = '';
 		if(!is_admin()):
@@ -134,14 +134,17 @@ class Fault{
 		<div class="form-group col-sm-6 col-xs-12">
 			<label for="current-servicing-agency">Current Servicing Agency </label>
 			<input type="text" name="current_servicing_agency" id="current_service_agent" class="form-control select-servicing-agency2" value="" readonly="readonly" /> 
+			<div align="right"> <small><b>If incorrect</b> this field can be updated in the equipment area.</small> </div>
 			<!--<select id="select" name="current_servicing_agency" class="form-control select-servicing-agency2" tabindex="-1" data-placeholder="Choose servicing agency" readonly="true">
 				<option value="">Current servicing agency</option>
 			</select>-->
 		</div>
 		<div class="form-group col-sm-6 col-xs-12">
+			<!--
 			<label for="time-of-fault">Servicing agency at time of fault </label>
 			<input type="text" name="time_of_fault" class="form-control" /> 
 			<div align="right"> <small><b>Only populate</b> this field if the servicing agency has changed and <b>does not match</b> the "Current Servicing Agency" field.</small> </div>
+			-->
 		</div>
 
 	</div>
@@ -262,23 +265,23 @@ class Fault{
 		<div class="form-group col-sm-2 col-xs-12">
 			<label for="">Total equipment downtime (days)</label>
 			<br/>
-			<input type="number"  name="equipment_downtime" class="form-control require" min="0" step="0.1" value='0'/> </div>
+			<input type="number"  name="equipment_downtime" class="form-control " min="0" step="0.05" value='0'/> </div>
 		<div class="form-group col-sm-2 col-xs-12">
-			<label for="">Total screening downtime (days)</label>
+			<label for="">Total screening downtime (days) <span title="This option is to be used for screening equipment only. If you enter downtime in this box, please remove any downtime recorded in the 'Total equipment downtime (days)' box" data-toggle="tooltip"><b>(?)</b></span></label>
 			<br/>
-			<input type="number" name="screening_downtime" class="form-control require" min="0" step="0.1" value='0'/> </div>
+			<input type="number" name="screening_downtime" class="form-control " min="0" step="0.05" value='0'/> </div>
 		<div class="form-group col-sm-2 col-xs-12">
 			<label for="">Number of repeat images</label>
 			<br/>
-			<input type="number" step="any" name="repeat_images" class="form-control require" min="0" value='0'/> </div>
+			<input type="number" step="any" name="repeat_images" class="form-control " min="0" value='0'/> </div>
 		<div class="form-group col-sm-2 col-xs-12">
 			<label for="">Number of cancelled women</label>
 			<br/>
-			<input type="number" name="cancelled_women" class="form-control require" min="0" value='0'/> </div>
+			<input type="number" name="cancelled_women" class="form-control " min="0" value='0'/> </div>
 		<div class="form-group col-sm-2 col-xs-12">
 			<label for="">Number of technical recalls</label>
 			<br/>
-			<input type="number"  step="any" name="technical_recalls" class="form-control require" min="0" value='0'/> </div>
+			<input type="number"  step="any" name="technical_recalls" class="form-control " min="0" value='0'/> </div>
 	</div>
 	<div class="row">
 		<div class="form-group col-sm-4 col-xs-12">
@@ -307,18 +310,21 @@ class Fault{
 		<div class="form-group col-sm-4 col-xs-12">
 			<label for="">Are you generally satisfied with the reliability/performance of the equipment?</label>
 			<br/>
-			<select name="satisfied_equipment" style='width:200px;' class="form-control select_single " data-placeholder="Choose ">
-				<option value="2"></option>
+			<?php if(is_admin()){ ?>
+			<label>
+				<input type="radio" class="flata" name="satisfied_equipment" value="1"  > Yes</label>
+			<label>&nbsp;</label>
+			<label>
+				<input type="radio" class="flata" name="satisfied_equipment" value="0"  > No</label>
+                        <label>&nbsp;</label>
+				<input type="radio" class="flata"  name="satisfied_equipment" value="2" checked="checked" > N/A</label>
+			<?php } else { ?>
+			<select name="satisfied_equipment" style='width:200px;' class="form-control select_single require" data-placeholder="Choose ">
+				<option value=""></option>
 				<option value="1">Yes</option>
 				<option value="0">No</option>
                         </select>
-			<!--
-			<label>
-				<input type="radio" class="sr-only form-control flat require" name="satisfied_equipment" value="1"  > Yes</label>
-			<label>&nbsp;</label>
-			<label>
-				<input type="radio" class="sr-only form-control flat require" name="satisfied_equipment" value="2"  > No</label>
-			-->
+			<?php } ?>
 		</div>
 	</div>
 	<?php if(is_admin()){ ?>
@@ -362,6 +368,11 @@ class Fault{
 </form>
 
 <script>
+	$(document).ready(function() {
+		if($('#centre_combo option').size() == 2) {
+			$('#centre_combo').prop('selectedIndex', 1);
+		}
+	});
 function myFunction() {
     document.getElementById("faultForm").reset();
 }
@@ -489,8 +500,10 @@ function myFunction() {
 			<label for="name">Current Servicing Agency</label>
 			<input type="text" name="service_agent" class="form-control" value="<?php _e($fault->current_servicing_agency);?>" readonly="readonly" /> </div>
 		<div class="form-group col-sm-6 col-xs-12">
+			<!--
 			<label for="time-of-fault">Servicing agency at time of fault <span class="required">*</span></label>
 			<input type="text" name="time_of_fault" class="form-control" value="<?php _e($fault->time_of_fault);?>" /> </div>
+			-->
 	</div>
 	<div class="row">
 		<div class="form-group col-sm-12 col-xs-12">
@@ -583,11 +596,11 @@ function myFunction() {
 		<div class="form-group col-sm-6 col-xs-12">
 			<label for="">Total equipment downtime (days)</label>
 			<br/>
-			<input type="number" name="equipment_downtime" class="form-control require" min="0" step="0.1" value="<?php _e($fault->equipment_downtime);?>" /> </div>
+			<input type="number" name="equipment_downtime" class="form-control require" min="0" step="0.05" value="<?php _e($fault->equipment_downtime);?>" /> </div>
 		<div class="form-group col-sm-6 col-xs-12">
 			<label for="">Total screening downtime (days)</label>
 			<br/>
-			<input type="number" name="screening_downtime" class="form-control require"min="0" step="0.1" value="<?php _e($fault->screening_downtime);?>" /> </div>
+			<input type="number" name="screening_downtime" class="form-control require"min="0" step="0.05" value="<?php _e($fault->screening_downtime);?>" /> </div>
 	</div>
 	<div class="row">
 		<div class="form-group col-sm-6 col-xs-12">
@@ -1087,6 +1100,11 @@ setTimeout(function(){newWin.close();},10);
 	public function all__faults__page(){
 		ob_start();
 		$query = '';
+		$sortcol = $_SESSION['sortcol'];	
+		$sortdir = $_SESSION['sortdir'];	
+		if(!$sortcol) {
+			$sortcol = 1;
+		}
 		$filters = $_SESSION['filters'];	
 		if(!is_admin()):
 		$centres = maybe_unserialize($this->current__user->centre);
@@ -1230,7 +1248,7 @@ setTimeout(function(){newWin.close();},10);
 		</div>
 	</div>
 </form>
-<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive table-responsive ajax-datatable-buttons" cellspacing="0" width="100%" data-table="fetch_all_faults" data-order-column="1">
+<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive table-responsive ajax-datatable-buttons" cellspacing="0" width="100%" data-table="fetch_all_faults" data-order-column="<?php echo($sortcol) ?>">
 	<thead>
 		<tr>
 			<?php if(is_admin()): ?>
@@ -1502,6 +1520,7 @@ setTimeout(function(){newWin.close();},10);
 		$guid = get_guid(TBL_FAULTS);
 		$doh = ( isset($doh) ) ? 1 : 0;
 
+		/*
 		$time = $time_of_fault;
 		$current_servicing_agency;
 		if($time_of_fault == $current_servicing_agency){	
@@ -1509,6 +1528,15 @@ setTimeout(function(){newWin.close();},10);
 		}else{
 			$time = $time_of_fault;
 		}
+		*/
+
+		$current_servicing_agency = addslashes($current_servicing_agency);
+		$name = addslashes($name);
+		$action_taken = addslashes($action_taken);
+		$description_of_fault = addslashes($description_of_fault);
+
+		$theequipment = get_tabledata(TBL_EQUIPMENTS,true, array('ID'=> $equipment));
+		$eq_man = $theequipment->{'manufacturer'};
 
 		$insert_args = array(
 			'ID' => $guid,
@@ -1517,11 +1545,12 @@ setTimeout(function(){newWin.close();},10);
 			'name_submit' => $name,
 			'user_id' => $this->current__user__id,
 			'equipment_type' => $equipment_type,
+			'eq_manufac' => $eq_man,
 			'equipment' => $equipment,
 			'fault_type' => $fault_type,
 			'date_of_fault' => date('Y-m-d h:i:s',strtotime($date_of_fault) ) ,
 			'current_servicing_agency' => $current_servicing_agency,
-			'time_of_fault' => $time,
+			//'time_of_fault' => $time,
 			'description_of_fault' => $description_of_fault,
 			'service_call_no' => $service_call_no,
 			'action_taken' => $action_taken,
@@ -1555,13 +1584,13 @@ setTimeout(function(){newWin.close();},10);
 		if($result):
 		$notification_args = array(
 			'title' => 'New fault created',
-			'notification'=> 'You have successfully entered a new fault ('.$name.').',
+			'notification'=> 'You have successfully entered a new fault ('.$name.'). Fault ID: '.$guid.'',
 		);
 
 		add_user_notification($notification_args);
 		$return['status'] = 1;
 		$return['message_heading'] = 'Success !';
-		$return['message'] = 'Fault has been created successfully.';
+		$return['message'] = 'Fault ('.$guid.') has been created successfully.';
 		$return['reset_form'] = 1;
 		endif;
 
@@ -1583,7 +1612,12 @@ setTimeout(function(){newWin.close();},10);
 				date_default_timezone_set('Europe/London');
 		$date = date('Y-m-d', time());
 		
-		
+		$current_servicing_agency = addslashes($current_servicing_agency);
+		$name = addslashes($name);
+		$action_taken = addslashes($action_taken);
+		$description_of_fault = addslashes($description_of_fault);
+		$theequipment = get_tabledata(TBL_EQUIPMENTS,true, array('ID'=> $equipment));
+		$eq_man = $theequipment->{'manufacturer'};
 		if(is_admin()){
 			$doh = ( isset($doh) ) ? 1 : 0;
 			$update_args = array(
@@ -1592,10 +1626,11 @@ setTimeout(function(){newWin.close();},10);
 				'name_submit' => $name,
 				'equipment_type' => $equipment_type,
 				'equipment' => $equipment,
+				'eq_manufac' => $eq_man,
 				'fault_type' => $fault_type,
 				'date_of_fault' => date('Y-m-d h:i:s',strtotime($date_of_fault) ) ,
 				'current_servicing_agency' => $service_agent,
-				'time_of_fault' => $time_of_fault,
+				//'time_of_fault' => $time_of_fault,
 				'description_of_fault' => $description_of_fault,
 				'service_call_no' => $service_call_no,
 				'action_taken' => $action_taken,
@@ -1629,7 +1664,7 @@ setTimeout(function(){newWin.close();},10);
 				'fault_type' => $fault_type,
 				'date_of_fault' => date('Y-m-d h:i:s',strtotime($date_of_fault) ) ,
 				'current_servicing_agency' => $service_agent,
-				'time_of_fault' => $time_of_fault,
+				//'time_of_fault' => $time_of_fault,
 				'description_of_fault' => $description_of_fault,
 				'service_call_no' => $service_call_no,
 				'action_taken' => $action_taken,
@@ -2255,7 +2290,7 @@ setTimeout(function(){newWin.close();},10);
 		array_push($row, __($fault->name));
 		array_push($row, __($equipment->equipment_code));
 		if($fault->current_servicing_agency==""){
-			array_push($row, __($fault->time_of_fault));	
+			//array_push($row, __($fault->time_of_fault));	
 		}else if($fault->current_servicing_agency != ""){
 			array_push($row, __($fault->current_servicing_agency));
 		}else{
@@ -2489,19 +2524,22 @@ setTimeout(function(){newWin.close();},10);
 		array_push($row, __($fault->ID));
 
 		if($fault->centre_name != ""){
-			array_push($row, __($fault->centre_name));
+			//array_push($row, __($fault->centre_name));
+			array_push($row, __($centre->name));
 		}else{
 			array_push($row, __($centre->name));
 		}
 
 		if($fault->e_type_name != ""){
-			array_push($row, __($fault->e_type_name));	
+			//array_push($row, __($fault->e_type_name));	
+			array_push($row, __($equipment_type->name));
 		}else{
 			array_push($row, __($equipment_type->name));
 		}	
 
 		if($fault->equipment_name != ""){
-			array_push($row, __($fault->equipment_name));	
+			//array_push($row, __($fault->equipment_name));	
+			array_push($row, __($equipment->name));
 		}else{
 			array_push($row, __($equipment->name));
 		}

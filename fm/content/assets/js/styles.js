@@ -4,9 +4,11 @@ function addAllCentres(thetype) {
 		url : ajax_url,
 		data : { 'action' : 'getCentreList', type: thetype },
 		success : function (res){
-			console.log(res);
 			res = jQuery.parseJSON(res);
-			$("#edit_user_centre").val(res);
+			var temp  = res.concat($("#edit_user_centre").val());
+			//$("#edit_user_centre").val(res);
+			$("#edit_user_centre").val(temp);
+			//$("#edit_user_centre").val($("#edit_user_centre").val()+res);
 			$("#edit_user_centre").trigger('change');
 		}
 	});
@@ -85,6 +87,7 @@ $(document).ready(function() {
 	
 	var ajaxhandleDataTableButtons = function() {
 		if ($(".ajax-datatable-buttons").length) {
+			console.log("HERHER: "+$(".ajax-datatable-buttons").data('order-column'));
 			$(".ajax-datatable-buttons").DataTable({		
 				order: [[ $(".ajax-datatable-buttons").data('order-column'), "desc" ]],
 				dom: "Bflrtip",
@@ -115,7 +118,6 @@ $(document).ready(function() {
 						d.fault_date_to = $('.custom-filters input[name="fault_date_to"]').val();
 						d.decommed = $('.custom-filters select[name="decommed"]').val();
 
-	   console.log($('.custom-filters select[name="manufacturer"]').val());
                     },
 					complete:function(r){
 						if ($("table .js-switch")[0]) {
@@ -972,6 +974,8 @@ $(document).ready(function() {
 	
 	$('.custom-filters select').on('change',function(){
 		var attr_name = $(this).attr('name');
+		var ord_col = $(".ajax-datatable-buttons").data('order-column')+1;
+		console.log("TABLE ORD: "+ord_col);
 	if(attr_name == 'centre' || attr_name == 'equipment_type'|| attr_name == 'decommed'){
 			$.ajax({ 
 				type : 'POST',
@@ -984,7 +988,6 @@ $(document).ready(function() {
 				url  : ajax_url,
 				dataType: 'json',
 				success: function(res){
-					console.log(res);
 					$select_multiple.select2("destroy");
 					$select_single.select2("destroy");
 					$('select[name="equipment"]').html(res['equipment_html']);
@@ -993,7 +996,7 @@ $(document).ready(function() {
 					
 					$select_single.select2({ allowClear: true });
 					$select_multiple.select2({ allowClear: true });
-					$('.ajax-datatable-buttons > thead > tr th:nth-child(1)').trigger('click');
+					$('.ajax-datatable-buttons > thead > tr th:nth-child('+ord_col+')').trigger('click');
 				}
 			});
 		}else if(attr_name == 'manufacturer'|| attr_name == 'equipment_type'){
@@ -1016,20 +1019,22 @@ $(document).ready(function() {
 					$('select[name="equipment"]').html(res['equipment_html']);
 					$select_single.select2({ allowClear: true });
 					$select_multiple.select2({ allowClear: true });
-					$('.ajax-datatable-buttons > thead > tr th:nth-child(1)').trigger('click');
+					$('.ajax-datatable-buttons > thead > tr th:nth-child('+ord_col+')').trigger('click');
 				}
 			});
 		}
 		
 		
 		else{
-			$('.ajax-datatable-buttons > thead > tr th:nth-child(1)').trigger('click');
+			$('.ajax-datatable-buttons > thead > tr th:nth-child('+ord_col+')').trigger('click');
 		}
 	});
 	
 	$('.custom-filters input').on('apply.daterangepicker', function(ev, picker) {
 		if($(this).val() != ''){
-			$('.ajax-datatable-buttons > thead > tr th:nth-child(1)').trigger('click');
+			var ord_col = $(".ajax-datatable-buttons").data('order-column')+1;
+			console.log("TABLE ORD: "+ord_col);
+			$('.ajax-datatable-buttons > thead > tr th:nth-child('+ord_col+')').trigger('click');
 		}
 	});
 	
@@ -1128,6 +1133,8 @@ function view_function(btn) {
 	var approved = $('.custom-filters select[name="approved"]').val();
 	var fault_date_from = $('.custom-filters input[name="fault_date_from"]').val();
 	var fault_date_to = $('.custom-filters input[name="fault_date_to"]').val();
+	var sortedCol = $('#datatable-buttons').dataTable().fnSettings().aaSorting[0][0];
+	var sortedDir = $('#datatable-buttons').dataTable().fnSettings().aaSorting[0][1];
 	var filter_options = {};
 	filter_options.man = man;
 	filter_options.centre = centre;
@@ -1139,7 +1146,7 @@ function view_function(btn) {
 	filter_options.fault_date_from = fault_date_from;
 	filter_options.fault_date_to = fault_date_to;
 	var encode = JSON.stringify(filter_options);
-	window.location.href = "../view-fault/?id="+id+"&filters="+encode;
+	window.location.href = "../view-fault/?id="+id+"&filters="+encode+"&sortcol="+sortedCol+"&sorrdir="+sortedDir;
 }
 
 function edit_function(btn) {
@@ -1155,6 +1162,8 @@ function edit_function(btn) {
 	var approved = $('.custom-filters select[name="approved"]').val();
 	var fault_date_from = $('.custom-filters input[name="fault_date_from"]').val();
 	var fault_date_to = $('.custom-filters input[name="fault_date_to"]').val();
+	var sortedCol = $('#datatable-buttons').dataTable().fnSettings().aaSorting[0][0];
+	var sortedDir = $('#datatable-buttons').dataTable().fnSettings().aaSorting[0][1];
 	var filter_options = {};
 	filter_options.man = man;
 	filter_options.centre = centre;
@@ -1166,7 +1175,7 @@ function edit_function(btn) {
 	filter_options.fault_date_from = fault_date_from;
 	filter_options.fault_date_to = fault_date_to;
 	var encode = JSON.stringify(filter_options);
-	window.location.href = "../edit-fault/?id="+id+"&filters="+encode;
+	window.location.href = "../edit-fault/?id="+id+"&filters="+encode+"&sortcol="+sortedCol+"&sorrdir="+sortedDir;;
 }
 
 function delete_function(btn){

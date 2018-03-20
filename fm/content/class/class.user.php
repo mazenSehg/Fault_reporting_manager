@@ -900,6 +900,7 @@ else {
 						array('ID' => $user_id)
 					);
 					$check = ($result) ? true : false;
+					$check = true;
 				
 					$result1 = false;
 					if($user_pass != ''){

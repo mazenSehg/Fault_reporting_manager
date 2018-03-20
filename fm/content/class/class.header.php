@@ -74,12 +74,12 @@ class Header{
 		?>
 		<!-- jQuery -->
 		<script src="<?php echo JS_URL;?>jquery.min.js"></script>
+		<!-- Bootstrap -->
+		<script src="<?php echo JS_URL;?>bootstrap.min.js"></script>
 		<!-- jQuery -->
 		<script src="<?php echo JS_URL;?>jquery-ui.js"></script>
 		<!-- canvas dot -->
 		<script src="<?php echo JS_URL;?>canvasdots.js"></script>
-		<!-- Bootstrap -->
-		<script src="<?php echo JS_URL;?>bootstrap.min.js"></script>
 		<!-- FastClick -->
 		<script src="<?php echo JS_URL;?>fastclick.js"></script>
 		<!-- NProgress -->
@@ -154,6 +154,11 @@ class Header{
 		</script>
 		<script src="<?php echo JS_URL;?>pnotify.buttons.js"></script>
 		<script src="<?php echo JS_URL;?>pnotify.nonblock.js"></script>
+		  <script>
+			  $( function() {
+				    $( document ).tooltip();
+			  } );
+		  </script>
 		<?php
 		$content = ob_get_clean();
 		return $content;

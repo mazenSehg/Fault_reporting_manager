@@ -34,11 +34,12 @@ class Footer{
 
 	public function scripts(){
 		ob_start();
+		$version = "1.51";
 		?>
 		<!-- Custom Theme Scripts -->
-		<script src="<?php echo JS_URL;?>custom.js">
+		<script src="<?php echo JS_URL;?>custom.js?ver=<?php echo($version) ?>">
 		</script>
-		<script src="<?php echo JS_URL;?>styles.js">
+		<script src="<?php echo JS_URL;?>styles.js?ver=<?php echo($version) ?>">
 		</script>
 		<?php
 		$content = ob_get_clean();

@@ -30,7 +30,7 @@ if(isset($_POST['exportSubmitButton'])){
                 $user = 'fault_user';
                 $pass = 'fault_user';
                 $host = '10.161.128.46';
-                $host = '10.161.128.46';
+		$host = '10.161.128.194';
                 if($_SERVER['SERVER_ADDR'] == '10.161.146.74' ) {
                         $user = 'fault_user';
                         $pass = 'fault_user';
@@ -121,7 +121,7 @@ if(isset($_POST['exportSubmitButton'])){
 
         $i = null;
 	$objPHPExcel->setActiveSheetIndex(0);
-	$sql = "SELECT f.ID, f.equipment_code, sa.name, f.f_type_name, f.description_of_fault, action_taken, doh, fault_corrected_by_user, to_fix_at_next_service_visit, engineer_called_out, service_call_no, equipment_downtime, screening_downtime, repeat_images, cancelled_women, technical_recalls, satisfied_servicing_organisation, satisfied_service_engineer, satisfied_equipment,  f.equipment_status, date_of_fault, f.created_on, f.last_modified, adverse_incident_report  FROM tbl_fault f JOIN tbl_equipment e ON (f.equipment = e.ID) LEFT OUTER JOIN tbl_service_agent sa ON (e.service_agent = sa.ID) " . $queryfa;
+	$sql = "SELECT f.ID, e.equipment_code, sa.name, tft.name, f.description_of_fault, action_taken, doh, fault_corrected_by_user, to_fix_at_next_service_visit, engineer_called_out, service_call_no, equipment_downtime, screening_downtime, repeat_images, cancelled_women, technical_recalls, satisfied_servicing_organisation, satisfied_service_engineer, satisfied_equipment,  f.equipment_status, date_of_fault, f.created_on, f.last_modified, adverse_incident_report  FROM tbl_fault f JOIN tbl_equipment e ON (f.equipment = e.ID) LEFT OUTER JOIN tbl_service_agent sa ON (e.service_agent = sa.ID) JOIN tbl_fault_type tft ON (f.fault_type = tft.ID) " . $queryfa;
 	error_log($sql);
 
 	$i = 24;

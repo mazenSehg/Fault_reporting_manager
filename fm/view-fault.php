@@ -6,7 +6,11 @@ require_once('load.php');
 
 login_check();
 $filters = $_GET['filters'];
+$sortcol = $_GET['sortcol'];
+$sortdir = $_GET['sortdir'];
 $_SESSION['filters'] = json_decode($filters);
+$_SESSION['sortcol'] = $sortcol;
+$_SESSION['sortdir'] = $sortdir;
 ?>
 <!DOCTYPE html>
 <html>

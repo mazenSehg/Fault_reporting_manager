@@ -157,11 +157,11 @@ function printFaultReport() {
 	if(!is_admin()):
 		$id = $_SESSION['current_user_id'];
 		$current_user = get_userdata($id);
-		$centres = maybe_unserialize($this->current__user->centre);
-		if(!empty($centres)){
-			$centres = implode(',',$centres);
-			$query = "WHERE `centre` IN (".$centres.")";
-		}
+		//$centres = maybe_unserialize($this->current__user->centre);
+		//if(!empty($centres)){
+		//	$centres = implode(',',$centres);
+			//$query = "WHERE `centre` IN (".$centres.")";
+		//}
 	endif;
 
 	header("Content-type: application/pdf");
